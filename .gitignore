@@ -1,0 +1,16 @@
+.env
+.env.*
+!.env.example
+docker-compose.override.yml
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv*/
+*.egg-info/
+build/
+dist/
+certs/*
+!certs/.gitkeep
+!certs/README.md
+eval/out/
+models/

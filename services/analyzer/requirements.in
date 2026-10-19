@@ -1,0 +1,9 @@
+# Direct dependencies of the analyzer service. Locked (with hashes) in
+# requirements.txt via: uv pip compile requirements.in --universal --generate-hashes --python-version 3.12 -o requirements.txt
+presidio-analyzer==2.2.364
+presidio-anonymizer==2.2.364
+spacy==3.8.16
+fastapi==0.149.0
+uvicorn==0.54.0
+pyyaml==6.0.3
+# spaCy models are installed from GitHub release wheels (pinned + hashed in the Dockerfile).

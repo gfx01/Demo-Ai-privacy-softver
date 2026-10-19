@@ -1,0 +1,197 @@
+# AI Privacy Hub - self-hosted demo stack.
+#   ./scripts/init-env.sh        # creates .env with random secrets
+#   docker compose up -d --build
+# Gateway (chat + admin + OpenAI-compatible API): http://localhost:8080
+# Open WebUI:                                     http://localhost:3000
+name: privacy-hub
+
+x-defaults: &defaults
+  restart: unless-stopped
+  logging:
+    driver: json-file
+    options: { max-size: "10m", max-file: "3" }
+
+services:
+  postgres:
+    <<: *defaults
+    image: postgres:16.15-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?run scripts/init-env.sh}
+      LITELLM_DB_PASSWORD: ${LITELLM_DB_PASSWORD:?}
+      PH_GATEWAY_DB_PASSWORD: ${PH_GATEWAY_DB_PASSWORD:?}
+      PH_PORTAL_DB_PASSWORD: ${PH_PORTAL_DB_PASSWORD:?}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+      - ./db/schema:/schema:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d privacyhub"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    networks: [data]
+
+  redis:
+    <<: *defaults
+    image: redis:7.4.11-alpine
+    # No persistence: encrypted mappings live in memory only, with a TTL.
+    command: >
+      redis-server --save "" --appendonly no --maxmemory 64mb
+      --maxmemory-policy volatile-ttl --requirepass "${REDIS_PASSWORD:?}"
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -a \"$$REDIS_PASSWORD\" --no-auth-warning ping | grep -q PONG"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:?}
+    networks: [data]
+
+  analyzer:
+    <<: *defaults
+    build:
+      context: .
+      dockerfile: services/analyzer/Dockerfile
+    image: privacy-hub/analyzer:dev
+    environment:
+      ANALYZER_API_TOKEN: ${ANALYZER_API_TOKEN:?}
+      ANALYZER_LANGUAGES: ${ANALYZER_LANGUAGES:-en}
+      ANALYZER_WORKERS: ${ANALYZER_WORKERS:-1}
+    read_only: true
+    tmpfs: [/tmp]
+    networks: [analysis]
+
+  mock-llm:
+    <<: *defaults
+    build:
+      context: .
+      dockerfile: services/mock_llm/Dockerfile
+    image: privacy-hub/mock-llm:dev
+    environment:
+      MOCK_LLM_INSPECT_TOKEN: ${MOCK_LLM_INSPECT_TOKEN:?}
+    read_only: true
+    tmpfs: [/tmp]
+    networks: [providers]
+
+  litellm:
+    <<: *defaults
+    build:
+      context: .
+      dockerfile: services/litellm/Dockerfile
+    image: privacy-hub/litellm:dev
+    environment:
+      LITELLM_MASTER_KEY: ${LITELLM_MASTER_KEY:?}
+      DATABASE_URL: postgresql://litellm:${LITELLM_DB_PASSWORD}@postgres:5432/litellm
+      MOCK_LLM_API_KEY: mock-not-a-secret
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      PRIVACY_HUB_ANALYZER_URL: http://analyzer:8000
+      PRIVACY_HUB_ANALYZER_TOKEN: ${ANALYZER_API_TOKEN}
+      PRIVACY_HUB_MAPPING_KEY: ${PRIVACY_HUB_MAPPING_KEY:?}
+      PRIVACY_HUB_STORE_URL: redis://:${REDIS_PASSWORD}@redis:6379/0
+      PRIVACY_HUB_DATABASE_URL: postgresql://ph_gateway:${PH_GATEWAY_DB_PASSWORD}@postgres:5432/privacyhub
+      PRIVACY_HUB_DEFAULT_LANGUAGE: ${PRIVACY_HUB_DEFAULT_LANGUAGE:-en}
+      PRIVACY_HUB_MAPPING_TTL_S: ${PRIVACY_HUB_MAPPING_TTL_S:-300}
+      PRIVACY_HUB_AUDIT_REQUIRED: "true"
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis: { condition: service_healthy }
+      analyzer: { condition: service_healthy }
+      mock-llm: { condition: service_started }
+    networks: [data, analysis, providers, internal, egress]
+
+  portal:
+    <<: *defaults
+    build:
+      context: .
+      dockerfile: services/portal/Dockerfile
+    image: privacy-hub/portal:dev
+    environment: &portal-env
+      LITELLM_URL: http://litellm:4000
+      LITELLM_MASTER_KEY: ${LITELLM_MASTER_KEY}
+      PRIVACY_HUB_ANALYZER_URL: http://analyzer:8000
+      PRIVACY_HUB_ANALYZER_TOKEN: ${ANALYZER_API_TOKEN}
+      PORTAL_DATABASE_URL: postgresql://ph_portal:${PH_PORTAL_DB_PASSWORD}@postgres:5432/privacyhub
+      PORTAL_ADMIN_USER: ${PORTAL_ADMIN_USER:-admin}
+      PORTAL_ADMIN_PASSWORD: ${PORTAL_ADMIN_PASSWORD:?}
+      PUBLIC_OPENWEBUI_URL: ${PUBLIC_OPENWEBUI_URL:-http://localhost:3000}
+      OPENWEBUI_LITELLM_KEY: ${OPENWEBUI_LITELLM_KEY:?}
+      PRIVACY_HUB_DEFAULT_ORG: default
+      PROVIDER_MODELS: ${PROVIDER_MODELS:-}
+    read_only: true
+    tmpfs: [/tmp]
+    depends_on:
+      postgres: { condition: service_healthy }
+    networks: [data, analysis, internal]
+
+  bootstrap:
+    image: privacy-hub/portal:dev
+    command: ["python", "-m", "portal.bootstrap"]
+    restart: "no"
+    environment: *portal-env
+    depends_on:
+      litellm: { condition: service_healthy }
+      portal: { condition: service_started }
+    networks: [internal]
+
+  gateway:
+    <<: *defaults
+    image: nginx:1.30.6-alpine
+    ports:
+      - "127.0.0.1:${GATEWAY_PORT:-8080}:8080"
+    volumes:
+      - ./services/gateway/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./services/gateway/llm_proxy.conf:/etc/nginx/llm_proxy.conf:ro
+    read_only: true
+    tmpfs: [/tmp]
+    depends_on:
+      litellm: { condition: service_healthy }
+      portal: { condition: service_healthy }
+    networks: [internal, frontend]
+
+  openwebui:
+    <<: *defaults
+    image: openwebui/open-webui:0.12.3-slim
+    ports:
+      - "127.0.0.1:${OPENWEBUI_PORT:-3000}:8080"
+    environment:
+      OPENAI_API_BASE_URL: http://gateway:8080/v1
+      OPENAI_API_KEY: ${OPENWEBUI_LITELLM_KEY}
+      WEBUI_SECRET_KEY: ${WEBUI_SECRET_KEY:?}
+      ENABLE_OLLAMA_API: "false"
+      ENABLE_FORWARD_USER_INFO_HEADERS: "true"
+      # Everything must go through the privacy gateway: no local models, no
+      # web search, no downloads, documents are sent as (masked) chat context.
+      OFFLINE_MODE: "true"
+      HF_HUB_OFFLINE: "1"
+      BYPASS_EMBEDDING_AND_RETRIEVAL: "true"
+      ENABLE_WEB_SEARCH: "false"
+      ENABLE_IMAGE_GENERATION: "false"
+      ENABLE_CODE_INTERPRETER: "false"
+      ENABLE_EVALUATION_ARENA_MODELS: "false"
+      ENABLE_DIRECT_CONNECTIONS: "false"
+      ANONYMIZED_TELEMETRY: "false"
+      DO_NOT_TRACK: "true"
+    volumes:
+      - openwebui:/app/backend/data
+    depends_on:
+      gateway: { condition: service_started }
+      bootstrap: { condition: service_completed_successfully }
+    networks: [frontend]
+
+volumes:
+  pgdata:
+  openwebui:
+
+networks:
+  # No internet egress on these:
+  data: { internal: true }
+  analysis: { internal: true }
+  providers: { internal: true }
+  internal: { internal: true }
+  # LiteLLM only: reach real LLM providers.
+  egress: {}
+  # Published ports (gateway, Open WebUI).
+  frontend: {}

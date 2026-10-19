@@ -1,0 +1,26 @@
+:root { --fg: #1d2330; --muted: #5b6475; --bg: #f6f7f9; --card: #fff; --accent: #2a5bd7; --warn: #b54708; --bad: #b42318; --ok: #067647; --border: #dfe3ea; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--fg); background: var(--bg); }
+header.top { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; background: var(--card); border-bottom: 1px solid var(--border); }
+header.top a { color: var(--fg); text-decoration: none; margin-left: 16px; }
+header.top .brand { font-weight: 600; margin-left: 0; }
+main { max-width: 1100px; margin: 24px auto; padding: 0 16px; }
+footer { text-align: center; color: var(--muted); font-size: 12px; padding: 24px; }
+h1 { font-size: 22px; } h2 { font-size: 18px; margin-top: 28px; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+table { width: 100%; border-collapse: collapse; background: var(--card); font-size: 13px; }
+th, td { border-bottom: 1px solid var(--border); padding: 6px 8px; text-align: left; vertical-align: top; }
+th { background: #eef1f6; }
+input, select, textarea { font: inherit; padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px; }
+textarea { width: 100%; min-height: 90px; }
+button { font: inherit; padding: 7px 14px; border: 0; border-radius: 6px; background: var(--accent); color: #fff; cursor: pointer; }
+button.secondary { background: #e7ebf3; color: var(--fg); }
+button:disabled { opacity: .5; cursor: default; }
+.muted { color: var(--muted); } .bad { color: var(--bad); } .ok { color: var(--ok); } .warn { color: var(--warn); }
+.pill { display: inline-block; padding: 1px 8px; border-radius: 10px; background: #eef1f6; font-size: 12px; margin: 1px; }
+.row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.chat-log { min-height: 200px; }
+.msg { padding: 10px 12px; border-radius: 8px; margin: 8px 0; white-space: pre-wrap; }
+.msg.user { background: #e8eefc; } .msg.assistant { background: var(--card); border: 1px solid var(--border); }
+.preview { white-space: pre-wrap; background: #fff8e6; border: 1px dashed var(--warn); padding: 10px; border-radius: 8px; }
+ul.links li { margin: 6px 0; }
