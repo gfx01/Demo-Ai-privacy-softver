@@ -29,11 +29,15 @@ def test_existing_tokens_in_input_are_not_reused():
     assert restorer.restore(masked) == text
 
 
-def test_overlaps_prefer_higher_score_then_longer():
+def test_overlaps_containing_span_wins_then_score():
     text = "Contact John Smith Jr today"
+    # a contained, higher-scored span must not punch a hole into a larger one
     spans = [Span("PERSON", 8, 18, 0.6), Span("PERSON", 8, 21, 0.6), Span("LOCATION", 13, 18, 0.9)]
     masked, _ = _mask(text, spans)
-    assert masked == "Contact John [LOCATION_1] Jr today"
+    assert masked == "Contact [PERSON_1] today"
+    # partial overlap (no containment): higher score wins
+    masked, _ = _mask(text, [Span("PERSON", 8, 18, 0.6), Span("LOCATION", 13, 21, 0.9)])
+    assert masked == "Contact John [LOCATION_1] today"
 
 
 @pytest.mark.parametrize(

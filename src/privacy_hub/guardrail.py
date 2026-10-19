@@ -49,7 +49,7 @@ from .crypto import MappingCipher
 from .db import Database
 from .masking import StreamingRestorer, build_restorer
 from .masking.model import Mapping
-from .messages import UnsupportedContentError, collect_request_slots, restore_message_in_place
+from .messages import UnsupportedContentError, collect_request_slots, restore_json_text, restore_message_in_place
 from .org_settings import OrgSettings, SettingsProvider, SettingsUnavailableError
 from .store import InMemoryMappingStore, MappingStore, RedisMappingStore
 
@@ -179,6 +179,7 @@ class PrivacyHubGuardrail(CustomGuardrail):
                 language=settings.language,
                 strategy=settings.strategy,
                 entities=None,
+                disabled_entities=settings.disabled_entities,
                 org_id=org_id,
             )
         except AnalyzerError as exc:
@@ -277,6 +278,9 @@ class PrivacyHubGuardrail(CustomGuardrail):
             return
 
         restorers: dict[int, StreamingRestorer] = {}
+        # Tool-call argument fragments are buffered per (choice, tool call) and
+        # released, restored and correctly JSON-escaped, with the finish chunk.
+        tool_args: dict[int, dict[int, list[str]]] = {}
         last_chunk: Any = None
         try:
             async for chunk in response:
@@ -290,19 +294,42 @@ class PrivacyHubGuardrail(CustomGuardrail):
                         continue
                     content = getattr(delta, "content", None)
                     emitted = sr.feed(content) if isinstance(content, str) and content else ""
+                    for call in getattr(delta, "tool_calls", None) or []:
+                        fn = getattr(call, "function", None)
+                        fragment = getattr(fn, "arguments", None) if fn is not None else None
+                        if fragment:
+                            tool_args.setdefault(idx, {}).setdefault(getattr(call, "index", 0) or 0, []).append(fragment)
+                            fn.arguments = ""
                     if getattr(choice, "finish_reason", None):
                         emitted += sr.flush()
+                        self._release_tool_calls(delta, tool_args.pop(idx, {}), sr.restorer.restore)
                     if isinstance(content, str) or emitted:
                         delta.content = emitted
                 last_chunk = chunk
                 yield chunk
             for idx, sr in restorers.items():
                 tail = sr.flush()
-                if tail and last_chunk is not None:
-                    yield self._tail_chunk(last_chunk, idx, tail)
+                pending_calls = tool_args.pop(idx, {})
+                if (tail or pending_calls) and last_chunk is not None:
+                    extra = self._tail_chunk(last_chunk, idx, tail)
+                    for c in extra.choices:
+                        self._release_tool_calls(c.delta, pending_calls, sr.restorer.restore)
+                    yield extra
         finally:
             restored = sum(sum(sr.restorer.restored.values()) for sr in restorers.values())
             await self._finish(user_api_key_dict, request_data, request_id, "completed", restored_total=restored)
+
+    @staticmethod
+    def _release_tool_calls(delta: Any, calls: dict[int, list[str]], restore) -> None:
+        if not calls:
+            return
+        from litellm.types.utils import ChatCompletionDeltaToolCall, Function
+
+        released = [
+            ChatCompletionDeltaToolCall(index=i, function=Function(arguments=restore_json_text("".join(parts), restore)))
+            for i, parts in sorted(calls.items())
+        ]
+        delta.tool_calls = (getattr(delta, "tool_calls", None) or []) + released
 
     @staticmethod
     def _tail_chunk(template: Any, index: int, text: str) -> Any:

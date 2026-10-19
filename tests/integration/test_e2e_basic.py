@@ -8,10 +8,10 @@ from .conftest import chat, compose
 
 pytestmark = pytest.mark.integration
 
-NAME = "Jane Doe"
-EMAIL = "jane.doe@example.org"
+NAME = "Kovács Péter"
+EMAIL = "kovacs.peter@example.org"
 PHONE = "+36 30 000 4567"
-PROMPT = f"Please email {NAME} at {EMAIL} or call {PHONE} about the contract."
+PROMPT = f"Kérlek, írj {NAME}nek a {EMAIL} címre, vagy hívd a {PHONE} számon a szerződés miatt."
 
 
 def _assert_no_pii(bodies: list[dict], *values: str) -> None:
@@ -32,9 +32,9 @@ def test_non_streaming_masks_and_restores(gateway, user_key, mock_provider):
     assert text == f"Mock reply: {PROMPT}"
     received = mock_provider.received()
     assert len(received) == 1
-    _assert_no_pii(received, NAME, EMAIL, PHONE, "000 4567")
+    _assert_no_pii(received, NAME, EMAIL, PHONE, "000 4567", "Kovács", "Péter")
     sent = received[0]["messages"][0]["content"]
-    assert "[PERSON_1]" in sent and "[EMAIL_1]" in sent and "[PHONE_1]" in sent
+    assert "[PERSON_1]-nek" in sent and "[EMAIL_1]" in sent and "[PHONE_1]" in sent
     # nothing but the model and the (masked) messages reaches the provider
     assert set(received[0]) <= {"model", "messages", "stream", "stream_options", "user"}
 
@@ -43,8 +43,11 @@ def test_streaming_masks_and_restores(gateway, user_key, mock_provider):
     status, text, _ = chat(gateway, user_key, PROMPT, model="mock-inflect", stream=True)
     assert status == 200
     assert text.startswith(f"Mock válasz: {PROMPT}")
+    # the mock re-used "[PERSON_1]" with a back-harmony dative ("-nak");
+    # restoration must produce the correct form of the original name
+    assert "Írtam Kovács Péternek." in text
     assert "[PERSON_1]" not in text and "[EMAIL_1]" not in text
-    _assert_no_pii(mock_provider.received(), NAME, EMAIL, PHONE)
+    _assert_no_pii(mock_provider.received(), NAME, EMAIL, PHONE, "Péter")
 
 
 def test_user_field_is_pseudonymised(gateway, user_key, mock_provider):

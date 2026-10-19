@@ -55,4 +55,4 @@ GRANT SELECT ON audit_events TO ph_portal;
 -- Nobody but the database owner can UPDATE or DELETE audit rows.
 
 INSERT INTO organisations (id, name) VALUES ('default', 'Default organisation');
-INSERT INTO org_settings (organisation_id, mode, strategy, language) VALUES ('default', 'mask', 'bracket', 'en');
+INSERT INTO org_settings (organisation_id, mode, strategy, language) VALUES ('default', 'mask', 'bracket', 'hu');

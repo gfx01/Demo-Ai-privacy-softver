@@ -7,14 +7,13 @@ from .session import MaskingSession, resolve_overlaps
 from .strategies import Strategy, get_strategy
 
 
-def get_morphology(language: str) -> Morphology:
-    """Morphology for a language code; Hungarian gets suffix handling."""
+def get_morphology(language: str, lexicon=None) -> Morphology:
+    """Morphology for a language code; Hungarian gets suffix handling.
+    ``lexicon`` (known names) prevents false splits when masking."""
     if language.lower().startswith("hu"):
-        try:
-            from .hungarian import HungarianMorphology
-        except ImportError:  # milestone 1: Hungarian morphology not built yet
-            return NullMorphology()
-        return HungarianMorphology()
+        from .hungarian import HungarianMorphology
+
+        return HungarianMorphology(lexicon=lexicon)
     return NullMorphology()
 
 

@@ -19,13 +19,37 @@ ENV PIP_CERT=/etc/ssl/certs/ca-certificates.crt \
     SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
 WORKDIR /app
-COPY services/analyzer/requirements.txt services/analyzer/install_model.py /app/
+COPY services/analyzer/requirements.txt services/analyzer/install_model.py services/analyzer/fetch_lexicon.py /app/
 RUN pip install --require-hashes -r /app/requirements.txt
 
 # spaCy models: pinned release wheels, verified by SHA-256.
 ARG EN_MODEL_URL=https://github.com/explosion/spacy-models/releases/download/en_core_web_md-3.8.0/en_core_web_md-3.8.0-py3-none-any.whl
 ARG EN_MODEL_SHA256=5e6329fe3fecedb1d1a02c3ea2172ee0fede6cea6e4aefb6a02d832dba78a310
 RUN python /app/install_model.py "$EN_MODEL_URL" "$EN_MODEL_SHA256"
+# Multilingual NER (ANALYZER_HU_NER=spacy:xx_ent_wiki_sm). Small; see the evaluation report.
+ARG XX_MODEL_URL=https://github.com/explosion/spacy-models/releases/download/xx_ent_wiki_sm-3.8.0/xx_ent_wiki_sm-3.8.0-py3-none-any.whl
+ARG XX_MODEL_SHA256=6f3c4b853852ea9e9d2dc76cc950dddb10a7e4c42d813308caefe6c5e8be2f0a
+RUN python /app/install_model.py "$XX_MODEL_URL" "$XX_MODEL_SHA256"
+
+# Optional HuSpaCy (ANALYZER_HU_NER=spacy:hu_core_news_md). NOT tested in this
+# repository (huggingface.co was unreachable while it was built). HuSpaCy
+# wheels have an invalid filename for pip >= 24.1, hence the rename. Pin the
+# SHA-256 once you have downloaded the wheel yourself.
+#   docker compose build --build-arg HU_SPACY_MODEL_URL=https://huggingface.co/huspacy/hu_core_news_md/resolve/v3.8.0/hu_core_news_md-any-py3-none-any.whl analyzer
+ARG HU_SPACY_MODEL_URL=""
+ARG HU_SPACY_MODEL_SHA256="unpinned"
+ARG HU_SPACY_WHEEL_NAME="hu_core_news_md-3.8.0-py3-none-any.whl"
+RUN if [ -n "$HU_SPACY_MODEL_URL" ]; then \
+      python /app/install_model.py "$HU_SPACY_MODEL_URL" "$HU_SPACY_MODEL_SHA256" "$HU_SPACY_WHEEL_NAME" --with-deps; \
+    fi
+
+# Hungarian name lexicon (official given-name list, pinned fallback mirror).
+RUN python /app/fetch_lexicon.py /app/data/lexicon
+ENV ANALYZER_LEXICON_DIR=/app/data/lexicon
+
+# Optional self-built models, e.g. models/hu_nerkor_cnn from
+# scripts/train_nerkor.py (ANALYZER_HU_NER=spacy:/app/models/hu_nerkor_cnn).
+COPY models/ /app/models/
 
 COPY src/privacy_hub /app/privacy_hub
 COPY services/analyzer/privacy_analyzer /app/privacy_analyzer

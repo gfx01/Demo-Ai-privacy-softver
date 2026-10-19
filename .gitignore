@@ -13,4 +13,6 @@ certs/*
 !certs/.gitkeep
 !certs/README.md
 eval/out/
-models/
+models/*
+!models/.gitkeep
+eval/data/hu_testset_*.jsonl

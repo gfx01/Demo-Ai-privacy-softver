@@ -77,13 +77,16 @@ class BracketRestorer(Restorer):
             alt = "|".join(re.escape(lab) for lab in labels)
             bracketed = rf"\[\s*(?P<bl>(?i:{alt}))[ _\-]?(?P<bn>\d+)\s*\]"
             bare = rf"(?<![\w\[])(?P<pl>{alt})_(?P<pn>\d+)(?!\d)"
-            self._re: re.Pattern[str] | None = re.compile(rf"(?:{bracketed}|{bare}){SUFFIX_PATTERN}")
+            # Closing markdown between token and ending ("**[PERSON_1]**-nek")
+            # is moved after the restored, inflected name ("**Kovács Péternek**").
+            markup = r"(?P<md>\*\*|__|\*|_|`)?"
+            self._re: re.Pattern[str] | None = re.compile(rf"(?:{bracketed}|{bare}){markup}{SUFFIX_PATTERN}")
             longest_key = max(len(k) for k in self.by_key)
         else:
             self._re = None
             longest_key = 0
-        # "[" + spaces + key + spaces + "]" + suffix (+hyphen) + 1 look-ahead char
-        self.max_match_len = longest_key + 2 + 4 + MAX_SUFFIX_LEN + 1 + 1
+        # "[" + spaces + key + spaces + "]" + markup + suffix (+hyphen) + 1 look-ahead char
+        self.max_match_len = longest_key + 2 + 4 + 2 + MAX_SUFFIX_LEN + 1 + 1
 
     def iter_matches(self, text: str, pos: int = 0) -> Iterator[RestoreMatch]:
         if self._re is None:
@@ -95,9 +98,8 @@ class BracketRestorer(Restorer):
             if entry is None:
                 continue
             inflection = self.morphology.parse_suffix(m.group("suf") or "")
-            yield RestoreMatch(
-                m.start(), m.end(), entry, self.morphology.inflect(entry.original, inflection, entry.entity_type)
-            )
+            restored = self.morphology.inflect(entry.original, inflection, entry.entity_type)
+            yield RestoreMatch(m.start(), m.end(), entry, restored + (m.group("md") or ""))
 
 
 class StreamingRestorer:

@@ -32,6 +32,8 @@ async def lifespan(app: FastAPI):
     token = os.environ.get("ANALYZER_API_TOKEN", "")
     if len(token) < 16:
         raise RuntimeError("ANALYZER_API_TOKEN must be set (>= 16 chars)")
+    if len(os.environ.get("PRIVACY_HUB_PSEUDONYM_KEY", "")) < 16:
+        raise RuntimeError("PRIVACY_HUB_PSEUDONYM_KEY must be set (>= 16 chars)")
     state["engine"] = PrivacyEngine()
     yield
     state.clear()
@@ -52,6 +54,7 @@ class MaskRequest(BaseModel):
     language: str = "hu"
     strategy: str = "bracket"
     entities: list[str] | None = None
+    disabled_entities: list[str] = Field(default_factory=list, max_length=64)
     org_id: str | None = None
     include_mapping: bool = True
 
@@ -73,7 +76,7 @@ def ready() -> dict:
     engine = state.get("engine")
     if engine is None:
         raise HTTPException(status_code=503, detail="not ready")
-    return {"status": "ready", "languages": engine.languages, "nlp_models": engine.nlp_models}
+    return {"status": "ready", "languages": engine.languages, "nlp_backends": engine.nlp_backends}
 
 
 @app.post("/v1/analyze", dependencies=[Depends(require_token)])
@@ -95,7 +98,7 @@ def mask(req: MaskRequest) -> dict:
     if req.strategy not in {"bracket", "pseudonym", "bracket_naive"}:
         raise HTTPException(status_code=400, detail="unsupported strategy")
     started = time.perf_counter()
-    result = engine.mask(req.texts, req.language, req.strategy, req.entities)
+    result = engine.mask(req.texts, req.language, req.strategy, req.entities, disabled_entities=req.disabled_entities)
     elapsed = (time.perf_counter() - started) * 1000
     # Log sizes and counts only - never text.
     log.info("mask texts=%d chars=%d entities=%d ms=%.1f", len(req.texts), sum(map(len, req.texts)), result.entity_total, elapsed)

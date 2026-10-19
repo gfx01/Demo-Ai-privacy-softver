@@ -44,11 +44,14 @@ class AnalyzerClient:
         language: str,
         strategy: str,
         entities: list[str] | None = None,
+        disabled_entities: list[str] | tuple[str, ...] = (),
         org_id: str | None = None,
     ) -> MaskResponse:
         payload: dict[str, Any] = {"texts": texts, "language": language, "strategy": strategy}
         if entities is not None:
             payload["entities"] = entities
+        if disabled_entities:
+            payload["disabled_entities"] = list(disabled_entities)
         if org_id is not None:
             payload["org_id"] = org_id
         try:

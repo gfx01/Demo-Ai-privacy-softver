@@ -259,3 +259,27 @@ async def test_mapping_of_other_org_cannot_be_used(env):
     response = ModelResponse(choices=[{"index": 0, "message": {"role": "assistant", "content": "[PERSON_1]"}}])
     response = await g.async_post_call_success_hook(out, Other(), response)
     assert response.choices[0].message.content == "[PERSON_1]"  # not restored with acme's mapping
+
+
+async def test_streaming_tool_call_arguments_are_restored(env):
+    from litellm.types.utils import ChatCompletionDeltaToolCall, Function
+
+    g = make_guardrail(env)
+    data = await g.async_pre_call_hook(UAK(), None, request(), "acompletion")
+    args = '{"to": "[EMAIL_1]", "name": "[PERSON_1]"}'
+
+    async def upstream():
+        yield ModelResponseStream(choices=[StreamingChoices(index=0, delta=Delta(content=None, tool_calls=[
+            ChatCompletionDeltaToolCall(id="call_1", index=0, type="function", function=Function(name="send_mail", arguments=""))]))])
+        for i in range(0, len(args), 3):
+            yield ModelResponseStream(choices=[StreamingChoices(index=0, delta=Delta(content=None, tool_calls=[
+                ChatCompletionDeltaToolCall(index=0, function=Function(arguments=args[i : i + 3]))]))])
+        yield ModelResponseStream(choices=[StreamingChoices(index=0, delta=Delta(content=None), finish_reason="tool_calls")])
+
+    chunks = [c async for c in g.async_post_call_streaming_iterator_hook(UAK(), upstream(), data)]
+    joined = "".join(
+        (tc.function.arguments or "") for c in chunks for ch in c.choices for tc in (ch.delta.tool_calls or [])
+    )
+    assert json.loads(joined) == {"to": EMAIL, "name": NAME}
+    names = [tc.function.name for c in chunks for ch in c.choices for tc in (ch.delta.tool_calls or []) if tc.function.name]
+    assert names == ["send_mail"]

@@ -113,12 +113,23 @@ class MaskingSession:
 
 
 def resolve_overlaps(spans: Sequence[Span]) -> list[Span]:
-    """Greedy overlap resolution: prefer higher score, then longer span."""
-    ranked = sorted(spans, key=lambda s: (-s.score, -(s.end - s.start), s.start))
+    """Greedy overlap resolution.
+
+    A span that fully contains another one wins regardless of score (privacy
+    first: an NER "Budapest" inside a full postal address must not leave the
+    rest of the address unmasked). Remaining conflicts: higher score, then
+    longer span.
+    """
+    valid = [s for s in spans if s.end > s.start]
+    contained = {
+        id(s)
+        for s in valid
+        for o in valid
+        if o is not s and o.start <= s.start and s.end <= o.end and (o.end - o.start) > (s.end - s.start)
+    }
+    ranked = sorted(valid, key=lambda s: (id(s) in contained, -s.score, -(s.end - s.start), s.start))
     kept: list[Span] = []
     for s in ranked:
-        if s.end <= s.start:
-            continue
         if all(s.end <= k.start or s.start >= k.end for k in kept):
             kept.append(s)
     return sorted(kept, key=lambda s: s.start)
