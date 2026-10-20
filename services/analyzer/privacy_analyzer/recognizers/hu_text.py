@@ -8,7 +8,9 @@ heuristics; their limits are documented in docs/LIMITATIONS.md.
 
 from __future__ import annotations
 
+import os
 import re
+from pathlib import Path
 
 from presidio_analyzer import RecognizerResult
 
@@ -119,8 +121,10 @@ class HuStreetRecognizer(HuRegexRecognizer):
     Inside a full address the address match (containing span) wins."""
 
     ENTITY = "LOCATION"
+    # street words that are also ordinary words: "Önhöz soron kívül", "Hosszú út áll előttünk"
+    _AMBIGUOUS_TYPES = re.compile(r"^(?:sor|köz|út|tér)", re.I)
     _STREET = (
-        r"utc[aá](?:ban|ba|ból|ra|ról|n|t|nál|hoz|tól|ig)?|útj?[aá]?(?:on|ra|ról|ig|n|t|nál)?|úton|útra|útról|"
+        r"utcai|úti|téri|utc[aá](?:ban|ba|ból|ra|ról|n|t|nál|hoz|tól|ig)?|útj?[aá]?(?:on|ra|ról|ig|n|t|nál)?|úton|útra|útról|"
         r"t[eé]r(?:en|re|ről|t|ig)?|körút(?:on|ra|ról|ig)?|köz(?:ben|be|ből|re|ön|t)?|sor(?:on|ra|ról|ba|ban)?|"
         r"fasor(?:ban|ba|ból|on|ra)?|sétány(?:on|ra|ról)?|rakpart(?:on|ra|ról)?|sugárút(?:on|ra|ról)?|lépcső(?:n|re|ről)?"
     )
@@ -132,9 +136,24 @@ class HuStreetRecognizer(HuRegexRecognizer):
         ),
     )
 
+    def __init__(self, supported_language: str = "hu", lexicon_dir: str | None = None) -> None:
+        super().__init__(supported_language=supported_language)
+        path = Path(lexicon_dir or os.environ.get("ANALYZER_LEXICON_DIR", "/app/data/lexicon")) / "common_words.txt"
+        self.common = set(path.read_text(encoding="utf-8").split()) if path.exists() else set()
+
+    def _all_common(self, words: list[str]) -> bool:
+        # exact lemmas only: "Kerepesi", "Váci", "Üllői" (place adjectives) are street names
+        return bool(self.common) and all(w.lower() in self.common for w in words)
+
     def analyze(self, text, entities, nlp_artifacts=None):
         out = []
         for r in super().analyze(text, entities, nlp_artifacts):
+            words = text[r.start : r.end].split()
+            name_words, street = words[:-1], words[-1]
+            if name_words and name_words[0].lower().startswith("ön"):
+                continue  # "Önhöz", "Önöknek": polite pronoun, not a street name
+            if self._AMBIGUOUS_TYPES.match(street) and self._all_common(name_words):
+                continue
             start = r.start
             while True:  # "A Ráday utcában" -> "Ráday utcában"
                 m = re.match(r"([^\s]+)\s+", text[start : r.end])
@@ -150,7 +169,7 @@ class HuStreetRecognizer(HuRegexRecognizer):
 _LEGAL_FORMS = (
     r"Nonprofit\s+(?:Kft|Zrt|Bt)\.?|Kft\.?|Zrt\.?|Nyrt\.?|Bt\.?|Kkt\.?|Rt\.?|Kht\.?|Kv\.?|Szövetkezet|"
     r"Ügyvédi\s+Iroda|Közjegyzői\s+Iroda|Könyvelőiroda|Könyvelő\s+Iroda|e\.\s?v\.|Egyéni\s+Cég|"
-    r"Ltd\.?|GmbH|LLC|Inc\.?|S\.?A\.|AG|B\.?V\.|s\.\s?r\.\s?o\.|Sp\.\s?z\s?o\.\s?o\.|S\.?R\.?L\.?|d\.o\.o\.|Kft-"
+    r"és\s+Társai?|Ltd\.?|GmbH|LLC|Inc\.?|S\.?A\.|AG|B\.?V\.|s\.\s?r\.\s?o\.|Sp\.\s?z\s?o\.\s?o\.|S\.?R\.?L\.?|d\.o\.o\.|Kft-"
 )
 # Capitalised words that start sentences but are not part of a company name.
 _STOP = {
@@ -204,7 +223,7 @@ _INSTITUTION_HEAD_WORDS = (
     r"szövetség|kamara|bank|szövetkezet|biztosító|patika|gyógyszertár|hotel|szálloda|szálló|panzió|vendégház|"
     r"étterem|vendéglő|kávézó|cukrászda|pékség|intézet|központ|centrum|szolgálat|gondozó|egészségház|labor|"
     r"laboratórium|fogászat|ügynökség|stúdió|szalon|műhely|kereskedés|áruház|klub|társaság|csoport|holding|"
-    r"könyvtár|múzeum|színház|plébánia|egyházközség"
+    r"könyvtár|múzeum|színház|plébánia|egyházközség|szerviz|pénztár|technikum|ház"
 )
 # final a/e lengthens before endings: "Irodától", "Klinikára"
 _INSTITUTION_HEADS = "|".join(
@@ -225,7 +244,7 @@ class HuInstitutionRecognizer(HuRegexRecognizer):
     PATTERNS = (
         Pattern(
             "head_noun",
-            rf"(?<![\w])(?P<value>(?:[{UPPER}][\w\-]*\s+){{1,5}}(?=[{UPPER}])[{UPPER}{LOWER}]*?(?i:{_INSTITUTION_HEADS}){_ORG_ENDING})(?![\w])",
+            rf"(?<![\w])(?P<value>(?:[{UPPER}][\w\-]*\s+(?:és\s+|&\s+)?){{1,5}}(?=[{UPPER}])[{UPPER}{LOWER}]*?(?i:{_INSTITUTION_HEADS}){_ORG_ENDING})(?![\w])",
             0.55,
         ),
     )

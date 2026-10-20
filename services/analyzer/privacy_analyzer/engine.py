@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import logging
 import os
+import re
 import tempfile
 import time
 import unicodedata
@@ -28,7 +29,7 @@ from functools import partial
 from pathlib import Path
 
 import tldextract
-from presidio_analyzer import AnalyzerEngine, RecognizerRegistry, RecognizerResult
+from presidio_analyzer import AnalysisExplanation, AnalyzerEngine, RecognizerRegistry, RecognizerResult
 from presidio_analyzer.nlp_engine import NerModelConfiguration, NlpEngineProvider
 from presidio_analyzer.predefined_recognizers import PhoneRecognizer
 from presidio_anonymizer import AnonymizerEngine
@@ -88,6 +89,43 @@ def normalize_text(text: str) -> str:
     if text.isascii():
         return text
     return "".join(ch for ch in text if _visible(ch))
+
+
+ORG_TYPES = ("HU_COMPANY", "ORGANIZATION")
+# Hungarian endings after a company's short name: "Bitkerttel", "Mecsek-Vill-lel", "Alfának"
+_ORG_SHORT_ENDING = (
+    r"(?:-?(?:[bcdfghjklmnprstvz]?[ae]l|t|ot|et|at|öt|nak|nek|nál|nél|hoz|hez|höz|tól|től|ból|ből|ban|ben|ba|be|"
+    r"ra|re|ról|ről|on|en|ön|n|ért|ként|é|nek|é))?"
+)
+
+
+def repeated_org_names(text: str, results: list[RecognizerResult], ignored: set[str]) -> list[RecognizerResult]:
+    """The distinctive first word of a detected company or organisation name
+    ("Bitkert Informatikai Zrt.") is masked again where it appears on its
+    own, also inflected ("a Bitkerttel", "a Mecsek-Vill-lel")."""
+    out: list[RecognizerResult] = []
+    if ignored & set(ORG_TYPES):
+        return out
+    taken = [(r.start, r.end) for r in results]
+    for r in [r for r in results if r.entity_type in ORG_TYPES]:
+        first = text[r.start : r.end].split()[0]
+        if len(first) < 4 or not first[:1].isupper() or first in _ORG_COMMON_FIRST:
+            continue
+        for m in re.finditer(rf"(?<![\w-]){re.escape(first)}{_ORG_SHORT_ENDING}(?![\w])", text):
+            if any(s <= m.start() < e for s, e in taken):
+                continue
+            taken.append((m.start(), m.end()))
+            out.append(RecognizerResult(r.entity_type, m.start(), m.end(), 0.5,
+                                        AnalysisExplanation(recognizer="RepeatedOrgName", original_score=0.5,
+                                                            textual_explanation="short form of an organisation found in the same text")))
+    return out
+
+
+# first words of organisation names that are too generic to mask on their own
+_ORG_COMMON_FIRST = {
+    "Magyar", "Nemzeti", "Országos", "Állami", "Fővárosi", "Budapesti", "Központi", "Városi", "Megyei", "Első",
+    "Általános", "Egyesült", "Szent", "Dél", "Észak", "Kelet", "Nyugat", "Közép", "Új", "Nagy", "Kis",
+}
 
 
 @dataclass
@@ -202,6 +240,8 @@ class PrivacyEngine:
         results = analyzer.analyze(text=text, language=language, entities=entities, score_threshold=score_threshold)
         ignored = set(disabled_entities) | (DEFAULT_IGNORED if entities is None else set())
         results = [r for r in results if r.entity_type not in ignored]
+        if language == "hu":
+            results += repeated_org_names(text, results, ignored)
         # Resolve overlaps here (prefer higher score, then longer span) so that
         # pre-registration and Presidio's anonymizer see the same span set.
         keep = {

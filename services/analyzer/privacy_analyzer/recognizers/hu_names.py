@@ -45,6 +45,21 @@ FOREIGN_ENDING = re.compile(
 )
 ACADEMIC_ABBREVIATIONS = {"med", "univ", "jur", "habil", "phil", "techn", "oec", "pharm", "vet", "dent"}
 TITLE_BEFORE = re.compile(r"(?:\b(?:dr|ifj|id|özv|prof|mr|mrs|ms)\.?)\s*$", re.I)
+INITIAL_BEFORE = re.compile(r"(?<![\w.])[A-ZÁÉÍÓÖŐÚÜŰ]\.\s")
+# Frequent surnames that are also ordinary words (occupations, adjectives)
+WORD_SURNAMES = {
+    "Kertész", "Vadász", "Takács", "Juhász", "Molnár", "Kovács", "Szabó", "Lakatos", "Mészáros", "Bíró",
+    "Pásztor", "Fazekas", "Kocsis", "Szűcs", "Varga", "Kádár", "Asztalos", "Ács", "Kántor", "Katona", "Papp",
+    "Pap", "Gulyás", "Csizmadia", "Borbély", "Szakács", "Halász", "Csordás", "Kalmár", "Tímár", "Bognár",
+    "Erdős", "Fodor", "Fekete", "Fehér", "Nagy", "Kis", "Kiss", "Barna", "Szőke", "Vörös", "Sárközi", "Somogyi",
+    "Kun", "Német", "Németh", "Orosz", "Tóth", "Horváth", "Oláh", "Rácz", "Lengyel", "Magyar", "Székely",
+    "Pintér", "Kerekes", "Szekeres", "Kardos", "Bodnár", "Szénási", "Mohácsi", "Vass", "Farkas", "Balogh",
+}
+# Stricter, for lower-case words: a Hungarian title written with its dot ("dr. rozsnyainak"),
+# not e.g. "koponya-MR szükségességét"
+TITLE_DOT_BEFORE = re.compile(r"(?<![\w-])(?:[Dd]r|ifj|id|özv|[Pp]rof)\.\s*$")
+# Lower-case words that look like nicknames but are slang ("szabin" = on leave)
+LOWER_NOT_NAMES = {"szabi"}
 HONORIFICS = re.compile(r"^\s+(?:úr|úrnak|urat|úrral|úrtól|úrhoz|urak|asszony|asszonynak|asszonyt|asszonnyal|"
                         r"kisasszony|doktor|doktornő|doktorúr|ügyvéd|ügyvédnő|tanár|tanárnő|néni|bácsi)\b", re.I)
 GREETING = re.compile(r"(?:^|[\s,(])(?:szia|szió|sziasztok|helló|hello|hali|hi|hey|kedves|üdv|szervusz|csá|csao|ciao)[\s,!]*$", re.I)
@@ -133,7 +148,9 @@ class HuNameRecognizer(EntityRecognizer):
         if not self.male:
             raise RuntimeError(f"Hungarian given-name list not found in {directory}")
         self.given = self.male | self.female | NICKNAMES
-        self.surnames = _load(directory / "surnames.txt")
+        # the Magyar Ispell surname list leaves out surnames that are also
+        # ordinary words; the most frequent of those are added here
+        self.surnames = _load(directory / "surnames.txt") | WORD_SURNAMES
         self.foreign = _load(directory / "foreign_given.txt") - STOPWORDS
         # Ordinary Hungarian words (lower case). Optional: without it, lone
         # lower-case given names are only accepted after a greeting.
@@ -158,7 +175,13 @@ class HuNameRecognizer(EntityRecognizer):
             r"^(.{3,}?)né(?:nek|nak|nél|nál|hez|hoz|höz|vel|val|t|ről|ról|től|tól|re|ra|é|ért|ként|ben|ban|ből|ból|be|ba|ék)?$",
             token,
         )
-        return m.group(1) if m else None
+        if not m:
+            return None
+        base = m.group(1)
+        # "Imréné" -> "Imre", "Lászlóné" -> "László"
+        if base[-1:] in ("á", "é") and base[:-1] + {"á": "a", "é": "e"}[base[-1]] in self.given | self.surnames:
+            base = base[:-1] + {"á": "a", "é": "e"}[base[-1]]
+        return base
 
     def is_given(self, token: str) -> bool:
         if token in self.given or self._stem(token)[0] in self.given:
@@ -169,8 +192,8 @@ class HuNameRecognizer(EntityRecognizer):
     def is_known_surname(self, token: str) -> bool:
         stem = self._stem(token)[0]
         base = self._married_base(token) or stem
-        family = re.match(r"^(.+?)ék", token)
-        parts = {token, stem, base, *base.split("-")} | ({family.group(1)} if family else set())
+        family = self._family_base(token)
+        parts = {token, stem, base, *base.split("-")} | ({family} if family else set())
         return any(p in self.surnames or self._stem(p)[0] in self.surnames for p in parts)
 
     def _family_base(self, token: str) -> str | None:
@@ -208,8 +231,15 @@ class HuNameRecognizer(EntityRecognizer):
         return bool(m) and token[: m.start()] in self.foreign
 
     def _common_word(self, token: str) -> bool:
+        """An ordinary word, also inflected: the word list has lemmas only, so
+        a known lemma of 5+ letters followed by up to 7 letters counts too
+        ("szükségességét", "rózsának"; not "rozs" in "rozsnyainak")."""
         low = token.lower()
-        return low in self.common or self._stem(token)[0].lower() in self.common
+        if not self.common:
+            return False
+        if low in self.common or self._stem(token)[0].lower() in self.common:
+            return True
+        return any(low[:k] in self.common for k in range(len(low) - 1, max(4, len(low) - 8), -1))
 
     @staticmethod
     def _sentence_initial(text: str, start: int) -> bool:
@@ -254,7 +284,14 @@ class HuNameRecognizer(EntityRecognizer):
         taken = [(r.start, r.end) for r in results]
         results.extend(self._single_surnames(text, tokens, taken))
         results.extend(self._repeated_parts(text, tokens, results))
-        return results
+        return [self._with_initial(text, r) for r in results]
+
+    def _with_initial(self, text, r):
+        """'K. Péternek', 'B. Gergellyel': an initial belongs to the name."""
+        m = INITIAL_BEFORE.search(text, 0, r.start)
+        if not m or m.end() != r.start:
+            return r
+        return self._result(m.start(), r.end, r.score, r.analysis_explanation.textual_explanation + " + initial")
 
     def _cued_name(self, text, tokens, run):
         """Capitalised words that are not known names but follow a title
@@ -361,6 +398,9 @@ class HuNameRecognizer(EntityRecognizer):
             w = name_words[0]
             if w in STOPWORDS or not self.is_given(w):
                 return None
+            after = words[end_idx + 1 :]
+            if after and self._common_word(w) and not any(self.is_given(x) or self.is_known_surname(x) for x in after):
+                return None  # "a belső Fehér Könyvünk": a title, not a person
             stem = self._stem(w)[0]
             if (w in AMBIGUOUS_GIVEN or stem in AMBIGUOUS_GIVEN) and self._sentence_initial(text, span_start):
                 return None
@@ -399,9 +439,10 @@ class HuNameRecognizer(EntityRecognizer):
                 and self._lower_surname(w)
                 and self._lower_given(nxt)
                 and cap not in AMBIGUOUS_GIVEN
-                and not (self.common and self._common_word(nxt))
             ):
                 return self._result(start, tokens[i + 1][1], 0.6, "lower-case surname + given name"), i + 2
+        if self._stem(cap)[0].lower() in LOWER_NOT_NAMES or w in LOWER_NOT_NAMES:
+            return None
         if len(w) >= 3 and cap not in AMBIGUOUS_GIVEN and (self._lower_given(w) or self._family_form(cap)):
             if GREETING.search(text[max(0, start - 25) : start]):
                 return self._result(start, end, 0.5, "lower-case name after greeting"), i + 1
@@ -415,7 +456,7 @@ class HuNameRecognizer(EntityRecognizer):
         if (
             len(w) >= 4
             and w not in ACADEMIC_ABBREVIATIONS
-            and TITLE_BEFORE.search(text[max(0, start - 6) : start])
+            and TITLE_DOT_BEFORE.search(text[max(0, start - 6) : start])
             and not (self.common and self._common_word(w))
         ):
             return self._result(start, end, 0.5, "lower-case word after a title"), i + 1
@@ -435,7 +476,7 @@ class HuNameRecognizer(EntityRecognizer):
             if not self.is_known_surname(w):
                 # married / family form of an unknown surname mid-sentence: "Erdősné", "Vadászék"
                 base = self._married_base(w) or self._family_base(w)
-                if base and not initial and self._name_like(w) and len(base) >= 3 and base not in STOPWORDS:
+                if base and self._name_like(w) and len(base) >= 3 and base not in STOPWORDS:
                     if not self._common_word(base) or base in self.surnames:
                         out.append(self._result(start, end, 0.5, "married / family form"))
                 continue

@@ -18,7 +18,8 @@ LEXICON = Path(__file__).resolve().parents[2] / "models" / "lexicon"
 
 @pytest.fixture(scope="module")
 def engine():
-    if not (LEXICON / "given_male.txt").exists():
+    needed = ("given_male.txt", "surnames.txt", "settlements.txt", "common_words.txt", "countries.txt")
+    if not all((LEXICON / f).exists() for f in needed):
         pytest.skip("run: python services/analyzer/fetch_lexicon.py models/lexicon")
     os.environ.setdefault("ANALYZER_LEXICON_DIR", str(LEXICON))
     return PrivacyEngine(languages=["hu"], hu_ner="none", lexicon_dir=str(LEXICON))
@@ -72,7 +73,6 @@ def test_positive(engine, text, expected):
     "A Ptk. 6:142. § alapján a kár megtérítendő.",
     "Holnap reggel nyolckor kezdünk.",
     "Egy Kft.-t szeretnék alapítani.",
-    "A Petőfi Sándor utcában lakik.",
     "Rózsa illata töltötte be a szobát.",
     "A termékkód 12345678-87654321, nem számlaszám.",  # invalid giro checksum
 ])
@@ -167,4 +167,42 @@ def test_round2_positives(engine, text, expected):
     "dr. med. univ.",
 ])
 def test_round2_negatives(engine, text):
+    assert found(engine, text) == set()
+
+
+def test_street_named_after_a_person_is_a_location_not_a_person(engine):
+    hits = found(engine, "A Petőfi Sándor utcában lakik.")
+    assert ("LOCATION", "Petőfi Sándor utcában") in hits
+    assert not any(t == "PERSON" for t, _ in hits)
+
+
+@pytest.mark.parametrize("text, expected", [
+    ("Szia Erika!", ("PERSON", "Erika")),
+    ("Gt.: Farkas Imréné kérte", ("PERSON", "Farkas Imréné")),
+    ("A 18 500 Ft. Barnáéknak szól", ("PERSON", "Barnáéknak")),
+    ("tudnál írni varga leventének", ("PERSON", "varga leventének")),
+    ("június 20-ra. Kertész Dorina tegnap", ("PERSON", "Kertész Dorina")),
+    ("gyógytorna. K. Péternek szól", ("PERSON", "K. Péternek")),
+    ("megbízza a Rácz és Bodnár Ügyvédi Irodát", ("ORGANIZATION", "Rácz és Bodnár Ügyvédi Irodát")),
+    ("Üdv: Gergő (Halmos és Társai)", ("HU_COMPANY", "Halmos és Társai")),
+    ("a Vörösmarty utcai rendelőbe", ("LOCATION", "Vörösmarty utcai")),
+    ("jövő héten Budapestre jön", ("LOCATION", "Budapestre")),
+    ("a Németországba költözik", ("LOCATION", "Németországba")),
+    ("az Egyesült Államokban él", ("LOCATION", "Egyesült Államokban")),
+    ("Pécsett lakik a nővére.", ("LOCATION", "Pécsett")),
+    ("A Bitkert Informatikai Zrt. ajánlata jó, a Bitkerttel szerződünk.", ("HU_COMPANY", "Bitkerttel")),
+])
+def test_round2_lexicon_positives(engine, text, expected):
+    assert expected in found(engine, text)
+
+
+@pytest.mark.parametrize("text", [
+    "a belső Fehér Könyvünk egyik fejezete",
+    "mert ő holnaptól szabin van",
+    "mérlegeljék a koponya-MR szükségességét.",
+    "Hosszú út áll előttünk.",
+    "Hatvan perc múlva indulunk.",
+    "a rózsa és a virág szép",
+])
+def test_round2_lexicon_negatives(engine, text):
     assert found(engine, text) == set()

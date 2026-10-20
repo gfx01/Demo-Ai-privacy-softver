@@ -12,6 +12,19 @@ without installing it.
 Countries: Hungarian country and territory names from Unicode CLDR 46.0.0
 (cldr-json, Unicode License V3), pinned tag + SHA-256.
 
+More surnames: ~6,000 current and historical Hungarian surnames from the
+Magyar Ispell project (GPL 2+/LGPL 2.1+/MPL 1.1+ tri-licence), pinned commit.
+Note from its maintainers: long "ő" is written as short "o" in some entries.
+
+Settlements: 3,857 Hungarian settlements and localities, MIT licence
+(andrasbarabas/hungarian-settlements, 2020; misses ~35 newer settlements).
+More complete lists exist but carry no licence.
+
+Ordinary words: lower-case lemmas of the LibreOffice Hunspell hu_HU
+dictionary (Magyar Ispell 1.9, MPL 2.0 / LGPL 3+), without proper nouns
+(morphology "po:noun_prs"). Used to avoid masking "rózsa", "virág", "kovács"
+when they are not names.
+
 Usage: python fetch_lexicon.py OUTPUT_DIR
 """
 
@@ -54,6 +67,19 @@ CLDR_TERRITORIES = (
     "cldr-json/cldr-localenames-full/main/hu/territories.json",
     "1082a55f3d107cff857dd41e6bc493a191f44021b1b7ad3ff53c9727a08996d2",
 )
+MAGYARISPELL_SURNAMES = (
+    "https://raw.githubusercontent.com/laszlonemeth/magyarispell/455229e26eaf5c9ed5bb7a4456c131fc0985e399/"
+    "szotar/magyar_szemelynevek/tulajdonnev-szemelynev.2",
+    "81e225265cedff180203f6cf3a115b2b7ae96d8b766c00958291dc417d4dbdf6",
+)
+SETTLEMENTS = (
+    "https://raw.githubusercontent.com/andrasbarabas/hungarian-settlements/34ad3f9f9533da95bafac25cb7b4cc49bda24dbd/"
+    "hungarian-settlements.json",
+    "dc1a4b9ab0d2e6a2bf7a0fd47bded76fd8cff0b206e48c0019c29afbac266c7a",
+)
+HUNSPELL_BASE = "https://raw.githubusercontent.com/LibreOffice/dictionaries/67032ee957631908098a72edf48dc81cac27e369/hu_HU/"
+HUNSPELL_DIC = (HUNSPELL_BASE + "hu_HU.dic", "97293d670ad4a3b8e7eebef7e25c6e8e939b914c64b6b4672b2bf416b768f990")
+HUNSPELL_AFF = (HUNSPELL_BASE + "hu_HU.aff", "f3a2748dd535cfde2142ab17d0f7f8e4787b03fb25a60829c69ac8d493db4802")
 # Region codes that are not places (EU, euro area, UN, "unknown", pseudo-locales)
 CLDR_NOT_PLACES = {"EU", "EZ", "UN", "QO", "ZZ", "XA", "XB"}
 
@@ -73,6 +99,42 @@ def countries() -> list[str]:
         for code, name in territories.items()
         if "-alt-" not in code and code.isalpha() and code not in CLDR_NOT_PLACES
     })
+
+
+def extra_surnames() -> list[str]:
+    text = fetch_pinned(*MAGYARISPELL_SURNAMES).decode("utf-8")
+    return sorted({unicodedata.normalize("NFC", w.strip()) for w in text.splitlines()
+                   if w.strip() and w.strip()[0].isupper() and " " not in w.strip()})
+
+
+def settlements() -> list[str]:
+    data = json.loads(fetch_pinned(*SETTLEMENTS))
+    names = set()
+    for entry in data:
+        name = unicodedata.normalize("NFC", entry["name"].strip())
+        if name.startswith("Budapest ") and "kerület" in name:
+            continue  # districts are matched by the address patterns
+        names.add(name)
+    return sorted(names)
+
+
+def common_words() -> list[str]:
+    """Lower-case lemmas of the Hunspell dictionary that are not proper nouns.
+    Entries reference morphology aliases ("AM" lines of the .aff file)."""
+    aff = fetch_pinned(*HUNSPELL_AFF)  # header comments are not UTF-8: parse as bytes
+    dic = fetch_pinned(*HUNSPELL_DIC).decode("utf-8")
+    morphs = [line[3:].decode("utf-8", "replace").strip() for line in aff.split(b"\n") if line.startswith(b"AM ")][1:]
+    words = set()
+    for line in dic.splitlines()[1:]:
+        entry, _, morph = line.partition("\t")
+        word = entry.split("/", 1)[0]
+        morph = morph.strip()
+        if morph.isdigit():
+            morph = morphs[int(morph) - 1] if 0 < int(morph) <= len(morphs) else ""
+        if "noun_prs" in morph or not word or word != word.lower() or not word.isalpha():
+            continue
+        words.add(unicodedata.normalize("NFC", word))
+    return sorted(words)
 
 
 def fetch(url: str, timeout: int = 60) -> bytes:
@@ -147,7 +209,8 @@ def main() -> int:
         meta[f"given_{kind}"] = {**info, "count": len(names)}
     wheel = fetch(FAKER_WHEEL[0])
     faker = faker_lists("hu_HU", wheel)
-    (out / "surnames.txt").write_text("\n".join(faker["last_names"]) + "\n", encoding="utf-8")
+    surnames = sorted(set(faker["last_names"]) | set(extra_surnames()))
+    (out / "surnames.txt").write_text("\n".join(surnames) + "\n", encoding="utf-8")
     # Common foreign given names (only used inside multi-word name runs).
     foreign: set[str] = set()
     for locale in ("en_US", "de_DE", "pl_PL", "sk_SK", "ro_RO"):
@@ -159,10 +222,19 @@ def main() -> int:
             foreign.update(n for n in lists.get(key, []) if n.isalpha() and len(n) >= 3)
     (out / "foreign_given.txt").write_text("\n".join(sorted(foreign)) + "\n", encoding="utf-8")
     meta["foreign_given"] = {"source": "Faker 40.43.0 en_US, de_DE, pl_PL, sk_SK, ro_RO", "count": len(foreign)}
-    meta["surnames"] = {"source": FAKER_WHEEL[0], "sha256": FAKER_WHEEL[1], "count": len(faker["last_names"]),
-                        "licence": "MIT (Faker)"}
+    meta["surnames"] = {"sources": [{"url": FAKER_WHEEL[0], "sha256": FAKER_WHEEL[1], "licence": "MIT (Faker)"},
+                                    {"url": MAGYARISPELL_SURNAMES[0], "sha256": MAGYARISPELL_SURNAMES[1],
+                                     "licence": "GPL-2.0+ / LGPL-2.1+ / MPL-1.1+ (Magyar Ispell)"}],
+                        "count": len(surnames)}
     for kind in ("male", "female"):
         (out / f"common_given_{kind}.txt").write_text("\n".join(faker[f"first_names_{kind}"]) + "\n", encoding="utf-8")
+    places = settlements()
+    (out / "settlements.txt").write_text("\n".join(places) + "\n", encoding="utf-8")
+    meta["settlements"] = {"source": SETTLEMENTS[0], "sha256": SETTLEMENTS[1], "count": len(places), "licence": "MIT"}
+    common = common_words()
+    (out / "common_words.txt").write_text("\n".join(common) + "\n", encoding="utf-8")
+    meta["common_words"] = {"sources": [HUNSPELL_DIC[0], HUNSPELL_AFF[0]], "sha256": [HUNSPELL_DIC[1], HUNSPELL_AFF[1]],
+                            "count": len(common), "licence": "MPL-2.0 / LGPL-3.0+ (Magyar Ispell, LibreOffice)"}
     names = countries()
     (out / "countries.txt").write_text("\n".join(names) + "\n", encoding="utf-8")
     meta["countries"] = {"source": CLDR_TERRITORIES[0], "sha256": CLDR_TERRITORIES[1], "count": len(names),

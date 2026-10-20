@@ -48,7 +48,7 @@ EXONYMS = {
 }
 # Budapest districts ("XI. kerület" is handled by the address patterns) and frequent quarters
 QUARTERS = {
-    "Óbuda", "Újpest", "Kispest", "Pesterzsébet", "Csepel", "Budafok", "Rákospalota", "Zugló", "Angyalföld",
+    "Budapest", "Pest", "Buda", "Óbuda", "Újpest", "Kispest", "Pesterzsébet", "Csepel", "Budafok", "Rákospalota", "Zugló", "Angyalföld",
     "Ferencváros", "Józsefváros", "Erzsébetváros", "Terézváros", "Lipótváros", "Kőbánya", "Rákosmente",
     "Pestszentlőrinc", "Rózsadomb", "Pasarét", "Budagyöngye", "Kelenföld", "Lágymányos", "Csillaghegy",
     "Békásmegyer", "Mátyásföld", "Rákoskeresztúr", "Rákosliget", "Pestszentimre", "Soroksár", "Albertfalva",

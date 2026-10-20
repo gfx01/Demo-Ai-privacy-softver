@@ -61,7 +61,6 @@ PATTERN_RECOGNIZERS = (
     BirthDateRecognizer,
     HuPhoneRecognizer,
     HuAddressRecognizer,
-    HuStreetRecognizer,
     HuCompanyRecognizer,
     HuInstitutionRecognizer,
     MoneyRecognizer,
@@ -77,6 +76,7 @@ def hungarian_recognizers(*, gazetteer: bool = True, lexicon_dir: str | None = N
         IpRecognizer(supported_language="hu"),
         PhoneRecognizer(supported_regions=("HU", "AT", "DE", "SK", "RO", "UK", "US"), supported_language="hu"),
     ]
+    recognizers.append(HuStreetRecognizer(supported_language="hu", lexicon_dir=lexicon_dir))
     if gazetteer:
         recognizers.append(HuNameRecognizer(lexicon_dir=lexicon_dir, supported_language="hu"))
         recognizers.append(HuPlaceRecognizer(lexicon_dir=lexicon_dir, supported_language="hu"))
