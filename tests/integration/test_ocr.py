@@ -60,7 +60,7 @@ def test_chat_image_is_ocrd_and_masked_before_the_provider(gateway, user_key, mo
     assert status == 200, body
     sent = sent_text(mock_provider)
     assert "image_url" not in sent and "base64" not in sent
-    assert "[Csatolt kép szövege (OCR)]" in sent
+    assert "[1. csatolt kép szövege (OCR)]" in sent
     for secret in ("Kovács", "kovacs.peter", "000 1234"):
         assert secret not in sent, sent
     assert "[PERSON_1]" in sent and "[EMAIL_1]" in sent
@@ -77,7 +77,7 @@ def test_chat_pdf_file_part_and_file_name_are_masked(gateway, user_key, mock_pro
     assert status == 200, body
     sent = sent_text(mock_provider)
     assert "Kovács" not in sent and "kovacs.peter" not in sent
-    assert "levele.pdf" in sent and "[Csatolt fájl szövege:" in sent
+    assert "levele" not in sent and "[1. csatolt fájl (pdf) szövege]" in sent
 
 
 def test_remote_image_url_is_refused(gateway, user_key, mock_provider):
@@ -194,3 +194,19 @@ def test_openwebui_signup_stays_off():
     file, otherwise self-registration would reopen after every restart."""
     out = compose("exec", "-T", "openwebui", "sh", "-c", "echo $ENABLE_SIGNUP $DEFAULT_USER_ROLE $ENABLE_PERSISTENT_CONFIG").stdout.split()
     assert out == ["false", "pending", "false"]
+
+
+def test_openwebui_only_through_nginx_and_without_internet(env):
+    import httpx
+
+    port = env.get("OPENWEBUI_PORT", "3000")
+    r = httpx.get(f"http://127.0.0.1:{port}/api/config", timeout=10)
+    assert r.status_code == 200 and r.json()["features"]["enable_signup"] is False
+    probe = (
+        "import urllib.request\n"
+        "try:\n urllib.request.urlopen('https://pypi.org/simple/', timeout=5); print('reachable')\n"
+        "except Exception as e: print('blocked', type(e).__name__)"
+    )
+    out = compose("exec", "-T", "openwebui", "python", "-c", probe).stdout
+    assert out.startswith("blocked"), out
+    assert compose("port", "openwebui", "8080", check=False).stdout.strip() in ("", ":0")

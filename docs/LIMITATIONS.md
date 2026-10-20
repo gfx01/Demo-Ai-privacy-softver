@@ -248,28 +248,47 @@ built-in lists in `hu_places.py`.
   (*Kovacs*), with a wrong letter or split across lines may not be recognised,
   and is then sent unmasked. The only correction applied is õ/ô → ő and
   û/ũ → ű (look-alikes some fonts and models produce).
+* File names are not sent: attachments are labelled by number and extension
+  (*[1. csatolt fájl (pdf) szövege]*), and the gateway replaces the file
+  names Open WebUI writes into `<source name="...">` tags with
+  `attachment.<ext>`. File names typed into the message text itself are
+  masked like any other text (names joined by underscores, as in
+  *Kovacs_Peter*, are usually missed).
 * Layout is lost: tables become tab-separated lines, columns may be merged,
   pictures without text yield nothing. The model does not see the image.
-* PDFs: a page that has a text layer is not OCR'd, so text inside images on
-  such a page is neither read nor sent. Limits per document: 50 pages,
-  25 MB, 40 megapixels per image or page, 180 s (configurable).
+* PDFs: a page that has a text layer of at least 20 characters is not
+  OCR'd, so text inside images on such a page is neither read nor sent.
+* Limits (configurable): Open WebUI uploads up to 25 MB; files and images
+  attached inline to chat requests up to 20 MiB each, 20 per request and
+  200,000 characters of extracted text in total (what the analyzer checks);
+  50 pages or frames, 40 megapixels per image or page, 1,000,000 characters
+  of text and 180 s per document.
 * One document is processed at a time, in a separate worker process. A file
-  that runs over the time limit or crashes the parser gets an error, the
+  that runs over the time limit or crashes the parser gets an error, and the
   worker is killed and restarted; the container is limited to 4 GB of memory
-  (`OCR_MEM_LIMIT`). A long scan therefore delays everyone else's uploads and
-  chat images; there is no per-user OCR quota.
-* DOCX: body text, tables, headers and footers are read; footnotes, comments
-  and text boxes are not (and are therefore not sent either). Other formats
-  (DOC, ODT, PPTX, RTF) are refused.
+  (`OCR_MEM_LIMIT`). At most 8 documents wait (`OCR_MAX_QUEUE`); beyond that
+  the service answers "busy" and the gateway blocks the request. A long scan
+  therefore delays everyone else's uploads and chat images, and one user can
+  keep the service busy by sending slow documents: there is no per-user OCR
+  quota.
+* DOCX: body text, tables, content controls, tracked insertions, text boxes,
+  all headers and footers (first page, even, default), footnotes and
+  endnotes are read. Tracked deletions and comments are left out on purpose
+  (they are not part of the visible document and are not sent).
+* XLSX: cell values of every sheet (formulas as their last saved value).
+* Plain text is accepted only for a closed list of types (text, Markdown,
+  CSV, JSON, XML, YAML, source code) and HTML; other formats, including DOC,
+  ODT, PPTX and RTF (whatever type it is declared as), are refused.
 
 ### Where extracted text is kept
 
 * Open WebUI stores uploaded files and their extracted text **unmasked** in
   its own volume, like the chat history.
 * The gateway keeps OCR results of chat attachments in process memory for at
-  most the mapping TTL (default 300 s, at most 64 attachments), because Open
-  WebUI resends the whole conversation on every turn. The OCR service keeps
-  nothing.
+  most the mapping TTL (default 300 s; expired entries are dropped on the
+  next request, at most 64 attachments), because Open WebUI resends the whole
+  conversation on every turn. On an idle gateway an expired entry stays in
+  memory until the next request arrives. The OCR service keeps nothing.
 
 ### Surya licence (read before enabling `OCR_ENGINE=surya`)
 
@@ -321,9 +340,17 @@ are decoded with Pillow 12.3.0 and PDFs rendered with pdfium (pypdfium2
   the gateway could not reach api.openai.com or pypi.org, the external
   provider entries were removed, and the mock model worked with masking and
   restore. The startup check and the config filter are covered by tests.
-  Open WebUI stays on the `frontend` network, which has internet access
-  (Docker cannot publish ports on internal networks); it runs in offline mode
-  and sends model traffic only to the gateway.
+  Local-only mode holds only while every compose command includes the
+  override file; set `COMPOSE_FILE` in `.env` (README "Local LLM"), otherwise
+  a plain `docker compose up` recreates the gateway in normal mode.
+* Open WebUI, the OCR service, the analyzer and the databases have no
+  internet access in any mode (tested for Open WebUI and the OCR service).
+  Only nginx sits on the `frontend` network, which has internet access
+  because Docker cannot publish ports on internal networks; it forwards only
+  to fixed internal services. An Open WebUI admin can still add model
+  connections in its admin UI (until the next restart), but they can only
+  reach services on Open WebUI's own networks (the gateway and the OCR
+  service).
 * With `ENABLE_PERSISTENT_CONFIG=false`, Open WebUI settings changed in its
   admin UI last only until the next restart; the compose file is the source
   of truth. Self-registration is therefore switched off there

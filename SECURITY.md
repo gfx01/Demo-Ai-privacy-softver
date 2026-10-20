@@ -17,11 +17,18 @@ This is an MVP / demo. Read this before using it with real data.
   `file_data`) are first sent to the internal OCR service and replaced by
   their text, which is then masked; the provider never receives the image or
   file. Files uploaded in Open WebUI go through the same OCR service and
-  reach the gateway as message text.
+  reach the gateway as message text. File names are not sent: attachments
+  are labelled by number and extension, and the file names Open WebUI writes
+  into `<source name="...">` tags are replaced by `attachment.<ext>`.
+* Nested fields are checked against a closed schema: content parts, tool
+  calls, `cache_control`, tool-call ids and function names may not carry
+  extra keys or free text, and parameters such as `reasoning_effort`,
+  `tool_choice`, `stream_options` and `logit_bias` must have the expected
+  shape. Anything else is refused (HTTP 400).
 * **Sent unmasked**: anything detection misses (see Known limits), `stop`
-  sequences, tool/function and schema names, enum and default values,
-  parameter names, and parameters an admin allows through
-  `PRIVACY_HUB_EXTRA_ALLOWED_PARAMS`.
+  sequences, tool/function and schema names, enum, default, `const` and
+  `examples` values of tool and response schemas, parameter names, and
+  parameters an admin allows through `PRIVACY_HUB_EXTRA_ALLOWED_PARAMS`.
 * The placeholder mapping is encrypted (AES-256-GCM, bound to request id and
   organisation), kept in Redis without persistence for at most
   `PRIVACY_HUB_MAPPING_TTL_S` (default 300 s) and deleted after the response
@@ -135,12 +142,17 @@ This is an MVP / demo. Read this before using it with real data.
   hands uploaded bytes to the old image codecs bundled in the Tesseract
   wheel. It does not log file contents, file names or the user headers Open
   WebUI sends.
-* **Networks around the OCR service**: Open WebUI and the gateway reach it on
-  two separate internal networks, so Open WebUI still reaches LiteLLM only
-  through nginx's route allowlist (tested). Docker networks are two-way: a
-  compromised OCR service could reach Open WebUI's and LiteLLM's HTTP ports
-  (both need credentials it does not have), but not the analyzer, Redis or
-  Postgres (tested).
+* **Networks**: Open WebUI is on internal networks only (no internet access,
+  tested) and is published through nginx; it reaches LiteLLM only through
+  nginx's route allowlist (tested). Open WebUI and the gateway reach the OCR
+  service on two separate internal networks. Docker networks are two-way: a
+  compromised OCR service could reach Open WebUI's and LiteLLM's HTTP ports,
+  but not the analyzer, Redis or Postgres (tested). Their authenticated routes
+  need credentials it does not have; LiteLLM's unauthenticated routes reveal
+  its route list and version. Likewise every service that shares a network
+  with LiteLLM (analyzer, mock provider, local model server, Redis,
+  Postgres) can open its port; nginx's allowlist protects only traffic from
+  outside.
 * **Analyzer token** protects the analyzer, which returns the mapping
   (original values) to the gateway. The portal's preview endpoint never
   requests the mapping.
@@ -164,8 +176,11 @@ This is an MVP / demo. Read this before using it with real data.
   backups readable only by admins. Rotate `LITELLM_MASTER_KEY`,
   `PRIVACY_HUB_MAPPING_KEY` and `PRIVACY_HUB_PSEUDONYM_KEY` periodically.
 * If no data may leave the server at all, run a local model in local-only
-  mode (`docker-compose.local-only.yml`): the gateway loses internet access
-  and refuses to start with any model outside the internal network.
+  mode (`docker-compose.local-only.yml`, enabled permanently with
+  `COMPOSE_FILE` in `.env`, see README): the gateway loses internet access
+  and refuses to start with any model outside the internal network. Only
+  nginx keeps internet access (needed to publish ports); it forwards only to
+  fixed internal services.
 * Use strict mode for teams that should not send personal data: it blocks
   any request in which an enabled entity type is detected instead of masking
   it. It is not a guarantee: whatever detection misses still goes out (with

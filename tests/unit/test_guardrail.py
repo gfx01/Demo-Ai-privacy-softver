@@ -315,23 +315,65 @@ async def test_image_is_ocrd_then_masked(env):
     sent = json.dumps(out["messages"], ensure_ascii=False)
     assert "image_url" not in sent and "base64" not in sent
     assert NAME not in sent and EMAIL not in sent
-    assert "[Text of attached image (OCR)]" in sent and "[PERSON_1]" in sent
+    assert "[Text of attached image 1 (OCR)]" in sent and "[PERSON_1]" in sent
     assert calls == [("image/png", "Bearer " + "o" * 32, b"\x89PNG fake image bytes")]
     # the same image in the next turn comes from the cache
     await g.async_pre_call_hook(UAK(), None, image_request({"type": "image_url", "image_url": PNG_URL}), "acompletion")
     assert len(calls) == 1
 
 
-async def test_inline_file_is_extracted_and_its_name_masked(env):
+async def test_inline_file_is_extracted_and_its_name_is_not_sent(env):
+    headers = []
+
     def ocr(request: httpx.Request) -> httpx.Response:
-        assert request.headers["x-filename"] == "John%20Smith%20CV.pdf"
+        headers.append(request.headers.get("x-filename"))
         return httpx.Response(200, json={"page_content": "Tapasztalat: 10 év", "metadata": {}})
 
     g = with_ocr(make_guardrail(env), ocr)
-    part = {"type": "file", "file": {"file_data": PDF_URL, "filename": f"{NAME} CV.pdf"}}
+    part = {"type": "file", "file": {"file_data": PDF_URL, "filename": "Smith_John_CV-final.PDF"}}
     out = await g.async_pre_call_hook(UAK(), None, image_request(part), "acompletion")
     sent = json.dumps(out["messages"], ensure_ascii=False)
-    assert NAME not in sent and "Tapasztalat: 10 év" in sent and "[PERSON_1] CV.pdf" in sent
+    assert "Smith" not in sent and "John" not in sent
+    assert "[Text of attached file 1 (pdf)]" in sent and "Tapasztalat: 10 év" in sent
+    assert headers == ["attachment.pdf"]  # not even the OCR service gets the name
+
+
+async def test_openwebui_source_names_are_replaced(env):
+    g = make_guardrail(env)
+    text = (
+        'Use the context.\n<source id="1" name="Kovacs_Peter_oneletrajz.pdf" resource-type="file" resource-id="abc">'
+        "Önéletrajz szövege</source>\n<source id=\"2\" name=\"jegyzet\">x</source>"
+    )
+    out = await g.async_pre_call_hook(UAK(), None, request(text), "acompletion")
+    sent = json.dumps(out["messages"], ensure_ascii=False)
+    assert "Kovacs" not in sent and "jegyzet" not in sent
+    assert 'name=\\"attachment.pdf\\"' in sent and 'name=\\"attachment\\"' in sent
+    assert "Önéletrajz szövege" in sent
+
+
+async def test_attachment_count_and_text_limits(env):
+    g = with_ocr(make_guardrail(env), lambda r: httpx.Response(200, json={"page_content": "x" * 150_000}))
+    many = [{"type": "image_url", "image_url": {"url": "data:image/png;base64," + base64.b64encode(bytes([i])).decode()}} for i in range(21)]
+    with pytest.raises(HTTPException) as exc:
+        await g.async_pre_call_hook(UAK(), None, image_request(*many), "acompletion")
+    assert exc.value.status_code == 400 and "attachments" in exc.value.detail["message"]
+    two = many[:2]
+    with pytest.raises(HTTPException) as exc:
+        await g.async_pre_call_hook(UAK(), None, image_request(*two), "acompletion")
+    assert exc.value.status_code == 400 and "characters" in exc.value.detail["message"]
+
+
+async def test_ocr_cache_entries_expire(env, monkeypatch):
+    from privacy_hub import attachments
+
+    clock = [1000.0]
+    monkeypatch.setattr(attachments.time, "monotonic", lambda: clock[0])
+    g = with_ocr(make_guardrail(env), lambda r: httpx.Response(200, json={"page_content": "titkos"}))
+    await g.async_pre_call_hook(UAK(), None, image_request({"type": "image_url", "image_url": {"url": PNG_URL}}), "acompletion")
+    assert len(g.ocr._cache) == 1
+    clock[0] += 301  # past the TTL: dropped on the next request, even one without attachments
+    await g.async_pre_call_hook(UAK(), None, request(), "acompletion")
+    assert len(g.ocr._cache) == 0
 
 
 @pytest.mark.parametrize(
@@ -393,3 +435,24 @@ async def test_unexpected_attachment_error_blocks_with_audit(env):
         await g.async_pre_call_hook(UAK(), None, image_request({"type": "image_url", "image_url": {"url": PNG_URL}}), "acompletion")
     assert exc.value.status_code == 503
     assert g.audit.events[-1].error_class == "OcrUnavailable"
+
+
+async def test_text_over_the_analyzer_limit_is_a_client_error(env):
+    g = make_guardrail(env, handler=lambda r: httpx.Response(413, json={"detail": "request too large"}))
+    with pytest.raises(HTTPException) as exc:
+        await g.async_pre_call_hook(UAK(), None, request(), "acompletion")
+    assert exc.value.status_code == 400 and exc.value.detail["error"] == "privacy_hub_too_large"
+
+
+async def test_unexpected_structure_is_blocked_with_audit(env, monkeypatch):
+    from privacy_hub import guardrail as guardrail_module
+
+    def broken(*args, **kwargs):
+        raise RecursionError("deeply nested")
+
+    monkeypatch.setattr(guardrail_module, "collect_definition_slots", broken)
+    g = make_guardrail(env)
+    with pytest.raises(HTTPException) as exc:
+        await g.async_pre_call_hook(UAK(), None, request(), "acompletion")
+    assert exc.value.status_code == 400
+    assert g.audit.events[-1].error_class == "RecursionError"

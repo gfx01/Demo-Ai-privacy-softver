@@ -9,6 +9,7 @@ the raw string would miss) are all collected as ``TextSlot`` objects.
 from __future__ import annotations
 
 import json
+import re
 from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any
@@ -34,6 +35,30 @@ LITELLM_INTERNAL_KEYS = frozenset({
     "litellm_metadata", "metadata", "user_api_key_dict",
 })
 MESSAGE_KEYS = frozenset({"role", "content", "name", "tool_calls", "tool_call_id", "function_call", "cache_control"})
+ROLES = frozenset({"system", "developer", "user", "assistant", "tool", "function"})
+# Nested objects are closed too: an unknown key inside a content part or a
+# tool call would be forwarded without being masked.
+TEXT_PART_KEYS = frozenset({"type", "text", "cache_control"})
+TOOL_CALL_KEYS = frozenset({"id", "type", "function", "index"})
+FUNCTION_KEYS = frozenset({"name", "arguments"})
+CACHE_CONTROL_KEYS = frozenset({"type", "ttl"})
+# Identifiers and function names are sent as they are, so only plain tokens
+# are accepted (provider ids such as call_abc123 / toolu_01...).
+IDENTIFIER = re.compile(r"^[A-Za-z0-9_.:-]{1,128}$")
+
+# Request parameters whose value could carry text are checked for shape.
+ENUM_PARAMS = {
+    "reasoning_effort": frozenset({"none", "minimal", "low", "medium", "high", "xhigh", "default", "disable"}),
+    "verbosity": frozenset({"low", "medium", "high"}),
+    "service_tier": frozenset({"auto", "default", "flex", "scale", "priority"}),
+}
+NUMBER_PARAMS = frozenset({
+    "temperature", "top_p", "n", "max_tokens", "max_completion_tokens", "presence_penalty",
+    "frequency_penalty", "seed", "top_logprobs",
+})
+BOOL_PARAMS = frozenset({"stream", "logprobs", "parallel_tool_calls"})
+STREAM_OPTION_KEYS = frozenset({"include_usage", "include_obfuscation", "continuous_usage_stats"})
+TOOL_CHOICE_STRINGS = frozenset({"auto", "none", "required", "any"})
 
 
 def check_request_params(data: dict, extra_allowed: frozenset[str] = frozenset()) -> None:
@@ -44,6 +69,99 @@ def check_request_params(data: dict, extra_allowed: frozenset[str] = frozenset()
     unknown = sorted(k for k, v in data.items() if k not in known and isinstance(v, (str, list, tuple, dict)))
     if unknown:
         raise UnsupportedContentError(f"request parameter(s) not allowed through the privacy gateway: {', '.join(unknown)}")
+    _check_param_values(data, extra_allowed)
+
+
+def _bad(param: str) -> UnsupportedContentError:
+    return UnsupportedContentError(f"request parameter {param!r} has a value the privacy gateway cannot inspect")
+
+
+def _check_param_values(data: dict, extra_allowed: frozenset[str]) -> None:
+    """Parameters that are not masked must not be able to carry free text."""
+    for key, value in data.items():
+        if key in extra_allowed or value is None:
+            continue
+        if key in ENUM_PARAMS and value not in ENUM_PARAMS[key]:
+            raise _bad(key)
+        if key in NUMBER_PARAMS and (isinstance(value, bool) or not isinstance(value, (int, float))):
+            raise _bad(key)
+        if key in BOOL_PARAMS and not isinstance(value, bool):
+            raise _bad(key)
+        if key == "model" and not isinstance(value, str):
+            raise _bad(key)
+        if key == "stream_options" and not (
+            isinstance(value, dict) and set(value) <= STREAM_OPTION_KEYS and all(isinstance(v, bool) for v in value.values())
+        ):
+            raise _bad(key)
+        if key == "logit_bias" and not (
+            isinstance(value, dict)
+            and all(str(k).isdigit() and isinstance(v, (int, float)) and not isinstance(v, bool) for k, v in value.items())
+        ):
+            raise _bad(key)
+        if key == "tool_choice" and not _valid_tool_choice(value):
+            raise _bad(key)
+
+
+def _valid_tool_choice(value: object) -> bool:
+    if isinstance(value, str):
+        return value in TOOL_CHOICE_STRINGS
+    if not isinstance(value, dict) or not set(value) <= {"type", "function", "name", "disable_parallel_tool_use"}:
+        return False
+    if value.get("type") not in (None, "function", "auto", "any", "tool", "none", "required"):
+        return False
+    fn = value.get("function")
+    if fn is not None and not (isinstance(fn, dict) and set(fn) <= {"name"} and _identifier(fn.get("name"))):
+        return False
+    return value.get("name") is None or _identifier(value.get("name"))
+
+
+def _identifier(value: object) -> bool:
+    return isinstance(value, str) and bool(IDENTIFIER.match(value))
+
+
+def _check_cache_control(value: object, where: str) -> None:
+    if value is None:
+        return
+    if not (
+        isinstance(value, dict)
+        and set(value) <= CACHE_CONTROL_KEYS
+        and value.get("type") == "ephemeral"
+        and value.get("ttl") in (None, "5m", "1h")
+    ):
+        raise UnsupportedContentError(f"{where}.cache_control cannot be inspected")
+
+
+def _check_message_structure(msg: dict, i: int) -> None:
+    """Closed schema for the parts of a message that are not masked."""
+    if msg.get("role") not in ROLES:
+        raise UnsupportedContentError(f"messages[{i}].role is not supported")
+    _check_cache_control(msg.get("cache_control"), f"messages[{i}]")
+    if "tool_call_id" in msg and msg["tool_call_id"] is not None and not _identifier(msg["tool_call_id"]):
+        raise UnsupportedContentError(f"messages[{i}].tool_call_id must be a plain identifier")
+    if msg.get("role") in ("tool", "function") and msg.get("name") is not None and not _identifier(msg["name"]):
+        raise UnsupportedContentError(f"messages[{i}].name must be a plain identifier")
+    calls = msg.get("tool_calls")
+    if calls is not None:
+        if not isinstance(calls, list):
+            raise UnsupportedContentError(f"messages[{i}].tool_calls must be a list")
+        for k, call in enumerate(calls):
+            where = f"messages[{i}].tool_calls[{k}]"
+            if not isinstance(call, dict) or not set(call) <= TOOL_CALL_KEYS:
+                raise UnsupportedContentError(f"{where} has fields that cannot be inspected")
+            if call.get("type") not in (None, "function") or (call.get("id") is not None and not _identifier(call["id"])):
+                raise UnsupportedContentError(f"{where} has an unsupported type or id")
+            _check_function(call.get("function"), where + ".function", required=True)
+    if msg.get("function_call") is not None:
+        _check_function(msg["function_call"], f"messages[{i}].function_call", required=True)
+
+
+def _check_function(fn: object, where: str, required: bool) -> None:
+    if fn is None and not required:
+        return
+    if not isinstance(fn, dict) or not set(fn) <= FUNCTION_KEYS or not _identifier(fn.get("name")):
+        raise UnsupportedContentError(f"{where} must be an object with a plain name and arguments")
+    if fn.get("arguments") is not None and not isinstance(fn["arguments"], (str, dict, list)):
+        raise UnsupportedContentError(f"{where}.arguments cannot be inspected")
 
 
 @dataclass
@@ -159,12 +277,17 @@ def collect_request_slots(messages: list[dict], allow_non_text: bool = False) ->
         unknown = sorted(set(msg) - MESSAGE_KEYS)
         if unknown:
             raise UnsupportedContentError(f"messages[{i}] field(s) cannot be inspected: {', '.join(unknown)}")
+        _check_message_structure(msg, i)
         content = msg.get("content")
         if isinstance(content, str):
             slots.append(_dict_slot(msg, "content", f"messages[{i}].content"))
         elif isinstance(content, list):
             for j, part in enumerate(content):
                 if isinstance(part, dict) and part.get("type") == "text" and isinstance(part.get("text"), str):
+                    extra = sorted(set(part) - TEXT_PART_KEYS)
+                    if extra:
+                        raise UnsupportedContentError(f"messages[{i}].content[{j}] field(s) cannot be inspected: {', '.join(extra)}")
+                    _check_cache_control(part.get("cache_control"), f"messages[{i}].content[{j}]")
                     slots.append(_dict_slot(part, "text", f"messages[{i}].content[{j}].text"))
                 elif isinstance(part, str):
                     def setter(value: str, lst=content, idx=j) -> None:

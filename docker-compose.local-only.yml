@@ -1,14 +1,19 @@
-# Local-only mode: nothing the hub processes may leave the server.
-#   docker compose down
-#   docker compose -f docker-compose.yml -f docker-compose.local-only.yml --profile local-llm up -d
+# Local-only mode: the gateway cannot reach the internet and accepts only
+# models served inside the compose network. Enable it permanently in .env:
+#   PRIVACY_HUB_LOCAL_ONLY=true
+#   COMPOSE_FILE=docker-compose.yml:docker-compose.local-only.yml
+#   COMPOSE_PROFILES=local-llm
+# then: docker compose down && docker compose up -d
+# (Running a later "docker compose ..." command WITHOUT this file would
+# recreate the gateway in normal mode; COMPOSE_FILE in .env prevents that.)
 #
-# * The gateway (LiteLLM) loses internet access: its "egress" network
-#   becomes internal, like every other network of the stack.
+# * The gateway's "egress" network becomes internal, like the networks of
+#   Open WebUI, the OCR service, the analyzer and the databases.
 # * PRIVACY_HUB_LOCAL_ONLY=true: the gateway drops model entries that would
 #   call an external provider and refuses to start if one remains.
-# Open WebUI keeps its published port on the "frontend" network, which is not
-# internal (Docker cannot publish ports on internal networks); it runs with
-# OFFLINE_MODE and sends model traffic only to the gateway.
+# Only nginx stays on the "frontend" network, which is not internal (Docker
+# cannot publish ports on internal networks); it forwards only to fixed
+# internal services.
 services:
   litellm:
     environment:

@@ -15,6 +15,11 @@ class AnalyzerError(RuntimeError):
     this as "do not forward the request" (fail closed)."""
 
 
+class AnalyzerRequestTooLarge(AnalyzerError):
+    """The text is longer than the analyzer accepts (ANALYZER_MAX_TOTAL_CHARS):
+    the client's request, not an outage."""
+
+
 @dataclass
 class MaskResponse:
     masked_texts: list[str]
@@ -58,6 +63,8 @@ class AnalyzerClient:
             resp = await self._client.post("/v1/mask", json=payload)
         except httpx.HTTPError as exc:  # timeouts, connection refused, ...
             raise AnalyzerError(f"analyzer unreachable: {type(exc).__name__}") from exc
+        if resp.status_code == 413:
+            raise AnalyzerRequestTooLarge("text longer than the analyzer accepts")
         if resp.status_code != 200:
             raise AnalyzerError(f"analyzer returned HTTP {resp.status_code}")
         try:

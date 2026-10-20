@@ -28,9 +28,8 @@ Grouped by area; items within an area are not ranked (docs/LIMITATIONS.md shows 
 - [ ] Run the Surya engine end-to-end on a GPU host (surya-vlm profile, pinned weight revision with SHA-256) and the llama.cpp local-llm profile with a real model; neither was run here.
 - [ ] Pick a local LLM with a Hungarian task set (letters, legal and medical summaries, Q&A over documents), human-reviewed; archive the weight licence files with their SHA-256; measure speed on CPU-only and single-GPU servers.
 - [ ] Decide whether a self-hosted model should get unmasked text ("trusted local" mode) or keep masking as defence in depth.
-- [ ] OCR images embedded in PDF pages that also have a text layer; footnotes, comments and text boxes of DOCX; ODT and PPTX.
-- [ ] Rate-limit OCR per user (one slow 50-page scan blocks the service for others; the service processes one document at a time).
-- [ ] Local-only mode: Open WebUI keeps internet access through its published-port network; put a reverse proxy on an internal network in front of it if that matters.
+- [ ] OCR images embedded in PDF pages that also have a text layer; ODT and PPTX.
+- [ ] Per-user OCR quota and fairness (the gateway and Open WebUI would have to pass a user id); more than one worker process; cancel a running extraction when its client disconnects. Today one user can keep the single OCR worker busy with slow documents (the queue is bounded, so requests beyond it are refused rather than piling up).
 
 ## Restoration
 - [ ] Measure restore rates with real models (OpenAI, Anthropic, Gemini) on the gold set (`eval/restore_eval.py` uses a simulated model).

@@ -52,9 +52,10 @@ def html_to_text(html: str) -> str:
 
 
 def tidy(text: str) -> str:
-    """NFC, unified line ends, no trailing spaces, at most one empty line."""
+    """NFC, unified line ends, no trailing spaces, at most one empty line.
+    Linear time: a regex over long whitespace runs would backtrack."""
     text = unicodedata.normalize("NFC", text.replace("\r\n", "\n").replace("\r", "\n"))
-    text = re.sub(r"[ \t]+\n", "\n", text)
+    text = "\n".join(line.rstrip(" \t") for line in text.split("\n"))
     text = re.sub(r"\n{3,}", "\n\n", text)
     return text.strip()
 

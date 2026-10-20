@@ -66,6 +66,9 @@ class Config:
     ocr_token: str = field(default="", repr=False)
     ocr_timeout_s: float = 120.0
     ocr_max_bytes: int = 20 * 1024 * 1024
+    ocr_max_attachments: int = 20
+    # what the analyzer checks per request (ANALYZER_MAX_TOTAL_CHARS)
+    ocr_max_text_chars: int = 200_000
 
     @classmethod
     def from_env(cls) -> "Config":
@@ -100,6 +103,8 @@ class Config:
             ocr_token=os.environ.get("PRIVACY_HUB_OCR_TOKEN", ""),
             ocr_timeout_s=_float("PRIVACY_HUB_OCR_TIMEOUT_S", 120.0),
             ocr_max_bytes=_int("PRIVACY_HUB_OCR_MAX_BYTES", 20 * 1024 * 1024),
+            ocr_max_attachments=_int("PRIVACY_HUB_OCR_MAX_ATTACHMENTS", 20),
+            ocr_max_text_chars=_int("PRIVACY_HUB_OCR_MAX_TEXT_CHARS", 200_000),
         )
         cfg.validate()
         return cfg

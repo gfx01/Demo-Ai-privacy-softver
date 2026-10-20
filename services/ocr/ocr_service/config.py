@@ -38,6 +38,8 @@ class Settings:
     min_text_layer_chars: int = 20
     timeout_s: int = 180
     fix_hu_accents: bool = True
+    max_text_chars: int = 1_000_000
+    max_queue: int = 8
 
     @classmethod
     def from_env(cls) -> "Settings":
@@ -56,6 +58,8 @@ class Settings:
             min_text_layer_chars=_int("OCR_MIN_TEXT_LAYER_CHARS", 20),
             timeout_s=_int("OCR_TIMEOUT_S", 180),
             fix_hu_accents=_bool("OCR_FIX_HU_ACCENTS", True),
+            max_text_chars=_int("OCR_MAX_TEXT_CHARS", 1_000_000),
+            max_queue=_int("OCR_MAX_QUEUE", 8),
         )
         s.validate()
         return s
@@ -81,6 +85,8 @@ class Settings:
                 )
         if not 1 <= self.max_pages <= 1000:
             problems.append("OCR_MAX_PAGES must be between 1 and 1000")
+        if not 1 <= self.max_queue <= 1000:
+            problems.append("OCR_MAX_QUEUE must be between 1 and 1000")
         if not 72 <= self.pdf_dpi <= 600:
             problems.append("OCR_PDF_DPI must be between 72 and 600")
         if problems:

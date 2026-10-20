@@ -7,6 +7,11 @@ internal OCR service and replaced by a text part. That text then goes
 through the same masking as the rest of the message, so the model never
 receives the image or file itself.
 
+File names are not passed on: they often hold a person's name written the
+way file names are (``Kovacs_Peter_CV.pdf``), which the recognizers do not
+catch. Attachments are labelled by number and extension instead, and the
+``name`` attribute of Open WebUI's ``<source>`` tags is replaced the same way.
+
 Fail closed: if the OCR service is unreachable, slow or answers with an
 error, the request is blocked. Remote image URLs and provider file ids are
 refused: the gateway does not fetch URLs (SSRF) and cannot inspect files
@@ -14,8 +19,8 @@ stored at the provider.
 
 Open WebUI resends the whole conversation on every turn, so results are
 kept in process memory, keyed by the SHA-256 of the attachment, for at most
-the mapping TTL. The cache holds unmasked OCR text; it never leaves the
-LiteLLM process.
+the mapping TTL (expired entries are dropped on every request). The cache
+holds unmasked OCR text; it never leaves the LiteLLM process.
 """
 
 from __future__ import annotations
@@ -27,7 +32,6 @@ import re
 import time
 from collections import OrderedDict
 from dataclasses import dataclass
-from urllib.parse import quote
 
 import httpx
 
@@ -35,10 +39,14 @@ from .messages import UnsupportedContentError
 
 # ASCII only: the MIME type becomes an HTTP header of the OCR request.
 DATA_URL = re.compile(r"^data:(?P<mime>[\w.+-]+/[\w.+-]+)?(?:;[\w.+-]+=[^;,]*)*;base64,", re.IGNORECASE | re.ASCII)
+EXTENSION = re.compile(r"\.([A-Za-z0-9]{1,8})$", re.ASCII)
+# Open WebUI 0.12.3 (utils/middleware.py get_source_context) writes uploaded
+# files into the prompt as <source id="1" name="FILE NAME" ...>.
+SOURCE_NAME = re.compile(r'(<source\b[^>]*?\sname=")([^"]*)(")')
 
 LABELS = {
-    "hu": {"image": "[Csatolt kép szövege (OCR)]", "file": "[Csatolt fájl szövege: {name}]", "empty": "(nem található benne szöveg)"},
-    "en": {"image": "[Text of attached image (OCR)]", "file": "[Text of attached file: {name}]", "empty": "(no text found)"},
+    "hu": {"image": "[{n}. csatolt kép szövege (OCR)]", "file": "[{n}. csatolt fájl ({ext}) szövege]", "empty": "(nem található benne szöveg)"},
+    "en": {"image": "[Text of attached image {n} (OCR)]", "file": "[Text of attached file {n} ({ext})]", "empty": "(no text found)"},
 }
 
 
@@ -53,7 +61,23 @@ class _Attachment:
     kind: str  # "image" | "file"
     mime: str
     data: bytes
-    filename: str
+    ext: str  # from the file name, e.g. "pdf"; "" if unknown
+
+
+def extension(filename: object) -> str:
+    m = EXTENSION.search(filename) if isinstance(filename, str) else None
+    return m.group(1).lower() if m else ""
+
+
+def neutralise_source_names(text: str) -> str:
+    """Replace file names in Open WebUI's <source name="..."> attributes by
+    'attachment.<ext>'."""
+
+    def repl(m: re.Match) -> str:
+        ext = extension(m.group(2))
+        return f"{m.group(1)}attachment{'.' + ext if ext else ''}{m.group(3)}"
+
+    return SOURCE_NAME.sub(repl, text) if "<source" in text else text
 
 
 class OcrClient:
@@ -65,6 +89,8 @@ class OcrClient:
         max_bytes: int,
         cache_ttl_s: float,
         cache_entries: int = 64,
+        max_attachments: int = 20,
+        max_text_chars: int = 200_000,
         transport: httpx.AsyncBaseTransport | None = None,
     ) -> None:
         self._client = httpx.AsyncClient(
@@ -76,18 +102,28 @@ class OcrClient:
         self.max_bytes = max_bytes
         self.cache_ttl_s = cache_ttl_s
         self.cache_entries = cache_entries
+        self.max_attachments = max_attachments
+        # The analyzer checks at most this much text per request; more would
+        # be refused there anyway, after the whole text had been built.
+        self.max_text_chars = max_text_chars
         self._cache: OrderedDict[str, tuple[float, str]] = OrderedDict()
 
     async def convert(self, messages: object, language: str) -> int:
         """Replace attachment parts in place with text parts; return how many."""
+        self._purge(time.monotonic())
         attachments = self._find(messages)
+        if len(attachments) > self.max_attachments:
+            raise UnsupportedContentError(f"more than {self.max_attachments} attachments in one request")
         labels = LABELS.get(language, LABELS["en"])
-        for att in attachments:
+        total = 0
+        for n, att in enumerate(attachments, 1):
             text = await self._text(att)
-            if att.kind == "image":
-                header = labels["image"]
-            else:
-                header = labels["file"].format(name=att.filename or att.mime)
+            total += len(text)
+            if total > self.max_text_chars:
+                raise UnsupportedContentError(
+                    f"the attachments contain more than {self.max_text_chars} characters of text, more than the gateway can check"
+                )
+            header = labels[att.kind].format(n=n, ext=att.ext or att.mime)
             att.content[att.index] = {"type": "text", "text": f"{header}\n{text or labels['empty']}"}
         return len(attachments)
 
@@ -112,8 +148,7 @@ class OcrClient:
                     if ref.get("file_id") or not ref.get("file_data"):
                         raise UnsupportedContentError("file parts must carry the file inline (file_data); file ids cannot be inspected")
                     mime, data = self._decode(ref["file_data"], "file")
-                    name = ref.get("filename") if isinstance(ref.get("filename"), str) else ""
-                    found.append(_Attachment(content, j, "file", mime, data, name[:200]))
+                    found.append(_Attachment(content, j, "file", mime, data, extension(ref.get("filename"))))
         return found
 
     def _decode(self, url: object, kind: str) -> tuple[str, bytes]:
@@ -135,6 +170,10 @@ class OcrClient:
             raise UnsupportedContentError("empty attachment")
         return (m.group("mime") or "application/octet-stream").lower(), data
 
+    def _purge(self, now: float) -> None:
+        for key in [k for k, (expires, _) in self._cache.items() if expires <= now]:
+            del self._cache[key]
+
     async def _text(self, att: _Attachment) -> str:
         key = hashlib.sha256(att.mime.encode() + b"\0" + att.data).hexdigest()
         now = time.monotonic()
@@ -143,8 +182,8 @@ class OcrClient:
             self._cache.move_to_end(key)
             return hit[1]
         headers = {"Content-Type": att.mime}
-        if att.filename:
-            headers["X-Filename"] = quote(att.filename)
+        if att.ext:
+            headers["X-Filename"] = f"attachment.{att.ext}"  # the extension helps detect text formats
         try:
             resp = await self._client.put("/process", content=att.data, headers=headers)
         except httpx.HTTPError as exc:
@@ -159,9 +198,10 @@ class OcrClient:
             raise OcrUnavailableError("OCR service returned a malformed response") from exc
         if not isinstance(text, str):
             raise OcrUnavailableError("OCR service returned a malformed response")
-        self._cache[key] = (now + self.cache_ttl_s, text)
-        while len(self._cache) > self.cache_entries:
-            self._cache.popitem(last=False)
+        if len(text) <= self.max_text_chars:  # larger texts are refused by convert anyway
+            self._cache[key] = (now + self.cache_ttl_s, text)
+            while len(self._cache) > self.cache_entries:
+                self._cache.popitem(last=False)
         return text
 
     @staticmethod

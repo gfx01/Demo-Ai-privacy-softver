@@ -1,9 +1,12 @@
 """Turn an uploaded file into plain text.
 
 Supported: PDF (text layer, OCR for pages without one), images (PNG, JPEG,
-TIFF incl. multi-page, WebP, GIF, BMP), DOCX, XLSX, plain text, Markdown,
-CSV, JSON and HTML. Anything else is refused (HTTP 415), never passed on
-unread.
+TIFF incl. multi-page, WebP, GIF, BMP), DOCX, XLSX, and plain-text formats
+(text, Markdown, CSV, JSON, XML, YAML, source code) and HTML. Anything else,
+including RTF, is refused (HTTP 415), never passed on unread.
+
+The extracted text is capped (``OCR_MAX_TEXT_CHARS``) while it is built, so
+a small file that expands to hundreds of megabytes of text is refused.
 """
 
 from __future__ import annotations
@@ -20,13 +23,24 @@ from .engines import OcrEngine
 from .text import fix_hungarian_accents, html_to_text, tidy
 
 IMAGE_FORMATS = ["PNG", "JPEG", "TIFF", "WEBP", "GIF", "BMP"]
-TEXT_TYPES = {"text/plain", "text/markdown", "text/csv", "text/x-markdown", "application/json", "text/tab-separated-values"}
-TEXT_EXTENSIONS = {"txt", "md", "markdown", "csv", "tsv", "json", "log"}
+# Plain-text formats are passed through as they are, so the list is closed:
+# a format with its own markup or escapes (RTF writes "P\'e9ter") would hide
+# names from the recognizers.
+TEXT_TYPES = {
+    "text/plain", "text/markdown", "text/x-markdown", "text/csv", "text/tab-separated-values",
+    "application/json", "text/xml", "application/xml", "text/yaml", "application/yaml",
+    "application/x-yaml", "text/x-python", "text/javascript", "application/javascript", "text/x-log",
+}
+TEXT_EXTENSIONS = {
+    "txt", "md", "markdown", "csv", "tsv", "json", "log", "xml", "yaml", "yml", "ini", "cfg", "toml",
+    "py", "js", "ts", "java", "c", "h", "cpp", "cs", "go", "rs", "sql", "sh",
+}
 HTML_TYPES = {"text/html", "application/xhtml+xml"}
 HTML_EXTENSIONS = {"html", "htm", "xhtml"}
 # Cells read from a spreadsheet; an empty row counts as one, so a sheet with
 # an absurd row index cannot loop for hours.
 MAX_SPREADSHEET_CELLS = 500_000
+W = "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}"
 
 
 class ExtractionError(Exception):
@@ -38,7 +52,11 @@ class UnsupportedTypeError(Exception):
 
 
 class TooLargeError(Exception):
-    """Over a page, pixel or size limit: HTTP 413."""
+    """Over a page, pixel, size or text limit: HTTP 413."""
+
+
+class EngineFailure(Exception):
+    """The OCR engine itself failed (e.g. its model server is down): HTTP 503."""
 
 
 @dataclass
@@ -47,6 +65,20 @@ class Extracted:
     kind: str
     pages: int = 0
     ocr_pages: int = 0
+
+
+class TextBudget:
+    """Counts extracted characters and stops as soon as the limit is passed."""
+
+    def __init__(self, limit: int) -> None:
+        self.limit = limit
+        self.used = 0
+
+    def add(self, text: str) -> str:
+        self.used += len(text)
+        if self.used > self.limit:
+            raise TooLargeError(f"the file contains more than {self.limit} characters of text")
+        return text
 
 
 def sniff(data: bytes, content_type: str, filename: str) -> str:
@@ -76,29 +108,39 @@ def sniff(data: bytes, content_type: str, filename: str) -> str:
         if "xl/workbook.xml" in names:
             return "xlsx"
         raise UnsupportedTypeError("ZIP-based format not supported (only DOCX and XLSX)")
+    if data.lstrip()[:5] == b"{\\rtf":
+        raise UnsupportedTypeError("RTF is not supported; save the document as DOCX or PDF")
     if ctype in HTML_TYPES or ext in HTML_EXTENSIONS:
         return "html"
-    if ctype in TEXT_TYPES or ext in TEXT_EXTENSIONS or ctype.startswith("text/"):
+    if ctype in TEXT_TYPES or ext in TEXT_EXTENSIONS:
         return "text"
     raise UnsupportedTypeError(f"file type not supported: {ctype or 'unknown'}")
 
 
 def extract(data: bytes, content_type: str, filename: str, engine: OcrEngine, settings: Settings) -> Extracted:
     kind = sniff(data, content_type, filename)
-    if kind == "pdf":
-        result = _pdf(data, engine, settings)
-    elif kind == "image":
-        result = _image(data, engine, settings)
-    elif kind == "docx":
-        _check_zip(data, settings)
-        result = Extracted(_docx(data), kind)
-    elif kind == "xlsx":
-        _check_zip(data, settings)
-        result = Extracted(_xlsx(data), kind)
-    elif kind == "html":
-        result = Extracted(html_to_text(_decode(data)), kind)
-    else:
-        result = Extracted(_decode(data), kind)
+    budget = TextBudget(settings.max_text_chars)
+    try:
+        if kind == "pdf":
+            result = _pdf(data, engine, settings, budget)
+        elif kind == "image":
+            result = _image(data, engine, settings, budget)
+        elif kind == "docx":
+            _check_zip(data, settings)
+            result = Extracted(_docx(data, budget), kind)
+        elif kind == "xlsx":
+            _check_zip(data, settings)
+            result = Extracted(_xlsx(data, budget), kind)
+        elif kind == "html":
+            result = Extracted(html_to_text(budget.add(_decode(data))), kind)
+        else:
+            result = Extracted(budget.add(_decode(data)), kind)
+    except (ExtractionError, TooLargeError, UnsupportedTypeError, EngineFailure):
+        raise
+    except Image.DecompressionBombError as exc:
+        raise TooLargeError("image exceeds the pixel limit") from exc
+    except Exception as exc:  # noqa: BLE001 - any other parser failure means the file is unreadable
+        raise ExtractionError(f"the file cannot be read ({type(exc).__name__})") from exc
     result.text = tidy(result.text)
     return result
 
@@ -112,13 +154,16 @@ def _decode(data: bytes) -> str:
         return data.decode("cp1250", errors="replace")  # legacy Hungarian Windows encoding
 
 
-def _ocr(images: list[Image.Image], engine: OcrEngine, settings: Settings, dpi: int) -> list[str]:
-    texts = engine.ocr(images, dpi)
-    return [fix_hungarian_accents(t) if settings.fix_hu_accents else t for t in texts]
+def _ocr(image: Image.Image, engine: OcrEngine, settings: Settings, dpi: int, budget: TextBudget) -> str:
+    try:
+        text = engine.ocr([image], dpi)[0]
+    except Exception as exc:  # noqa: BLE001
+        raise EngineFailure(type(exc).__name__) from exc
+    return budget.add(fix_hungarian_accents(text) if settings.fix_hu_accents else text)
 
 
 # -- PDF ------------------------------------------------------------------------
-def _pdf(data: bytes, engine: OcrEngine, settings: Settings) -> Extracted:
+def _pdf(data: bytes, engine: OcrEngine, settings: Settings, budget: TextBudget) -> Extracted:
     import pypdfium2 as pdfium
 
     try:
@@ -138,7 +183,7 @@ def _pdf(data: bytes, engine: OcrEngine, settings: Settings) -> Extracted:
                 layer = textpage.get_text_bounded()
                 textpage.close()
                 if sum(not c.isspace() for c in layer) >= settings.min_text_layer_chars:
-                    texts.append(layer)
+                    texts.append(budget.add(layer))
                     continue
                 width, height = page.get_size()  # points (1/72 inch)
                 scale = settings.pdf_dpi / 72
@@ -149,7 +194,7 @@ def _pdf(data: bytes, engine: OcrEngine, settings: Settings) -> Extracted:
                 bitmap.close()
             finally:
                 page.close()
-            texts.append(_ocr([image], engine, settings, round(scale * 72))[0])
+            texts.append(_ocr(image, engine, settings, round(scale * 72), budget))
             ocr_pages += 1
         return Extracted("\n\n".join(texts), "pdf", pages=n, ocr_pages=ocr_pages)
     finally:
@@ -157,7 +202,7 @@ def _pdf(data: bytes, engine: OcrEngine, settings: Settings) -> Extracted:
 
 
 # -- images -----------------------------------------------------------------------
-def _image(data: bytes, engine: OcrEngine, settings: Settings) -> Extracted:
+def _image(data: bytes, engine: OcrEngine, settings: Settings, budget: TextBudget) -> Extracted:
     try:
         image = Image.open(io.BytesIO(data), formats=IMAGE_FORMATS)
     except (OSError, Image.DecompressionBombError) as exc:
@@ -165,29 +210,28 @@ def _image(data: bytes, engine: OcrEngine, settings: Settings) -> Extracted:
     if image.width * image.height > settings.max_pixels:
         raise TooLargeError(f"image has {image.width}x{image.height} pixels; the limit is {settings.max_pixels}")
     dpi = _dpi(image.info.get("dpi"))
+    # Count frames by seeking at most max_pages+1 times: Pillow's n_frames
+    # walks every frame of a TIFF, quadratically.
+    frames = 0
+    for i in range(settings.max_pages + 1):
+        try:
+            image.seek(i)
+        except EOFError:
+            break
+        frames = i + 1
+    if frames > settings.max_pages:
+        raise TooLargeError(f"image has more than {settings.max_pages} frames")
     texts: list[str] = []
     # One frame at a time: a multi-page TIFF or GIF is never held in memory
     # as a whole.
-    try:
-        frames = getattr(image, "n_frames", 1)
-    except (OSError, ValueError) as exc:
-        raise ExtractionError("image cannot be decoded") from exc
-    if frames > settings.max_pages:
-        raise TooLargeError(f"image has {frames} frames; the limit is {settings.max_pages}")
     for i in range(frames):
-        try:
-            image.seek(i)
-        except (EOFError, OSError, ValueError) as exc:
-            raise ExtractionError("image cannot be decoded") from exc
+        image.seek(i)
         if image.width * image.height > settings.max_pixels:
             raise TooLargeError(f"image frame exceeds {settings.max_pixels} pixels")
-        try:
-            frame = ImageOps.exif_transpose(image.convert("RGB"))
-        except (OSError, ValueError, Image.DecompressionBombError) as exc:
-            raise ExtractionError("image cannot be decoded") from exc
-        texts += _ocr([frame], engine, settings, dpi)
+        frame = ImageOps.exif_transpose(image.convert("RGB"))
+        texts.append(_ocr(frame, engine, settings, dpi, budget))
         del frame
-    return Extracted("\n\n".join(texts), "image", pages=len(texts), ocr_pages=len(texts))
+    return Extracted("\n\n".join(texts), "image", pages=frames, ocr_pages=frames)
 
 
 def _dpi(value) -> int:
@@ -210,59 +254,120 @@ def _check_zip(data: bytes, settings: Settings) -> None:
         raise TooLargeError("document expands beyond the size limit")
 
 
-def _docx(data: bytes) -> str:
+def _docx(data: bytes, budget: TextBudget) -> str:
+    """Visible text of a Word document in reading order: every header (first
+    page, even, default), the body, every footer, then footnotes and
+    endnotes. Includes tables, content controls, tracked insertions and text
+    boxes. Leaves out tracked deletions and comments, which are not part of
+    the visible document."""
     import docx
-    from docx.table import Table
+    from docx.opc.constants import RELATIONSHIP_TYPE as RT
+    from docx.oxml import parse_xml
 
-    try:
-        document = docx.Document(io.BytesIO(data))
-    except Exception as exc:  # noqa: BLE001 - python-docx raises various types
-        raise ExtractionError("DOCX cannot be read") from exc
+    document = docx.Document(io.BytesIO(data))
+    parts_by_type: dict[str, list] = {RT.HEADER: [], RT.FOOTER: [], RT.FOOTNOTES: [], RT.ENDNOTES: []}
+    for rel in document.part.rels.values():
+        if rel.reltype in parts_by_type and not rel.is_external:
+            parts_by_type[rel.reltype].append(rel.target_part)
+
+    def part_root(part):
+        element = getattr(part, "element", None)
+        return element if element is not None else parse_xml(part.blob)
+
+    blocks: list[str] = []
+    seen: set[str] = set()
+
+    def add_once(texts: list[str]) -> None:
+        text = "\n".join(t for t in texts if t.strip())
+        if text and text not in seen:  # a header repeated in every section is read once
+            seen.add(text)
+            blocks.append(budget.add(text))
+
+    for part in parts_by_type[RT.HEADER]:
+        add_once(_block_texts(part_root(part)))
+    blocks.extend(budget.add(t) for t in _block_texts(document.element.body))
+    for part in parts_by_type[RT.FOOTER]:
+        add_once(_block_texts(part_root(part)))
+    for reltype in (RT.FOOTNOTES, RT.ENDNOTES):
+        for part in parts_by_type[reltype]:
+            for note in part_root(part).iterchildren():
+                # ids -1 and 0 are the separator lines Word adds itself
+                if note.get(W + "id") not in ("-1", "0"):
+                    add_once(_block_texts(note))
+    return "\n".join(blocks)
+
+
+def _block_texts(element) -> list[str]:
+    """Paragraphs and tables under a body, header, footer, note or cell."""
+    out: list[str] = []
+    for child in element.iterchildren():
+        if child.tag == W + "p":
+            out.append(_paragraph_text(child))
+        elif child.tag == W + "tbl":
+            out.append(_table_text(child))
+        elif child.tag in (W + "sdt", W + "customXml", W + "ins"):
+            content = child.find(W + "sdtContent") if child.tag == W + "sdt" else child
+            if content is not None:
+                out.extend(_block_texts(content))
+    return out
+
+
+def _paragraph_text(p) -> str:
+    """Text of a paragraph including runs in hyperlinks, content controls,
+    tracked insertions and text boxes; w:delText (deletions) and field codes
+    are different elements and are skipped."""
     parts: list[str] = []
-    for section in document.sections:
-        parts += [p.text for p in section.header.paragraphs if p.text.strip()]
-    for block in document.iter_inner_content():
-        if isinstance(block, Table):
-            parts.append(_docx_table(block))
-        else:
-            parts.append(block.text)
-    for section in document.sections:
-        parts += [p.text for p in section.footer.paragraphs if p.text.strip()]
-    return "\n".join(parts)
+    for el in p.iter():
+        if el.tag == W + "t":
+            parts.append(el.text or "")
+        elif el.tag == W + "tab":
+            parts.append("\t")
+        elif el.tag in (W + "br", W + "cr"):
+            parts.append("\n")
+        elif el.tag == W + "p" and el is not p:  # paragraph inside a text box
+            parts.append("\n")
+    return "".join(parts)
 
 
-def _docx_table(table) -> str:
+def _children(element, tag: str):
+    """Direct children with this tag, looking through content controls that
+    wrap table rows or cells."""
+    for child in element.iterchildren():
+        if child.tag == tag:
+            yield child
+        elif child.tag == W + "sdt":
+            content = child.find(W + "sdtContent")
+            if content is not None:
+                yield from _children(content, tag)
+
+
+def _table_text(tbl) -> str:
     rows = []
-    for row in table.rows:
-        cells, seen = [], set()
-        for cell in row.cells:
-            if id(cell._tc) in seen:  # merged cells are repeated by python-docx
-                continue
-            seen.add(id(cell._tc))
-            cells.append(cell.text.replace("\n", " "))
+    for tr in _children(tbl, W + "tr"):
+        cells = [" ".join(t for t in _block_texts(tc) if t).replace("\n", " ") for tc in _children(tr, W + "tc")]
         rows.append("\t".join(cells))
     return "\n".join(rows)
 
 
-def _xlsx(data: bytes) -> str:
+def _xlsx(data: bytes, budget: TextBudget) -> str:
     import openpyxl
 
-    try:
-        workbook = openpyxl.load_workbook(io.BytesIO(data), read_only=True, data_only=True)
-    except Exception as exc:  # noqa: BLE001
-        raise ExtractionError("XLSX cannot be read") from exc
+    workbook = openpyxl.load_workbook(io.BytesIO(data), read_only=True, data_only=True)
     parts: list[str] = []
     cells = 0
     try:
         for sheet in workbook.worksheets:
-            parts.append(f"# {sheet.title}")
+            # read-only mode trusts the sheet's <dimension>, which some
+            # exporters write wrongly; Excel itself ignores it
+            sheet.reset_dimensions()
+            parts.append(budget.add(f"# {sheet.title}"))
             for row in sheet.iter_rows(values_only=True):
                 cells += max(len(row), 1)
                 if cells > MAX_SPREADSHEET_CELLS:
                     raise TooLargeError(f"spreadsheet has more than {MAX_SPREADSHEET_CELLS} cells")
                 values = ["" if v is None else str(v) for v in row]
                 if any(values):
-                    parts.append("\t".join(values).rstrip("\t"))
+                    parts.append(budget.add("\t".join(values).rstrip("\t")))
     finally:
         workbook.close()
     return "\n".join(parts)

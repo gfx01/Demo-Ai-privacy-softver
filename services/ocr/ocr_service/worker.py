@@ -11,12 +11,15 @@ a fresh one started, and the slot is only freed once the old one is gone.
 from __future__ import annotations
 
 import importlib
+import logging
 import multiprocessing
+import threading
 from typing import Any
 
 from .config import Settings
 from .extract import ExtractionError, Extracted, TooLargeError, UnsupportedTypeError, extract
 
+log = logging.getLogger("ocr_service")
 EXPECTED_ERRORS = {cls.__name__: cls for cls in (ExtractionError, TooLargeError, UnsupportedTypeError)}
 DEFAULT_FACTORY = "ocr_service.engines:make_engine"
 STARTUP_TIMEOUT_S = 300
@@ -64,6 +67,10 @@ class ExtractionWorker:
         self._proc: Any = None
         self._conn: Any = None
         self.engine_name = ""
+        # The pipe carries one request and one reply at a time; the HTTP layer
+        # serialises calls too, but a second caller must never read the
+        # reply meant for the first (one user's document text for another).
+        self._lock = threading.Lock()
         self._start()
 
     def _start(self) -> None:
@@ -73,6 +80,7 @@ class ExtractionWorker:
         child.close()
         if not parent.poll(STARTUP_TIMEOUT_S):
             proc.kill()
+            proc.join(10)
             raise RuntimeError("OCR worker did not start in time")
         try:
             status, detail = parent.recv()
@@ -80,6 +88,7 @@ class ExtractionWorker:
             raise RuntimeError("OCR worker exited during start-up") from exc
         if status != "ready":
             proc.join(5)
+            log.error("OCR engine could not be initialised: %s", detail)
             raise RuntimeError(f"OCR engine could not be initialised: {detail}")
         self._proc, self._conn, self.engine_name = proc, parent, detail
 
@@ -94,8 +103,17 @@ class ExtractionWorker:
     def alive(self) -> bool:
         return self._proc is not None and self._proc.is_alive()
 
+    def ensure_running(self) -> None:
+        with self._lock:
+            if not self.alive():
+                self._restart()
+
     def run(self, data: bytes, content_type: str, filename: str, timeout_s: float) -> Extracted:
-        """Blocking; the caller serialises calls (one extraction at a time)."""
+        """Blocking; one extraction at a time."""
+        with self._lock:
+            return self._run(data, content_type, filename, timeout_s)
+
+    def _run(self, data: bytes, content_type: str, filename: str, timeout_s: float) -> Extracted:
         if not self.alive():
             self._restart()
         try:

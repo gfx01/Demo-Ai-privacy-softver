@@ -45,8 +45,9 @@ toldalékkal együtt.
 * **Előnézet:** a chatben küldés előtt megnézhető, pontosan mi megy ki.
 * **Dokumentumok és képek:** a feltöltött PDF, Word, Excel és kép szövegét
   egy belső OCR-szolgáltatás olvassa ki, és ez is a maszkolón megy át.
-* **Saját szerveren futó modell:** egy helyi nyelvi modellel és a
-  „local-only” móddal semmi nem hagyja el a szervert.
+* **Saját szerveren futó modell:** helyi nyelvi modellel és „local-only”
+  módban a gateway, az Open WebUI és a többi szolgáltatás sem éri el az
+  internetet (csak az nginx, amely a portokat publikálja).
 
 ### Gyorsindítás (kb. 10 perc)
 
@@ -117,6 +118,9 @@ szöveg:
   szöveggé és maszkolja; a modell csak a maszkolt szöveget kapja, a képet
   nem. Ha az OCR nem elérhető, a kérés nem megy ki (fail closed). Internetes
   kép-URL-t nem tölt le.
+* **Fájlnevek:** a fájlnév gyakran nevet tartalmaz (`Kovacs_Peter_CV.pdf`),
+  ezért nem kerül a modellhez: a csatolmányok sorszámot és kiterjesztést
+  kapnak, az Open WebUI forrásneveit a gateway `attachment.pdf`-re cseréli.
 
 | `OCR_ENGINE` | licenc | hardver | állapot |
 |---|---|---|---|
@@ -137,23 +141,29 @@ A magyar OCR pontosságát valódi szkennelt dokumentumokon **nem mértük**. Ha
 az OCR elront egy nevet (pl. ékezet nélkül olvassa), a maszkoló is
 kihagyhatja.
 
-### Saját szerveren futó nyelvi modell (semmi nem megy ki)
+### Saját szerveren futó nyelvi modell („local-only” mód)
 
-1. Tegyen egy GGUF formátumú modellfájlt a `models/llm/` mappába, és írja be
-   a nevét a `.env`-be (`LOCAL_LLM_GGUF=...`), valamint:
-   `PROVIDER_MODELS=local-llm`.
-2. Indítás internet nélküli („local-only”) módban:
+1. Tegyen egy GGUF formátumú modellfájlt a `models/llm/` mappába.
+2. Állítsa be a `.env`-ben (a `COMPOSE_FILE` és `COMPOSE_PROFILES` sor miatt minden
+   későbbi `docker compose` parancs is ebben a módban marad):
 
 ```sh
-docker compose down
-docker compose -f docker-compose.yml -f docker-compose.local-only.yml --profile local-llm up -d
-docker compose up -d bootstrap
+LOCAL_LLM_GGUF=a-modell-fajl-neve.gguf
+PROVIDER_MODELS=local-llm
+PRIVACY_HUB_LOCAL_ONLY=true
+COMPOSE_FILE=docker-compose.yml:docker-compose.local-only.yml
+COMPOSE_PROFILES=local-llm
 ```
 
-Ebben a módban a gateway nem éri el az internetet, a külső szolgáltatók
-modelljeit kiveszi a beállításokból, és el sem indul, ha valamelyik modell a
-belső hálózaton kívülre mutatna. A maszkolás a helyi modellnél is
-bekapcsolva marad.
+3. Újraindítás: `docker compose down && docker compose up -d`.
+
+Ebben a módban a gateway (LiteLLM) sem éri el az internetet, a külső
+szolgáltatók modelljeit kiveszi a beállításokból, és el sem indul, ha
+valamelyik modell a belső hálózaton kívülre mutatna. Az Open WebUI, az OCR,
+az analyzer és az adatbázisok minden módban csak belső hálózaton vannak.
+Internetet egyedül az nginx ér el, mert a Docker csak ilyen hálózaton tud
+portot publikálni; az nginx csak rögzített belső szolgáltatásokhoz továbbít.
+A maszkolás a helyi modellnél is bekapcsolva marad.
 
 A modellszerver a llama.cpp (MIT licenc, CPU-n és GPU-n is fut). Konkrét
 modellt nem ajánlunk, mert a legújabb nyílt modellekről nem találtunk magyar
@@ -203,8 +213,9 @@ restored, including Hungarian case endings.
 * **Preview**: the built-in chat can show exactly what will be sent.
 * **Documents and images**: text of uploaded PDFs, Word and Excel files and
   images is read by an internal OCR service and masked like typed text.
-* **Your own model**: with a self-hosted LLM and local-only mode nothing
-  leaves the server.
+* **Your own model**: with a self-hosted LLM in local-only mode, neither the
+  gateway nor Open WebUI nor any other service can reach the internet (only
+  nginx, which publishes the ports).
 
 ### Quickstart (about 10 minutes)
 
@@ -270,7 +281,10 @@ uploaded PDF, DOCX, XLSX, text and image files. Open WebUI sends uploads to it
 request, where the gateway masks it. Images and files attached inline to chat
 requests (Open WebUI chat images, API clients) are converted to text by the
 gateway itself and masked; the model never receives the image. If OCR is
-unavailable, such requests are blocked; remote image URLs are refused.
+unavailable, such requests are blocked; remote image URLs are refused. File
+names are not passed on (they often contain a person's name, e.g.
+`Kovacs_Peter_CV.pdf`): attachments are labelled by number and extension, and
+the gateway replaces the file names in Open WebUI's `<source>` tags.
 
 | `OCR_ENGINE` | licence | hardware | status |
 |---|---|---|---|
@@ -288,18 +302,27 @@ name can make the masking miss it.
 
 ### Local LLM and local-only mode
 
-Put a GGUF model file into `models/llm/`, set `LOCAL_LLM_GGUF` and
-`PROVIDER_MODELS=local-llm` in `.env`, then:
+Put a GGUF model file into `models/llm/` and set in `.env` (with
+`COMPOSE_FILE` and `COMPOSE_PROFILES` there, every later `docker compose`
+command stays in this mode):
 
 ```sh
-docker compose down
-docker compose -f docker-compose.yml -f docker-compose.local-only.yml --profile local-llm up -d
-docker compose up -d bootstrap
+LOCAL_LLM_GGUF=your-model-file.gguf
+PROVIDER_MODELS=local-llm
+PRIVACY_HUB_LOCAL_ONLY=true
+COMPOSE_FILE=docker-compose.yml:docker-compose.local-only.yml
+COMPOSE_PROFILES=local-llm
 ```
 
-In local-only mode the gateway has no internet access, drops the external
-provider entries from its configuration and refuses to start if any model
-points outside the internal network. Masking stays on for the local model.
+then restart: `docker compose down && docker compose up -d`.
+
+In local-only mode the gateway (LiteLLM) has no internet access either, drops
+the external provider entries from its configuration and refuses to start if
+any model points outside the internal network. Open WebUI, the OCR service,
+the analyzer and the databases are on internal networks in every mode. Only
+nginx keeps internet access, because Docker publishes ports only on such a
+network; it forwards only to fixed internal services. Masking stays on for
+the local model.
 The model server is llama.cpp (MIT, CPU or GPU). No model is recommended: we
 found no Hungarian benchmark of the newest open models, so test candidates on
 your own Hungarian tasks first (licence-wise: Qwen3, Apache-2.0 per Qwen's
@@ -350,12 +373,12 @@ See [docs/EVALUATION.md](docs/EVALUATION.md).
   model list reach LiteLLM).
 * `services/ocr/`: text extraction (PDF text layer, OCR of scans and images,
   DOCX, XLSX); Tesseract by default, Surya optional.
-* The analyzer, OCR service, Redis, Postgres, portal, mock provider and the
-  optional local model servers sit only on `internal: true` networks (no
-  internet). LiteLLM has egress to reach the
-  providers; nginx and Open WebUI are on the `frontend` network, which Docker
-  cannot make internal because it publishes ports (Open WebUI runs in offline
-  mode). Ports are bound to `127.0.0.1`.
+* Open WebUI, the analyzer, OCR service, Redis, Postgres, portal, mock
+  provider and the optional local model servers sit only on `internal: true`
+  networks (no internet). LiteLLM has egress to reach the providers (not in
+  local-only mode). Only nginx is on the `frontend` network, which Docker
+  cannot make internal because it publishes ports; it serves the API on 8080
+  and Open WebUI on 3000. Ports are bound to `127.0.0.1`.
 
 ## Configuration
 
@@ -371,9 +394,10 @@ committed); see [.env.example](.env.example). Important settings:
 | `PROVIDER_MODELS` | empty | provider model wildcards users may call; `local-llm` for the self-hosted model |
 | `OCR_ENGINE` | `tesseract` | `tesseract` or `surya` (needs `OCR_WITH_SURYA=1`, `OCR_SURYA_LICENSE_ACCEPTED=true`, `SURYA_INFERENCE_URL`, a GPU and a weights licence) |
 | `OCR_MAX_PAGES`, `OCR_TIMEOUT_S`, `OCR_MEM_LIMIT` | `50`, `180`, `4g` | per-document limits and memory limit of the OCR service |
-| `OPENWEBUI_ENABLE_SIGNUP` | `false` | Open WebUI self-registration (the first admin account can always be created; Open WebUI settings come from the compose file, not its admin UI) |
+| `OCR_MAX_QUEUE` | `8` | documents waiting for the OCR service before it answers "busy" |
+| `OPENWEBUI_ENABLE_SIGNUP` | `false` | Open WebUI self-registration (the first admin account can always be created; changes made in Open WebUI's admin UI last until the next restart) |
 | `LOCAL_LLM_GGUF`, `LOCAL_LLM_CTX` | `model.gguf`, `8192` | model file in `LOCAL_LLM_MODEL_DIR` and context size of the llama.cpp server |
-| `PRIVACY_HUB_LOCAL_ONLY` | `false` | refuse every model outside the compose network; use with `docker-compose.local-only.yml`, which also cuts internet access |
+| `PRIVACY_HUB_LOCAL_ONLY` | `false` | refuse every model outside the compose network; use with `docker-compose.local-only.yml` (set `COMPOSE_FILE`, see "Local LLM"), which also cuts the gateway's internet access |
 
 Organisation settings (mode, strategy, language, masked types) are edited in
 the admin portal.
@@ -388,7 +412,7 @@ make test-integration   # against the running stack: E2E, fail-closed, OCR, audi
 make eval               # detection + restore evaluation -> docs/EVALUATION.md
 ```
 
-Last run: 228 unit, 101 analyzer, 24 OCR and 59 integration tests passed. The
+Last run: 262 unit, 101 analyzer, 32 OCR and 60 integration tests passed. The
 integration tests stop and pause services to prove fail-closed behaviour. They
 check that the mock provider receives nothing, and that a full Postgres dump,
 Redis and all container logs contain no raw test PII.

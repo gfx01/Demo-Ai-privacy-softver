@@ -92,6 +92,7 @@ services:
     # Untrusted files are parsed here; an extraction that runs out of memory
     # is killed and restarted without affecting the other services.
     mem_limit: ${OCR_MEM_LIMIT:-4g}
+    memswap_limit: ${OCR_MEM_LIMIT:-4g}
     networks: [ocr-ui, ocr-gateway, ocr-model]
 
   mock-llm:
@@ -131,7 +132,8 @@ services:
       # Chat images and files are turned into text here, then masked.
       PRIVACY_HUB_OCR_URL: http://ocr:8000
       PRIVACY_HUB_OCR_TOKEN: ${OCR_API_KEY}
-      PRIVACY_HUB_OCR_TIMEOUT_S: ${OCR_TIMEOUT_S:-180}
+      # longer than the OCR service's own limit, which may also queue requests
+      PRIVACY_HUB_OCR_TIMEOUT_S: ${PRIVACY_HUB_OCR_TIMEOUT_S:-240}
       LOCAL_LLM_API_KEY: ${LOCAL_LLM_API_KEY:?run scripts/init-env.sh --add-missing}
       # true: refuse every model outside the compose network (see
       # docker-compose.local-only.yml, which also cuts internet access)
@@ -185,6 +187,8 @@ services:
     image: nginx:1.30.6-alpine
     ports:
       - "127.0.0.1:${GATEWAY_PORT:-8080}:8080"
+      # Open WebUI is reached through nginx only (it has no published port)
+      - "127.0.0.1:${OPENWEBUI_PORT:-3000}:3000"
     volumes:
       - ./services/gateway/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./services/gateway/llm_proxy.conf:/etc/nginx/llm_proxy.conf:ro
@@ -194,13 +198,11 @@ services:
       # nginx resolves upstreams at start: restart it when they are recreated
       litellm: { condition: service_healthy, restart: true }
       portal: { condition: service_healthy, restart: true }
-    networks: [internal, frontend]
+    networks: [internal, frontend, webui]
 
   openwebui:
     <<: *defaults
     image: openwebui/open-webui:0.12.3-slim
-    ports:
-      - "127.0.0.1:${OPENWEBUI_PORT:-3000}:8080"
     environment:
       OPENAI_API_BASE_URL: http://gateway:8080/v1
       OPENAI_API_KEY: ${OPENWEBUI_LITELLM_KEY}
@@ -242,7 +244,8 @@ services:
       gateway: { condition: service_started }
       ocr: { condition: service_healthy }
       bootstrap: { condition: service_completed_successfully }
-    networks: [frontend, ocr-ui]
+    # internal networks only: no internet access, no published port
+    networks: [webui, ocr-ui]
 
   # --- optional: self-hosted LLM (docker compose --profile local-llm up -d) --
   # llama.cpp server (MIT). Put a GGUF file into LOCAL_LLM_MODEL_DIR and set
@@ -318,5 +321,7 @@ networks:
   ocr-model: { internal: true }
   # LiteLLM only: reach real LLM providers.
   egress: {}
-  # Published ports (gateway, Open WebUI).
+  # nginx <-> Open WebUI.
+  webui: { internal: true }
+  # Published ports: nginx only (gateway API and Open WebUI).
   frontend: {}

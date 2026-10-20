@@ -310,7 +310,7 @@ def test_process_contract(make_client):
     assert r.status_code == 200
     body = r.json()
     assert body["page_content"] == "Kép szövege"
-    assert body["metadata"] == {"source": "privacy-hub-ocr", "engine": "fake", "kind": "image", "pages": 1, "ocr_pages": 1}
+    assert body["metadata"] == {"extractor": "privacy-hub-ocr", "engine": "fake", "kind": "image", "pages": 1, "ocr_pages": 1}
     assert "Kov" not in r.text  # the file name is not echoed back
 
 
@@ -400,3 +400,140 @@ def test_xlsx_with_absurd_row_index_stops_quickly():
     with pytest.raises(TooLargeError):
         extract(out.getvalue(), "", "bomba.xlsx", FakeEngine(), settings())
     assert time.monotonic() - started < 20
+
+
+# -- second review round ------------------------------------------------------------------------
+def test_rtf_and_unlisted_text_types_are_refused():
+    rtf = b"{\\rtf1\\ansi P\\'e9ter Kov\\'e1cs}"
+    for ctype in ("text/rtf", "application/rtf", "text/plain"):
+        with pytest.raises(UnsupportedTypeError):
+            extract(rtf, ctype, "level.rtf", FakeEngine(), settings())
+    with pytest.raises(UnsupportedTypeError):
+        sniff(b"hello", "text/x-something", "x.unknown")
+    assert sniff(b"print(1)", "", "script.py") == "text"
+    assert sniff(b"<a>1</a>", "application/xml", "") == "text"
+
+
+def test_tidy_is_linear_on_long_whitespace_runs():
+    import time
+
+    started = time.monotonic()
+    out = extract(("a" + " " * 500_000 + "b").encode(), "text/plain", "", FakeEngine(), settings())
+    assert out.text.startswith("a ") and out.text.endswith("b")
+    assert time.monotonic() - started < 5
+
+
+def test_text_budget_stops_expanding_documents():
+    openpyxl = pytest.importorskip("openpyxl")
+    wb = openpyxl.Workbook()
+    big = "x" * 10_000
+    for r in range(1, 40):
+        wb.active.cell(row=r, column=1, value=big)
+    buf = io.BytesIO()
+    wb.save(buf)
+    with pytest.raises(TooLargeError):
+        extract(buf.getvalue(), "", "a.xlsx", FakeEngine(), settings(max_text_chars=200_000))
+    assert extract(buf.getvalue(), "", "a.xlsx", FakeEngine(), settings(max_text_chars=500_000)).kind == "xlsx"
+
+
+def test_xlsx_wrong_dimension_does_not_hide_rows():
+    openpyxl = pytest.importorskip("openpyxl")
+    wb = openpyxl.Workbook()
+    for row in (["Név", "Város"], ["Tóth Ilona", "Pécs"], ["Kis Éva", "Győr"]):
+        wb.active.append(row)
+    buf = io.BytesIO()
+    wb.save(buf)
+    src = zipfile.ZipFile(io.BytesIO(buf.getvalue()))
+    out = io.BytesIO()
+    with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as dst:
+        for item in src.infolist():
+            data = src.read(item.filename)
+            if item.filename == "xl/worksheets/sheet1.xml":
+                data = data.replace(b'<dimension ref="A1:B3"/>', b'<dimension ref="A1"/>')
+                assert b'<dimension ref="A1"/>' in data
+            dst.writestr(item, data)
+    text = extract(out.getvalue(), "", "a.xlsx", FakeEngine(), settings()).text
+    assert "Kis Éva\tGyőr" in text
+
+
+def _docx_with_xml(body_xml: str, footnote: str | None = None) -> bytes:
+    docx = pytest.importorskip("docx")
+    document = docx.Document()
+    section = document.sections[0]
+    section.different_first_page_header_footer = True
+    section.first_page_header.paragraphs[0].text = "Első oldali fejléc: Dr. Szabó Anna"
+    section.header.paragraphs[0].text = "Iktatószám: 7/2026"
+    document.add_paragraph("PLACEHOLDER")
+    buf = io.BytesIO()
+    document.save(buf)
+    src = zipfile.ZipFile(io.BytesIO(buf.getvalue()))
+    out = io.BytesIO()
+    ns = 'xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"'
+    with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as dst:
+        for item in src.infolist():
+            data = src.read(item.filename)
+            if item.filename == "word/document.xml":
+                start = data.index(b"<w:p>", data.index(b"<w:body>")) if b"<w:p>" in data else data.index(b"<w:p ")
+                end = data.index(b"</w:p>", start) + len(b"</w:p>")
+                data = data[:start] + body_xml.encode() + data[end:]
+            if footnote and item.filename == "word/_rels/document.xml.rels":
+                data = data.replace(b"</Relationships>", b'<Relationship Id="rIdFn" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/footnotes" Target="footnotes.xml"/></Relationships>')
+            if footnote and item.filename == "[Content_Types].xml":
+                data = data.replace(b"</Types>", b'<Override PartName="/word/footnotes.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footnotes+xml"/></Types>')
+            dst.writestr(item, data)
+        if footnote:
+            dst.writestr("word/footnotes.xml", (
+                f'<w:footnotes {ns}><w:footnote w:id="-1"><w:p><w:r><w:t>SEPARATOR</w:t></w:r></w:p></w:footnote>'
+                f'<w:footnote w:id="1"><w:p><w:r><w:t>{footnote}</w:t></w:r></w:p></w:footnote></w:footnotes>'
+            ))
+    return out.getvalue()
+
+
+def test_docx_reads_controls_insertions_headers_and_footnotes_but_not_deletions():
+    body = (
+        "<w:sdt><w:sdtContent><w:p><w:r><w:t>Ügyfél: Horváth Márk</w:t></w:r></w:p></w:sdtContent></w:sdt>"
+        "<w:p><w:r><w:t xml:space=\"preserve\">Képviselő: </w:t></w:r><w:ins w:id=\"1\" w:author=\"x\"><w:r><w:t>Papp Rita</w:t></w:r></w:ins>"
+        "<w:del w:id=\"2\" w:author=\"x\"><w:r><w:delText>Törölt Név</w:delText></w:r></w:del></w:p>"
+        "<w:tbl><w:sdt><w:sdtContent><w:tr><w:tc><w:p><w:r><w:t>Varga Imre</w:t></w:r></w:p></w:tc>"
+        "<w:tc><w:p><w:r><w:t>Szeged</w:t></w:r></w:p></w:tc></w:tr></w:sdtContent></w:sdt></w:tbl>"
+    )
+    text = extract(_docx_with_xml(body, footnote="Lábjegyzet: Balogh Judit"), "", "a.docx", FakeEngine(), settings()).text
+    for expected in ("Ügyfél: Horváth Márk", "Képviselő: Papp Rita", "Varga Imre\tSzeged",
+                     "Első oldali fejléc: Dr. Szabó Anna", "Iktatószám: 7/2026", "Lábjegyzet: Balogh Judit"):
+        assert expected in text, (expected, text)
+    assert "Törölt Név" not in text and "SEPARATOR" not in text
+
+
+def test_malformed_office_file_is_unreadable_not_engine_failure():
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w") as z:
+        z.writestr("word/document.xml", "<w:document><unclosed>")
+    with pytest.raises(ExtractionError):
+        extract(buf.getvalue(), "", "a.docx", FakeEngine(), settings())
+
+
+def test_tiff_with_many_frames_is_refused_quickly():
+    import time
+
+    frames = [Image.new("1", (8, 8), 1) for _ in range(3000)]
+    tiff = to_bytes(frames[0], "TIFF", save_all=True, append_images=frames[1:])
+    started = time.monotonic()
+    with pytest.raises(TooLargeError):
+        extract(tiff, "image/tiff", "", FakeEngine(), settings())
+    assert time.monotonic() - started < 3
+
+
+def test_queue_is_bounded(make_client):
+    import threading
+
+    client = make_client("slow", OCR_TIMEOUT_S="4", OCR_MAX_QUEUE="1")
+    first = {}
+    t = threading.Thread(target=lambda: first.setdefault("r", client.put("/process", content=png(), headers={**AUTH, "Content-Type": "image/png"})))
+    t.start()
+    import time
+
+    time.sleep(1)
+    r = client.put("/process", content=b"szia", headers={**AUTH, "Content-Type": "text/plain"})
+    assert r.status_code == 503 and "busy" in r.text
+    t.join()
+    assert first["r"].status_code == 504

@@ -46,8 +46,8 @@ from fastapi import HTTPException
 from litellm.integrations.custom_guardrail import CustomGuardrail
 from litellm.types.guardrails import GuardrailEventHooks
 
-from .analyzer_client import AnalyzerClient, AnalyzerError
-from .attachments import OcrClient, OcrUnavailableError
+from .analyzer_client import AnalyzerClient, AnalyzerError, AnalyzerRequestTooLarge
+from .attachments import OcrClient, OcrUnavailableError, neutralise_source_names
 from .audit import AuditEvent, AuditSink, AuditUnavailableError, LogAuditSink, PostgresAuditSink
 from .config import Config, FatalConfigError
 from .crypto import MappingCipher
@@ -98,7 +98,15 @@ class PrivacyHubGuardrail(CustomGuardrail):
         )
         self.analyzer = AnalyzerClient(self.cfg.analyzer_url, self.cfg.analyzer_token, self.cfg.analyzer_timeout_s)
         self.ocr: OcrClient | None = (
-            OcrClient(self.cfg.ocr_url, self.cfg.ocr_token, self.cfg.ocr_timeout_s, self.cfg.ocr_max_bytes, self.cfg.mapping_ttl_s)
+            OcrClient(
+                self.cfg.ocr_url,
+                self.cfg.ocr_token,
+                self.cfg.ocr_timeout_s,
+                self.cfg.ocr_max_bytes,
+                self.cfg.mapping_ttl_s,
+                max_attachments=self.cfg.ocr_max_attachments,
+                max_text_chars=self.cfg.ocr_max_text_chars,
+            )
             if self.cfg.ocr_url
             else None
         )
@@ -215,6 +223,11 @@ class PrivacyHubGuardrail(CustomGuardrail):
                     raise OcrUnavailableError(f"attachment handling failed: {type(exc).__name__}") from exc
             slots = collect_request_slots(data.get("messages"), self.cfg.allow_non_text_content)
             slots += collect_definition_slots(data)
+            # file names Open WebUI writes into <source name="..."> tags
+            for slot in slots:
+                text = slot.get()
+                if "<source" in text:
+                    slot.set(neutralise_source_names(text))
         except UnsupportedContentError as exc:
             await self._audit(ev("blocked_unsupported_content", settings, error_class="UnsupportedContent"), required=False)
             raise _blocked(400, "privacy_hub_unsupported_content", str(exc))
@@ -222,6 +235,10 @@ class PrivacyHubGuardrail(CustomGuardrail):
             log.error("OCR failed, blocking request %s: %s", request_id, exc)
             await self._audit(ev("blocked_error", settings, error_class="OcrUnavailable"), required=False)
             raise _blocked(503, "privacy_hub_unavailable", "OCR unavailable; request with attachments blocked (fail closed).")
+        except Exception as exc:  # noqa: BLE001 - a structure the checks did not anticipate: block, with an audit record
+            log.error("request %s could not be inspected: %s", request_id, type(exc).__name__)
+            await self._audit(ev("blocked_unsupported_content", settings, error_class=type(exc).__name__), required=False)
+            raise _blocked(400, "privacy_hub_unsupported_content", f"request could not be inspected ({type(exc).__name__})")
 
         texts = [s.get() for s in slots]
         try:
@@ -233,6 +250,9 @@ class PrivacyHubGuardrail(CustomGuardrail):
                 disabled_entities=settings.disabled_entities,
                 org_id=org_id,
             )
+        except AnalyzerRequestTooLarge:
+            await self._audit(ev("blocked_unsupported_content", settings, error_class="TooLarge"), required=False)
+            raise _blocked(400, "privacy_hub_too_large", "The request has more text than the privacy check accepts; shorten it.")
         except AnalyzerError as exc:
             log.error("masking failed, blocking request %s: %s", request_id, exc)
             await self._audit(ev("blocked_error", settings, error_class="AnalyzerError"), required=False)
