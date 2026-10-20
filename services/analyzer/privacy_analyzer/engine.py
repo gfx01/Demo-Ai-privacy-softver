@@ -37,7 +37,7 @@ from presidio_anonymizer.entities import OperatorConfig
 from privacy_hub.masking import MaskingSession, MaskResult, Span, get_morphology, resolve_overlaps
 from privacy_hub.masking.pseudonyms import PseudonymStrategy
 
-from .recognizers import HuNameRecognizer, hungarian_recognizers
+from .recognizers import AnyTldEmailRecognizer, HuNameRecognizer, hungarian_recognizers
 
 log = logging.getLogger("privacy_analyzer.engine")
 
@@ -152,6 +152,8 @@ class PrivacyEngine:
                     registry.add_recognizer(rec)
             else:
                 registry.remove_recognizer("PhoneRecognizer")
+                registry.remove_recognizer("EmailRecognizer")
+                registry.add_recognizer(AnyTldEmailRecognizer(supported_language=lang))
                 registry.add_recognizer(PhoneRecognizer(supported_regions=("HU", "US", "UK", "DE", "AT", "FR"), supported_language=lang))
             self.analyzers[lang] = AnalyzerEngine(nlp_engine=nlp, registry=registry, supported_languages=[lang])
         self.anonymizer = AnonymizerEngine()

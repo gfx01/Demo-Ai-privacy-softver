@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import re
+
 from presidio_analyzer import EntityRecognizer
 from presidio_analyzer.predefined_recognizers import (
     CreditCardRecognizer,
@@ -31,6 +33,19 @@ from .hu_text import (
     MoneyRecognizer,
 )
 
+class AnyTldEmailRecognizer(EmailRecognizer):
+    """Presidio's EmailRecognizer only accepts domains whose suffix is in the
+    public suffix list, so addresses on internal domains (``ceg.local``,
+    ``corp.internal``) or reserved ones (``.example``) were not detected at
+    all. Any alphabetic or punycode top-level label is accepted here; the
+    cost is occasional over-masking (``logo@2x.png``), the safe direction."""
+
+    TLD_RE = re.compile(r"\.(?:[^\W\d_]{2,63}|xn--[a-z0-9-]{2,59})$", re.IGNORECASE)
+
+    def validate_result(self, pattern_text: str) -> bool:
+        return bool(self.TLD_RE.search(pattern_text))
+
+
 PATTERN_RECOGNIZERS = (
     TajRecognizer,
     TaxIdRecognizer,
@@ -52,7 +67,7 @@ PATTERN_RECOGNIZERS = (
 def hungarian_recognizers(*, gazetteer: bool = True, lexicon_dir: str | None = None) -> list[EntityRecognizer]:
     recognizers: list[EntityRecognizer] = [cls(supported_language="hu") for cls in PATTERN_RECOGNIZERS]
     recognizers += [
-        EmailRecognizer(supported_language="hu"),
+        AnyTldEmailRecognizer(supported_language="hu"),
         IbanRecognizer(supported_language="hu"),
         CreditCardRecognizer(supported_language="hu"),
         IpRecognizer(supported_language="hu"),
@@ -63,4 +78,4 @@ def hungarian_recognizers(*, gazetteer: bool = True, lexicon_dir: str | None = N
     return recognizers
 
 
-__all__ = ["hungarian_recognizers", "PATTERN_RECOGNIZERS", "HuNameRecognizer"]
+__all__ = ["hungarian_recognizers", "PATTERN_RECOGNIZERS", "HuNameRecognizer", "AnyTldEmailRecognizer"]

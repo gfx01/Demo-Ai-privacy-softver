@@ -106,3 +106,8 @@ def test_decomposed_accents_and_invisible_characters_are_normalised(engine):
     result = engine.mask([text], "hu", "bracket")
     assert "Kov" not in result.masked_texts[0] and "ter" not in result.masked_texts[0]
     assert result.masked_texts[0].startswith("[PERSON_1]")
+
+
+@pytest.mark.parametrize("address", ["titkarsag@ceg.local", "kp@corp.internal", "anna.kovacs@iroda.example", "x@példa.hu"])
+def test_email_on_any_top_level_domain(engine, address):
+    assert ("EMAIL_ADDRESS", address) in found(engine, f"Írj a {address} címre.")
