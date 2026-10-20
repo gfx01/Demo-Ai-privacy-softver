@@ -24,13 +24,13 @@ The only change between the held-out first run and the final run is the e-mail f
 
 | strategy | dev names (tuned on them) | held-out names, first run | held-out names, after fixes |
 |---|---|---|---|
-| bracket_naive | 1.5% | 1.8% | 1.8% |
+| bracket_naive | 1.6% | 1.8% | 1.8% |
 | bracket | 99.6% | 98.9% | 100.0% |
 | pseudonym | 99.9% | 99.6% | 100.0% |
 
 Fixes after the held-out first run: accusative after r/l + sibilant (*Örs → Örsöt*, the engine wrote *Örst*) and preferring the possessive over the rare translative reading (*Marcellé*). "Right value back" was 100% for bracket and pseudonym in every run; streaming always equalled batch.
 
-Engine inflection accuracy on held-out gold forms, first run: **99.9%** of 855 forms (gold = forms two independent AI annotators agreed on).
+Engine inflection accuracy on held-out gold forms, first run: **99.9%** of 855 forms (gold = forms two independent AI annotators agreed on; the 9 disputed *Kkt.* forms were excluded from the first run and adjudicated afterwards: back endings per the AkH pronunciation rule, front endings accepted as an attested variant).
 
 ## Detection: development set (used while tuning recognizers — optimistic)
 
@@ -330,7 +330,7 @@ Simulated model, not a real LLM (see method). `grammatical` = restored text equa
 
 | strategy | n | grammatical | value | stream |
 |---|---|---|---|---|
-| bracket_naive | 4704 | 1.5% | 100.0% | 100.0% |
+| bracket_naive | 4704 | 1.6% | 100.0% | 100.0% |
 | bracket | 4704 | 99.6% | 100.0% | 100.0% |
 | pseudonym | 2316 | 99.9% | 100.0% | 100.0% |
 
@@ -339,12 +339,12 @@ Simulated model, not a real LLM (see method). `grammatical` = restored text equa
 | perturbation | n | grammatical | value |
 |---|---|---|---|
 | en_dash | 672 | 0.6% | 100.0% |
-| lowercase | 672 | 1.3% | 100.0% |
+| lowercase | 672 | 1.5% | 100.0% |
 | markdown | 672 | 1.3% | 100.0% |
 | no_brackets | 672 | 1.3% | 100.0% |
 | space_in_token | 672 | 1.5% | 100.0% |
 | token_glued | 672 | 3.4% | 100.0% |
-| token_hyphen | 672 | 1.2% | 100.0% |
+| token_hyphen | 672 | 1.3% | 100.0% |
 
 ### `bracket` by perturbation
 
@@ -376,33 +376,33 @@ Simulated model, not a real LLM (see method). `grammatical` = restored text equa
 
 | strategy | n | grammatical | value | stream |
 |---|---|---|---|---|
-| bracket_naive | 3297 | 1.8% | 100.0% | 100.0% |
-| bracket | 3297 | 100.0% | 100.0% | 100.0% |
+| bracket_naive | 3360 | 1.8% | 100.0% | 100.0% |
+| bracket | 3360 | 100.0% | 100.0% | 100.0% |
 | pseudonym | 1968 | 100.0% | 100.0% | 100.0% |
 
 ### `bracket_naive` by perturbation
 
 | perturbation | n | grammatical | value |
 |---|---|---|---|
-| en_dash | 471 | 1.3% | 100.0% |
-| lowercase | 471 | 1.9% | 100.0% |
-| markdown | 471 | 1.7% | 100.0% |
-| no_brackets | 471 | 2.1% | 100.0% |
-| space_in_token | 471 | 1.5% | 100.0% |
-| token_glued | 471 | 2.8% | 100.0% |
-| token_hyphen | 471 | 1.7% | 100.0% |
+| en_dash | 480 | 1.0% | 100.0% |
+| lowercase | 480 | 1.9% | 100.0% |
+| markdown | 480 | 1.5% | 100.0% |
+| no_brackets | 480 | 2.3% | 100.0% |
+| space_in_token | 480 | 1.5% | 100.0% |
+| token_glued | 480 | 2.5% | 100.0% |
+| token_hyphen | 480 | 1.7% | 100.0% |
 
 ### `bracket` by perturbation
 
 | perturbation | n | grammatical | value |
 |---|---|---|---|
-| en_dash | 471 | 100.0% | 100.0% |
-| lowercase | 471 | 100.0% | 100.0% |
-| markdown | 471 | 100.0% | 100.0% |
-| no_brackets | 471 | 100.0% | 100.0% |
-| space_in_token | 471 | 100.0% | 100.0% |
-| token_glued | 471 | 100.0% | 100.0% |
-| token_hyphen | 471 | 100.0% | 100.0% |
+| en_dash | 480 | 100.0% | 100.0% |
+| lowercase | 480 | 100.0% | 100.0% |
+| markdown | 480 | 100.0% | 100.0% |
+| no_brackets | 480 | 100.0% | 100.0% |
+| space_in_token | 480 | 100.0% | 100.0% |
+| token_glued | 480 | 100.0% | 100.0% |
+| token_hyphen | 480 | 100.0% | 100.0% |
 
 ### `pseudonym` by perturbation
 
@@ -414,7 +414,7 @@ Simulated model, not a real LLM (see method). `grammatical` = restored text equa
 | surname_ur | 384 | 100.0% | 100.0% |
 | uppercase_full | 384 | 100.0% | 100.0% |
 
-Engine inflection accuracy against the gold table: **100.0%** of 855 forms.
+Engine inflection accuracy against the gold table: **100.0%** of 864 forms.
 
 ## Method
 

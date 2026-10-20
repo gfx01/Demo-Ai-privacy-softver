@@ -149,7 +149,9 @@ def summary_section() -> list[str]:
                   ""]
         if rh1:
             lines.append(f"Engine inflection accuracy on held-out gold forms, first run: **{pct(rh1['inflection']['accuracy'])}** "
-                         f"of {rh1['inflection']['n']} forms (gold = forms two independent AI annotators agreed on).")
+                         f"of {rh1['inflection']['n']} forms (gold = forms two independent AI annotators agreed on; "
+                         "the 9 disputed *Kkt.* forms were excluded from the first run and adjudicated afterwards: "
+                         "back endings per the AkH pronunciation rule, front endings accepted as an attested variant).")
             lines.append("")
     return lines
 

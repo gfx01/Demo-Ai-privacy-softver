@@ -79,9 +79,12 @@ negatives.
 * Without suffix handling (plain `[PERSON_1]`), only 1.5–1.8% of mentions get
   the right ending: Hungarian needs the morphology layer.
 * The gold case forms were written by two independent AI annotators (99%
-  agreement), **not verified by a native speaker**. One open question:
-  whether *Kkt.* takes back (*Kkt.-val*) or front (*Kkt.-vel*) endings.
-  The engine uses front endings for all legal-form abbreviations.
+  agreement), **not verified by a native speaker**. The one disagreement,
+  *Kkt.-val* vs *Kkt.-vel*, was adjudicated (medium confidence) in favour of
+  back endings: AkH says the ending follows the pronounced form (*kákáté*,
+  like AkH's *BKV-nál*). Front forms are common in real usage too (analogy
+  with *Kft.-vel*) and are accepted as a variant in the gold tables. The
+  engine writes *Kkt.-val*, *Kht.-val*, *Kft.-vel*, *Bt.-vel*.
 * Genuinely ambiguous forms are guessed: *Lilit* is a name and also *Lili* +
   accusative; *Marcellé* can be *Marcell* + possessive or *Marcel* +
   translative.

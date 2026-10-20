@@ -99,3 +99,13 @@ def test_accusative_after_r_or_l_plus_sibilant_and_possessive_over_translative()
     assert inflect("Kiss", "ACC") == "Kisst" and inflect("Dénes", "ACC") == "Dénest"
     assert m.split_word("Örsöt")[:2] == ("Örs", "ACC")
     assert m.split_word("Marcellé")[:2] == ("Marcell", "POSS")
+
+
+def test_abbreviation_endings_follow_pronunciation():
+    assert inflect("Pannon Könyvelő Bt.", "INS") == "Pannon Könyvelő Bt.-vel"
+    assert inflect("Alfa Kft.", "DAT") == "Alfa Kft.-nek"
+    assert inflect("Bükkalja Erdész Kkt.", "INS") == "Bükkalja Erdész Kkt.-val"  # kákáté, like BKV-nál
+    assert inflect("Bükkalja Erdész Kkt.", "ALL") == "Bükkalja Erdész Kkt.-hoz"
+    assert inflect("Bükkalja Erdész Kkt.", "ACC") == "Bükkalja Erdész Kkt.-t"
+    m = HungarianMorphology(lexicon=set())
+    assert m.split_word("Kkt.-vel")[:2] == ("Kkt.", "INS")  # the attested front variant still parses

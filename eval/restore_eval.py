@@ -60,12 +60,25 @@ SETS = {
 }
 
 
+# Accepted alternative forms, (name, case) -> forms (e.g. attested "Kkt.-vel"
+# next to the rule-conformant "Kkt.-val"); filled by load_gold().
+VARIANTS: dict[tuple[str, str], list[str]] = {}
+
+
 def load_gold(path: Path = GOLD) -> dict[str, dict[str, str]]:
     data = json.loads(path.read_text(encoding="utf-8"))
     table: dict[str, dict[str, str]] = defaultdict(dict)
     for f in data["forms"]:
         table[f["name"]][f["case"]] = f["form"]
+        if f.get("variants"):
+            VARIANTS[(f["name"], f["case"])] = list(f["variants"])
     return table
+
+
+def accepted(text: str, name: str, case: str, form: str) -> set[str]:
+    """``text`` (which contains the gold ``form``) plus the same text with each
+    accepted variant of that form."""
+    return {text} | {text.replace(form, v) for v in VARIANTS.get((name, case), ())}
 
 
 # --- simulated model -------------------------------------------------------------
@@ -151,7 +164,7 @@ def run(strategy_name: str, gold, lexicon, gender, rng: random.Random, names_fil
                 expected = frame(expected_mention)
                 restorer = build_restorer(mapping)
                 out = restorer.restore(model_text)
-                grammatical = out == expected
+                grammatical = out in accepted(expected, original, c_out, gold[original][c_out]) if etype == "HU_COMPANY" else out == expected
                 residue = entry.replacement.strip("[]").lower() in out.lower() or (
                     strategy_name == "pseudonym" and any(p[0] in out for p in entry.parts)
                 )
@@ -207,7 +220,7 @@ def engine_inflection_accuracy(gold) -> dict:
         for case, form in forms.items():
             total += 1
             got = inflect(name, case)
-            if got == form:
+            if got == form or got in VARIANTS.get((name, case), ()):
                 ok += 1
             elif len(wrong) < 200:
                 wrong.append({"name": name, "case": case, "gold": form, "engine": got})

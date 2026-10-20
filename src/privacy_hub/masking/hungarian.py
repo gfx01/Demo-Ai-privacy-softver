@@ -83,9 +83,13 @@ OLD_ORTHO_FINAL = {
     "w": "v",
     "x": "sz",  # "Max" -> "Maxszal"
 }
-# Legal forms / abbreviations: written with a hyphen, pronounced vowel-final
-# with front harmony ("Kft." = "káefté").
+# Legal forms / abbreviations: written with a hyphen; the ending follows the
+# pronounced form (AkH): "Kft." = "káefté" -> front ("Kft.-vel"), but
+# "Kkt." = "kákáté", "Kht." = "káháté", "Kv." = "kávé" -> back ("Kkt.-val",
+# like AkH's "BKV-nál"). Usage of "Kkt.-vel" is also attested (analogy with
+# Kft.); see eval/data/inflection_gold*.json.
 ABBREVIATION_RE = re.compile(r"(?:Kft|Zrt|Nyrt|Bt|Kkt|Rt|Kht|Kv|Ltd|e\.\s?v)\.$")
+BACK_ABBREVIATION_RE = re.compile(r"(?:Kkt|Kht|Kv)\.$", re.IGNORECASE)
 
 # Parsing: every written suffix variant -> case (harmony is ignored).
 _PARSE: dict[str, str] = {}
@@ -172,7 +176,7 @@ def inflect_word(word: str, case: str | None) -> str:
     if not case or case == "NOM" or case not in SUFFIXES:
         return word
     if ABBREVIATION_RE.search(word) or word.endswith(".") or word[-1:].isdigit():
-        return word + "-" + _abbreviation_suffix(case)
+        return word + "-" + _abbreviation_suffix(case, word)
     h = harmony(word)
     suffix = SUFFIXES[case][h]
     if _ends_in_vowel(word):
@@ -209,9 +213,9 @@ def _double_final(lower: str) -> bool:
     return len(lower) >= 2 and lower[-1] == lower[-2] and lower[-1] not in VOWELS
 
 
-def _abbreviation_suffix(case: str) -> str:
-    # pronounced vowel-final, front harmony: "Kft.-nek", "Kft.-vel", "Kft.-t"
-    return SUFFIXES[case][1]
+def _abbreviation_suffix(case: str, word: str = "") -> str:
+    # pronounced vowel-final: "Kft.-nek", "Kft.-vel", "Kft.-t"; "Kkt.-nak"
+    return SUFFIXES[case][0 if BACK_ABBREVIATION_RE.search(word) else 1]
 
 
 def inflect(base: str, case: str | None) -> str:

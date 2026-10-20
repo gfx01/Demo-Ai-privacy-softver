@@ -19,7 +19,7 @@ Ordered roughly by risk. Nothing below is done unless stated.
 - [ ] Per-organisation allow/deny lists (e.g. never mask the firm's own name; always mask client list).
 
 - [ ] Lower-case names in chat-style text and foreign surnames with Hungarian endings are the largest remaining leak classes (held-out set); numeric birth dates without a cue word are missed.
-- [ ] Decide the harmony of "Kkt." endings (gold annotators disagreed: *Kkt.-val* vs *Kkt.-vel*) with a native-speaker linguist.
+- [ ] Confirm with a native-speaker linguist the adjudicated harmony of "Kkt." endings (engine: *Kkt.-val*, per the AkH pronunciation rule; *Kkt.-vel* is common in usage).
 
 ## Restoration
 - [ ] Measure restore rates with real models (OpenAI, Anthropic, Gemini) on the gold set (`eval/restore_eval.py` uses a simulated model).

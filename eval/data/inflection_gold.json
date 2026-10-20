@@ -9931,36 +9931,51 @@
 "name": "Kovács és Fiai Kkt.",
 "kind": "company",
 "case": "DAT",
-"form": "Kovács és Fiai Kkt.-nek",
-"agreement": "both"
+"form": "Kovács és Fiai Kkt.-nak",
+"agreement": "both_front_then_adjudicated_back",
+"variants": [
+"Kovács és Fiai Kkt.-nek"
+]
 },
 {
 "name": "Kovács és Fiai Kkt.",
 "kind": "company",
 "case": "INS",
-"form": "Kovács és Fiai Kkt.-vel",
-"agreement": "both"
+"form": "Kovács és Fiai Kkt.-val",
+"agreement": "both_front_then_adjudicated_back",
+"variants": [
+"Kovács és Fiai Kkt.-vel"
+]
 },
 {
 "name": "Kovács és Fiai Kkt.",
 "kind": "company",
 "case": "INE",
-"form": "Kovács és Fiai Kkt.-ben",
-"agreement": "both"
+"form": "Kovács és Fiai Kkt.-ban",
+"agreement": "both_front_then_adjudicated_back",
+"variants": [
+"Kovács és Fiai Kkt.-ben"
+]
 },
 {
 "name": "Kovács és Fiai Kkt.",
 "kind": "company",
 "case": "ILL",
-"form": "Kovács és Fiai Kkt.-be",
-"agreement": "both"
+"form": "Kovács és Fiai Kkt.-ba",
+"agreement": "both_front_then_adjudicated_back",
+"variants": [
+"Kovács és Fiai Kkt.-be"
+]
 },
 {
 "name": "Kovács és Fiai Kkt.",
 "kind": "company",
 "case": "ELA",
-"form": "Kovács és Fiai Kkt.-ből",
-"agreement": "both"
+"form": "Kovács és Fiai Kkt.-ból",
+"agreement": "both_front_then_adjudicated_back",
+"variants": [
+"Kovács és Fiai Kkt.-ből"
+]
 },
 {
 "name": "Kovács és Fiai Kkt.",
@@ -9973,29 +9988,41 @@
 "name": "Kovács és Fiai Kkt.",
 "kind": "company",
 "case": "DEL",
-"form": "Kovács és Fiai Kkt.-ről",
-"agreement": "both"
+"form": "Kovács és Fiai Kkt.-ról",
+"agreement": "both_front_then_adjudicated_back",
+"variants": [
+"Kovács és Fiai Kkt.-ről"
+]
 },
 {
 "name": "Kovács és Fiai Kkt.",
 "kind": "company",
 "case": "ABL",
-"form": "Kovács és Fiai Kkt.-től",
-"agreement": "both"
+"form": "Kovács és Fiai Kkt.-tól",
+"agreement": "both_front_then_adjudicated_back",
+"variants": [
+"Kovács és Fiai Kkt.-től"
+]
 },
 {
 "name": "Kovács és Fiai Kkt.",
 "kind": "company",
 "case": "ALL",
-"form": "Kovács és Fiai Kkt.-hez",
-"agreement": "both"
+"form": "Kovács és Fiai Kkt.-hoz",
+"agreement": "both_front_then_adjudicated_back",
+"variants": [
+"Kovács és Fiai Kkt.-hez"
+]
 },
 {
 "name": "Kovács és Fiai Kkt.",
 "kind": "company",
 "case": "ADE",
-"form": "Kovács és Fiai Kkt.-nél",
-"agreement": "both"
+"form": "Kovács és Fiai Kkt.-nál",
+"agreement": "both_front_then_adjudicated_back",
+"variants": [
+"Kovács és Fiai Kkt.-nél"
+]
 },
 {
 "name": "Észak-Alföldi Agrár Zrt.",
@@ -11761,5 +11788,6 @@
 "form": "Mandulavirág Kft.-nél",
 "agreement": "both"
 }
-]
+],
+"adjudication": "Adjudicated: AkH (suffix follows the pronounced form, cf. 'BKV-nál'): 'kákáté' -> back endings. Front endings ('Kkt.-vel', by analogy with Kft.) are attested in usage (Közbeszerzési Értesítő corpus: ~10 independent sources front vs 3 back) and accepted as a variant. Medium confidence; no ruling on 'kkt.' itself was found. Applied to the development set after the held-out annotators disagreed."
 }

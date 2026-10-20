@@ -1,5 +1,5 @@
 {
- "description": "HELD-OUT gold Hungarian case forms for names never used while developing the morphology engine. Written independently by two AI annotators (no code generation); only forms both agreed on are included (855 of 864). The 9 disputed forms (harmony of 'Kkt.') are listed separately. NOT reviewed by a human native speaker.",
+ "description": "HELD-OUT gold Hungarian case forms for names never used while developing the morphology engine. Written independently by two AI annotators (no code generation); only forms both agreed on are included (855 of 864). The 9 disputed forms (harmony of 'Kkt.') were adjudicated afterwards; see 'adjudication'. NOT reviewed by a human native speaker.",
  "disputed": [
   {
    "name": "Bükkalja Erdész Kkt.",
@@ -6041,6 +6041,97 @@
    "case": "SUP",
    "form": "Őrségi Tejház Kft.-n",
    "agreement": "both"
+  },
+  {
+   "name": "Bükkalja Erdész Kkt.",
+   "kind": "company",
+   "case": "ABL",
+   "form": "Bükkalja Erdész Kkt.-tól",
+   "variants": [
+    "Bükkalja Erdész Kkt.-től"
+   ],
+   "agreement": "adjudicated"
+  },
+  {
+   "name": "Bükkalja Erdész Kkt.",
+   "kind": "company",
+   "case": "ADE",
+   "form": "Bükkalja Erdész Kkt.-nál",
+   "variants": [
+    "Bükkalja Erdész Kkt.-nél"
+   ],
+   "agreement": "adjudicated"
+  },
+  {
+   "name": "Bükkalja Erdész Kkt.",
+   "kind": "company",
+   "case": "ALL",
+   "form": "Bükkalja Erdész Kkt.-hoz",
+   "variants": [
+    "Bükkalja Erdész Kkt.-hez"
+   ],
+   "agreement": "adjudicated"
+  },
+  {
+   "name": "Bükkalja Erdész Kkt.",
+   "kind": "company",
+   "case": "DAT",
+   "form": "Bükkalja Erdész Kkt.-nak",
+   "variants": [
+    "Bükkalja Erdész Kkt.-nek"
+   ],
+   "agreement": "adjudicated"
+  },
+  {
+   "name": "Bükkalja Erdész Kkt.",
+   "kind": "company",
+   "case": "DEL",
+   "form": "Bükkalja Erdész Kkt.-ról",
+   "variants": [
+    "Bükkalja Erdész Kkt.-ről"
+   ],
+   "agreement": "adjudicated"
+  },
+  {
+   "name": "Bükkalja Erdész Kkt.",
+   "kind": "company",
+   "case": "ELA",
+   "form": "Bükkalja Erdész Kkt.-ból",
+   "variants": [
+    "Bükkalja Erdész Kkt.-ből"
+   ],
+   "agreement": "adjudicated"
+  },
+  {
+   "name": "Bükkalja Erdész Kkt.",
+   "kind": "company",
+   "case": "ILL",
+   "form": "Bükkalja Erdész Kkt.-ba",
+   "variants": [
+    "Bükkalja Erdész Kkt.-be"
+   ],
+   "agreement": "adjudicated"
+  },
+  {
+   "name": "Bükkalja Erdész Kkt.",
+   "kind": "company",
+   "case": "INE",
+   "form": "Bükkalja Erdész Kkt.-ban",
+   "variants": [
+    "Bükkalja Erdész Kkt.-ben"
+   ],
+   "agreement": "adjudicated"
+  },
+  {
+   "name": "Bükkalja Erdész Kkt.",
+   "kind": "company",
+   "case": "INS",
+   "form": "Bükkalja Erdész Kkt.-val",
+   "variants": [
+    "Bükkalja Erdész Kkt.-vel"
+   ],
+   "agreement": "adjudicated"
   }
- ]
+ ],
+ "adjudication": "Adjudicated: AkH (suffix follows the pronounced form, cf. 'BKV-nál'): 'kákáté' -> back endings. Front endings ('Kkt.-vel', by analogy with Kft.) are attested in usage (Közbeszerzési Értesítő corpus: ~10 independent sources front vs 3 back) and accepted as a variant. Medium confidence; no ruling on 'kkt.' itself was found."
 }
