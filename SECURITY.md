@@ -50,17 +50,18 @@ This is an MVP / demo. Read this before using it with real data.
    prompts are still personal data; you still need a legal basis, a data
    processing agreement with the LLM provider and a DPIA where required.
 2. **False negatives happen.** Detection is pattern-, gazetteer- and
-   (optionally) model-based. Unusual names, lower-case names, nicknames
-   not on the built-in list, foreign names, rare identifier formats and
+   (optionally) model-based. Unusual names, names and places typed without
+   accents (*Reka*, *Szolnokrol*), nicknames not on the built-in list,
+   foreign names and cities, rare identifier formats and
    free-text descriptions ("the CEO of the only bakery in Tiszafüred") are
    missed. See `docs/LIMITATIONS.md` for measured recall on a small synthetic
    test set and which types are weakest.
 3. **Contextual leakage.** Even with every name masked, the rest of the text
    (job title, diagnosis, dates, rare events, undetected place names) can
    identify a person. Most quasi-identifiers and sensitive facts are not
-   detected. Place names are masked only with an NER backend: with the
-   default Hungarian setup (`ANALYZER_HU_NER=none`) they are not detected at
-   all (34 of 35 leaked on the held-out set).
+   detected. Place names are detected from a settlement and country list
+   (default setup: 53 of 60 protected on held-out set #2); counties, regions
+   and foreign cities not on the list are missed.
 4. **Not suitable as the only safeguard for health data** (or other special
    categories under GDPR Art. 9). Diagnoses, symptoms and medication are not
    masked. Use contractual, organisational and technical controls in
@@ -137,8 +138,8 @@ This is an MVP / demo. Read this before using it with real data.
 * Use strict mode for teams that should not send personal data: it blocks
   any request in which an enabled entity type is detected instead of masking
   it. It is not a guarantee: whatever detection misses still goes out (with
-  the default backend about 14% of held-out test entities were left mostly
-  unmasked), and so do quasi-identifiers and disabled entity types.
+  the default backend 24 of 406 entities of held-out set #2, about 6%, were
+  left mostly unmasked), and so do quasi-identifiers and disabled entity types.
 * Give users individual keys (portal → Budgets & users) so that the audit
   log and budgets are per person.
 * Review `docs/LIMITATIONS.md` with your DPO.

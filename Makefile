@@ -27,7 +27,7 @@ $(GATEWAY_VENV):
 	uv pip install -p $(GATEWAY_VENV) "litellm[proxy]==1.105.1" "psycopg[binary]" pytest pytest-asyncio httpx pyyaml
 
 $(ANALYZER_VENV):
-	uv venv $(ANALYZER_VENV) -p 3.12
+	uv venv --seed $(ANALYZER_VENV) -p 3.12  # --seed: install_model.py needs pip
 	uv pip install -p $(ANALYZER_VENV) -r services/analyzer/requirements.txt pytest pytest-asyncio httpx
 	$(ANALYZER_VENV)/bin/python services/analyzer/install_model.py \
 	  https://github.com/explosion/spacy-models/releases/download/en_core_web_md-3.8.0/en_core_web_md-3.8.0-py3-none-any.whl \

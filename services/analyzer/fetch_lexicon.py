@@ -16,7 +16,8 @@ More surnames: ~6,000 current and historical Hungarian surnames from the
 Magyar Ispell project (GPL 2+/LGPL 2.1+/MPL 1.1+ tri-licence), pinned commit.
 Note from its maintainers: long "ő" is written as short "o" in some entries.
 
-Settlements: 3,857 Hungarian settlements and localities, MIT licence
+Settlements: 3,857 Hungarian settlements and localities (3,828 distinct
+names without the 23 Budapest districts), MIT licence
 (andrasbarabas/hungarian-settlements, 2020; misses ~35 newer settlements).
 More complete lists exist but carry no licence.
 

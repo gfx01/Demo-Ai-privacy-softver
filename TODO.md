@@ -11,14 +11,15 @@ Grouped by area; items within an area are not ranked (docs/LIMITATIONS.md shows 
 
 ## Detection quality
 - [ ] Native-speaker review of the synthetic test set and the gold inflection table (both were produced by AI agents and cross-checked by other AI agents, not by humans).
-- [ ] Larger, realistic evaluation set (with consent / properly anonymised real documents) per customer segment: law firms, accountants, clinics. The current sets are synthetic and small; items are tagged by domain (legal, invoice, clinic, email, misc, hard) but metrics are not yet reported per domain.
+- [ ] Larger, realistic evaluation set (with consent / properly anonymised real documents) per customer segment: law firms, accountants, clinics. The current sets are synthetic and small (metrics are reported per domain in `docs/EVALUATION.md`).
 - [ ] Run and benchmark HuSpaCy (`hu_core_news_md/lg/trf`) and a Hungarian transformer NER where Hugging Face is reachable; pick the default backend from measured recall/latency/cost.
 - [ ] Confirm the bank-account (GIRO) and adószám check-digit rules against the official MNB / NAV texts (currently library-documented; see `docs/LIMITATIONS.md`).
 - [ ] Most quasi-identifiers and all special categories are not detected (age, occupation, nationality, rare events, diagnoses and other health data, religion, ethnicity). Only birth dates (with a cue word), postal addresses and licence plates are masked.
-- [ ] Nicknames beyond the built-in list in `hu_names.py` (diminutives such as *Bencike*), lower-case names (caught only after a greeting, as a known surname + given-name pair or in an -ék form), initials ("K. Péter"), foreign names in Hungarian text.
+- [ ] Nicknames beyond the built-in list in `hu_names.py` (diminutives such as *Bencike*), lower-case names (caught after a greeting or title, as a surname + given-name pair, as a lone given name that is not an ordinary word, or in an -né/-ék form), initials ("K. Péter"), foreign names in Hungarian text.
 - [ ] Per-organisation allow/deny lists (e.g. never mask the firm's own name; always mask client list).
 
-- [ ] Lower-case names in chat-style text are the largest remaining leak class (10 of 25 leaked entities on the held-out set with the recommended setup). Smaller ones: organisations without a legal form or public bodies (5), inflected place names (3), birth dates (3; numeric dates without a cue word), foreign surnames with endings (2), -né/-ék forms (2). With the default configuration, person names (35 leaked), place names (34) and organisations (22) dominate.
+- [ ] Capitalised names and places typed without accents (*Reka*, *Halasz Tibornal*, *Szolnokrol*) are the largest remaining leak class with the default setup: 16 of 24 leaked entities on held-out set #2. Smaller ones: foreign given names and cities not on the lists (*Jeroen*, *Aoife Brennan*, *Rotterdamba*), counties and regions (*Baranyából*), streets named after a person in running text (*Mátyás király út*), lone surnames without a cue. Not fixed yet on purpose: fixing them now would tune on held-out #2. Write a fresh held-out set #3 before the next round, then fix and measure once.
+- [ ] Decide whether public authorities such as *NAV* should be masked: they are labelled ORG in the test sets and count as misses, but their names are not personal data and masking them makes prompts harder to answer.
 - [ ] Confirm with a native-speaker linguist the adjudicated harmony of "Kkt." endings (engine: *Kkt.-val*, per the AkH pronunciation rule; *Kkt.-vel* is common in usage).
 
 ## Restoration

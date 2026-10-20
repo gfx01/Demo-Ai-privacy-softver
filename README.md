@@ -74,11 +74,13 @@ A válaszban viszont már *Kovács Péternek* áll.
 
 ### Ajánlott: magyar névfelismerő modell
 
-Az alapbeállítás (`ANALYZER_HU_NER=none`) csak mintákkal és névlistával dolgozik:
-gyors, de a helyneveket egyáltalán nem, a cégneveket és a neveket részben nem
-ismeri fel: a független teszthalmaz adatainak 76,8%-át maszkolja teljesen
-(az első futáson 72,9% volt; az ott talált e-mail-hibát utána javítottuk). A
-NerKor korpuszon tanított kis modellel ez 91,9% (első futás: 88,0%):
+Az alapbeállítás (`ANALYZER_HU_NER=none`) mintákkal, valamint név-, település-
+és szólistával dolgozik. A második független teszthalmazon (74 szöveg, 406
+adat) az adatok 93,8%-át maszkolja teljesen; 24 marad szinte teljesen
+olvasható, főleg ékezet nélkül írt nevek és helynevek, valamint külföldi nevek.
+A NerKor korpuszon tanított kis modellel ez 98,8%, 3 kiszivárgással, viszont
+több hétköznapi szót is maszkol. A hangoláshoz használt halmazokon magasabbak a
+számok, de azok optimista becslések (lásd [docs/LIMITATIONS.md](docs/LIMITATIONS.md)):
 
 ```sh
 make nerkor          # kb. 20 perc 4 vCPU-n; NYTK-NerKor, CC BY-SA 4.0
@@ -162,11 +164,13 @@ the answer you get back says *Kovács Péternek* again.
 
 ### Recommended: Hungarian NER model
 
-The default (`ANALYZER_HU_NER=none`) uses patterns and a name list only. It is
-fast and precise, but misses all place names and some organisation and person
-names: 76.8% of entities fully masked on the held-out set (72.9% on the first
-run, before an e-mail bug that run revealed was fixed). A small model trained
-on NYTK-NerKor raises this to 91.9% (first run: 88.0%):
+The default (`ANALYZER_HU_NER=none`) uses patterns plus name, settlement and
+word lists. On held-out set #2 (74 texts, 406 entities, not used for tuning)
+it fully masks 93.8% of entities; 24 stay mostly readable, mainly names and
+places typed without accents and foreign names. A small model trained on
+NYTK-NerKor raises this to 98.8% with 3 leaks, at the cost of masking more
+ordinary words. Numbers on the sets used for tuning are higher but optimistic
+(see [docs/LIMITATIONS.md](docs/LIMITATIONS.md)):
 
 ```sh
 make nerkor          # ~20 min on 4 vCPU; NYTK-NerKor data, CC BY-SA 4.0
@@ -250,15 +254,16 @@ make test-integration   # against the running stack: E2E, fail-closed, audit, bu
 make eval               # detection + restore evaluation -> docs/EVALUATION.md
 ```
 
-Last run: 199 unit, 49 analyzer and 45 integration tests passed. The
+Last run: 199 unit, 101 analyzer and 45 integration tests passed. The
 integration tests stop and pause services to prove fail-closed behaviour. They
 check that the mock provider receives nothing, and that a full Postgres dump,
 Redis and all container logs contain no raw test PII.
 
 The test data is synthetic (written and labelled by AI agents, not
-native-speaker humans): 146 development texts and 78 held-out texts in
-Hungarian. The held-out texts were written after tuning; fixes prompted by
-their first run are reported separately. See [docs/EVALUATION.md](docs/EVALUATION.md)
+native-speaker humans): 146 development texts and two held-out sets of 78
+and 74 Hungarian texts. Held-out #1 was written after round 1 and used for
+tuning in round 2; held-out #2 was not used for tuning and gives the honest
+number. See [docs/EVALUATION.md](docs/EVALUATION.md)
 for all numbers; 95% intervals are given for the protection rate and
 per-type recall, the other figures are point estimates.
 
