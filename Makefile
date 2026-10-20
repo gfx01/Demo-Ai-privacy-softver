@@ -5,7 +5,7 @@
 GATEWAY_VENV := .venv-gateway
 ANALYZER_VENV := .venv-analyzer
 
-.PHONY: env up down logs ps venvs test test-unit test-analyzer test-integration eval clean
+.PHONY: env up down logs ps venvs test test-unit test-analyzer test-integration eval report nerkor clean
 
 env:
 	./scripts/init-env.sh
@@ -46,5 +46,25 @@ test-integration: $(GATEWAY_VENV)
 
 test: test-unit test-analyzer test-integration
 
+# Detection + restoration evaluation, then docs/EVALUATION.md.
+eval: $(ANALYZER_VENV) $(GATEWAY_VENV)
+	python3 eval/build_testset.py dev eval/data/raw/dev_generated_verified.json
+	python3 eval/build_testset.py heldout eval/data/raw/heldout_generated_verified.json
+	PYTHONPATH=services/analyzer:src PRIVACY_HUB_PSEUDONYM_KEY=eval-only-not-a-secret-key $(ANALYZER_VENV)/bin/python eval/evaluate.py detection --dataset dev
+	PYTHONPATH=services/analyzer:src PRIVACY_HUB_PSEUDONYM_KEY=eval-only-not-a-secret-key $(ANALYZER_VENV)/bin/python eval/evaluate.py detection --dataset heldout
+	PRIVACY_HUB_PSEUDONYM_KEY=eval-only-not-a-secret-key $(GATEWAY_VENV)/bin/python eval/restore_eval.py --set dev
+	PRIVACY_HUB_PSEUDONYM_KEY=eval-only-not-a-secret-key $(GATEWAY_VENV)/bin/python eval/restore_eval.py --set heldout
+	python3 eval/report.py
+
+# Recommended Hungarian NER: train a small spaCy CNN on NYTK-NerKor
+# (CC BY-SA 4.0; ~20 min on 4 vCPU). Then set ANALYZER_HU_NER=spacy:/app/models/hu_nerkor_cnn
+# in .env and run: docker compose up -d --build analyzer
+NERKOR_COMMIT := 7c9c5b5f1f3ec7f94e724e0b92f3afa8eb262d00
+nerkor: $(ANALYZER_VENV)
+	rm -rf .nerkor-src && git init -q .nerkor-src
+	git -C .nerkor-src fetch -q --depth 1 https://github.com/nytud/NYTK-NerKor $(NERKOR_COMMIT)
+	git -C .nerkor-src checkout -q FETCH_HEAD
+	$(ANALYZER_VENV)/bin/python scripts/train_nerkor.py .nerkor-src models/hu_nerkor_cnn
+
 clean:
-	rm -rf $(GATEWAY_VENV) $(ANALYZER_VENV) .pytest_cache
+	rm -rf $(GATEWAY_VENV) $(ANALYZER_VENV) .pytest_cache .nerkor-src

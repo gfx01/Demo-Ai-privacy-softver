@@ -90,3 +90,12 @@ def test_bracket_placeholder_suffix_and_restore():
     # unknown ending: glued to names, hyphenated after abbreviations
     assert morph.inflect("Kovács Péter", morph.parse_suffix("-ék"), "PERSON") == "Kovács Péterék"
     assert morph.inflect("Zöldmező Kft.", morph.parse_suffix("-ék"), "HU_COMPANY") == "Zöldmező Kft.-ék"
+
+
+def test_accusative_after_r_or_l_plus_sibilant_and_possessive_over_translative():
+    m = HungarianMorphology(lexicon={"Örs", "Bors", "Marcell", "Marcel", "Kiss", "Dénes"})
+    assert inflect("Szénási Örs", "ACC") == "Szénási Örsöt"
+    assert inflect("Bors", "ACC") == "Borsot"
+    assert inflect("Kiss", "ACC") == "Kisst" and inflect("Dénes", "ACC") == "Dénest"
+    assert m.split_word("Örsöt")[:2] == ("Örs", "ACC")
+    assert m.split_word("Marcellé")[:2] == ("Marcell", "POSS")

@@ -16,3 +16,4 @@ eval/out/
 models/*
 !models/.gitkeep
 eval/data/hu_testset_*.jsonl
+.nerkor-src/

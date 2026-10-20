@@ -192,7 +192,11 @@ def inflect_word(word: str, case: str | None) -> str:
     if case == "SUP":
         return word + SUP_AFTER_CONSONANT[h]
     if case == "ACC":
-        # j l ly n ny r s sz z zs (and double s: "Kisst") take a bare -t
+        # j l ly n ny r s sz z zs (and double s: "Kisst") take a bare -t,
+        # except a sibilant after r/l: "Örs" -> "Örsöt", "Bors" -> "Borsot"
+        before = lower[: len(lower) - len(written)]
+        if written in ("s", "sz", "z", "zs") and before[-1:] in ("r", "l"):
+            return word + ACC_LINKING[h]
         if written in DIRECT_T or lower.endswith("ss"):
             return word + "t"
         return word + ACC_LINKING[h]
@@ -306,12 +310,14 @@ class HungarianMorphology:
             if not pool:
                 return w, None, ""
         # Prefer known stems, then the productive (lengthening) analysis, then
-        # stems not ending in a doubled consonant ("Zoltánnal" -> "Zoltán",
+        # common cases, then stems not ending in a doubled consonant ("Zoltánnal" -> "Zoltán",
         # not "Zoltánn"), then the longest stem ("Péternek" -> "Péter").
+        # The translative ("Marcellé" = Marcel + -vé) is rare with names: the
+        # possessive reading (Marcell + -é) wins.
         def rank(c):
             stem = c[2].lower()
             single_final = 0 if len(stem) >= 2 and stem[-1] == stem[-2] and stem[-1] not in VOWELS else 1
-            return (c[0], c[1], single_final, len(stem))
+            return (c[0], c[1], c[3] != "TRA", single_final, len(stem))
 
         _, _, stem, case, raw = max(pool, key=rank)
         return stem, case, raw
