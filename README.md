@@ -27,8 +27,9 @@ chat) érik el a nagy nyelvi modelleket. Minden kérés átmegy a gateway kötel
 szűrőjén: a felismert személyes adatokat (nevek, e-mail, telefonszám, TAJ,
 adóazonosító, adószám, bankszámlaszám, IBAN, cégjegyzékszám, személyi
 igazolvány, cím, rendszám, összegek, cégnevek) helyőrzőre vagy álnévre
-cseréli, és csak ezt küldi tovább a szolgáltatónak. A felismerés nem teljes
-(lásd lent és a [korlátokat](docs/LIMITATIONS.md)). A válaszban visszaírja az eredeti adatokat, magyar
+cseréli, és csak a maszkolt szöveget küldi tovább a szolgáltatónak (kivétel:
+a `stop` szekvenciák és az eszközdefiníciók nevei, enum-értékei). A felismerés
+nem teljes (lásd lent és a [korlátokat](docs/LIMITATIONS.md)). A válaszban visszaírja az eredeti adatokat, magyar
 toldalékkal együtt.
 
 * **Fail closed:** ha a felismerés vagy a napló nem elérhető, a kérés nem
@@ -113,7 +114,8 @@ mandatory guardrail that looks for personal data (detection is not complete,
 see below): names, e-mails, phones, Hungarian IDs (TAJ, adóazonosító,
 adószám, bank account, IBAN, cégjegyzékszám, ID card), addresses, licence
 plates, amounts and company names. These are replaced with placeholders or
-pseudonyms, and only the masked text goes to the provider. The answer is
+pseudonyms, and only the masked text goes to the provider (exceptions: `stop`
+sequences and tool/schema names and enum values are sent as they are). The answer is
 restored, including Hungarian case endings.
 
 * **Fail closed**: if detection or the audit log is unavailable, nothing is
@@ -177,8 +179,8 @@ docker compose up -d --build analyzer
 Set `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` / `GEMINI_API_KEY` and
 `PROVIDER_MODELS` (e.g. `openai/*,anthropic/*`) in `.env`, then run
 `docker compose up -d && docker compose up -d bootstrap`. Request models as
-`openai/<model-id>`. **Not tested against real providers** (no API keys were
-available while building). You still need a DPA with the provider, EU
+`openai/<model-id>`. **Not tested against real providers** (no provider API keys were
+configured while building). You still need a DPA with the provider, EU
 processing where required, and zero-retention terms.
 
 ### Strategies
@@ -248,7 +250,7 @@ make test-integration   # against the running stack: E2E, fail-closed, audit, bu
 make eval               # detection + restore evaluation -> docs/EVALUATION.md
 ```
 
-Last run: 198 unit, 40 analyzer and 38 integration tests passed. The
+Last run: 199 unit, 49 analyzer and 45 integration tests passed. The
 integration tests stop and pause services to prove fail-closed behaviour. They
 check that the mock provider receives nothing, and that a full Postgres dump,
 Redis and all container logs contain no raw test PII.

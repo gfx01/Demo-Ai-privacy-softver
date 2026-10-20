@@ -79,14 +79,14 @@ ambiguous formats (e.g. the személyi azonosító) they are required.
 
 ## 2. How well answers are restored
 
-* Measured with a **simulated model**, not a real LLM (no API keys were
-  available). Real models may rephrase, translate, abbreviate or invent
+* Measured with a **simulated model**, not a real LLM (no provider API keys
+  were configured). Real models may rephrase, translate, abbreviate or invent
   placeholders in ways the simulation does not cover.
 * Bracket strategy: 98.9% of mentions restored with the grammatically right
   Hungarian ending on held-out names (first run; 100% after two fixes),
   99.6% on development names. Pseudonyms: 99.6% / 99.9%. The *right value*
   came back in 100% of cases in every run; streaming equals non-streaming.
-* Without suffix handling (plain `[PERSON_1]`), only 1.5–1.8% of mentions get
+* Without suffix handling (plain `[PERSON_1]`), only 1.6–1.8% of mentions get
   the right ending: Hungarian needs the morphology layer.
 * The gold case forms were written by two independent AI annotators (99%
   agreement), **not verified by a native speaker**. The one disagreement,
@@ -133,8 +133,8 @@ ambiguous formats (e.g. the személyi azonosító) they are required.
   not forwarded to OpenAI-style providers; for Anthropic, LiteLLM forwards
   `metadata.user_id`, which the guardrail pseudonymises like `user`
   (integration test). LiteLLM **stores** some metadata keys in its own
-  database: `tags`, `spend_logs_metadata` and `session_id` go to the spend
-  logs. Client user identifiers (`user`, `metadata.user_id`, Open WebUI's user
+  database: verified for `tags`, `spend_logs_metadata` and `session_id`
+  (spend logs); other keys LiteLLM recognises may be stored too. Client user identifiers (`user`, `metadata.user_id`, Open WebUI's user
   header) are stored as end-user ids in LiteLLM's tables and in the audit log;
   only the pseudonymised form reaches the provider. Do not put personal data
   in `metadata`.

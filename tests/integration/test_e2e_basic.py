@@ -80,6 +80,33 @@ def test_non_allowlisted_routes_are_unreachable(gateway, master_key, path):
     assert r.status_code == 404
 
 
+@pytest.mark.parametrize(
+    "raw_path",
+    [
+        "/key/list/../../v1/models",
+        "/credentials/x/../../v1/models",
+        "/openai/v1/x/../../../v1/chat/completions",
+        "/openai/v1/x/%2e%2e/%2E%2E/%2e%2e/v1/chat/completions",
+        "/v1%2fchat%2fcompletions",
+        "/admin/../v1/chat/completions",
+    ],
+)
+def test_paths_that_only_normalise_to_an_allowed_route_are_refused(env, raw_path):
+    """nginx matches locations on the normalised path; such requests must not
+    reach LiteLLM with their raw path (which would hit other routes)."""
+    import subprocess
+
+    port = env.get("GATEWAY_PORT", "8080")
+    out = subprocess.run(
+        ["curl", "-s", "--path-as-is", "-o", "/dev/null", "-w", "%{http_code}", "-X", "POST",
+         "-H", f"Authorization: Bearer {env['LITELLM_MASTER_KEY']}", "-H", "Content-Type: application/json",
+         "-d", '{"model":"mock-gpt","messages":[{"role":"user","content":"x"}]}',
+         f"http://127.0.0.1:{port}{raw_path}"],
+        capture_output=True, text=True, timeout=30,
+    )
+    assert out.stdout == "400", (raw_path, out.stdout)
+
+
 def test_canary_model_not_available_to_users(gateway, user_key):
     status, _, _ = chat(gateway, user_key, "hi", model="privacy-canary")
     assert status in (401, 403)

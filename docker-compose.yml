@@ -120,7 +120,6 @@ services:
       PORTAL_ADMIN_USER: ${PORTAL_ADMIN_USER:-admin}
       PORTAL_ADMIN_PASSWORD: ${PORTAL_ADMIN_PASSWORD:?}
       PUBLIC_OPENWEBUI_URL: ${PUBLIC_OPENWEBUI_URL:-http://localhost:3000}
-      OPENWEBUI_LITELLM_KEY: ${OPENWEBUI_LITELLM_KEY:?}
       PRIVACY_HUB_DEFAULT_ORG: default
       PROVIDER_MODELS: ${PROVIDER_MODELS:-}
     read_only: true
@@ -133,7 +132,10 @@ services:
     image: privacy-hub/portal:dev
     command: ["python", "-m", "portal.bootstrap"]
     restart: "no"
-    environment: *portal-env
+    environment:
+      <<: *portal-env
+      # Only the one-shot bootstrap job registers the Open WebUI key.
+      OPENWEBUI_LITELLM_KEY: ${OPENWEBUI_LITELLM_KEY:?}
     depends_on:
       litellm: { condition: service_healthy }
       portal: { condition: service_started }

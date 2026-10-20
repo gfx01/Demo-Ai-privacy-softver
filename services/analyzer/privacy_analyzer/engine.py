@@ -67,11 +67,27 @@ NER_IGNORE = ["MISC", "CARDINAL", "ORDINAL", "QUANTITY", "PERCENT", "WORK_OF_ART
               "PRODUCT", "LAW", "MONEY"]
 
 
-INVISIBLE = dict.fromkeys(map(ord, "\u00ad\u200b\u200c\u200d\u2060\ufeff"))
+# Invisible characters that are not format characters (category Cf):
+# variation selectors, combining grapheme joiner, Hangul fillers.
+_INVISIBLE_OTHER = frozenset(
+    [*range(0xFE00, 0xFE10), *range(0xE0100, 0xE01F0), 0x034F, 0x115F, 0x1160, 0x3164, 0xFFA0]
+)
+
+
+def _visible(ch: str) -> bool:
+    return unicodedata.category(ch) != "Cf" and ord(ch) not in _INVISIBLE_OTHER
 
 
 def normalize_text(text: str) -> str:
-    return unicodedata.normalize("NFC", text).translate(INVISIBLE)
+    """NFC + removal of invisible characters (all format characters such as
+    zero-width spaces/joiners, soft hyphen, bidi marks and isolates, word
+    joiner, BOM, tag characters; plus variation selectors, CGJ and Hangul
+    fillers). One of them inside "Kov<U+200E>ács" would otherwise hide the
+    name from every recognizer while the model still reads "Kovács"."""
+    text = unicodedata.normalize("NFC", text)
+    if text.isascii():
+        return text
+    return "".join(ch for ch in text if _visible(ch))
 
 
 @dataclass

@@ -111,3 +111,9 @@ def test_decomposed_accents_and_invisible_characters_are_normalised(engine):
 @pytest.mark.parametrize("address", ["titkarsag@ceg.local", "kp@corp.internal", "anna.kovacs@iroda.example", "x@példa.hu"])
 def test_email_on_any_top_level_domain(engine, address):
     assert ("EMAIL_ADDRESS", address) in found(engine, f"Írj a {address} címre.")
+
+
+@pytest.mark.parametrize("invisible", ["\u200e", "\u202c", "\u2066", "\ufe0f", "\U000e0041", "\u034f", "\u2063", "\u00ad", "\u3164"])
+def test_invisible_characters_cannot_split_a_name(engine, invisible):
+    result = engine.mask([f"Írj Kov{invisible}ács Péternek a tárgyalásról."], "hu", "bracket")
+    assert result.masked_texts[0].startswith("Írj [PERSON_1]"), repr(result.masked_texts[0])
