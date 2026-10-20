@@ -33,18 +33,18 @@ def detection_section(name: str, data: dict) -> list[str]:
         "",
         "### Backends (micro-averaged over all entity types)",
         "",
-        "| backend | status | protected¹ | leaked² | overlap P / R / F1 | exact F1 | load s | RSS MB³ | p50 / p95 ms | chars/s |",
-        "|---|---|---|---|---|---|---|---|---|---|",
+        "| backend | status | protected¹ | leaked² | spurious⁴ | overlap P / R / F1 | exact F1 | load s | RSS MB³ | p50 / p95 ms | chars/s |",
+        "|---|---|---|---|---|---|---|---|---|---|---|",
     ]
     for b, r in data["backends"].items():
         if r.get("status") != "ok":
             reason = (r.get("error") or "").splitlines()[-1][:120] if r.get("error") else ""
-            lines.append(f"| {b} | **not run**: {reason} | | | | | | | | |")
+            lines.append(f"| {b} | **not run**: {reason} | | | | | | | | | |")
             continue
         m = r["metrics"]
         o, e = m["micro"]["overlap"], m["micro"]["exact"]
         lines.append(
-            f"| {b} | ok | {pct(m['protected_rate'])} ({ci(m['protected_ci95'])}) | {m['leaked']} | "
+            f"| {b} | ok | {pct(m['protected_rate'])} ({ci(m['protected_ci95'])}) | {m['leaked']} | {m.get('spurious_spans', '–')} | "
             f"{pct(o['precision'])} / {pct(o['recall'])} / {pct(o['f1'])} | {pct(e['f1'])} | {r['load_seconds']} | "
             f"{r['rss_mb_after_load']} (+{r['rss_mb_model_delta']}) | {r['latency_ms_p50']} / {r['latency_ms_p95']} | "
             f"{int(r['chars_per_second'])} |"
@@ -57,6 +57,7 @@ def detection_section(name: str, data: dict) -> list[str]:
         "³ resident memory (RSS) of the isolated evaluation process (one per backend, run from the analyzer "
         "venv on the host, not inside the container) after building a Hungarian-only engine (in parentheses: "
         "increase caused by building the engine incl. model). Build machine (4 vCPU); single-threaded, no batching.",
+        "⁴ predicted spans that overlap no labelled entity: ordinary text that would be masked (over-masking).",
         "",
     ]
     for b, r in data["backends"].items():
@@ -72,6 +73,13 @@ def detection_section(name: str, data: dict) -> list[str]:
                 f"| {t} | {v['support']} | {v['predicted']} | {pct(o['precision'])} | {pct(o['recall'])} ({ci(o['recall_ci95'])}) | "
                 f"{pct(o['f1'])} | {pct(e['f1'])} | {v['protected']} | {v['partially_protected']} | {v['leaked']} |"
             )
+        if m.get("per_domain"):
+            lines += ["", "By domain:", "", "| domain | items (without PII) | entities | protected (95% CI) | partial | leaked | spurious spans | PII-free items with masking |",
+                      "|---|---|---|---|---|---|---|---|"]
+            for dname, v in m["per_domain"].items():
+                rate = f"{pct(v['protected_rate'])} ({ci(v['protected_ci95'])})" if v["protected_rate"] is not None else "–"
+                lines.append(f"| {dname} | {v['items']} ({v['negative_items']}) | {v['gold']} | {rate} | {v['partially_protected']} | "
+                             f"{v['leaked']} | {v['spurious_spans']} | {v['negative_items_with_masking']} |")
         if m.get("recall_by_case"):
             lines += ["", "Recall (overlap) of names by grammatical form: " + ", ".join(
                 f"{k} {pct(v['recall'])} (n={v['n']})" for k, v in m["recall_by_case"].items())]

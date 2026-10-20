@@ -156,6 +156,9 @@ def score(items: list[dict], predictions: dict[str, list[dict]]) -> dict:
     protected, partially, leaked = Counter(), Counter(), Counter()
     by_case = defaultdict(lambda: [0, 0])  # PERSON/ORG recall (overlap) by grammatical case
     leaks: list[dict] = []
+    # per domain: [gold, protected, partial, leaked, spurious spans, items, negative items, negatives with a hit]
+    by_domain = defaultdict(lambda: [0, 0, 0, 0, 0, 0, 0, 0])
+    spurious_total = 0
     for item in items:
         text = item["text"]
         gold = [(g["type"], *_norm(text, g["start"], g["end"]), g) for g in item["entities"]]
@@ -165,6 +168,15 @@ def score(items: list[dict], predictions: dict[str, list[dict]]) -> dict:
             n_gold[g[0]] += 1
         for p in pred:
             n_pred[p[0]] += 1
+        dom = by_domain[item.get("domain", "?")]
+        dom[5] += 1
+        # spans that overlap no gold entity at all: over-masking of ordinary text
+        spurious = sum(1 for p in pred if not any(min(g[2], p[2]) > max(g[1], p[1]) for g in gold))
+        spurious_total += spurious
+        dom[4] += spurious
+        if not gold:
+            dom[6] += 1
+            dom[7] += int(bool(pred))
         exact_used: set[int] = set()
         for g in gold:
             for k, p in enumerate(pred):
@@ -189,12 +201,16 @@ def score(items: list[dict], predictions: dict[str, list[dict]]) -> dict:
             chars = [i for i in range(g[1], g[2]) if not text[i].isspace()]
             covered = sum(1 for i in chars if any(p[1] <= i < p[2] for p in pred))
             frac = covered / len(chars) if chars else 1.0
+            dom[0] += 1
             if frac >= 0.95:
                 protected[g[0]] += 1
+                dom[1] += 1
             elif frac >= 0.5:
                 partially[g[0]] += 1
+                dom[2] += 1
             else:
                 leaked[g[0]] += 1
+                dom[3] += 1
                 leaks.append({"id": item["id"], "type": g[0], "text": text[g[1]:g[2]]})
             if g[0] in ("PERSON", "ORG"):
                 key = f"{g[0]}:{'NOM' if g[3].get('case', 'NOM') == 'NOM' else 'inflected'}"
@@ -236,7 +252,14 @@ def score(items: list[dict], predictions: dict[str, list[dict]]) -> dict:
         "leaked": sum(leaked.values()),
         "partially_protected": sum(partially.values()),
         "recall_by_case": {k: {"recall": round(v[0] / v[1], 3) if v[1] else 0.0, "n": v[1]} for k, v in sorted(by_case.items())},
-        "leak_examples": leaks[:40],
+        "leak_examples": leaks,
+        "spurious_spans": spurious_total,
+        "per_domain": {
+            d: {"gold": v[0], "protected": v[1], "partially_protected": v[2], "leaked": v[3],
+                "protected_rate": round(v[1] / v[0], 3) if v[0] else None, "protected_ci95": wilson(v[1], v[0]) if v[0] else None,
+                "spurious_spans": v[4], "items": v[5], "negative_items": v[6], "negative_items_with_masking": v[7]}
+            for d, v in sorted(by_domain.items())
+        },
     }
 
 
