@@ -76,6 +76,9 @@ general_settings:
   master_key: os.environ/LITELLM_MASTER_KEY
   database_url: os.environ/DATABASE_URL
   store_prompts_in_spend_logs: false
+  # Portal keys belong to the organisation's team; without this LiteLLM
+  # ignores the per-user budget for team keys (checked in 1.105.1 auth_checks).
+  apply_user_budget_to_team_keys: true
   # Open WebUI forwards the signed-in user's id; used as LiteLLM end-user id.
   user_header_mappings:
     - header_name: X-OpenWebUI-User-Id

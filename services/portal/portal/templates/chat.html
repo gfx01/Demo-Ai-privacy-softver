@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Chat – AI Privacy Hub{% endblock %}
+{% block content %}
+<h1>Chat</h1>
+<div class="card row">
+  <label>API kulcs / key <input id="key" type="password" size="36" placeholder="sk-..." autocomplete="off"></label>
+  <label>Modell <select id="model"></select></label>
+  <label><input id="preview" type="checkbox" checked> Előnézet küldés előtt / Preview before sending</label>
+  <button id="clear" class="secondary">Új beszélgetés / New chat</button>
+</div>
+<div id="log" class="chat-log"></div>
+<div id="previewBox" class="card" hidden>
+  <p><b>Ez megy ki a modellhez / This is what will be sent:</b> <span id="previewInfo" class="muted"></span></p>
+  <div id="previewText" class="preview"></div>
+  <p id="previewWarn" class="bad" hidden></p>
+  <p class="row"><button id="confirm">Küldés / Send</button><button id="cancel" class="secondary">Mégse / Cancel</button></p>
+</div>
+<div class="card">
+  <textarea id="input" placeholder="Írja be az üzenetet… / Type your message…"></textarea>
+  <p class="row"><button id="send">Küldés / Send</button><span id="status" class="muted"></span></p>
+</div>
+<p class="muted">A kulcs csak ebben a böngészőfülben tárolódik (sessionStorage). The key is kept only in this browser tab.</p>
+<script src="/static/chat.js"></script>
+{% endblock %}

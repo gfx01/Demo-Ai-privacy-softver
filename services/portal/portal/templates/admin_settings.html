@@ -1,0 +1,51 @@
+{% extends "admin_base.html" %}
+{% block admin %}
+<h1>Adatvédelmi beállítások / Privacy settings</h1>
+{% if saved %}<div class="card ok">Mentve / saved: {{ saved }} (a gateway legfeljebb 10 mp-en belül átveszi / applied within ~10 s)</div>{% endif %}
+<p class="muted">
+  <b>mask</b>: a felismert adatokat helyőrzőre cseréljük és továbbküldjük; <b>strict</b>: ha bármit felismerünk, a kérést blokkoljuk.<br>
+  <b>mask</b>: detected data is replaced and the request forwarded; <b>strict</b>: any detection blocks the request.
+</p>
+{% for o in orgs %}
+<form class="card" method="post" action="/admin/settings/{{ o.id }}">
+  <input type="hidden" name="csrf" value="{{ csrf }}">
+  <h2 style="margin-top:0">{{ o.name }} <span class="muted">({{ o.id }})</span></h2>
+  <div class="row">
+    <label>Mód / Mode
+      <select name="mode">
+        <option value="mask" {% if o.mode == 'mask' %}selected{% endif %}>mask</option>
+        <option value="strict" {% if o.mode == 'strict' %}selected{% endif %}>strict (block)</option>
+      </select></label>
+    <label>Stratégia / Strategy
+      <select name="strategy">
+        <option value="bracket" {% if o.strategy == 'bracket' %}selected{% endif %}>bracket ([PERSON_1])</option>
+        <option value="pseudonym" {% if o.strategy == 'pseudonym' %}selected{% endif %}>pseudonym (álnév)</option>
+      </select></label>
+    <label>Nyelv / Language
+      <select name="language">
+        <option value="hu" {% if o.language == 'hu' %}selected{% endif %}>magyar</option>
+        <option value="en" {% if o.language == 'en' %}selected{% endif %}>English</option>
+      </select></label>
+  </div>
+  <p><b>Maszkolt típusok / Masked entity types</b></p>
+  <div class="row">
+    {% for value, label in entities %}
+    <label class="pill"><input type="checkbox" name="enabled" value="{{ value }}" {% if value not in (o.disabled_entities or []) %}checked{% endif %}> {{ label }}</label>
+    {% endfor %}
+  </div>
+  <p><button type="submit">Mentés / Save</button>
+     <span class="muted">utoljára / last change: {{ o.updated_at or '–' }} {{ o.updated_by or '' }}</span></p>
+</form>
+{% endfor %}
+
+<form class="card" method="post" action="/admin/organisations">
+  <input type="hidden" name="csrf" value="{{ csrf }}">
+  <h2 style="margin-top:0">Új szervezet / New organisation</h2>
+  <div class="row">
+    <input name="org_id" placeholder="azonosító, pl. ugyvediroda" pattern="[a-z0-9][a-z0-9_-]{1,62}" required>
+    <input name="name" placeholder="Név / Name" required>
+    <button type="submit">Létrehozás / Create</button>
+  </div>
+  <p class="muted">Létrehoz egy LiteLLM csapatot is (org-&lt;id&gt;). Creates the LiteLLM team org-&lt;id&gt; as well.</p>
+</form>
+{% endblock %}

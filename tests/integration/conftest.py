@@ -117,3 +117,38 @@ def chat(client: httpx.Client, key: str, content: str, model: str = "mock-gpt", 
                 for c in json.loads(line[6:]).get("choices", []):
                     parts.append((c.get("delta") or {}).get("content") or "")
     return 200, "".join(parts), {}
+
+
+def wait_healthy(service: str, timeout_s: float = 180) -> None:
+    import time
+
+    deadline = time.monotonic() + timeout_s
+    while time.monotonic() < deadline:
+        out = compose("ps", "--format", "{{.Health}}", service, check=False).stdout.strip()
+        if out == "healthy":
+            return
+        time.sleep(2)
+    raise AssertionError(f"{service} did not become healthy within {timeout_s}s")
+
+
+def psql(db: str, sql: str) -> str:
+    return compose("exec", "-T", "postgres", "psql", "-U", "postgres", "-d", db, "-At", "-c", sql).stdout
+
+
+def litellm_api(method: str, path: str, body: dict | None = None) -> dict:
+    """Call the LiteLLM admin API from inside its container (admin routes are
+    not reachable through the gateway)."""
+    script = (
+        "import json,os,sys,urllib.request;"
+        "b=sys.argv[3].encode() if sys.argv[3] else None;"
+        "r=urllib.request.Request('http://127.0.0.1:4000'+sys.argv[2],data=b,method=sys.argv[1],"
+        "headers={'Authorization':'Bearer '+os.environ['LITELLM_MASTER_KEY'],'Content-Type':'application/json'});"
+        "print(urllib.request.urlopen(r).read().decode())"
+    )
+    out = compose("exec", "-T", "litellm", "python3", "-c", script, method, path, json.dumps(body) if body else "")
+    return json.loads(out.stdout)
+
+
+@pytest.fixture(scope="session")
+def admin_auth(env) -> tuple[str, str]:
+    return env.get("PORTAL_ADMIN_USER", "admin"), env["PORTAL_ADMIN_PASSWORD"]
