@@ -252,7 +252,12 @@ built-in lists in `hu_places.py`.
   pictures without text yield nothing. The model does not see the image.
 * PDFs: a page that has a text layer is not OCR'd, so text inside images on
   such a page is neither read nor sent. Limits per document: 50 pages,
-  25 MB, 40 megapixels per image, 180 s (configurable).
+  25 MB, 40 megapixels per image or page, 180 s (configurable).
+* One document is processed at a time, in a separate worker process. A file
+  that runs over the time limit or crashes the parser gets an error, the
+  worker is killed and restarted; the container is limited to 4 GB of memory
+  (`OCR_MEM_LIMIT`). A long scan therefore delays everyone else's uploads and
+  chat images; there is no per-user OCR quota.
 * DOCX: body text, tables, headers and footers are read; footnotes, comments
   and text boxes are not (and are therefore not sent either). Other formats
   (DOC, ODT, PPTX, RTF) are refused.
@@ -321,4 +326,7 @@ are decoded with Pillow 12.3.0 and PDFs rendered with pdfium (pypdfium2
   and sends model traffic only to the gateway.
 * With `ENABLE_PERSISTENT_CONFIG=false`, Open WebUI settings changed in its
   admin UI last only until the next restart; the compose file is the source
-  of truth.
+  of truth. Self-registration is therefore switched off there
+  (`OPENWEBUI_ENABLE_SIGNUP=false`; the first admin account can still be
+  created) and new accounts wait for approval (`DEFAULT_USER_ROLE=pending`);
+  otherwise registration would reopen after every restart.

@@ -7,12 +7,11 @@ CONFIG="${LITELLM_CONFIG:-/app/privacy/config.yaml}"
 
 # Local-only mode: drop model entries that would call an external provider;
 # startup_check then refuses to start if any remains.
-case "${PRIVACY_HUB_LOCAL_ONLY:-false}" in
-  1|true|TRUE|True|yes|on)
-    python3 -m privacy_hub.local_only "$CONFIG" /tmp/litellm-local-only.yaml
-    CONFIG=/tmp/litellm-local-only.yaml
-    ;;
-esac
+# Python decides whether the mode is on, exactly as startup_check does.
+if python3 -m privacy_hub.local_only --enabled; then
+  python3 -m privacy_hub.local_only "$CONFIG" /tmp/litellm-local-only.yaml
+  CONFIG=/tmp/litellm-local-only.yaml
+fi
 
 python3 -m privacy_hub.startup_check "$CONFIG"
 

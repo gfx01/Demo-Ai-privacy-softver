@@ -8,6 +8,7 @@ same endpoint for images and files attached to chat requests.
 
 The service only extracts text; masking happens later in the gateway. It
 never logs request bodies, file names or the user headers Open WebUI sends.
+Extraction runs in a killable worker process (see worker.py).
 """
 
 from __future__ import annotations
@@ -15,16 +16,16 @@ from __future__ import annotations
 import asyncio
 import hmac
 import logging
+import os
 from contextlib import asynccontextmanager
 from urllib.parse import unquote
 
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
-from PIL import Image
 
 from .config import Settings
-from .engines import make_engine
-from .extract import ExtractionError, TooLargeError, UnsupportedTypeError, extract
+from .extract import ExtractionError, TooLargeError, UnsupportedTypeError
+from .worker import DEFAULT_FACTORY, EngineError, ExtractionWorker, WorkerCrashError
 
 log = logging.getLogger("ocr_service")
 
@@ -32,12 +33,13 @@ log = logging.getLogger("ocr_service")
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     settings = Settings.from_env()
-    Image.MAX_IMAGE_PIXELS = settings.max_pixels
     app.state.settings = settings
-    app.state.engine = make_engine(settings)
+    # OCR_ENGINE_FACTORY exists for the test suite (a fake engine).
+    app.state.worker = await asyncio.to_thread(ExtractionWorker, settings, os.environ.get("OCR_ENGINE_FACTORY", DEFAULT_FACTORY))
     app.state.slots = asyncio.Semaphore(1)
-    log.info("OCR service ready (engine=%s)", settings.engine)
+    log.info("OCR service ready (engine=%s)", app.state.worker.engine_name)
     yield
+    app.state.worker.close()
 
 
 app = FastAPI(title="privacy-hub OCR", docs_url=None, redoc_url=None, openapi_url=None, lifespan=lifespan)
@@ -49,7 +51,7 @@ def _error(status: int, message: str) -> JSONResponse:
 
 @app.get("/health")
 async def health(request: Request) -> dict:
-    return {"status": "ok", "engine": request.app.state.engine.name}
+    return {"status": "ok", "engine": request.app.state.worker.engine_name}
 
 
 @app.put("/process")
@@ -73,28 +75,31 @@ async def process(request: Request):
 
     content_type = request.headers.get("content-type", "")
     filename = unquote(request.headers.get("x-filename", ""))
+    worker: ExtractionWorker = request.app.state.worker
     try:
+        # The slot is held until the worker has finished or has been killed.
         async with request.app.state.slots:
-            result = await asyncio.wait_for(
-                asyncio.to_thread(extract, bytes(body), content_type, filename, request.app.state.engine, settings),
-                timeout=settings.timeout_s,
-            )
+            result = await asyncio.to_thread(worker.run, bytes(body), content_type, filename, settings.timeout_s)
     except UnsupportedTypeError as exc:
         return _error(415, str(exc))
     except TooLargeError as exc:
         return _error(413, str(exc))
     except ExtractionError as exc:
         return _error(422, str(exc))
+    except WorkerCrashError:
+        log.error("extraction worker crashed; restarted")
+        return _error(422, "the file could not be processed (the extractor stopped)")
     except TimeoutError:
+        log.error("extraction timed out; worker restarted")
         return _error(504, f"text extraction took longer than {settings.timeout_s} s")
-    except Exception as exc:  # noqa: BLE001 - engine/model server failures
+    except (EngineError, RuntimeError) as exc:
         log.error("extraction failed: %s", type(exc).__name__)
-        return _error(503, f"OCR engine unavailable ({type(exc).__name__})")
+        return _error(503, "OCR engine unavailable")
     return {
         "page_content": result.text,
         "metadata": {
             "source": "privacy-hub-ocr",
-            "engine": request.app.state.engine.name if result.ocr_pages else "none",
+            "engine": worker.engine_name if result.ocr_pages else "none",
             "kind": result.kind,
             "pages": result.pages,
             "ocr_pages": result.ocr_pages,

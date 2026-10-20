@@ -165,3 +165,32 @@ def test_local_only_config_inside_the_gateway_image():
     assert out.returncode == 0, out.stdout + out.stderr
     assert "removed external model entries: openai/*, anthropic/*, gemini/*" in out.stdout
     assert "model 'openai/*' would send requests to the provider's public API" in out.stderr
+
+
+REACH = (
+    "import socket,sys\n"
+    "try:\n socket.create_connection((sys.argv[1], int(sys.argv[2])), timeout=3); print('reachable')\n"
+    "except Exception as e: print('unreachable', type(e).__name__)"
+)
+
+
+@pytest.mark.parametrize("source, target, port", [
+    ("openwebui", "litellm", "4000"),   # only through nginx (route allowlist)
+    ("openwebui", "analyzer", "8000"),
+    ("ocr", "redis", "6379"),
+    ("ocr", "postgres", "5432"),
+    ("ocr", "analyzer", "8000"),
+])
+def test_network_isolation(source, target, port):
+    """Docker networks are two-way: the OCR service can reach Open WebUI and
+    LiteLLM (it shares a network with each), but nothing else."""
+    python = "python3" if source == "litellm" else "python"
+    out = compose("exec", "-T", source, python, "-c", REACH, target, port).stdout
+    assert out.startswith("unreachable"), f"{source} can reach {target}:{port}"
+
+
+def test_openwebui_signup_stays_off():
+    """ENABLE_PERSISTENT_CONFIG=false: hardening must come from the compose
+    file, otherwise self-registration would reopen after every restart."""
+    out = compose("exec", "-T", "openwebui", "sh", "-c", "echo $ENABLE_SIGNUP $DEFAULT_USER_ROLE $ENABLE_PERSISTENT_CONFIG").stdout.split()
+    assert out == ["false", "pending", "false"]

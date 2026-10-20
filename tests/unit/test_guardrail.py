@@ -374,3 +374,22 @@ async def test_ocr_failure_blocks_the_request(env, failure):
         await g.async_pre_call_hook(UAK(), None, data, "acompletion")
     assert exc.value.status_code == 503
     assert g.audit.events[-1].error_class == "OcrUnavailable"
+
+
+async def test_non_ascii_mime_type_is_refused_not_crashing(env):
+    g = with_ocr(make_guardrail(env), lambda r: httpx.Response(200, json={"page_content": "x"}))
+    url = "data:image/péng;base64," + base64.b64encode(b"img").decode()
+    with pytest.raises(HTTPException) as exc:
+        await g.async_pre_call_hook(UAK(), None, image_request({"type": "image_url", "image_url": {"url": url}}), "acompletion")
+    assert exc.value.status_code == 400
+
+
+async def test_unexpected_attachment_error_blocks_with_audit(env):
+    def ocr(request):
+        raise ValueError("unexpected")
+
+    g = with_ocr(make_guardrail(env), ocr)
+    with pytest.raises(HTTPException) as exc:
+        await g.async_pre_call_hook(UAK(), None, image_request({"type": "image_url", "image_url": {"url": PNG_URL}}), "acompletion")
+    assert exc.value.status_code == 503
+    assert g.audit.events[-1].error_class == "OcrUnavailable"

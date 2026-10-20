@@ -22,6 +22,8 @@ umask 077
 if [ "${1:-}" = "--add-missing" ]; then
   [ -e .env ] || { echo ".env does not exist - run without --add-missing first." >&2; exit 1; }
   added=""
+  # a last line without a newline would be glued to the first added setting
+  if [ -s .env ] && [ -n "$(tail -c 1 .env)" ]; then echo >> .env; fi
   while IFS= read -r line; do
     case "$line" in ''|'#'*) continue ;; esac
     key="${line%%=*}"

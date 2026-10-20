@@ -13,7 +13,7 @@ import math
 import zipfile
 from dataclasses import dataclass
 
-from PIL import Image, ImageOps, ImageSequence
+from PIL import Image, ImageOps
 
 from .config import Settings
 from .engines import OcrEngine
@@ -24,6 +24,8 @@ TEXT_TYPES = {"text/plain", "text/markdown", "text/csv", "text/x-markdown", "app
 TEXT_EXTENSIONS = {"txt", "md", "markdown", "csv", "tsv", "json", "log"}
 HTML_TYPES = {"text/html", "application/xhtml+xml"}
 HTML_EXTENSIONS = {"html", "htm", "xhtml"}
+# Cells read from a spreadsheet; an empty row counts as one, so a sheet with
+# an absurd row index cannot loop for hours.
 MAX_SPREADSHEET_CELLS = 500_000
 
 
@@ -162,19 +164,39 @@ def _image(data: bytes, engine: OcrEngine, settings: Settings) -> Extracted:
         raise ExtractionError("image cannot be decoded") from exc
     if image.width * image.height > settings.max_pixels:
         raise TooLargeError(f"image has {image.width}x{image.height} pixels; the limit is {settings.max_pixels}")
-    frames: list[Image.Image] = []
+    dpi = _dpi(image.info.get("dpi"))
+    texts: list[str] = []
+    # One frame at a time: a multi-page TIFF or GIF is never held in memory
+    # as a whole.
     try:
-        for i, frame in enumerate(ImageSequence.Iterator(image)):
-            if i >= settings.max_pages:
-                raise TooLargeError(f"image has more than {settings.max_pages} frames")
-            if frame.width * frame.height > settings.max_pixels:
-                raise TooLargeError(f"image frame exceeds {settings.max_pixels} pixels")
-            frames.append(ImageOps.exif_transpose(frame.convert("RGB")))
-    except (OSError, ValueError, Image.DecompressionBombError) as exc:
+        frames = getattr(image, "n_frames", 1)
+    except (OSError, ValueError) as exc:
         raise ExtractionError("image cannot be decoded") from exc
-    dpi = image.info.get("dpi", (300, 300))[0] or 300
-    texts = _ocr(frames, engine, settings, int(min(max(dpi, 70), 1200)))
-    return Extracted("\n\n".join(texts), "image", pages=len(frames), ocr_pages=len(frames))
+    if frames > settings.max_pages:
+        raise TooLargeError(f"image has {frames} frames; the limit is {settings.max_pages}")
+    for i in range(frames):
+        try:
+            image.seek(i)
+        except (EOFError, OSError, ValueError) as exc:
+            raise ExtractionError("image cannot be decoded") from exc
+        if image.width * image.height > settings.max_pixels:
+            raise TooLargeError(f"image frame exceeds {settings.max_pixels} pixels")
+        try:
+            frame = ImageOps.exif_transpose(image.convert("RGB"))
+        except (OSError, ValueError, Image.DecompressionBombError) as exc:
+            raise ExtractionError("image cannot be decoded") from exc
+        texts += _ocr([frame], engine, settings, dpi)
+        del frame
+    return Extracted("\n\n".join(texts), "image", pages=len(texts), ocr_pages=len(texts))
+
+
+def _dpi(value) -> int:
+    """Resolution from image metadata, clamped; 300 when absent or malformed."""
+    try:
+        dpi = float(value[0] if isinstance(value, (tuple, list)) else value)
+    except (TypeError, ValueError, IndexError, ZeroDivisionError):
+        return 300
+    return int(min(max(dpi, 70), 1200)) if dpi == dpi and dpi > 0 else 300
 
 
 # -- Office -------------------------------------------------------------------------
@@ -235,7 +257,7 @@ def _xlsx(data: bytes) -> str:
         for sheet in workbook.worksheets:
             parts.append(f"# {sheet.title}")
             for row in sheet.iter_rows(values_only=True):
-                cells += len(row)
+                cells += max(len(row), 1)
                 if cells > MAX_SPREADSHEET_CELLS:
                     raise TooLargeError(f"spreadsheet has more than {MAX_SPREADSHEET_CELLS} cells")
                 values = ["" if v is None else str(v) for v in row]

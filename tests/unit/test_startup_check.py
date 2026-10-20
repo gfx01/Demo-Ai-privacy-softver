@@ -91,3 +91,29 @@ def test_local_only_rejects_logging_callbacks():
     cfg, _ = filter_config(copy.deepcopy(CONFIG), LOCAL_ENV)
     cfg["litellm_settings"]["success_callback"] = ["langfuse"]
     assert any("success_callback" in p for p in check_config(cfg, LOCAL_ENV))
+
+
+@pytest.mark.parametrize("value, on", [("true", True), ("YES", True), (" On ", True), ("1", True), ("false", False), ("", False), ("no", False)])
+def test_local_only_enabled_flag_matches_startup_check(monkeypatch, value, on):
+    """The entrypoint asks this exit code; startup_check uses the same function."""
+    from privacy_hub import local_only
+
+    monkeypatch.setenv("PRIVACY_HUB_LOCAL_ONLY", value)
+    assert local_only.main(["local_only", "--enabled"]) == (0 if on else 1)
+    assert local_only.enabled({"PRIVACY_HUB_LOCAL_ONLY": value}) is on
+
+
+def test_init_env_add_missing_keeps_last_line_without_newline(tmp_path):
+    import shutil
+    import subprocess
+
+    root = Path(__file__).parents[2]
+    (tmp_path / "scripts").mkdir()
+    shutil.copy(root / "scripts/init-env.sh", tmp_path / "scripts/init-env.sh")
+    (tmp_path / ".env.example").write_text("# comment\nA_SECRET=CHANGE_ME\nPUBLIC_URL=http://localhost:3000\nNEW_SECRET=CHANGE_ME\nNEW_SETTING=x\n")
+    (tmp_path / ".env").write_text("A_SECRET=keep\nPUBLIC_URL=http://localhost:3000")  # no final newline
+    subprocess.run(["sh", str(tmp_path / "scripts/init-env.sh"), "--add-missing"], check=True, capture_output=True)
+    lines = (tmp_path / ".env").read_text().splitlines()
+    assert lines[:2] == ["A_SECRET=keep", "PUBLIC_URL=http://localhost:3000"]
+    assert lines[2].startswith("NEW_SECRET=") and len(lines[2]) > len("NEW_SECRET=") + 20
+    assert lines[3] == "NEW_SETTING=x"

@@ -268,23 +268,43 @@ def test_surya_requires_licence_acknowledgement_and_server():
         settings(engine="cloud").validate()
 
 
-# -- HTTP contract -------------------------------------------------------------------------
+# -- HTTP contract (the service with its worker process and a fake engine) --------------
+PNG = None
+
+
+def png() -> bytes:
+    return to_bytes(Image.new("RGB", (32, 32), "white"), "PNG")
+
+
 @pytest.fixture()
-def client(monkeypatch):
+def make_client(monkeypatch):
     from fastapi.testclient import TestClient
 
-    monkeypatch.setenv("OCR_API_KEY", KEY)
-    monkeypatch.setenv("OCR_MAX_BYTES", "200000")
-    engine = FakeEngine("Kép szövege")
-    monkeypatch.setattr(app_module, "make_engine", lambda s: engine)
-    with TestClient(app_module.app) as c:
-        yield c
+    clients = []
+
+    def make(factory="ok", **env):
+        monkeypatch.setenv("OCR_API_KEY", KEY)
+        monkeypatch.setenv("OCR_MAX_BYTES", "200000")
+        monkeypatch.setenv("OCR_ENGINE_FACTORY", f"tests.ocr.fakes:{factory}")
+        for k, v in env.items():
+            monkeypatch.setenv(k, v)
+        c = TestClient(app_module.app)
+        c.__enter__()
+        clients.append(c)
+        return c
+
+    yield make
+    for c in clients:
+        c.__exit__(None, None, None)
 
 
-def test_process_contract(client):
-    png = to_bytes(Image.new("RGB", (32, 32), "white"), "PNG")
-    r = client.put("/process", content=png, headers={
-        "Authorization": f"Bearer {KEY}", "Content-Type": "image/png",
+AUTH = {"Authorization": f"Bearer {KEY}"}
+
+
+def test_process_contract(make_client):
+    client = make_client()
+    r = client.put("/process", content=png(), headers={
+        **AUTH, "Content-Type": "image/png",
         "X-Filename": "abc_Kov%C3%A1cs%20P%C3%A9ter.png", "X-OpenWebUI-User-Email": "x@example.com",
     })
     assert r.status_code == 200
@@ -294,14 +314,89 @@ def test_process_contract(client):
     assert "Kov" not in r.text  # the file name is not echoed back
 
 
-def test_process_errors(client):
-    auth = {"Authorization": f"Bearer {KEY}"}
+def test_process_errors(make_client):
+    client = make_client()
     assert client.put("/process", content=b"x", headers={"Content-Type": "text/plain"}).status_code == 401
     assert client.put("/process", content=b"x", headers={"Authorization": "Bearer wrong-key-000000000"}).status_code == 401
-    assert client.put("/process", content=b"", headers=auth).status_code == 422
-    assert client.put("/process", content=b"x" * 200_001, headers={**auth, "Content-Type": "text/plain"}).status_code == 413
-    assert client.put("/process", content=b"\x00\x01", headers={**auth, "Content-Type": "application/octet-stream"}).status_code == 415
-    r = client.put("/process", content="Szia Péter".encode(), headers={**auth, "Content-Type": "text/plain"})
+    assert client.put("/process", content=b"", headers=AUTH).status_code == 422
+    assert client.put("/process", content=b"x" * 200_001, headers={**AUTH, "Content-Type": "text/plain"}).status_code == 413
+    assert client.put("/process", content=b"\x00\x01", headers={**AUTH, "Content-Type": "application/octet-stream"}).status_code == 415
+    r = client.put("/process", content="Szia Péter".encode(), headers={**AUTH, "Content-Type": "text/plain"})
     assert r.status_code == 200 and r.json()["page_content"] == "Szia Péter"
     assert r.json()["metadata"]["engine"] == "none"
     assert client.get("/health").json() == {"status": "ok", "engine": "fake"}
+
+
+def test_timeout_kills_the_worker_and_the_service_recovers(make_client):
+    import multiprocessing
+    import time
+
+    client = make_client("slow", OCR_TIMEOUT_S="2")
+    started = time.monotonic()
+    for _ in range(3):
+        assert client.put("/process", content=png(), headers={**AUTH, "Content-Type": "image/png"}).status_code == 504
+    assert time.monotonic() - started < 30
+    # killed, not left running: only the current worker process is alive
+    assert len(multiprocessing.active_children()) == 1
+    r = client.put("/process", content="szöveg".encode(), headers={**AUTH, "Content-Type": "text/plain"})
+    assert r.status_code == 200 and r.json()["page_content"] == "szöveg"
+
+
+def test_worker_crash_is_contained(make_client):
+    client = make_client("crash")
+    r = client.put("/process", content=png(), headers={**AUTH, "Content-Type": "image/png"})
+    assert r.status_code == 422
+    r = client.put("/process", content="még működik".encode(), headers={**AUTH, "Content-Type": "text/plain"})
+    assert r.status_code == 200 and r.json()["page_content"] == "még működik"
+
+
+def test_engine_failure_is_503(make_client):
+    client = make_client("fail")
+    assert client.put("/process", content=png(), headers={**AUTH, "Content-Type": "image/png"}).status_code == 503
+
+
+def test_service_refuses_to_start_when_the_engine_cannot_load(monkeypatch):
+    from fastapi.testclient import TestClient
+
+    monkeypatch.setenv("OCR_API_KEY", KEY)
+    monkeypatch.setenv("OCR_ENGINE_FACTORY", "tests.ocr.fakes:broken")
+    with pytest.raises(RuntimeError, match="language data missing"):
+        with TestClient(app_module.app):
+            pass
+
+
+# -- resource limits ---------------------------------------------------------------------------
+def test_frame_limit_is_checked_before_any_ocr():
+    engine = FakeEngine()
+    frames = [Image.new("L", (64, 64), 255) for _ in range(4)]
+    tiff = to_bytes(frames[0], "TIFF", save_all=True, append_images=frames[1:])
+    with pytest.raises(TooLargeError):
+        extract(tiff, "image/tiff", "", engine, settings(max_pages=3))
+    assert engine.calls == []
+
+
+def test_xlsx_with_absurd_row_index_stops_quickly():
+    """A 5 KB sheet whose only row has index 10^12 made openpyxl yield 10^12
+    empty rows; empty rows now count against the cell limit."""
+    import time
+
+    openpyxl = pytest.importorskip("openpyxl")
+    wb = openpyxl.Workbook()
+    wb.active["A1"] = "x"
+    buf = io.BytesIO()
+    wb.save(buf)
+    src = zipfile.ZipFile(io.BytesIO(buf.getvalue()))
+    out = io.BytesIO()
+    sheet = (
+        '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetData>'
+        '<row r="1000000000000"><c r="A1000000000000" t="inlineStr"><is><t>x</t></is></c></row>'
+        "</sheetData></worksheet>"
+    )
+    with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as dst:
+        for item in src.infolist():
+            data = sheet.encode() if item.filename == "xl/worksheets/sheet1.xml" else src.read(item.filename)
+            dst.writestr(item, data)
+    started = time.monotonic()
+    with pytest.raises(TooLargeError):
+        extract(out.getvalue(), "", "bomba.xlsx", FakeEngine(), settings())
+    assert time.monotonic() - started < 20

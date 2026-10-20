@@ -33,7 +33,8 @@ import httpx
 
 from .messages import UnsupportedContentError
 
-DATA_URL = re.compile(r"^data:(?P<mime>[\w.+-]+/[\w.+-]+)?(?:;[\w.+-]+=[^;,]*)*;base64,", re.IGNORECASE)
+# ASCII only: the MIME type becomes an HTTP header of the OCR request.
+DATA_URL = re.compile(r"^data:(?P<mime>[\w.+-]+/[\w.+-]+)?(?:;[\w.+-]+=[^;,]*)*;base64,", re.IGNORECASE | re.ASCII)
 
 LABELS = {
     "hu": {"image": "[Csatolt kép szövege (OCR)]", "file": "[Csatolt fájl szövege: {name}]", "empty": "(nem található benne szöveg)"},

@@ -129,10 +129,18 @@ This is an MVP / demo. Read this before using it with real data.
   OCR service only returns the text of what it is sent and sits on an
   internal network without internet access, but it parses untrusted files
   (PDF via pdfium, images via Pillow, DOCX/XLSX via python-docx and openpyxl
-  with defusedxml). It runs as a non-root user on a read-only file system,
-  refuses ZIP bombs and oversized images, and never hands uploaded bytes to
-  the old image codecs bundled in the Tesseract wheel. It does not log file
-  contents, file names or the user headers Open WebUI sends.
+  with defusedxml). It runs as a non-root user on a read-only file system
+  with a memory limit, parses each file in a worker process that is killed
+  on timeout or crash, refuses ZIP bombs and oversized images, and never
+  hands uploaded bytes to the old image codecs bundled in the Tesseract
+  wheel. It does not log file contents, file names or the user headers Open
+  WebUI sends.
+* **Networks around the OCR service**: Open WebUI and the gateway reach it on
+  two separate internal networks, so Open WebUI still reaches LiteLLM only
+  through nginx's route allowlist (tested). Docker networks are two-way: a
+  compromised OCR service could reach Open WebUI's and LiteLLM's HTTP ports
+  (both need credentials it does not have), but not the analyzer, Redis or
+  Postgres (tested).
 * **Analyzer token** protects the analyzer, which returns the mapping
   (original values) to the gateway. The portal's preview endpoint never
   requests the mapping.

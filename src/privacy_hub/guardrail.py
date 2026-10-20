@@ -207,7 +207,12 @@ class PrivacyHubGuardrail(CustomGuardrail):
             check_request_params(data, self.cfg.extra_allowed_params)
             if self.ocr is not None:
                 # images/files -> text parts, masked below like any other text
-                await self.ocr.convert(data.get("messages"), settings.language)
+                try:
+                    await self.ocr.convert(data.get("messages"), settings.language)
+                except (UnsupportedContentError, OcrUnavailableError):
+                    raise
+                except Exception as exc:  # noqa: BLE001 - anything else: block, with an audit record
+                    raise OcrUnavailableError(f"attachment handling failed: {type(exc).__name__}") from exc
             slots = collect_request_slots(data.get("messages"), self.cfg.allow_non_text_content)
             slots += collect_definition_slots(data)
         except UnsupportedContentError as exc:

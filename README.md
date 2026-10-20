@@ -370,7 +370,8 @@ committed); see [.env.example](.env.example). Important settings:
 | `PRIVACY_HUB_EXTRA_ALLOWED_PARAMS` | empty | comma-separated extra request parameters to let through. By default an unknown parameter whose value is text, a list or an object is rejected (HTTP 400); numbers, booleans and null pass. Listed parameters are **not** inspected or masked, so list only parameters that cannot carry free text |
 | `PROVIDER_MODELS` | empty | provider model wildcards users may call; `local-llm` for the self-hosted model |
 | `OCR_ENGINE` | `tesseract` | `tesseract` or `surya` (needs `OCR_WITH_SURYA=1`, `OCR_SURYA_LICENSE_ACCEPTED=true`, `SURYA_INFERENCE_URL`, a GPU and a weights licence) |
-| `OCR_MAX_PAGES`, `OCR_TIMEOUT_S` | `50`, `180` | per-document limits of the OCR service |
+| `OCR_MAX_PAGES`, `OCR_TIMEOUT_S`, `OCR_MEM_LIMIT` | `50`, `180`, `4g` | per-document limits and memory limit of the OCR service |
+| `OPENWEBUI_ENABLE_SIGNUP` | `false` | Open WebUI self-registration (the first admin account can always be created; Open WebUI settings come from the compose file, not its admin UI) |
 | `LOCAL_LLM_GGUF`, `LOCAL_LLM_CTX` | `model.gguf`, `8192` | model file in `LOCAL_LLM_MODEL_DIR` and context size of the llama.cpp server |
 | `PRIVACY_HUB_LOCAL_ONLY` | `false` | refuse every model outside the compose network; use with `docker-compose.local-only.yml`, which also cuts internet access |
 
@@ -387,7 +388,7 @@ make test-integration   # against the running stack: E2E, fail-closed, OCR, audi
 make eval               # detection + restore evaluation -> docs/EVALUATION.md
 ```
 
-Last run: 218 unit, 101 analyzer, 18 OCR and 53 integration tests passed. The
+Last run: 228 unit, 101 analyzer, 24 OCR and 59 integration tests passed. The
 integration tests stop and pause services to prove fail-closed behaviour. They
 check that the mock provider receives nothing, and that a full Postgres dump,
 Redis and all container logs contain no raw test PII.

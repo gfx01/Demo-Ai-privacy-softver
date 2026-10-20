@@ -9,6 +9,7 @@ prompts cannot leave the server even if a model entry is misconfigured.
 
 Usage (entrypoint)::
 
+    python -m privacy_hub.local_only --enabled          # exit 0 if the mode is on
     python -m privacy_hub.local_only CONFIG.yaml OUT.yaml
 """
 
@@ -78,8 +79,10 @@ def filter_config(cfg: dict[str, Any], env: dict[str, str]) -> tuple[dict[str, A
 
 
 def main(argv: list[str]) -> int:
+    if argv[1:] == ["--enabled"]:
+        return 0 if enabled(dict(os.environ)) else 1
     if len(argv) != 3:
-        print("usage: python -m privacy_hub.local_only CONFIG.yaml OUT.yaml", file=sys.stderr)
+        print("usage: python -m privacy_hub.local_only CONFIG.yaml OUT.yaml | --enabled", file=sys.stderr)
         return 2
     with open(argv[1], encoding="utf-8") as fh:
         cfg = yaml.safe_load(fh) or {}
