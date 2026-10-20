@@ -1,0 +1,11765 @@
+{
+"description": "Gold Hungarian case forms for names used by eval/restore_eval.py. Produced by two independent AI annotators; disagreements decided by an AI adjudicator citing AkH 12 rules. NOT reviewed by a human native speaker.",
+"forms": [
+{
+"name": "Kovács Péter",
+"kind": "person",
+"case": "NOM",
+"form": "Kovács Péter",
+"agreement": "both"
+},
+{
+"name": "Kovács Péter",
+"kind": "person",
+"case": "ACC",
+"form": "Kovács Pétert",
+"agreement": "both"
+},
+{
+"name": "Kovács Péter",
+"kind": "person",
+"case": "DAT",
+"form": "Kovács Péternek",
+"agreement": "both"
+},
+{
+"name": "Kovács Péter",
+"kind": "person",
+"case": "INS",
+"form": "Kovács Péterrel",
+"agreement": "both"
+},
+{
+"name": "Kovács Péter",
+"kind": "person",
+"case": "SUB",
+"form": "Kovács Péterre",
+"agreement": "both"
+},
+{
+"name": "Kovács Péter",
+"kind": "person",
+"case": "DEL",
+"form": "Kovács Péterről",
+"agreement": "both"
+},
+{
+"name": "Kovács Péter",
+"kind": "person",
+"case": "ADE",
+"form": "Kovács Péternél",
+"agreement": "both"
+},
+{
+"name": "Kovács Péter",
+"kind": "person",
+"case": "ABL",
+"form": "Kovács Pétertől",
+"agreement": "both"
+},
+{
+"name": "Kovács Péter",
+"kind": "person",
+"case": "ALL",
+"form": "Kovács Péterhez",
+"agreement": "both"
+},
+{
+"name": "Kovács Péter",
+"kind": "person",
+"case": "CAU",
+"form": "Kovács Péterért",
+"agreement": "both"
+},
+{
+"name": "Kovács Péter",
+"kind": "person",
+"case": "ESS",
+"form": "Kovács Péterként",
+"agreement": "both"
+},
+{
+"name": "Kovács Péter",
+"kind": "person",
+"case": "POSS",
+"form": "Kovács Péteré",
+"agreement": "both"
+},
+{
+"name": "Szabó Anna",
+"kind": "person",
+"case": "NOM",
+"form": "Szabó Anna",
+"agreement": "both"
+},
+{
+"name": "Szabó Anna",
+"kind": "person",
+"case": "ACC",
+"form": "Szabó Annát",
+"agreement": "both"
+},
+{
+"name": "Szabó Anna",
+"kind": "person",
+"case": "DAT",
+"form": "Szabó Annának",
+"agreement": "both"
+},
+{
+"name": "Szabó Anna",
+"kind": "person",
+"case": "INS",
+"form": "Szabó Annával",
+"agreement": "both"
+},
+{
+"name": "Szabó Anna",
+"kind": "person",
+"case": "SUB",
+"form": "Szabó Annára",
+"agreement": "both"
+},
+{
+"name": "Szabó Anna",
+"kind": "person",
+"case": "DEL",
+"form": "Szabó Annáról",
+"agreement": "both"
+},
+{
+"name": "Szabó Anna",
+"kind": "person",
+"case": "ADE",
+"form": "Szabó Annánál",
+"agreement": "both"
+},
+{
+"name": "Szabó Anna",
+"kind": "person",
+"case": "ABL",
+"form": "Szabó Annától",
+"agreement": "both"
+},
+{
+"name": "Szabó Anna",
+"kind": "person",
+"case": "ALL",
+"form": "Szabó Annához",
+"agreement": "both"
+},
+{
+"name": "Szabó Anna",
+"kind": "person",
+"case": "CAU",
+"form": "Szabó Annáért",
+"agreement": "both"
+},
+{
+"name": "Szabó Anna",
+"kind": "person",
+"case": "ESS",
+"form": "Szabó Annaként",
+"agreement": "both"
+},
+{
+"name": "Szabó Anna",
+"kind": "person",
+"case": "POSS",
+"form": "Szabó Annáé",
+"agreement": "both"
+},
+{
+"name": "Nagy Gábor",
+"kind": "person",
+"case": "NOM",
+"form": "Nagy Gábor",
+"agreement": "both"
+},
+{
+"name": "Nagy Gábor",
+"kind": "person",
+"case": "ACC",
+"form": "Nagy Gábort",
+"agreement": "both"
+},
+{
+"name": "Nagy Gábor",
+"kind": "person",
+"case": "DAT",
+"form": "Nagy Gábornak",
+"agreement": "both"
+},
+{
+"name": "Nagy Gábor",
+"kind": "person",
+"case": "INS",
+"form": "Nagy Gáborral",
+"agreement": "both"
+},
+{
+"name": "Nagy Gábor",
+"kind": "person",
+"case": "SUB",
+"form": "Nagy Gáborra",
+"agreement": "both"
+},
+{
+"name": "Nagy Gábor",
+"kind": "person",
+"case": "DEL",
+"form": "Nagy Gáborról",
+"agreement": "both"
+},
+{
+"name": "Nagy Gábor",
+"kind": "person",
+"case": "ADE",
+"form": "Nagy Gábornál",
+"agreement": "both"
+},
+{
+"name": "Nagy Gábor",
+"kind": "person",
+"case": "ABL",
+"form": "Nagy Gábortól",
+"agreement": "both"
+},
+{
+"name": "Nagy Gábor",
+"kind": "person",
+"case": "ALL",
+"form": "Nagy Gáborhoz",
+"agreement": "both"
+},
+{
+"name": "Nagy Gábor",
+"kind": "person",
+"case": "CAU",
+"form": "Nagy Gáborért",
+"agreement": "both"
+},
+{
+"name": "Nagy Gábor",
+"kind": "person",
+"case": "ESS",
+"form": "Nagy Gáborként",
+"agreement": "both"
+},
+{
+"name": "Nagy Gábor",
+"kind": "person",
+"case": "POSS",
+"form": "Nagy Gáboré",
+"agreement": "both"
+},
+{
+"name": "Tóth Ferenc",
+"kind": "person",
+"case": "NOM",
+"form": "Tóth Ferenc",
+"agreement": "both"
+},
+{
+"name": "Tóth Ferenc",
+"kind": "person",
+"case": "ACC",
+"form": "Tóth Ferencet",
+"agreement": "both"
+},
+{
+"name": "Tóth Ferenc",
+"kind": "person",
+"case": "DAT",
+"form": "Tóth Ferencnek",
+"agreement": "both"
+},
+{
+"name": "Tóth Ferenc",
+"kind": "person",
+"case": "INS",
+"form": "Tóth Ferenccel",
+"agreement": "both"
+},
+{
+"name": "Tóth Ferenc",
+"kind": "person",
+"case": "SUB",
+"form": "Tóth Ferencre",
+"agreement": "both"
+},
+{
+"name": "Tóth Ferenc",
+"kind": "person",
+"case": "DEL",
+"form": "Tóth Ferencről",
+"agreement": "both"
+},
+{
+"name": "Tóth Ferenc",
+"kind": "person",
+"case": "ADE",
+"form": "Tóth Ferencnél",
+"agreement": "both"
+},
+{
+"name": "Tóth Ferenc",
+"kind": "person",
+"case": "ABL",
+"form": "Tóth Ferenctől",
+"agreement": "both"
+},
+{
+"name": "Tóth Ferenc",
+"kind": "person",
+"case": "ALL",
+"form": "Tóth Ferenchez",
+"agreement": "both"
+},
+{
+"name": "Tóth Ferenc",
+"kind": "person",
+"case": "CAU",
+"form": "Tóth Ferencért",
+"agreement": "both"
+},
+{
+"name": "Tóth Ferenc",
+"kind": "person",
+"case": "ESS",
+"form": "Tóth Ferencként",
+"agreement": "both"
+},
+{
+"name": "Tóth Ferenc",
+"kind": "person",
+"case": "POSS",
+"form": "Tóth Ferencé",
+"agreement": "both"
+},
+{
+"name": "Horváth Éva",
+"kind": "person",
+"case": "NOM",
+"form": "Horváth Éva",
+"agreement": "both"
+},
+{
+"name": "Horváth Éva",
+"kind": "person",
+"case": "ACC",
+"form": "Horváth Évát",
+"agreement": "both"
+},
+{
+"name": "Horváth Éva",
+"kind": "person",
+"case": "DAT",
+"form": "Horváth Évának",
+"agreement": "both"
+},
+{
+"name": "Horváth Éva",
+"kind": "person",
+"case": "INS",
+"form": "Horváth Évával",
+"agreement": "both"
+},
+{
+"name": "Horváth Éva",
+"kind": "person",
+"case": "SUB",
+"form": "Horváth Évára",
+"agreement": "both"
+},
+{
+"name": "Horváth Éva",
+"kind": "person",
+"case": "DEL",
+"form": "Horváth Éváról",
+"agreement": "both"
+},
+{
+"name": "Horváth Éva",
+"kind": "person",
+"case": "ADE",
+"form": "Horváth Évánál",
+"agreement": "both"
+},
+{
+"name": "Horváth Éva",
+"kind": "person",
+"case": "ABL",
+"form": "Horváth Évától",
+"agreement": "both"
+},
+{
+"name": "Horváth Éva",
+"kind": "person",
+"case": "ALL",
+"form": "Horváth Évához",
+"agreement": "both"
+},
+{
+"name": "Horváth Éva",
+"kind": "person",
+"case": "CAU",
+"form": "Horváth Éváért",
+"agreement": "both"
+},
+{
+"name": "Horváth Éva",
+"kind": "person",
+"case": "ESS",
+"form": "Horváth Évaként",
+"agreement": "both"
+},
+{
+"name": "Horváth Éva",
+"kind": "person",
+"case": "POSS",
+"form": "Horváth Éváé",
+"agreement": "both"
+},
+{
+"name": "Kiss Zoltán",
+"kind": "person",
+"case": "NOM",
+"form": "Kiss Zoltán",
+"agreement": "both"
+},
+{
+"name": "Kiss Zoltán",
+"kind": "person",
+"case": "ACC",
+"form": "Kiss Zoltánt",
+"agreement": "both"
+},
+{
+"name": "Kiss Zoltán",
+"kind": "person",
+"case": "DAT",
+"form": "Kiss Zoltánnak",
+"agreement": "both"
+},
+{
+"name": "Kiss Zoltán",
+"kind": "person",
+"case": "INS",
+"form": "Kiss Zoltánnal",
+"agreement": "both"
+},
+{
+"name": "Kiss Zoltán",
+"kind": "person",
+"case": "SUB",
+"form": "Kiss Zoltánra",
+"agreement": "both"
+},
+{
+"name": "Kiss Zoltán",
+"kind": "person",
+"case": "DEL",
+"form": "Kiss Zoltánról",
+"agreement": "both"
+},
+{
+"name": "Kiss Zoltán",
+"kind": "person",
+"case": "ADE",
+"form": "Kiss Zoltánnál",
+"agreement": "both"
+},
+{
+"name": "Kiss Zoltán",
+"kind": "person",
+"case": "ABL",
+"form": "Kiss Zoltántól",
+"agreement": "both"
+},
+{
+"name": "Kiss Zoltán",
+"kind": "person",
+"case": "ALL",
+"form": "Kiss Zoltánhoz",
+"agreement": "both"
+},
+{
+"name": "Kiss Zoltán",
+"kind": "person",
+"case": "CAU",
+"form": "Kiss Zoltánért",
+"agreement": "both"
+},
+{
+"name": "Kiss Zoltán",
+"kind": "person",
+"case": "ESS",
+"form": "Kiss Zoltánként",
+"agreement": "both"
+},
+{
+"name": "Kiss Zoltán",
+"kind": "person",
+"case": "POSS",
+"form": "Kiss Zoltáné",
+"agreement": "both"
+},
+{
+"name": "Varga Csaba",
+"kind": "person",
+"case": "NOM",
+"form": "Varga Csaba",
+"agreement": "both"
+},
+{
+"name": "Varga Csaba",
+"kind": "person",
+"case": "ACC",
+"form": "Varga Csabát",
+"agreement": "both"
+},
+{
+"name": "Varga Csaba",
+"kind": "person",
+"case": "DAT",
+"form": "Varga Csabának",
+"agreement": "both"
+},
+{
+"name": "Varga Csaba",
+"kind": "person",
+"case": "INS",
+"form": "Varga Csabával",
+"agreement": "both"
+},
+{
+"name": "Varga Csaba",
+"kind": "person",
+"case": "SUB",
+"form": "Varga Csabára",
+"agreement": "both"
+},
+{
+"name": "Varga Csaba",
+"kind": "person",
+"case": "DEL",
+"form": "Varga Csabáról",
+"agreement": "both"
+},
+{
+"name": "Varga Csaba",
+"kind": "person",
+"case": "ADE",
+"form": "Varga Csabánál",
+"agreement": "both"
+},
+{
+"name": "Varga Csaba",
+"kind": "person",
+"case": "ABL",
+"form": "Varga Csabától",
+"agreement": "both"
+},
+{
+"name": "Varga Csaba",
+"kind": "person",
+"case": "ALL",
+"form": "Varga Csabához",
+"agreement": "both"
+},
+{
+"name": "Varga Csaba",
+"kind": "person",
+"case": "CAU",
+"form": "Varga Csabáért",
+"agreement": "both"
+},
+{
+"name": "Varga Csaba",
+"kind": "person",
+"case": "ESS",
+"form": "Varga Csabaként",
+"agreement": "both"
+},
+{
+"name": "Varga Csaba",
+"kind": "person",
+"case": "POSS",
+"form": "Varga Csabáé",
+"agreement": "both"
+},
+{
+"name": "Molnár Ildikó",
+"kind": "person",
+"case": "NOM",
+"form": "Molnár Ildikó",
+"agreement": "both"
+},
+{
+"name": "Molnár Ildikó",
+"kind": "person",
+"case": "ACC",
+"form": "Molnár Ildikót",
+"agreement": "both"
+},
+{
+"name": "Molnár Ildikó",
+"kind": "person",
+"case": "DAT",
+"form": "Molnár Ildikónak",
+"agreement": "both"
+},
+{
+"name": "Molnár Ildikó",
+"kind": "person",
+"case": "INS",
+"form": "Molnár Ildikóval",
+"agreement": "both"
+},
+{
+"name": "Molnár Ildikó",
+"kind": "person",
+"case": "SUB",
+"form": "Molnár Ildikóra",
+"agreement": "both"
+},
+{
+"name": "Molnár Ildikó",
+"kind": "person",
+"case": "DEL",
+"form": "Molnár Ildikóról",
+"agreement": "both"
+},
+{
+"name": "Molnár Ildikó",
+"kind": "person",
+"case": "ADE",
+"form": "Molnár Ildikónál",
+"agreement": "both"
+},
+{
+"name": "Molnár Ildikó",
+"kind": "person",
+"case": "ABL",
+"form": "Molnár Ildikótól",
+"agreement": "both"
+},
+{
+"name": "Molnár Ildikó",
+"kind": "person",
+"case": "ALL",
+"form": "Molnár Ildikóhoz",
+"agreement": "both"
+},
+{
+"name": "Molnár Ildikó",
+"kind": "person",
+"case": "CAU",
+"form": "Molnár Ildikóért",
+"agreement": "both"
+},
+{
+"name": "Molnár Ildikó",
+"kind": "person",
+"case": "ESS",
+"form": "Molnár Ildikóként",
+"agreement": "both"
+},
+{
+"name": "Molnár Ildikó",
+"kind": "person",
+"case": "POSS",
+"form": "Molnár Ildikóé",
+"agreement": "both"
+},
+{
+"name": "Balogh Béla",
+"kind": "person",
+"case": "NOM",
+"form": "Balogh Béla",
+"agreement": "both"
+},
+{
+"name": "Balogh Béla",
+"kind": "person",
+"case": "ACC",
+"form": "Balogh Bélát",
+"agreement": "both"
+},
+{
+"name": "Balogh Béla",
+"kind": "person",
+"case": "DAT",
+"form": "Balogh Bélának",
+"agreement": "both"
+},
+{
+"name": "Balogh Béla",
+"kind": "person",
+"case": "INS",
+"form": "Balogh Bélával",
+"agreement": "both"
+},
+{
+"name": "Balogh Béla",
+"kind": "person",
+"case": "SUB",
+"form": "Balogh Bélára",
+"agreement": "both"
+},
+{
+"name": "Balogh Béla",
+"kind": "person",
+"case": "DEL",
+"form": "Balogh Béláról",
+"agreement": "both"
+},
+{
+"name": "Balogh Béla",
+"kind": "person",
+"case": "ADE",
+"form": "Balogh Bélánál",
+"agreement": "both"
+},
+{
+"name": "Balogh Béla",
+"kind": "person",
+"case": "ABL",
+"form": "Balogh Bélától",
+"agreement": "both"
+},
+{
+"name": "Balogh Béla",
+"kind": "person",
+"case": "ALL",
+"form": "Balogh Bélához",
+"agreement": "both"
+},
+{
+"name": "Balogh Béla",
+"kind": "person",
+"case": "CAU",
+"form": "Balogh Béláért",
+"agreement": "both"
+},
+{
+"name": "Balogh Béla",
+"kind": "person",
+"case": "ESS",
+"form": "Balogh Bélaként",
+"agreement": "both"
+},
+{
+"name": "Balogh Béla",
+"kind": "person",
+"case": "POSS",
+"form": "Balogh Béláé",
+"agreement": "both"
+},
+{
+"name": "Papp Judit",
+"kind": "person",
+"case": "NOM",
+"form": "Papp Judit",
+"agreement": "both"
+},
+{
+"name": "Papp Judit",
+"kind": "person",
+"case": "ACC",
+"form": "Papp Juditot",
+"agreement": "both"
+},
+{
+"name": "Papp Judit",
+"kind": "person",
+"case": "DAT",
+"form": "Papp Juditnak",
+"agreement": "both"
+},
+{
+"name": "Papp Judit",
+"kind": "person",
+"case": "INS",
+"form": "Papp Judittal",
+"agreement": "both"
+},
+{
+"name": "Papp Judit",
+"kind": "person",
+"case": "SUB",
+"form": "Papp Juditra",
+"agreement": "both"
+},
+{
+"name": "Papp Judit",
+"kind": "person",
+"case": "DEL",
+"form": "Papp Juditról",
+"agreement": "both"
+},
+{
+"name": "Papp Judit",
+"kind": "person",
+"case": "ADE",
+"form": "Papp Juditnál",
+"agreement": "both"
+},
+{
+"name": "Papp Judit",
+"kind": "person",
+"case": "ABL",
+"form": "Papp Judittól",
+"agreement": "both"
+},
+{
+"name": "Papp Judit",
+"kind": "person",
+"case": "ALL",
+"form": "Papp Judithoz",
+"agreement": "both"
+},
+{
+"name": "Papp Judit",
+"kind": "person",
+"case": "CAU",
+"form": "Papp Juditért",
+"agreement": "both"
+},
+{
+"name": "Papp Judit",
+"kind": "person",
+"case": "ESS",
+"form": "Papp Juditként",
+"agreement": "both"
+},
+{
+"name": "Papp Judit",
+"kind": "person",
+"case": "POSS",
+"form": "Papp Judité",
+"agreement": "both"
+},
+{
+"name": "Takács Ádám",
+"kind": "person",
+"case": "NOM",
+"form": "Takács Ádám",
+"agreement": "both"
+},
+{
+"name": "Takács Ádám",
+"kind": "person",
+"case": "ACC",
+"form": "Takács Ádámot",
+"agreement": "both"
+},
+{
+"name": "Takács Ádám",
+"kind": "person",
+"case": "DAT",
+"form": "Takács Ádámnak",
+"agreement": "both"
+},
+{
+"name": "Takács Ádám",
+"kind": "person",
+"case": "INS",
+"form": "Takács Ádámmal",
+"agreement": "both"
+},
+{
+"name": "Takács Ádám",
+"kind": "person",
+"case": "SUB",
+"form": "Takács Ádámra",
+"agreement": "both"
+},
+{
+"name": "Takács Ádám",
+"kind": "person",
+"case": "DEL",
+"form": "Takács Ádámról",
+"agreement": "both"
+},
+{
+"name": "Takács Ádám",
+"kind": "person",
+"case": "ADE",
+"form": "Takács Ádámnál",
+"agreement": "both"
+},
+{
+"name": "Takács Ádám",
+"kind": "person",
+"case": "ABL",
+"form": "Takács Ádámtól",
+"agreement": "both"
+},
+{
+"name": "Takács Ádám",
+"kind": "person",
+"case": "ALL",
+"form": "Takács Ádámhoz",
+"agreement": "both"
+},
+{
+"name": "Takács Ádám",
+"kind": "person",
+"case": "CAU",
+"form": "Takács Ádámért",
+"agreement": "both"
+},
+{
+"name": "Takács Ádám",
+"kind": "person",
+"case": "ESS",
+"form": "Takács Ádámként",
+"agreement": "both"
+},
+{
+"name": "Takács Ádám",
+"kind": "person",
+"case": "POSS",
+"form": "Takács Ádámé",
+"agreement": "both"
+},
+{
+"name": "Juhász Erzsébet",
+"kind": "person",
+"case": "NOM",
+"form": "Juhász Erzsébet",
+"agreement": "both"
+},
+{
+"name": "Juhász Erzsébet",
+"kind": "person",
+"case": "ACC",
+"form": "Juhász Erzsébetet",
+"agreement": "both"
+},
+{
+"name": "Juhász Erzsébet",
+"kind": "person",
+"case": "DAT",
+"form": "Juhász Erzsébetnek",
+"agreement": "both"
+},
+{
+"name": "Juhász Erzsébet",
+"kind": "person",
+"case": "INS",
+"form": "Juhász Erzsébettel",
+"agreement": "both"
+},
+{
+"name": "Juhász Erzsébet",
+"kind": "person",
+"case": "SUB",
+"form": "Juhász Erzsébetre",
+"agreement": "both"
+},
+{
+"name": "Juhász Erzsébet",
+"kind": "person",
+"case": "DEL",
+"form": "Juhász Erzsébetről",
+"agreement": "both"
+},
+{
+"name": "Juhász Erzsébet",
+"kind": "person",
+"case": "ADE",
+"form": "Juhász Erzsébetnél",
+"agreement": "both"
+},
+{
+"name": "Juhász Erzsébet",
+"kind": "person",
+"case": "ABL",
+"form": "Juhász Erzsébettől",
+"agreement": "both"
+},
+{
+"name": "Juhász Erzsébet",
+"kind": "person",
+"case": "ALL",
+"form": "Juhász Erzsébethez",
+"agreement": "both"
+},
+{
+"name": "Juhász Erzsébet",
+"kind": "person",
+"case": "CAU",
+"form": "Juhász Erzsébetért",
+"agreement": "both"
+},
+{
+"name": "Juhász Erzsébet",
+"kind": "person",
+"case": "ESS",
+"form": "Juhász Erzsébetként",
+"agreement": "both"
+},
+{
+"name": "Juhász Erzsébet",
+"kind": "person",
+"case": "POSS",
+"form": "Juhász Erzsébeté",
+"agreement": "both"
+},
+{
+"name": "Lakatos Márk",
+"kind": "person",
+"case": "NOM",
+"form": "Lakatos Márk",
+"agreement": "both"
+},
+{
+"name": "Lakatos Márk",
+"kind": "person",
+"case": "ACC",
+"form": "Lakatos Márkot",
+"agreement": "both"
+},
+{
+"name": "Lakatos Márk",
+"kind": "person",
+"case": "DAT",
+"form": "Lakatos Márknak",
+"agreement": "both"
+},
+{
+"name": "Lakatos Márk",
+"kind": "person",
+"case": "INS",
+"form": "Lakatos Márkkal",
+"agreement": "both"
+},
+{
+"name": "Lakatos Márk",
+"kind": "person",
+"case": "SUB",
+"form": "Lakatos Márkra",
+"agreement": "both"
+},
+{
+"name": "Lakatos Márk",
+"kind": "person",
+"case": "DEL",
+"form": "Lakatos Márkról",
+"agreement": "both"
+},
+{
+"name": "Lakatos Márk",
+"kind": "person",
+"case": "ADE",
+"form": "Lakatos Márknál",
+"agreement": "both"
+},
+{
+"name": "Lakatos Márk",
+"kind": "person",
+"case": "ABL",
+"form": "Lakatos Márktól",
+"agreement": "both"
+},
+{
+"name": "Lakatos Márk",
+"kind": "person",
+"case": "ALL",
+"form": "Lakatos Márkhoz",
+"agreement": "both"
+},
+{
+"name": "Lakatos Márk",
+"kind": "person",
+"case": "CAU",
+"form": "Lakatos Márkért",
+"agreement": "both"
+},
+{
+"name": "Lakatos Márk",
+"kind": "person",
+"case": "ESS",
+"form": "Lakatos Márkként",
+"agreement": "both"
+},
+{
+"name": "Lakatos Márk",
+"kind": "person",
+"case": "POSS",
+"form": "Lakatos Márké",
+"agreement": "both"
+},
+{
+"name": "Mészáros Ágnes",
+"kind": "person",
+"case": "NOM",
+"form": "Mészáros Ágnes",
+"agreement": "both"
+},
+{
+"name": "Mészáros Ágnes",
+"kind": "person",
+"case": "ACC",
+"form": "Mészáros Ágnest",
+"agreement": "both"
+},
+{
+"name": "Mészáros Ágnes",
+"kind": "person",
+"case": "DAT",
+"form": "Mészáros Ágnesnek",
+"agreement": "both"
+},
+{
+"name": "Mészáros Ágnes",
+"kind": "person",
+"case": "INS",
+"form": "Mészáros Ágnessel",
+"agreement": "both"
+},
+{
+"name": "Mészáros Ágnes",
+"kind": "person",
+"case": "SUB",
+"form": "Mészáros Ágnesre",
+"agreement": "both"
+},
+{
+"name": "Mészáros Ágnes",
+"kind": "person",
+"case": "DEL",
+"form": "Mészáros Ágnesről",
+"agreement": "both"
+},
+{
+"name": "Mészáros Ágnes",
+"kind": "person",
+"case": "ADE",
+"form": "Mészáros Ágnesnél",
+"agreement": "both"
+},
+{
+"name": "Mészáros Ágnes",
+"kind": "person",
+"case": "ABL",
+"form": "Mészáros Ágnestől",
+"agreement": "both"
+},
+{
+"name": "Mészáros Ágnes",
+"kind": "person",
+"case": "ALL",
+"form": "Mészáros Ágneshez",
+"agreement": "both"
+},
+{
+"name": "Mészáros Ágnes",
+"kind": "person",
+"case": "CAU",
+"form": "Mészáros Ágnesért",
+"agreement": "both"
+},
+{
+"name": "Mészáros Ágnes",
+"kind": "person",
+"case": "ESS",
+"form": "Mészáros Ágnesként",
+"agreement": "both"
+},
+{
+"name": "Mészáros Ágnes",
+"kind": "person",
+"case": "POSS",
+"form": "Mészáros Ágnesé",
+"agreement": "both"
+},
+{
+"name": "Rácz Ildikó",
+"kind": "person",
+"case": "NOM",
+"form": "Rácz Ildikó",
+"agreement": "both"
+},
+{
+"name": "Rácz Ildikó",
+"kind": "person",
+"case": "ACC",
+"form": "Rácz Ildikót",
+"agreement": "both"
+},
+{
+"name": "Rácz Ildikó",
+"kind": "person",
+"case": "DAT",
+"form": "Rácz Ildikónak",
+"agreement": "both"
+},
+{
+"name": "Rácz Ildikó",
+"kind": "person",
+"case": "INS",
+"form": "Rácz Ildikóval",
+"agreement": "both"
+},
+{
+"name": "Rácz Ildikó",
+"kind": "person",
+"case": "SUB",
+"form": "Rácz Ildikóra",
+"agreement": "both"
+},
+{
+"name": "Rácz Ildikó",
+"kind": "person",
+"case": "DEL",
+"form": "Rácz Ildikóról",
+"agreement": "both"
+},
+{
+"name": "Rácz Ildikó",
+"kind": "person",
+"case": "ADE",
+"form": "Rácz Ildikónál",
+"agreement": "both"
+},
+{
+"name": "Rácz Ildikó",
+"kind": "person",
+"case": "ABL",
+"form": "Rácz Ildikótól",
+"agreement": "both"
+},
+{
+"name": "Rácz Ildikó",
+"kind": "person",
+"case": "ALL",
+"form": "Rácz Ildikóhoz",
+"agreement": "both"
+},
+{
+"name": "Rácz Ildikó",
+"kind": "person",
+"case": "CAU",
+"form": "Rácz Ildikóért",
+"agreement": "both"
+},
+{
+"name": "Rácz Ildikó",
+"kind": "person",
+"case": "ESS",
+"form": "Rácz Ildikóként",
+"agreement": "both"
+},
+{
+"name": "Rácz Ildikó",
+"kind": "person",
+"case": "POSS",
+"form": "Rácz Ildikóé",
+"agreement": "both"
+},
+{
+"name": "Fekete Balázs",
+"kind": "person",
+"case": "NOM",
+"form": "Fekete Balázs",
+"agreement": "both"
+},
+{
+"name": "Fekete Balázs",
+"kind": "person",
+"case": "ACC",
+"form": "Fekete Balázst",
+"agreement": "both"
+},
+{
+"name": "Fekete Balázs",
+"kind": "person",
+"case": "DAT",
+"form": "Fekete Balázsnak",
+"agreement": "both"
+},
+{
+"name": "Fekete Balázs",
+"kind": "person",
+"case": "INS",
+"form": "Fekete Balázzsal",
+"agreement": "both"
+},
+{
+"name": "Fekete Balázs",
+"kind": "person",
+"case": "SUB",
+"form": "Fekete Balázsra",
+"agreement": "both"
+},
+{
+"name": "Fekete Balázs",
+"kind": "person",
+"case": "DEL",
+"form": "Fekete Balázsról",
+"agreement": "both"
+},
+{
+"name": "Fekete Balázs",
+"kind": "person",
+"case": "ADE",
+"form": "Fekete Balázsnál",
+"agreement": "both"
+},
+{
+"name": "Fekete Balázs",
+"kind": "person",
+"case": "ABL",
+"form": "Fekete Balázstól",
+"agreement": "both"
+},
+{
+"name": "Fekete Balázs",
+"kind": "person",
+"case": "ALL",
+"form": "Fekete Balázshoz",
+"agreement": "both"
+},
+{
+"name": "Fekete Balázs",
+"kind": "person",
+"case": "CAU",
+"form": "Fekete Balázsért",
+"agreement": "both"
+},
+{
+"name": "Fekete Balázs",
+"kind": "person",
+"case": "ESS",
+"form": "Fekete Balázsként",
+"agreement": "both"
+},
+{
+"name": "Fekete Balázs",
+"kind": "person",
+"case": "POSS",
+"form": "Fekete Balázsé",
+"agreement": "both"
+},
+{
+"name": "Farkas Mihály",
+"kind": "person",
+"case": "NOM",
+"form": "Farkas Mihály",
+"agreement": "both"
+},
+{
+"name": "Farkas Mihály",
+"kind": "person",
+"case": "ACC",
+"form": "Farkas Mihályt",
+"agreement": "both"
+},
+{
+"name": "Farkas Mihály",
+"kind": "person",
+"case": "DAT",
+"form": "Farkas Mihálynak",
+"agreement": "both"
+},
+{
+"name": "Farkas Mihály",
+"kind": "person",
+"case": "INS",
+"form": "Farkas Mihállyal",
+"agreement": "both"
+},
+{
+"name": "Farkas Mihály",
+"kind": "person",
+"case": "SUB",
+"form": "Farkas Mihályra",
+"agreement": "both"
+},
+{
+"name": "Farkas Mihály",
+"kind": "person",
+"case": "DEL",
+"form": "Farkas Mihályról",
+"agreement": "both"
+},
+{
+"name": "Farkas Mihály",
+"kind": "person",
+"case": "ADE",
+"form": "Farkas Mihálynál",
+"agreement": "both"
+},
+{
+"name": "Farkas Mihály",
+"kind": "person",
+"case": "ABL",
+"form": "Farkas Mihálytól",
+"agreement": "both"
+},
+{
+"name": "Farkas Mihály",
+"kind": "person",
+"case": "ALL",
+"form": "Farkas Mihályhoz",
+"agreement": "both"
+},
+{
+"name": "Farkas Mihály",
+"kind": "person",
+"case": "CAU",
+"form": "Farkas Mihályért",
+"agreement": "both"
+},
+{
+"name": "Farkas Mihály",
+"kind": "person",
+"case": "ESS",
+"form": "Farkas Mihályként",
+"agreement": "both"
+},
+{
+"name": "Farkas Mihály",
+"kind": "person",
+"case": "POSS",
+"form": "Farkas Mihályé",
+"agreement": "both"
+},
+{
+"name": "Szűcs Kinga",
+"kind": "person",
+"case": "NOM",
+"form": "Szűcs Kinga",
+"agreement": "both"
+},
+{
+"name": "Szűcs Kinga",
+"kind": "person",
+"case": "ACC",
+"form": "Szűcs Kingát",
+"agreement": "both"
+},
+{
+"name": "Szűcs Kinga",
+"kind": "person",
+"case": "DAT",
+"form": "Szűcs Kingának",
+"agreement": "both"
+},
+{
+"name": "Szűcs Kinga",
+"kind": "person",
+"case": "INS",
+"form": "Szűcs Kingával",
+"agreement": "both"
+},
+{
+"name": "Szűcs Kinga",
+"kind": "person",
+"case": "SUB",
+"form": "Szűcs Kingára",
+"agreement": "both"
+},
+{
+"name": "Szűcs Kinga",
+"kind": "person",
+"case": "DEL",
+"form": "Szűcs Kingáról",
+"agreement": "both"
+},
+{
+"name": "Szűcs Kinga",
+"kind": "person",
+"case": "ADE",
+"form": "Szűcs Kingánál",
+"agreement": "both"
+},
+{
+"name": "Szűcs Kinga",
+"kind": "person",
+"case": "ABL",
+"form": "Szűcs Kingától",
+"agreement": "both"
+},
+{
+"name": "Szűcs Kinga",
+"kind": "person",
+"case": "ALL",
+"form": "Szűcs Kingához",
+"agreement": "both"
+},
+{
+"name": "Szűcs Kinga",
+"kind": "person",
+"case": "CAU",
+"form": "Szűcs Kingáért",
+"agreement": "both"
+},
+{
+"name": "Szűcs Kinga",
+"kind": "person",
+"case": "ESS",
+"form": "Szűcs Kingaként",
+"agreement": "both"
+},
+{
+"name": "Szűcs Kinga",
+"kind": "person",
+"case": "POSS",
+"form": "Szűcs Kingáé",
+"agreement": "both"
+},
+{
+"name": "Bognár Dávid",
+"kind": "person",
+"case": "NOM",
+"form": "Bognár Dávid",
+"agreement": "both"
+},
+{
+"name": "Bognár Dávid",
+"kind": "person",
+"case": "ACC",
+"form": "Bognár Dávidot",
+"agreement": "both"
+},
+{
+"name": "Bognár Dávid",
+"kind": "person",
+"case": "DAT",
+"form": "Bognár Dávidnak",
+"agreement": "both"
+},
+{
+"name": "Bognár Dávid",
+"kind": "person",
+"case": "INS",
+"form": "Bognár Dáviddal",
+"agreement": "both"
+},
+{
+"name": "Bognár Dávid",
+"kind": "person",
+"case": "SUB",
+"form": "Bognár Dávidra",
+"agreement": "both"
+},
+{
+"name": "Bognár Dávid",
+"kind": "person",
+"case": "DEL",
+"form": "Bognár Dávidról",
+"agreement": "both"
+},
+{
+"name": "Bognár Dávid",
+"kind": "person",
+"case": "ADE",
+"form": "Bognár Dávidnál",
+"agreement": "both"
+},
+{
+"name": "Bognár Dávid",
+"kind": "person",
+"case": "ABL",
+"form": "Bognár Dávidtól",
+"agreement": "both"
+},
+{
+"name": "Bognár Dávid",
+"kind": "person",
+"case": "ALL",
+"form": "Bognár Dávidhoz",
+"agreement": "both"
+},
+{
+"name": "Bognár Dávid",
+"kind": "person",
+"case": "CAU",
+"form": "Bognár Dávidért",
+"agreement": "both"
+},
+{
+"name": "Bognár Dávid",
+"kind": "person",
+"case": "ESS",
+"form": "Bognár Dávidként",
+"agreement": "both"
+},
+{
+"name": "Bognár Dávid",
+"kind": "person",
+"case": "POSS",
+"form": "Bognár Dávidé",
+"agreement": "both"
+},
+{
+"name": "Kelemen Zsófia",
+"kind": "person",
+"case": "NOM",
+"form": "Kelemen Zsófia",
+"agreement": "both"
+},
+{
+"name": "Kelemen Zsófia",
+"kind": "person",
+"case": "ACC",
+"form": "Kelemen Zsófiát",
+"agreement": "both"
+},
+{
+"name": "Kelemen Zsófia",
+"kind": "person",
+"case": "DAT",
+"form": "Kelemen Zsófiának",
+"agreement": "both"
+},
+{
+"name": "Kelemen Zsófia",
+"kind": "person",
+"case": "INS",
+"form": "Kelemen Zsófiával",
+"agreement": "both"
+},
+{
+"name": "Kelemen Zsófia",
+"kind": "person",
+"case": "SUB",
+"form": "Kelemen Zsófiára",
+"agreement": "both"
+},
+{
+"name": "Kelemen Zsófia",
+"kind": "person",
+"case": "DEL",
+"form": "Kelemen Zsófiáról",
+"agreement": "both"
+},
+{
+"name": "Kelemen Zsófia",
+"kind": "person",
+"case": "ADE",
+"form": "Kelemen Zsófiánál",
+"agreement": "both"
+},
+{
+"name": "Kelemen Zsófia",
+"kind": "person",
+"case": "ABL",
+"form": "Kelemen Zsófiától",
+"agreement": "both"
+},
+{
+"name": "Kelemen Zsófia",
+"kind": "person",
+"case": "ALL",
+"form": "Kelemen Zsófiához",
+"agreement": "both"
+},
+{
+"name": "Kelemen Zsófia",
+"kind": "person",
+"case": "CAU",
+"form": "Kelemen Zsófiáért",
+"agreement": "both"
+},
+{
+"name": "Kelemen Zsófia",
+"kind": "person",
+"case": "ESS",
+"form": "Kelemen Zsófiaként",
+"agreement": "both"
+},
+{
+"name": "Kelemen Zsófia",
+"kind": "person",
+"case": "POSS",
+"form": "Kelemen Zsófiáé",
+"agreement": "both"
+},
+{
+"name": "Dessewffy Anna",
+"kind": "person",
+"case": "NOM",
+"form": "Dessewffy Anna",
+"agreement": "both"
+},
+{
+"name": "Dessewffy Anna",
+"kind": "person",
+"case": "ACC",
+"form": "Dessewffy Annát",
+"agreement": "both"
+},
+{
+"name": "Dessewffy Anna",
+"kind": "person",
+"case": "DAT",
+"form": "Dessewffy Annának",
+"agreement": "both"
+},
+{
+"name": "Dessewffy Anna",
+"kind": "person",
+"case": "INS",
+"form": "Dessewffy Annával",
+"agreement": "both"
+},
+{
+"name": "Dessewffy Anna",
+"kind": "person",
+"case": "SUB",
+"form": "Dessewffy Annára",
+"agreement": "both"
+},
+{
+"name": "Dessewffy Anna",
+"kind": "person",
+"case": "DEL",
+"form": "Dessewffy Annáról",
+"agreement": "both"
+},
+{
+"name": "Dessewffy Anna",
+"kind": "person",
+"case": "ADE",
+"form": "Dessewffy Annánál",
+"agreement": "both"
+},
+{
+"name": "Dessewffy Anna",
+"kind": "person",
+"case": "ABL",
+"form": "Dessewffy Annától",
+"agreement": "both"
+},
+{
+"name": "Dessewffy Anna",
+"kind": "person",
+"case": "ALL",
+"form": "Dessewffy Annához",
+"agreement": "both"
+},
+{
+"name": "Dessewffy Anna",
+"kind": "person",
+"case": "CAU",
+"form": "Dessewffy Annáért",
+"agreement": "both"
+},
+{
+"name": "Dessewffy Anna",
+"kind": "person",
+"case": "ESS",
+"form": "Dessewffy Annaként",
+"agreement": "both"
+},
+{
+"name": "Dessewffy Anna",
+"kind": "person",
+"case": "POSS",
+"form": "Dessewffy Annáé",
+"agreement": "both"
+},
+{
+"name": "Halász Ödön",
+"kind": "person",
+"case": "NOM",
+"form": "Halász Ödön",
+"agreement": "both"
+},
+{
+"name": "Halász Ödön",
+"kind": "person",
+"case": "ACC",
+"form": "Halász Ödönt",
+"agreement": "both"
+},
+{
+"name": "Halász Ödön",
+"kind": "person",
+"case": "DAT",
+"form": "Halász Ödönnek",
+"agreement": "both"
+},
+{
+"name": "Halász Ödön",
+"kind": "person",
+"case": "INS",
+"form": "Halász Ödönnel",
+"agreement": "both"
+},
+{
+"name": "Halász Ödön",
+"kind": "person",
+"case": "SUB",
+"form": "Halász Ödönre",
+"agreement": "both"
+},
+{
+"name": "Halász Ödön",
+"kind": "person",
+"case": "DEL",
+"form": "Halász Ödönről",
+"agreement": "both"
+},
+{
+"name": "Halász Ödön",
+"kind": "person",
+"case": "ADE",
+"form": "Halász Ödönnél",
+"agreement": "both"
+},
+{
+"name": "Halász Ödön",
+"kind": "person",
+"case": "ABL",
+"form": "Halász Ödöntől",
+"agreement": "both"
+},
+{
+"name": "Halász Ödön",
+"kind": "person",
+"case": "ALL",
+"form": "Halász Ödönhöz",
+"agreement": "both"
+},
+{
+"name": "Halász Ödön",
+"kind": "person",
+"case": "CAU",
+"form": "Halász Ödönért",
+"agreement": "both"
+},
+{
+"name": "Halász Ödön",
+"kind": "person",
+"case": "ESS",
+"form": "Halász Ödönként",
+"agreement": "both"
+},
+{
+"name": "Halász Ödön",
+"kind": "person",
+"case": "POSS",
+"form": "Halász Ödöné",
+"agreement": "both"
+},
+{
+"name": "Vincze Tünde",
+"kind": "person",
+"case": "NOM",
+"form": "Vincze Tünde",
+"agreement": "both"
+},
+{
+"name": "Vincze Tünde",
+"kind": "person",
+"case": "ACC",
+"form": "Vincze Tündét",
+"agreement": "both"
+},
+{
+"name": "Vincze Tünde",
+"kind": "person",
+"case": "DAT",
+"form": "Vincze Tündének",
+"agreement": "both"
+},
+{
+"name": "Vincze Tünde",
+"kind": "person",
+"case": "INS",
+"form": "Vincze Tündével",
+"agreement": "both"
+},
+{
+"name": "Vincze Tünde",
+"kind": "person",
+"case": "SUB",
+"form": "Vincze Tündére",
+"agreement": "both"
+},
+{
+"name": "Vincze Tünde",
+"kind": "person",
+"case": "DEL",
+"form": "Vincze Tündéről",
+"agreement": "both"
+},
+{
+"name": "Vincze Tünde",
+"kind": "person",
+"case": "ADE",
+"form": "Vincze Tündénél",
+"agreement": "both"
+},
+{
+"name": "Vincze Tünde",
+"kind": "person",
+"case": "ABL",
+"form": "Vincze Tündétől",
+"agreement": "both"
+},
+{
+"name": "Vincze Tünde",
+"kind": "person",
+"case": "ALL",
+"form": "Vincze Tündéhez",
+"agreement": "both"
+},
+{
+"name": "Vincze Tünde",
+"kind": "person",
+"case": "CAU",
+"form": "Vincze Tündéért",
+"agreement": "both"
+},
+{
+"name": "Vincze Tünde",
+"kind": "person",
+"case": "ESS",
+"form": "Vincze Tündeként",
+"agreement": "both"
+},
+{
+"name": "Vincze Tünde",
+"kind": "person",
+"case": "POSS",
+"form": "Vincze Tündéé",
+"agreement": "both"
+},
+{
+"name": "Lengyel Gergely",
+"kind": "person",
+"case": "NOM",
+"form": "Lengyel Gergely",
+"agreement": "both"
+},
+{
+"name": "Lengyel Gergely",
+"kind": "person",
+"case": "ACC",
+"form": "Lengyel Gergelyt",
+"agreement": "both"
+},
+{
+"name": "Lengyel Gergely",
+"kind": "person",
+"case": "DAT",
+"form": "Lengyel Gergelynek",
+"agreement": "both"
+},
+{
+"name": "Lengyel Gergely",
+"kind": "person",
+"case": "INS",
+"form": "Lengyel Gergellyel",
+"agreement": "both"
+},
+{
+"name": "Lengyel Gergely",
+"kind": "person",
+"case": "SUB",
+"form": "Lengyel Gergelyre",
+"agreement": "both"
+},
+{
+"name": "Lengyel Gergely",
+"kind": "person",
+"case": "DEL",
+"form": "Lengyel Gergelyről",
+"agreement": "both"
+},
+{
+"name": "Lengyel Gergely",
+"kind": "person",
+"case": "ADE",
+"form": "Lengyel Gergelynél",
+"agreement": "both"
+},
+{
+"name": "Lengyel Gergely",
+"kind": "person",
+"case": "ABL",
+"form": "Lengyel Gergelytől",
+"agreement": "both"
+},
+{
+"name": "Lengyel Gergely",
+"kind": "person",
+"case": "ALL",
+"form": "Lengyel Gergelyhez",
+"agreement": "both"
+},
+{
+"name": "Lengyel Gergely",
+"kind": "person",
+"case": "CAU",
+"form": "Lengyel Gergelyért",
+"agreement": "both"
+},
+{
+"name": "Lengyel Gergely",
+"kind": "person",
+"case": "ESS",
+"form": "Lengyel Gergelyként",
+"agreement": "both"
+},
+{
+"name": "Lengyel Gergely",
+"kind": "person",
+"case": "POSS",
+"form": "Lengyel Gergelyé",
+"agreement": "both"
+},
+{
+"name": "Szalai Noémi",
+"kind": "person",
+"case": "NOM",
+"form": "Szalai Noémi",
+"agreement": "both"
+},
+{
+"name": "Szalai Noémi",
+"kind": "person",
+"case": "ACC",
+"form": "Szalai Noémit",
+"agreement": "both"
+},
+{
+"name": "Szalai Noémi",
+"kind": "person",
+"case": "DAT",
+"form": "Szalai Noéminek",
+"agreement": "both"
+},
+{
+"name": "Szalai Noémi",
+"kind": "person",
+"case": "INS",
+"form": "Szalai Noémivel",
+"agreement": "both"
+},
+{
+"name": "Szalai Noémi",
+"kind": "person",
+"case": "SUB",
+"form": "Szalai Noémire",
+"agreement": "both"
+},
+{
+"name": "Szalai Noémi",
+"kind": "person",
+"case": "DEL",
+"form": "Szalai Noémiről",
+"agreement": "both"
+},
+{
+"name": "Szalai Noémi",
+"kind": "person",
+"case": "ADE",
+"form": "Szalai Noéminél",
+"agreement": "both"
+},
+{
+"name": "Szalai Noémi",
+"kind": "person",
+"case": "ABL",
+"form": "Szalai Noémitől",
+"agreement": "both"
+},
+{
+"name": "Szalai Noémi",
+"kind": "person",
+"case": "ALL",
+"form": "Szalai Noémihez",
+"agreement": "both"
+},
+{
+"name": "Szalai Noémi",
+"kind": "person",
+"case": "CAU",
+"form": "Szalai Noémiért",
+"agreement": "both"
+},
+{
+"name": "Szalai Noémi",
+"kind": "person",
+"case": "ESS",
+"form": "Szalai Noémiként",
+"agreement": "both"
+},
+{
+"name": "Szalai Noémi",
+"kind": "person",
+"case": "POSS",
+"form": "Szalai Noémié",
+"agreement": "both"
+},
+{
+"name": "Fehér Ernő",
+"kind": "person",
+"case": "NOM",
+"form": "Fehér Ernő",
+"agreement": "both"
+},
+{
+"name": "Fehér Ernő",
+"kind": "person",
+"case": "ACC",
+"form": "Fehér Ernőt",
+"agreement": "both"
+},
+{
+"name": "Fehér Ernő",
+"kind": "person",
+"case": "DAT",
+"form": "Fehér Ernőnek",
+"agreement": "both"
+},
+{
+"name": "Fehér Ernő",
+"kind": "person",
+"case": "INS",
+"form": "Fehér Ernővel",
+"agreement": "both"
+},
+{
+"name": "Fehér Ernő",
+"kind": "person",
+"case": "SUB",
+"form": "Fehér Ernőre",
+"agreement": "both"
+},
+{
+"name": "Fehér Ernő",
+"kind": "person",
+"case": "DEL",
+"form": "Fehér Ernőről",
+"agreement": "both"
+},
+{
+"name": "Fehér Ernő",
+"kind": "person",
+"case": "ADE",
+"form": "Fehér Ernőnél",
+"agreement": "both"
+},
+{
+"name": "Fehér Ernő",
+"kind": "person",
+"case": "ABL",
+"form": "Fehér Ernőtől",
+"agreement": "both"
+},
+{
+"name": "Fehér Ernő",
+"kind": "person",
+"case": "ALL",
+"form": "Fehér Ernőhöz",
+"agreement": "both"
+},
+{
+"name": "Fehér Ernő",
+"kind": "person",
+"case": "CAU",
+"form": "Fehér Ernőért",
+"agreement": "both"
+},
+{
+"name": "Fehér Ernő",
+"kind": "person",
+"case": "ESS",
+"form": "Fehér Ernőként",
+"agreement": "both"
+},
+{
+"name": "Fehér Ernő",
+"kind": "person",
+"case": "POSS",
+"form": "Fehér Ernőé",
+"agreement": "both"
+},
+{
+"name": "Pintér Kálmán",
+"kind": "person",
+"case": "NOM",
+"form": "Pintér Kálmán",
+"agreement": "both"
+},
+{
+"name": "Pintér Kálmán",
+"kind": "person",
+"case": "ACC",
+"form": "Pintér Kálmánt",
+"agreement": "both"
+},
+{
+"name": "Pintér Kálmán",
+"kind": "person",
+"case": "DAT",
+"form": "Pintér Kálmánnak",
+"agreement": "both"
+},
+{
+"name": "Pintér Kálmán",
+"kind": "person",
+"case": "INS",
+"form": "Pintér Kálmánnal",
+"agreement": "both"
+},
+{
+"name": "Pintér Kálmán",
+"kind": "person",
+"case": "SUB",
+"form": "Pintér Kálmánra",
+"agreement": "both"
+},
+{
+"name": "Pintér Kálmán",
+"kind": "person",
+"case": "DEL",
+"form": "Pintér Kálmánról",
+"agreement": "both"
+},
+{
+"name": "Pintér Kálmán",
+"kind": "person",
+"case": "ADE",
+"form": "Pintér Kálmánnál",
+"agreement": "both"
+},
+{
+"name": "Pintér Kálmán",
+"kind": "person",
+"case": "ABL",
+"form": "Pintér Kálmántól",
+"agreement": "both"
+},
+{
+"name": "Pintér Kálmán",
+"kind": "person",
+"case": "ALL",
+"form": "Pintér Kálmánhoz",
+"agreement": "both"
+},
+{
+"name": "Pintér Kálmán",
+"kind": "person",
+"case": "CAU",
+"form": "Pintér Kálmánért",
+"agreement": "both"
+},
+{
+"name": "Pintér Kálmán",
+"kind": "person",
+"case": "ESS",
+"form": "Pintér Kálmánként",
+"agreement": "both"
+},
+{
+"name": "Pintér Kálmán",
+"kind": "person",
+"case": "POSS",
+"form": "Pintér Kálmáné",
+"agreement": "both"
+},
+{
+"name": "Bodnár Lili",
+"kind": "person",
+"case": "NOM",
+"form": "Bodnár Lili",
+"agreement": "both"
+},
+{
+"name": "Bodnár Lili",
+"kind": "person",
+"case": "ACC",
+"form": "Bodnár Lilit",
+"agreement": "both"
+},
+{
+"name": "Bodnár Lili",
+"kind": "person",
+"case": "DAT",
+"form": "Bodnár Lilinek",
+"agreement": "both"
+},
+{
+"name": "Bodnár Lili",
+"kind": "person",
+"case": "INS",
+"form": "Bodnár Lilivel",
+"agreement": "both"
+},
+{
+"name": "Bodnár Lili",
+"kind": "person",
+"case": "SUB",
+"form": "Bodnár Lilire",
+"agreement": "both"
+},
+{
+"name": "Bodnár Lili",
+"kind": "person",
+"case": "DEL",
+"form": "Bodnár Liliről",
+"agreement": "both"
+},
+{
+"name": "Bodnár Lili",
+"kind": "person",
+"case": "ADE",
+"form": "Bodnár Lilinél",
+"agreement": "both"
+},
+{
+"name": "Bodnár Lili",
+"kind": "person",
+"case": "ABL",
+"form": "Bodnár Lilitől",
+"agreement": "both"
+},
+{
+"name": "Bodnár Lili",
+"kind": "person",
+"case": "ALL",
+"form": "Bodnár Lilihez",
+"agreement": "both"
+},
+{
+"name": "Bodnár Lili",
+"kind": "person",
+"case": "CAU",
+"form": "Bodnár Liliért",
+"agreement": "both"
+},
+{
+"name": "Bodnár Lili",
+"kind": "person",
+"case": "ESS",
+"form": "Bodnár Liliként",
+"agreement": "both"
+},
+{
+"name": "Bodnár Lili",
+"kind": "person",
+"case": "POSS",
+"form": "Bodnár Lilié",
+"agreement": "both"
+},
+{
+"name": "Németh Dániel",
+"kind": "person",
+"case": "NOM",
+"form": "Németh Dániel",
+"agreement": "both"
+},
+{
+"name": "Németh Dániel",
+"kind": "person",
+"case": "ACC",
+"form": "Németh Dánielt",
+"agreement": "both"
+},
+{
+"name": "Németh Dániel",
+"kind": "person",
+"case": "DAT",
+"form": "Németh Dánielnek",
+"agreement": "both"
+},
+{
+"name": "Németh Dániel",
+"kind": "person",
+"case": "INS",
+"form": "Németh Dániellel",
+"agreement": "both"
+},
+{
+"name": "Németh Dániel",
+"kind": "person",
+"case": "SUB",
+"form": "Németh Dánielre",
+"agreement": "both"
+},
+{
+"name": "Németh Dániel",
+"kind": "person",
+"case": "DEL",
+"form": "Németh Dánielről",
+"agreement": "both"
+},
+{
+"name": "Németh Dániel",
+"kind": "person",
+"case": "ADE",
+"form": "Németh Dánielnél",
+"agreement": "both"
+},
+{
+"name": "Németh Dániel",
+"kind": "person",
+"case": "ABL",
+"form": "Németh Dánieltől",
+"agreement": "both"
+},
+{
+"name": "Németh Dániel",
+"kind": "person",
+"case": "ALL",
+"form": "Németh Dánielhez",
+"agreement": "both"
+},
+{
+"name": "Németh Dániel",
+"kind": "person",
+"case": "CAU",
+"form": "Németh Dánielért",
+"agreement": "both"
+},
+{
+"name": "Németh Dániel",
+"kind": "person",
+"case": "ESS",
+"form": "Németh Dánielként",
+"agreement": "both"
+},
+{
+"name": "Németh Dániel",
+"kind": "person",
+"case": "POSS",
+"form": "Németh Dánielé",
+"agreement": "both"
+},
+{
+"name": "Oláh Krisztina",
+"kind": "person",
+"case": "NOM",
+"form": "Oláh Krisztina",
+"agreement": "both"
+},
+{
+"name": "Oláh Krisztina",
+"kind": "person",
+"case": "ACC",
+"form": "Oláh Krisztinát",
+"agreement": "both"
+},
+{
+"name": "Oláh Krisztina",
+"kind": "person",
+"case": "DAT",
+"form": "Oláh Krisztinának",
+"agreement": "both"
+},
+{
+"name": "Oláh Krisztina",
+"kind": "person",
+"case": "INS",
+"form": "Oláh Krisztinával",
+"agreement": "both"
+},
+{
+"name": "Oláh Krisztina",
+"kind": "person",
+"case": "SUB",
+"form": "Oláh Krisztinára",
+"agreement": "both"
+},
+{
+"name": "Oláh Krisztina",
+"kind": "person",
+"case": "DEL",
+"form": "Oláh Krisztináról",
+"agreement": "both"
+},
+{
+"name": "Oláh Krisztina",
+"kind": "person",
+"case": "ADE",
+"form": "Oláh Krisztinánál",
+"agreement": "both"
+},
+{
+"name": "Oláh Krisztina",
+"kind": "person",
+"case": "ABL",
+"form": "Oláh Krisztinától",
+"agreement": "both"
+},
+{
+"name": "Oláh Krisztina",
+"kind": "person",
+"case": "ALL",
+"form": "Oláh Krisztinához",
+"agreement": "both"
+},
+{
+"name": "Oláh Krisztina",
+"kind": "person",
+"case": "CAU",
+"form": "Oláh Krisztináért",
+"agreement": "both"
+},
+{
+"name": "Oláh Krisztina",
+"kind": "person",
+"case": "ESS",
+"form": "Oláh Krisztinaként",
+"agreement": "both"
+},
+{
+"name": "Oláh Krisztina",
+"kind": "person",
+"case": "POSS",
+"form": "Oláh Krisztináé",
+"agreement": "both"
+},
+{
+"name": "Sipos Bence",
+"kind": "person",
+"case": "NOM",
+"form": "Sipos Bence",
+"agreement": "both"
+},
+{
+"name": "Sipos Bence",
+"kind": "person",
+"case": "ACC",
+"form": "Sipos Bencét",
+"agreement": "both"
+},
+{
+"name": "Sipos Bence",
+"kind": "person",
+"case": "DAT",
+"form": "Sipos Bencének",
+"agreement": "both"
+},
+{
+"name": "Sipos Bence",
+"kind": "person",
+"case": "INS",
+"form": "Sipos Bencével",
+"agreement": "both"
+},
+{
+"name": "Sipos Bence",
+"kind": "person",
+"case": "SUB",
+"form": "Sipos Bencére",
+"agreement": "both"
+},
+{
+"name": "Sipos Bence",
+"kind": "person",
+"case": "DEL",
+"form": "Sipos Bencéről",
+"agreement": "both"
+},
+{
+"name": "Sipos Bence",
+"kind": "person",
+"case": "ADE",
+"form": "Sipos Bencénél",
+"agreement": "both"
+},
+{
+"name": "Sipos Bence",
+"kind": "person",
+"case": "ABL",
+"form": "Sipos Bencétől",
+"agreement": "both"
+},
+{
+"name": "Sipos Bence",
+"kind": "person",
+"case": "ALL",
+"form": "Sipos Bencéhez",
+"agreement": "both"
+},
+{
+"name": "Sipos Bence",
+"kind": "person",
+"case": "CAU",
+"form": "Sipos Bencéért",
+"agreement": "both"
+},
+{
+"name": "Sipos Bence",
+"kind": "person",
+"case": "ESS",
+"form": "Sipos Benceként",
+"agreement": "both"
+},
+{
+"name": "Sipos Bence",
+"kind": "person",
+"case": "POSS",
+"form": "Sipos Bencéé",
+"agreement": "both"
+},
+{
+"name": "Major Kristóf",
+"kind": "person",
+"case": "NOM",
+"form": "Major Kristóf",
+"agreement": "both"
+},
+{
+"name": "Major Kristóf",
+"kind": "person",
+"case": "ACC",
+"form": "Major Kristófot",
+"agreement": "both"
+},
+{
+"name": "Major Kristóf",
+"kind": "person",
+"case": "DAT",
+"form": "Major Kristófnak",
+"agreement": "both"
+},
+{
+"name": "Major Kristóf",
+"kind": "person",
+"case": "INS",
+"form": "Major Kristóffal",
+"agreement": "both"
+},
+{
+"name": "Major Kristóf",
+"kind": "person",
+"case": "SUB",
+"form": "Major Kristófra",
+"agreement": "both"
+},
+{
+"name": "Major Kristóf",
+"kind": "person",
+"case": "DEL",
+"form": "Major Kristófról",
+"agreement": "both"
+},
+{
+"name": "Major Kristóf",
+"kind": "person",
+"case": "ADE",
+"form": "Major Kristófnál",
+"agreement": "both"
+},
+{
+"name": "Major Kristóf",
+"kind": "person",
+"case": "ABL",
+"form": "Major Kristóftól",
+"agreement": "both"
+},
+{
+"name": "Major Kristóf",
+"kind": "person",
+"case": "ALL",
+"form": "Major Kristófhoz",
+"agreement": "both"
+},
+{
+"name": "Major Kristóf",
+"kind": "person",
+"case": "CAU",
+"form": "Major Kristófért",
+"agreement": "both"
+},
+{
+"name": "Major Kristóf",
+"kind": "person",
+"case": "ESS",
+"form": "Major Kristófként",
+"agreement": "both"
+},
+{
+"name": "Major Kristóf",
+"kind": "person",
+"case": "POSS",
+"form": "Major Kristófé",
+"agreement": "both"
+},
+{
+"name": "Szőke Győző",
+"kind": "person",
+"case": "NOM",
+"form": "Szőke Győző",
+"agreement": "both"
+},
+{
+"name": "Szőke Győző",
+"kind": "person",
+"case": "ACC",
+"form": "Szőke Győzőt",
+"agreement": "both"
+},
+{
+"name": "Szőke Győző",
+"kind": "person",
+"case": "DAT",
+"form": "Szőke Győzőnek",
+"agreement": "both"
+},
+{
+"name": "Szőke Győző",
+"kind": "person",
+"case": "INS",
+"form": "Szőke Győzővel",
+"agreement": "both"
+},
+{
+"name": "Szőke Győző",
+"kind": "person",
+"case": "SUB",
+"form": "Szőke Győzőre",
+"agreement": "both"
+},
+{
+"name": "Szőke Győző",
+"kind": "person",
+"case": "DEL",
+"form": "Szőke Győzőről",
+"agreement": "both"
+},
+{
+"name": "Szőke Győző",
+"kind": "person",
+"case": "ADE",
+"form": "Szőke Győzőnél",
+"agreement": "both"
+},
+{
+"name": "Szőke Győző",
+"kind": "person",
+"case": "ABL",
+"form": "Szőke Győzőtől",
+"agreement": "both"
+},
+{
+"name": "Szőke Győző",
+"kind": "person",
+"case": "ALL",
+"form": "Szőke Győzőhöz",
+"agreement": "both"
+},
+{
+"name": "Szőke Győző",
+"kind": "person",
+"case": "CAU",
+"form": "Szőke Győzőért",
+"agreement": "both"
+},
+{
+"name": "Szőke Győző",
+"kind": "person",
+"case": "ESS",
+"form": "Szőke Győzőként",
+"agreement": "both"
+},
+{
+"name": "Szőke Győző",
+"kind": "person",
+"case": "POSS",
+"form": "Szőke Győzőé",
+"agreement": "both"
+},
+{
+"name": "Biró Tamás",
+"kind": "person",
+"case": "NOM",
+"form": "Biró Tamás",
+"agreement": "both"
+},
+{
+"name": "Biró Tamás",
+"kind": "person",
+"case": "ACC",
+"form": "Biró Tamást",
+"agreement": "both"
+},
+{
+"name": "Biró Tamás",
+"kind": "person",
+"case": "DAT",
+"form": "Biró Tamásnak",
+"agreement": "both"
+},
+{
+"name": "Biró Tamás",
+"kind": "person",
+"case": "INS",
+"form": "Biró Tamással",
+"agreement": "both"
+},
+{
+"name": "Biró Tamás",
+"kind": "person",
+"case": "SUB",
+"form": "Biró Tamásra",
+"agreement": "both"
+},
+{
+"name": "Biró Tamás",
+"kind": "person",
+"case": "DEL",
+"form": "Biró Tamásról",
+"agreement": "both"
+},
+{
+"name": "Biró Tamás",
+"kind": "person",
+"case": "ADE",
+"form": "Biró Tamásnál",
+"agreement": "both"
+},
+{
+"name": "Biró Tamás",
+"kind": "person",
+"case": "ABL",
+"form": "Biró Tamástól",
+"agreement": "both"
+},
+{
+"name": "Biró Tamás",
+"kind": "person",
+"case": "ALL",
+"form": "Biró Tamáshoz",
+"agreement": "both"
+},
+{
+"name": "Biró Tamás",
+"kind": "person",
+"case": "CAU",
+"form": "Biró Tamásért",
+"agreement": "both"
+},
+{
+"name": "Biró Tamás",
+"kind": "person",
+"case": "ESS",
+"form": "Biró Tamásként",
+"agreement": "both"
+},
+{
+"name": "Biró Tamás",
+"kind": "person",
+"case": "POSS",
+"form": "Biró Tamásé",
+"agreement": "both"
+},
+{
+"name": "Antal Rozália",
+"kind": "person",
+"case": "NOM",
+"form": "Antal Rozália",
+"agreement": "both"
+},
+{
+"name": "Antal Rozália",
+"kind": "person",
+"case": "ACC",
+"form": "Antal Rozáliát",
+"agreement": "both"
+},
+{
+"name": "Antal Rozália",
+"kind": "person",
+"case": "DAT",
+"form": "Antal Rozáliának",
+"agreement": "both"
+},
+{
+"name": "Antal Rozália",
+"kind": "person",
+"case": "INS",
+"form": "Antal Rozáliával",
+"agreement": "both"
+},
+{
+"name": "Antal Rozália",
+"kind": "person",
+"case": "SUB",
+"form": "Antal Rozáliára",
+"agreement": "both"
+},
+{
+"name": "Antal Rozália",
+"kind": "person",
+"case": "DEL",
+"form": "Antal Rozáliáról",
+"agreement": "both"
+},
+{
+"name": "Antal Rozália",
+"kind": "person",
+"case": "ADE",
+"form": "Antal Rozáliánál",
+"agreement": "both"
+},
+{
+"name": "Antal Rozália",
+"kind": "person",
+"case": "ABL",
+"form": "Antal Rozáliától",
+"agreement": "both"
+},
+{
+"name": "Antal Rozália",
+"kind": "person",
+"case": "ALL",
+"form": "Antal Rozáliához",
+"agreement": "both"
+},
+{
+"name": "Antal Rozália",
+"kind": "person",
+"case": "CAU",
+"form": "Antal Rozáliáért",
+"agreement": "both"
+},
+{
+"name": "Antal Rozália",
+"kind": "person",
+"case": "ESS",
+"form": "Antal Rozáliaként",
+"agreement": "both"
+},
+{
+"name": "Antal Rozália",
+"kind": "person",
+"case": "POSS",
+"form": "Antal Rozáliáé",
+"agreement": "both"
+},
+{
+"name": "Gulyás Imre",
+"kind": "person",
+"case": "NOM",
+"form": "Gulyás Imre",
+"agreement": "both"
+},
+{
+"name": "Gulyás Imre",
+"kind": "person",
+"case": "ACC",
+"form": "Gulyás Imrét",
+"agreement": "both"
+},
+{
+"name": "Gulyás Imre",
+"kind": "person",
+"case": "DAT",
+"form": "Gulyás Imrének",
+"agreement": "both"
+},
+{
+"name": "Gulyás Imre",
+"kind": "person",
+"case": "INS",
+"form": "Gulyás Imrével",
+"agreement": "both"
+},
+{
+"name": "Gulyás Imre",
+"kind": "person",
+"case": "SUB",
+"form": "Gulyás Imrére",
+"agreement": "both"
+},
+{
+"name": "Gulyás Imre",
+"kind": "person",
+"case": "DEL",
+"form": "Gulyás Imréről",
+"agreement": "both"
+},
+{
+"name": "Gulyás Imre",
+"kind": "person",
+"case": "ADE",
+"form": "Gulyás Imrénél",
+"agreement": "both"
+},
+{
+"name": "Gulyás Imre",
+"kind": "person",
+"case": "ABL",
+"form": "Gulyás Imrétől",
+"agreement": "both"
+},
+{
+"name": "Gulyás Imre",
+"kind": "person",
+"case": "ALL",
+"form": "Gulyás Imréhez",
+"agreement": "both"
+},
+{
+"name": "Gulyás Imre",
+"kind": "person",
+"case": "CAU",
+"form": "Gulyás Imréért",
+"agreement": "both"
+},
+{
+"name": "Gulyás Imre",
+"kind": "person",
+"case": "ESS",
+"form": "Gulyás Imreként",
+"agreement": "both"
+},
+{
+"name": "Gulyás Imre",
+"kind": "person",
+"case": "POSS",
+"form": "Gulyás Imréé",
+"agreement": "both"
+},
+{
+"name": "Katona Edit",
+"kind": "person",
+"case": "NOM",
+"form": "Katona Edit",
+"agreement": "both"
+},
+{
+"name": "Katona Edit",
+"kind": "person",
+"case": "ACC",
+"form": "Katona Editet",
+"agreement": "both"
+},
+{
+"name": "Katona Edit",
+"kind": "person",
+"case": "DAT",
+"form": "Katona Editnek",
+"agreement": "both"
+},
+{
+"name": "Katona Edit",
+"kind": "person",
+"case": "INS",
+"form": "Katona Edittel",
+"agreement": "both"
+},
+{
+"name": "Katona Edit",
+"kind": "person",
+"case": "SUB",
+"form": "Katona Editre",
+"agreement": "both"
+},
+{
+"name": "Katona Edit",
+"kind": "person",
+"case": "DEL",
+"form": "Katona Editről",
+"agreement": "both"
+},
+{
+"name": "Katona Edit",
+"kind": "person",
+"case": "ADE",
+"form": "Katona Editnél",
+"agreement": "both"
+},
+{
+"name": "Katona Edit",
+"kind": "person",
+"case": "ABL",
+"form": "Katona Edittől",
+"agreement": "both"
+},
+{
+"name": "Katona Edit",
+"kind": "person",
+"case": "ALL",
+"form": "Katona Edithez",
+"agreement": "both"
+},
+{
+"name": "Katona Edit",
+"kind": "person",
+"case": "CAU",
+"form": "Katona Editért",
+"agreement": "both"
+},
+{
+"name": "Katona Edit",
+"kind": "person",
+"case": "ESS",
+"form": "Katona Editként",
+"agreement": "both"
+},
+{
+"name": "Katona Edit",
+"kind": "person",
+"case": "POSS",
+"form": "Katona Edité",
+"agreement": "both"
+},
+{
+"name": "Hegedűs László",
+"kind": "person",
+"case": "NOM",
+"form": "Hegedűs László",
+"agreement": "both"
+},
+{
+"name": "Hegedűs László",
+"kind": "person",
+"case": "ACC",
+"form": "Hegedűs Lászlót",
+"agreement": "both"
+},
+{
+"name": "Hegedűs László",
+"kind": "person",
+"case": "DAT",
+"form": "Hegedűs Lászlónak",
+"agreement": "both"
+},
+{
+"name": "Hegedűs László",
+"kind": "person",
+"case": "INS",
+"form": "Hegedűs Lászlóval",
+"agreement": "both"
+},
+{
+"name": "Hegedűs László",
+"kind": "person",
+"case": "SUB",
+"form": "Hegedűs Lászlóra",
+"agreement": "both"
+},
+{
+"name": "Hegedűs László",
+"kind": "person",
+"case": "DEL",
+"form": "Hegedűs Lászlóról",
+"agreement": "both"
+},
+{
+"name": "Hegedűs László",
+"kind": "person",
+"case": "ADE",
+"form": "Hegedűs Lászlónál",
+"agreement": "both"
+},
+{
+"name": "Hegedűs László",
+"kind": "person",
+"case": "ABL",
+"form": "Hegedűs Lászlótól",
+"agreement": "both"
+},
+{
+"name": "Hegedűs László",
+"kind": "person",
+"case": "ALL",
+"form": "Hegedűs Lászlóhoz",
+"agreement": "both"
+},
+{
+"name": "Hegedűs László",
+"kind": "person",
+"case": "CAU",
+"form": "Hegedűs Lászlóért",
+"agreement": "both"
+},
+{
+"name": "Hegedűs László",
+"kind": "person",
+"case": "ESS",
+"form": "Hegedűs Lászlóként",
+"agreement": "both"
+},
+{
+"name": "Hegedűs László",
+"kind": "person",
+"case": "POSS",
+"form": "Hegedűs Lászlóé",
+"agreement": "both"
+},
+{
+"name": "Kun Zsuzsanna",
+"kind": "person",
+"case": "NOM",
+"form": "Kun Zsuzsanna",
+"agreement": "both"
+},
+{
+"name": "Kun Zsuzsanna",
+"kind": "person",
+"case": "ACC",
+"form": "Kun Zsuzsannát",
+"agreement": "both"
+},
+{
+"name": "Kun Zsuzsanna",
+"kind": "person",
+"case": "DAT",
+"form": "Kun Zsuzsannának",
+"agreement": "both"
+},
+{
+"name": "Kun Zsuzsanna",
+"kind": "person",
+"case": "INS",
+"form": "Kun Zsuzsannával",
+"agreement": "both"
+},
+{
+"name": "Kun Zsuzsanna",
+"kind": "person",
+"case": "SUB",
+"form": "Kun Zsuzsannára",
+"agreement": "both"
+},
+{
+"name": "Kun Zsuzsanna",
+"kind": "person",
+"case": "DEL",
+"form": "Kun Zsuzsannáról",
+"agreement": "both"
+},
+{
+"name": "Kun Zsuzsanna",
+"kind": "person",
+"case": "ADE",
+"form": "Kun Zsuzsannánál",
+"agreement": "both"
+},
+{
+"name": "Kun Zsuzsanna",
+"kind": "person",
+"case": "ABL",
+"form": "Kun Zsuzsannától",
+"agreement": "both"
+},
+{
+"name": "Kun Zsuzsanna",
+"kind": "person",
+"case": "ALL",
+"form": "Kun Zsuzsannához",
+"agreement": "both"
+},
+{
+"name": "Kun Zsuzsanna",
+"kind": "person",
+"case": "CAU",
+"form": "Kun Zsuzsannáért",
+"agreement": "both"
+},
+{
+"name": "Kun Zsuzsanna",
+"kind": "person",
+"case": "ESS",
+"form": "Kun Zsuzsannaként",
+"agreement": "both"
+},
+{
+"name": "Kun Zsuzsanna",
+"kind": "person",
+"case": "POSS",
+"form": "Kun Zsuzsannáé",
+"agreement": "both"
+},
+{
+"name": "Fazekas Attila",
+"kind": "person",
+"case": "NOM",
+"form": "Fazekas Attila",
+"agreement": "both"
+},
+{
+"name": "Fazekas Attila",
+"kind": "person",
+"case": "ACC",
+"form": "Fazekas Attilát",
+"agreement": "both"
+},
+{
+"name": "Fazekas Attila",
+"kind": "person",
+"case": "DAT",
+"form": "Fazekas Attilának",
+"agreement": "both"
+},
+{
+"name": "Fazekas Attila",
+"kind": "person",
+"case": "INS",
+"form": "Fazekas Attilával",
+"agreement": "both"
+},
+{
+"name": "Fazekas Attila",
+"kind": "person",
+"case": "SUB",
+"form": "Fazekas Attilára",
+"agreement": "both"
+},
+{
+"name": "Fazekas Attila",
+"kind": "person",
+"case": "DEL",
+"form": "Fazekas Attiláról",
+"agreement": "both"
+},
+{
+"name": "Fazekas Attila",
+"kind": "person",
+"case": "ADE",
+"form": "Fazekas Attilánál",
+"agreement": "both"
+},
+{
+"name": "Fazekas Attila",
+"kind": "person",
+"case": "ABL",
+"form": "Fazekas Attilától",
+"agreement": "both"
+},
+{
+"name": "Fazekas Attila",
+"kind": "person",
+"case": "ALL",
+"form": "Fazekas Attilához",
+"agreement": "both"
+},
+{
+"name": "Fazekas Attila",
+"kind": "person",
+"case": "CAU",
+"form": "Fazekas Attiláért",
+"agreement": "both"
+},
+{
+"name": "Fazekas Attila",
+"kind": "person",
+"case": "ESS",
+"form": "Fazekas Attilaként",
+"agreement": "both"
+},
+{
+"name": "Fazekas Attila",
+"kind": "person",
+"case": "POSS",
+"form": "Fazekas Attiláé",
+"agreement": "both"
+},
+{
+"name": "Kovácsné Tóth Éva",
+"kind": "person",
+"case": "NOM",
+"form": "Kovácsné Tóth Éva",
+"agreement": "both"
+},
+{
+"name": "Kovácsné Tóth Éva",
+"kind": "person",
+"case": "ACC",
+"form": "Kovácsné Tóth Évát",
+"agreement": "both"
+},
+{
+"name": "Kovácsné Tóth Éva",
+"kind": "person",
+"case": "DAT",
+"form": "Kovácsné Tóth Évának",
+"agreement": "both"
+},
+{
+"name": "Kovácsné Tóth Éva",
+"kind": "person",
+"case": "INS",
+"form": "Kovácsné Tóth Évával",
+"agreement": "both"
+},
+{
+"name": "Kovácsné Tóth Éva",
+"kind": "person",
+"case": "SUB",
+"form": "Kovácsné Tóth Évára",
+"agreement": "both"
+},
+{
+"name": "Kovácsné Tóth Éva",
+"kind": "person",
+"case": "DEL",
+"form": "Kovácsné Tóth Éváról",
+"agreement": "both"
+},
+{
+"name": "Kovácsné Tóth Éva",
+"kind": "person",
+"case": "ADE",
+"form": "Kovácsné Tóth Évánál",
+"agreement": "both"
+},
+{
+"name": "Kovácsné Tóth Éva",
+"kind": "person",
+"case": "ABL",
+"form": "Kovácsné Tóth Évától",
+"agreement": "both"
+},
+{
+"name": "Kovácsné Tóth Éva",
+"kind": "person",
+"case": "ALL",
+"form": "Kovácsné Tóth Évához",
+"agreement": "both"
+},
+{
+"name": "Kovácsné Tóth Éva",
+"kind": "person",
+"case": "CAU",
+"form": "Kovácsné Tóth Éváért",
+"agreement": "both"
+},
+{
+"name": "Kovácsné Tóth Éva",
+"kind": "person",
+"case": "ESS",
+"form": "Kovácsné Tóth Évaként",
+"agreement": "both"
+},
+{
+"name": "Kovácsné Tóth Éva",
+"kind": "person",
+"case": "POSS",
+"form": "Kovácsné Tóth Éváé",
+"agreement": "both"
+},
+{
+"name": "Szabó-Nagy Eszter",
+"kind": "person",
+"case": "NOM",
+"form": "Szabó-Nagy Eszter",
+"agreement": "both"
+},
+{
+"name": "Szabó-Nagy Eszter",
+"kind": "person",
+"case": "ACC",
+"form": "Szabó-Nagy Esztert",
+"agreement": "both"
+},
+{
+"name": "Szabó-Nagy Eszter",
+"kind": "person",
+"case": "DAT",
+"form": "Szabó-Nagy Eszternek",
+"agreement": "both"
+},
+{
+"name": "Szabó-Nagy Eszter",
+"kind": "person",
+"case": "INS",
+"form": "Szabó-Nagy Eszterrel",
+"agreement": "both"
+},
+{
+"name": "Szabó-Nagy Eszter",
+"kind": "person",
+"case": "SUB",
+"form": "Szabó-Nagy Eszterre",
+"agreement": "both"
+},
+{
+"name": "Szabó-Nagy Eszter",
+"kind": "person",
+"case": "DEL",
+"form": "Szabó-Nagy Eszterről",
+"agreement": "both"
+},
+{
+"name": "Szabó-Nagy Eszter",
+"kind": "person",
+"case": "ADE",
+"form": "Szabó-Nagy Eszternél",
+"agreement": "both"
+},
+{
+"name": "Szabó-Nagy Eszter",
+"kind": "person",
+"case": "ABL",
+"form": "Szabó-Nagy Esztertől",
+"agreement": "both"
+},
+{
+"name": "Szabó-Nagy Eszter",
+"kind": "person",
+"case": "ALL",
+"form": "Szabó-Nagy Eszterhez",
+"agreement": "both"
+},
+{
+"name": "Szabó-Nagy Eszter",
+"kind": "person",
+"case": "CAU",
+"form": "Szabó-Nagy Eszterért",
+"agreement": "both"
+},
+{
+"name": "Szabó-Nagy Eszter",
+"kind": "person",
+"case": "ESS",
+"form": "Szabó-Nagy Eszterként",
+"agreement": "both"
+},
+{
+"name": "Szabó-Nagy Eszter",
+"kind": "person",
+"case": "POSS",
+"form": "Szabó-Nagy Eszteré",
+"agreement": "both"
+},
+{
+"name": "Babits Anikó",
+"kind": "person",
+"case": "NOM",
+"form": "Babits Anikó",
+"agreement": "both"
+},
+{
+"name": "Babits Anikó",
+"kind": "person",
+"case": "ACC",
+"form": "Babits Anikót",
+"agreement": "both"
+},
+{
+"name": "Babits Anikó",
+"kind": "person",
+"case": "DAT",
+"form": "Babits Anikónak",
+"agreement": "both"
+},
+{
+"name": "Babits Anikó",
+"kind": "person",
+"case": "INS",
+"form": "Babits Anikóval",
+"agreement": "both"
+},
+{
+"name": "Babits Anikó",
+"kind": "person",
+"case": "SUB",
+"form": "Babits Anikóra",
+"agreement": "both"
+},
+{
+"name": "Babits Anikó",
+"kind": "person",
+"case": "DEL",
+"form": "Babits Anikóról",
+"agreement": "both"
+},
+{
+"name": "Babits Anikó",
+"kind": "person",
+"case": "ADE",
+"form": "Babits Anikónál",
+"agreement": "both"
+},
+{
+"name": "Babits Anikó",
+"kind": "person",
+"case": "ABL",
+"form": "Babits Anikótól",
+"agreement": "both"
+},
+{
+"name": "Babits Anikó",
+"kind": "person",
+"case": "ALL",
+"form": "Babits Anikóhoz",
+"agreement": "both"
+},
+{
+"name": "Babits Anikó",
+"kind": "person",
+"case": "CAU",
+"form": "Babits Anikóért",
+"agreement": "both"
+},
+{
+"name": "Babits Anikó",
+"kind": "person",
+"case": "ESS",
+"form": "Babits Anikóként",
+"agreement": "both"
+},
+{
+"name": "Babits Anikó",
+"kind": "person",
+"case": "POSS",
+"form": "Babits Anikóé",
+"agreement": "both"
+},
+{
+"name": "Gaál Péter",
+"kind": "person",
+"case": "NOM",
+"form": "Gaál Péter",
+"agreement": "both"
+},
+{
+"name": "Gaál Péter",
+"kind": "person",
+"case": "ACC",
+"form": "Gaál Pétert",
+"agreement": "both"
+},
+{
+"name": "Gaál Péter",
+"kind": "person",
+"case": "DAT",
+"form": "Gaál Péternek",
+"agreement": "both"
+},
+{
+"name": "Gaál Péter",
+"kind": "person",
+"case": "INS",
+"form": "Gaál Péterrel",
+"agreement": "both"
+},
+{
+"name": "Gaál Péter",
+"kind": "person",
+"case": "SUB",
+"form": "Gaál Péterre",
+"agreement": "both"
+},
+{
+"name": "Gaál Péter",
+"kind": "person",
+"case": "DEL",
+"form": "Gaál Péterről",
+"agreement": "both"
+},
+{
+"name": "Gaál Péter",
+"kind": "person",
+"case": "ADE",
+"form": "Gaál Péternél",
+"agreement": "both"
+},
+{
+"name": "Gaál Péter",
+"kind": "person",
+"case": "ABL",
+"form": "Gaál Pétertől",
+"agreement": "both"
+},
+{
+"name": "Gaál Péter",
+"kind": "person",
+"case": "ALL",
+"form": "Gaál Péterhez",
+"agreement": "both"
+},
+{
+"name": "Gaál Péter",
+"kind": "person",
+"case": "CAU",
+"form": "Gaál Péterért",
+"agreement": "both"
+},
+{
+"name": "Gaál Péter",
+"kind": "person",
+"case": "ESS",
+"form": "Gaál Péterként",
+"agreement": "both"
+},
+{
+"name": "Gaál Péter",
+"kind": "person",
+"case": "POSS",
+"form": "Gaál Péteré",
+"agreement": "both"
+},
+{
+"name": "Péter",
+"kind": "single",
+"case": "NOM",
+"form": "Péter",
+"agreement": "both"
+},
+{
+"name": "Péter",
+"kind": "single",
+"case": "ACC",
+"form": "Pétert",
+"agreement": "both"
+},
+{
+"name": "Péter",
+"kind": "single",
+"case": "DAT",
+"form": "Péternek",
+"agreement": "both"
+},
+{
+"name": "Péter",
+"kind": "single",
+"case": "INS",
+"form": "Péterrel",
+"agreement": "both"
+},
+{
+"name": "Péter",
+"kind": "single",
+"case": "SUB",
+"form": "Péterre",
+"agreement": "both"
+},
+{
+"name": "Péter",
+"kind": "single",
+"case": "DEL",
+"form": "Péterről",
+"agreement": "both"
+},
+{
+"name": "Péter",
+"kind": "single",
+"case": "ADE",
+"form": "Péternél",
+"agreement": "both"
+},
+{
+"name": "Péter",
+"kind": "single",
+"case": "ABL",
+"form": "Pétertől",
+"agreement": "both"
+},
+{
+"name": "Péter",
+"kind": "single",
+"case": "ALL",
+"form": "Péterhez",
+"agreement": "both"
+},
+{
+"name": "Péter",
+"kind": "single",
+"case": "CAU",
+"form": "Péterért",
+"agreement": "both"
+},
+{
+"name": "Péter",
+"kind": "single",
+"case": "ESS",
+"form": "Péterként",
+"agreement": "both"
+},
+{
+"name": "Péter",
+"kind": "single",
+"case": "POSS",
+"form": "Péteré",
+"agreement": "both"
+},
+{
+"name": "Anna",
+"kind": "single",
+"case": "NOM",
+"form": "Anna",
+"agreement": "both"
+},
+{
+"name": "Anna",
+"kind": "single",
+"case": "ACC",
+"form": "Annát",
+"agreement": "both"
+},
+{
+"name": "Anna",
+"kind": "single",
+"case": "DAT",
+"form": "Annának",
+"agreement": "both"
+},
+{
+"name": "Anna",
+"kind": "single",
+"case": "INS",
+"form": "Annával",
+"agreement": "both"
+},
+{
+"name": "Anna",
+"kind": "single",
+"case": "SUB",
+"form": "Annára",
+"agreement": "both"
+},
+{
+"name": "Anna",
+"kind": "single",
+"case": "DEL",
+"form": "Annáról",
+"agreement": "both"
+},
+{
+"name": "Anna",
+"kind": "single",
+"case": "ADE",
+"form": "Annánál",
+"agreement": "both"
+},
+{
+"name": "Anna",
+"kind": "single",
+"case": "ABL",
+"form": "Annától",
+"agreement": "both"
+},
+{
+"name": "Anna",
+"kind": "single",
+"case": "ALL",
+"form": "Annához",
+"agreement": "both"
+},
+{
+"name": "Anna",
+"kind": "single",
+"case": "CAU",
+"form": "Annáért",
+"agreement": "both"
+},
+{
+"name": "Anna",
+"kind": "single",
+"case": "ESS",
+"form": "Annaként",
+"agreement": "both"
+},
+{
+"name": "Anna",
+"kind": "single",
+"case": "POSS",
+"form": "Annáé",
+"agreement": "both"
+},
+{
+"name": "Csaba",
+"kind": "single",
+"case": "NOM",
+"form": "Csaba",
+"agreement": "both"
+},
+{
+"name": "Csaba",
+"kind": "single",
+"case": "ACC",
+"form": "Csabát",
+"agreement": "both"
+},
+{
+"name": "Csaba",
+"kind": "single",
+"case": "DAT",
+"form": "Csabának",
+"agreement": "both"
+},
+{
+"name": "Csaba",
+"kind": "single",
+"case": "INS",
+"form": "Csabával",
+"agreement": "both"
+},
+{
+"name": "Csaba",
+"kind": "single",
+"case": "SUB",
+"form": "Csabára",
+"agreement": "both"
+},
+{
+"name": "Csaba",
+"kind": "single",
+"case": "DEL",
+"form": "Csabáról",
+"agreement": "both"
+},
+{
+"name": "Csaba",
+"kind": "single",
+"case": "ADE",
+"form": "Csabánál",
+"agreement": "both"
+},
+{
+"name": "Csaba",
+"kind": "single",
+"case": "ABL",
+"form": "Csabától",
+"agreement": "both"
+},
+{
+"name": "Csaba",
+"kind": "single",
+"case": "ALL",
+"form": "Csabához",
+"agreement": "both"
+},
+{
+"name": "Csaba",
+"kind": "single",
+"case": "CAU",
+"form": "Csabáért",
+"agreement": "both"
+},
+{
+"name": "Csaba",
+"kind": "single",
+"case": "ESS",
+"form": "Csabaként",
+"agreement": "both"
+},
+{
+"name": "Csaba",
+"kind": "single",
+"case": "POSS",
+"form": "Csabáé",
+"agreement": "both"
+},
+{
+"name": "Balázs",
+"kind": "single",
+"case": "NOM",
+"form": "Balázs",
+"agreement": "both"
+},
+{
+"name": "Balázs",
+"kind": "single",
+"case": "ACC",
+"form": "Balázst",
+"agreement": "both"
+},
+{
+"name": "Balázs",
+"kind": "single",
+"case": "DAT",
+"form": "Balázsnak",
+"agreement": "both"
+},
+{
+"name": "Balázs",
+"kind": "single",
+"case": "INS",
+"form": "Balázzsal",
+"agreement": "both"
+},
+{
+"name": "Balázs",
+"kind": "single",
+"case": "SUB",
+"form": "Balázsra",
+"agreement": "both"
+},
+{
+"name": "Balázs",
+"kind": "single",
+"case": "DEL",
+"form": "Balázsról",
+"agreement": "both"
+},
+{
+"name": "Balázs",
+"kind": "single",
+"case": "ADE",
+"form": "Balázsnál",
+"agreement": "both"
+},
+{
+"name": "Balázs",
+"kind": "single",
+"case": "ABL",
+"form": "Balázstól",
+"agreement": "both"
+},
+{
+"name": "Balázs",
+"kind": "single",
+"case": "ALL",
+"form": "Balázshoz",
+"agreement": "both"
+},
+{
+"name": "Balázs",
+"kind": "single",
+"case": "CAU",
+"form": "Balázsért",
+"agreement": "both"
+},
+{
+"name": "Balázs",
+"kind": "single",
+"case": "ESS",
+"form": "Balázsként",
+"agreement": "both"
+},
+{
+"name": "Balázs",
+"kind": "single",
+"case": "POSS",
+"form": "Balázsé",
+"agreement": "both"
+},
+{
+"name": "Ödön",
+"kind": "single",
+"case": "NOM",
+"form": "Ödön",
+"agreement": "both"
+},
+{
+"name": "Ödön",
+"kind": "single",
+"case": "ACC",
+"form": "Ödönt",
+"agreement": "both"
+},
+{
+"name": "Ödön",
+"kind": "single",
+"case": "DAT",
+"form": "Ödönnek",
+"agreement": "both"
+},
+{
+"name": "Ödön",
+"kind": "single",
+"case": "INS",
+"form": "Ödönnel",
+"agreement": "both"
+},
+{
+"name": "Ödön",
+"kind": "single",
+"case": "SUB",
+"form": "Ödönre",
+"agreement": "both"
+},
+{
+"name": "Ödön",
+"kind": "single",
+"case": "DEL",
+"form": "Ödönről",
+"agreement": "both"
+},
+{
+"name": "Ödön",
+"kind": "single",
+"case": "ADE",
+"form": "Ödönnél",
+"agreement": "both"
+},
+{
+"name": "Ödön",
+"kind": "single",
+"case": "ABL",
+"form": "Ödöntől",
+"agreement": "both"
+},
+{
+"name": "Ödön",
+"kind": "single",
+"case": "ALL",
+"form": "Ödönhöz",
+"agreement": "both"
+},
+{
+"name": "Ödön",
+"kind": "single",
+"case": "CAU",
+"form": "Ödönért",
+"agreement": "both"
+},
+{
+"name": "Ödön",
+"kind": "single",
+"case": "ESS",
+"form": "Ödönként",
+"agreement": "both"
+},
+{
+"name": "Ödön",
+"kind": "single",
+"case": "POSS",
+"form": "Ödöné",
+"agreement": "both"
+},
+{
+"name": "Tünde",
+"kind": "single",
+"case": "NOM",
+"form": "Tünde",
+"agreement": "both"
+},
+{
+"name": "Tünde",
+"kind": "single",
+"case": "ACC",
+"form": "Tündét",
+"agreement": "both"
+},
+{
+"name": "Tünde",
+"kind": "single",
+"case": "DAT",
+"form": "Tündének",
+"agreement": "both"
+},
+{
+"name": "Tünde",
+"kind": "single",
+"case": "INS",
+"form": "Tündével",
+"agreement": "both"
+},
+{
+"name": "Tünde",
+"kind": "single",
+"case": "SUB",
+"form": "Tündére",
+"agreement": "both"
+},
+{
+"name": "Tünde",
+"kind": "single",
+"case": "DEL",
+"form": "Tündéről",
+"agreement": "both"
+},
+{
+"name": "Tünde",
+"kind": "single",
+"case": "ADE",
+"form": "Tündénél",
+"agreement": "both"
+},
+{
+"name": "Tünde",
+"kind": "single",
+"case": "ABL",
+"form": "Tündétől",
+"agreement": "both"
+},
+{
+"name": "Tünde",
+"kind": "single",
+"case": "ALL",
+"form": "Tündéhez",
+"agreement": "both"
+},
+{
+"name": "Tünde",
+"kind": "single",
+"case": "CAU",
+"form": "Tündéért",
+"agreement": "both"
+},
+{
+"name": "Tünde",
+"kind": "single",
+"case": "ESS",
+"form": "Tündeként",
+"agreement": "both"
+},
+{
+"name": "Tünde",
+"kind": "single",
+"case": "POSS",
+"form": "Tündéé",
+"agreement": "both"
+},
+{
+"name": "Kovács",
+"kind": "single",
+"case": "NOM",
+"form": "Kovács",
+"agreement": "both"
+},
+{
+"name": "Kovács",
+"kind": "single",
+"case": "ACC",
+"form": "Kovácsot",
+"agreement": "both"
+},
+{
+"name": "Kovács",
+"kind": "single",
+"case": "DAT",
+"form": "Kovácsnak",
+"agreement": "both"
+},
+{
+"name": "Kovács",
+"kind": "single",
+"case": "INS",
+"form": "Kováccsal",
+"agreement": "both"
+},
+{
+"name": "Kovács",
+"kind": "single",
+"case": "SUB",
+"form": "Kovácsra",
+"agreement": "both"
+},
+{
+"name": "Kovács",
+"kind": "single",
+"case": "DEL",
+"form": "Kovácsról",
+"agreement": "both"
+},
+{
+"name": "Kovács",
+"kind": "single",
+"case": "ADE",
+"form": "Kovácsnál",
+"agreement": "both"
+},
+{
+"name": "Kovács",
+"kind": "single",
+"case": "ABL",
+"form": "Kovácstól",
+"agreement": "both"
+},
+{
+"name": "Kovács",
+"kind": "single",
+"case": "ALL",
+"form": "Kovácshoz",
+"agreement": "both"
+},
+{
+"name": "Kovács",
+"kind": "single",
+"case": "CAU",
+"form": "Kovácsért",
+"agreement": "both"
+},
+{
+"name": "Kovács",
+"kind": "single",
+"case": "ESS",
+"form": "Kovácsként",
+"agreement": "both"
+},
+{
+"name": "Kovács",
+"kind": "single",
+"case": "POSS",
+"form": "Kovácsé",
+"agreement": "both"
+},
+{
+"name": "Tóth",
+"kind": "single",
+"case": "NOM",
+"form": "Tóth",
+"agreement": "both"
+},
+{
+"name": "Tóth",
+"kind": "single",
+"case": "ACC",
+"form": "Tóthot",
+"agreement": "both"
+},
+{
+"name": "Tóth",
+"kind": "single",
+"case": "DAT",
+"form": "Tóthnak",
+"agreement": "both"
+},
+{
+"name": "Tóth",
+"kind": "single",
+"case": "INS",
+"form": "Tóthtal",
+"agreement": "both"
+},
+{
+"name": "Tóth",
+"kind": "single",
+"case": "SUB",
+"form": "Tóthra",
+"agreement": "both"
+},
+{
+"name": "Tóth",
+"kind": "single",
+"case": "DEL",
+"form": "Tóthról",
+"agreement": "both"
+},
+{
+"name": "Tóth",
+"kind": "single",
+"case": "ADE",
+"form": "Tóthnál",
+"agreement": "both"
+},
+{
+"name": "Tóth",
+"kind": "single",
+"case": "ABL",
+"form": "Tóthtól",
+"agreement": "both"
+},
+{
+"name": "Tóth",
+"kind": "single",
+"case": "ALL",
+"form": "Tóthhoz",
+"agreement": "both"
+},
+{
+"name": "Tóth",
+"kind": "single",
+"case": "CAU",
+"form": "Tóthért",
+"agreement": "both"
+},
+{
+"name": "Tóth",
+"kind": "single",
+"case": "ESS",
+"form": "Tóthként",
+"agreement": "both"
+},
+{
+"name": "Tóth",
+"kind": "single",
+"case": "POSS",
+"form": "Tóthé",
+"agreement": "both"
+},
+{
+"name": "Kiss",
+"kind": "single",
+"case": "NOM",
+"form": "Kiss",
+"agreement": "both"
+},
+{
+"name": "Kiss",
+"kind": "single",
+"case": "ACC",
+"form": "Kisst",
+"agreement": "both"
+},
+{
+"name": "Kiss",
+"kind": "single",
+"case": "DAT",
+"form": "Kissnek",
+"agreement": "both"
+},
+{
+"name": "Kiss",
+"kind": "single",
+"case": "INS",
+"form": "Kiss-sel",
+"agreement": "both"
+},
+{
+"name": "Kiss",
+"kind": "single",
+"case": "SUB",
+"form": "Kissre",
+"agreement": "both"
+},
+{
+"name": "Kiss",
+"kind": "single",
+"case": "DEL",
+"form": "Kissről",
+"agreement": "both"
+},
+{
+"name": "Kiss",
+"kind": "single",
+"case": "ADE",
+"form": "Kissnél",
+"agreement": "both"
+},
+{
+"name": "Kiss",
+"kind": "single",
+"case": "ABL",
+"form": "Kisstől",
+"agreement": "both"
+},
+{
+"name": "Kiss",
+"kind": "single",
+"case": "ALL",
+"form": "Kisshez",
+"agreement": "both"
+},
+{
+"name": "Kiss",
+"kind": "single",
+"case": "CAU",
+"form": "Kissért",
+"agreement": "both"
+},
+{
+"name": "Kiss",
+"kind": "single",
+"case": "ESS",
+"form": "Kissként",
+"agreement": "both"
+},
+{
+"name": "Kiss",
+"kind": "single",
+"case": "POSS",
+"form": "Kissé",
+"agreement": "both"
+},
+{
+"name": "Nagy",
+"kind": "single",
+"case": "NOM",
+"form": "Nagy",
+"agreement": "both"
+},
+{
+"name": "Nagy",
+"kind": "single",
+"case": "ACC",
+"form": "Nagyot",
+"agreement": "both"
+},
+{
+"name": "Nagy",
+"kind": "single",
+"case": "DAT",
+"form": "Nagynak",
+"agreement": "both"
+},
+{
+"name": "Nagy",
+"kind": "single",
+"case": "INS",
+"form": "Naggyal",
+"agreement": "both"
+},
+{
+"name": "Nagy",
+"kind": "single",
+"case": "SUB",
+"form": "Nagyra",
+"agreement": "both"
+},
+{
+"name": "Nagy",
+"kind": "single",
+"case": "DEL",
+"form": "Nagyról",
+"agreement": "both"
+},
+{
+"name": "Nagy",
+"kind": "single",
+"case": "ADE",
+"form": "Nagynál",
+"agreement": "both"
+},
+{
+"name": "Nagy",
+"kind": "single",
+"case": "ABL",
+"form": "Nagytól",
+"agreement": "both"
+},
+{
+"name": "Nagy",
+"kind": "single",
+"case": "ALL",
+"form": "Nagyhoz",
+"agreement": "both"
+},
+{
+"name": "Nagy",
+"kind": "single",
+"case": "CAU",
+"form": "Nagyért",
+"agreement": "both"
+},
+{
+"name": "Nagy",
+"kind": "single",
+"case": "ESS",
+"form": "Nagyként",
+"agreement": "both"
+},
+{
+"name": "Nagy",
+"kind": "single",
+"case": "POSS",
+"form": "Nagyé",
+"agreement": "both"
+},
+{
+"name": "Gábor",
+"kind": "given",
+"case": "NOM",
+"form": "Gábor",
+"agreement": "both"
+},
+{
+"name": "Gábor",
+"kind": "given",
+"case": "ACC",
+"form": "Gábort",
+"agreement": "both"
+},
+{
+"name": "Gábor",
+"kind": "given",
+"case": "DAT",
+"form": "Gábornak",
+"agreement": "both"
+},
+{
+"name": "Gábor",
+"kind": "given",
+"case": "INS",
+"form": "Gáborral",
+"agreement": "both"
+},
+{
+"name": "Gábor",
+"kind": "given",
+"case": "SUB",
+"form": "Gáborra",
+"agreement": "both"
+},
+{
+"name": "Gábor",
+"kind": "given",
+"case": "DEL",
+"form": "Gáborról",
+"agreement": "both"
+},
+{
+"name": "Gábor",
+"kind": "given",
+"case": "ADE",
+"form": "Gábornál",
+"agreement": "both"
+},
+{
+"name": "Gábor",
+"kind": "given",
+"case": "ABL",
+"form": "Gábortól",
+"agreement": "both"
+},
+{
+"name": "Gábor",
+"kind": "given",
+"case": "ALL",
+"form": "Gáborhoz",
+"agreement": "both"
+},
+{
+"name": "Gábor",
+"kind": "given",
+"case": "CAU",
+"form": "Gáborért",
+"agreement": "both"
+},
+{
+"name": "Gábor",
+"kind": "given",
+"case": "ESS",
+"form": "Gáborként",
+"agreement": "both"
+},
+{
+"name": "Gábor",
+"kind": "given",
+"case": "POSS",
+"form": "Gáboré",
+"agreement": "both"
+},
+{
+"name": "Tamás",
+"kind": "given",
+"case": "NOM",
+"form": "Tamás",
+"agreement": "both"
+},
+{
+"name": "Tamás",
+"kind": "given",
+"case": "ACC",
+"form": "Tamást",
+"agreement": "both"
+},
+{
+"name": "Tamás",
+"kind": "given",
+"case": "DAT",
+"form": "Tamásnak",
+"agreement": "both"
+},
+{
+"name": "Tamás",
+"kind": "given",
+"case": "INS",
+"form": "Tamással",
+"agreement": "both"
+},
+{
+"name": "Tamás",
+"kind": "given",
+"case": "SUB",
+"form": "Tamásra",
+"agreement": "both"
+},
+{
+"name": "Tamás",
+"kind": "given",
+"case": "DEL",
+"form": "Tamásról",
+"agreement": "both"
+},
+{
+"name": "Tamás",
+"kind": "given",
+"case": "ADE",
+"form": "Tamásnál",
+"agreement": "both"
+},
+{
+"name": "Tamás",
+"kind": "given",
+"case": "ABL",
+"form": "Tamástól",
+"agreement": "both"
+},
+{
+"name": "Tamás",
+"kind": "given",
+"case": "ALL",
+"form": "Tamáshoz",
+"agreement": "both"
+},
+{
+"name": "Tamás",
+"kind": "given",
+"case": "CAU",
+"form": "Tamásért",
+"agreement": "both"
+},
+{
+"name": "Tamás",
+"kind": "given",
+"case": "ESS",
+"form": "Tamásként",
+"agreement": "both"
+},
+{
+"name": "Tamás",
+"kind": "given",
+"case": "POSS",
+"form": "Tamásé",
+"agreement": "both"
+},
+{
+"name": "Zoltán",
+"kind": "given",
+"case": "NOM",
+"form": "Zoltán",
+"agreement": "both"
+},
+{
+"name": "Zoltán",
+"kind": "given",
+"case": "ACC",
+"form": "Zoltánt",
+"agreement": "both"
+},
+{
+"name": "Zoltán",
+"kind": "given",
+"case": "DAT",
+"form": "Zoltánnak",
+"agreement": "both"
+},
+{
+"name": "Zoltán",
+"kind": "given",
+"case": "INS",
+"form": "Zoltánnal",
+"agreement": "both"
+},
+{
+"name": "Zoltán",
+"kind": "given",
+"case": "SUB",
+"form": "Zoltánra",
+"agreement": "both"
+},
+{
+"name": "Zoltán",
+"kind": "given",
+"case": "DEL",
+"form": "Zoltánról",
+"agreement": "both"
+},
+{
+"name": "Zoltán",
+"kind": "given",
+"case": "ADE",
+"form": "Zoltánnál",
+"agreement": "both"
+},
+{
+"name": "Zoltán",
+"kind": "given",
+"case": "ABL",
+"form": "Zoltántól",
+"agreement": "both"
+},
+{
+"name": "Zoltán",
+"kind": "given",
+"case": "ALL",
+"form": "Zoltánhoz",
+"agreement": "both"
+},
+{
+"name": "Zoltán",
+"kind": "given",
+"case": "CAU",
+"form": "Zoltánért",
+"agreement": "both"
+},
+{
+"name": "Zoltán",
+"kind": "given",
+"case": "ESS",
+"form": "Zoltánként",
+"agreement": "both"
+},
+{
+"name": "Zoltán",
+"kind": "given",
+"case": "POSS",
+"form": "Zoltáné",
+"agreement": "both"
+},
+{
+"name": "Ádám",
+"kind": "given",
+"case": "NOM",
+"form": "Ádám",
+"agreement": "both"
+},
+{
+"name": "Ádám",
+"kind": "given",
+"case": "ACC",
+"form": "Ádámot",
+"agreement": "both"
+},
+{
+"name": "Ádám",
+"kind": "given",
+"case": "DAT",
+"form": "Ádámnak",
+"agreement": "both"
+},
+{
+"name": "Ádám",
+"kind": "given",
+"case": "INS",
+"form": "Ádámmal",
+"agreement": "both"
+},
+{
+"name": "Ádám",
+"kind": "given",
+"case": "SUB",
+"form": "Ádámra",
+"agreement": "both"
+},
+{
+"name": "Ádám",
+"kind": "given",
+"case": "DEL",
+"form": "Ádámról",
+"agreement": "both"
+},
+{
+"name": "Ádám",
+"kind": "given",
+"case": "ADE",
+"form": "Ádámnál",
+"agreement": "both"
+},
+{
+"name": "Ádám",
+"kind": "given",
+"case": "ABL",
+"form": "Ádámtól",
+"agreement": "both"
+},
+{
+"name": "Ádám",
+"kind": "given",
+"case": "ALL",
+"form": "Ádámhoz",
+"agreement": "both"
+},
+{
+"name": "Ádám",
+"kind": "given",
+"case": "CAU",
+"form": "Ádámért",
+"agreement": "both"
+},
+{
+"name": "Ádám",
+"kind": "given",
+"case": "ESS",
+"form": "Ádámként",
+"agreement": "both"
+},
+{
+"name": "Ádám",
+"kind": "given",
+"case": "POSS",
+"form": "Ádámé",
+"agreement": "both"
+},
+{
+"name": "Bálint",
+"kind": "given",
+"case": "NOM",
+"form": "Bálint",
+"agreement": "both"
+},
+{
+"name": "Bálint",
+"kind": "given",
+"case": "ACC",
+"form": "Bálintot",
+"agreement": "both"
+},
+{
+"name": "Bálint",
+"kind": "given",
+"case": "DAT",
+"form": "Bálintnak",
+"agreement": "both"
+},
+{
+"name": "Bálint",
+"kind": "given",
+"case": "INS",
+"form": "Bálinttal",
+"agreement": "both"
+},
+{
+"name": "Bálint",
+"kind": "given",
+"case": "SUB",
+"form": "Bálintra",
+"agreement": "both"
+},
+{
+"name": "Bálint",
+"kind": "given",
+"case": "DEL",
+"form": "Bálintról",
+"agreement": "both"
+},
+{
+"name": "Bálint",
+"kind": "given",
+"case": "ADE",
+"form": "Bálintnál",
+"agreement": "both"
+},
+{
+"name": "Bálint",
+"kind": "given",
+"case": "ABL",
+"form": "Bálinttól",
+"agreement": "both"
+},
+{
+"name": "Bálint",
+"kind": "given",
+"case": "ALL",
+"form": "Bálinthoz",
+"agreement": "both"
+},
+{
+"name": "Bálint",
+"kind": "given",
+"case": "CAU",
+"form": "Bálintért",
+"agreement": "both"
+},
+{
+"name": "Bálint",
+"kind": "given",
+"case": "ESS",
+"form": "Bálintként",
+"agreement": "both"
+},
+{
+"name": "Bálint",
+"kind": "given",
+"case": "POSS",
+"form": "Bálinté",
+"agreement": "both"
+},
+{
+"name": "Dániel",
+"kind": "given",
+"case": "NOM",
+"form": "Dániel",
+"agreement": "both"
+},
+{
+"name": "Dániel",
+"kind": "given",
+"case": "ACC",
+"form": "Dánielt",
+"agreement": "both"
+},
+{
+"name": "Dániel",
+"kind": "given",
+"case": "DAT",
+"form": "Dánielnek",
+"agreement": "both"
+},
+{
+"name": "Dániel",
+"kind": "given",
+"case": "INS",
+"form": "Dániellel",
+"agreement": "both"
+},
+{
+"name": "Dániel",
+"kind": "given",
+"case": "SUB",
+"form": "Dánielre",
+"agreement": "both"
+},
+{
+"name": "Dániel",
+"kind": "given",
+"case": "DEL",
+"form": "Dánielről",
+"agreement": "both"
+},
+{
+"name": "Dániel",
+"kind": "given",
+"case": "ADE",
+"form": "Dánielnél",
+"agreement": "both"
+},
+{
+"name": "Dániel",
+"kind": "given",
+"case": "ABL",
+"form": "Dánieltől",
+"agreement": "both"
+},
+{
+"name": "Dániel",
+"kind": "given",
+"case": "ALL",
+"form": "Dánielhez",
+"agreement": "both"
+},
+{
+"name": "Dániel",
+"kind": "given",
+"case": "CAU",
+"form": "Dánielért",
+"agreement": "both"
+},
+{
+"name": "Dániel",
+"kind": "given",
+"case": "ESS",
+"form": "Dánielként",
+"agreement": "both"
+},
+{
+"name": "Dániel",
+"kind": "given",
+"case": "POSS",
+"form": "Dánielé",
+"agreement": "both"
+},
+{
+"name": "Márton",
+"kind": "given",
+"case": "NOM",
+"form": "Márton",
+"agreement": "both"
+},
+{
+"name": "Márton",
+"kind": "given",
+"case": "ACC",
+"form": "Mártont",
+"agreement": "both"
+},
+{
+"name": "Márton",
+"kind": "given",
+"case": "DAT",
+"form": "Mártonnak",
+"agreement": "both"
+},
+{
+"name": "Márton",
+"kind": "given",
+"case": "INS",
+"form": "Mártonnal",
+"agreement": "both"
+},
+{
+"name": "Márton",
+"kind": "given",
+"case": "SUB",
+"form": "Mártonra",
+"agreement": "both"
+},
+{
+"name": "Márton",
+"kind": "given",
+"case": "DEL",
+"form": "Mártonról",
+"agreement": "both"
+},
+{
+"name": "Márton",
+"kind": "given",
+"case": "ADE",
+"form": "Mártonnál",
+"agreement": "both"
+},
+{
+"name": "Márton",
+"kind": "given",
+"case": "ABL",
+"form": "Mártontól",
+"agreement": "both"
+},
+{
+"name": "Márton",
+"kind": "given",
+"case": "ALL",
+"form": "Mártonhoz",
+"agreement": "both"
+},
+{
+"name": "Márton",
+"kind": "given",
+"case": "CAU",
+"form": "Mártonért",
+"agreement": "both"
+},
+{
+"name": "Márton",
+"kind": "given",
+"case": "ESS",
+"form": "Mártonként",
+"agreement": "both"
+},
+{
+"name": "Márton",
+"kind": "given",
+"case": "POSS",
+"form": "Mártoné",
+"agreement": "both"
+},
+{
+"name": "Ákos",
+"kind": "given",
+"case": "NOM",
+"form": "Ákos",
+"agreement": "both"
+},
+{
+"name": "Ákos",
+"kind": "given",
+"case": "ACC",
+"form": "Ákost",
+"agreement": "both"
+},
+{
+"name": "Ákos",
+"kind": "given",
+"case": "DAT",
+"form": "Ákosnak",
+"agreement": "both"
+},
+{
+"name": "Ákos",
+"kind": "given",
+"case": "INS",
+"form": "Ákossal",
+"agreement": "both"
+},
+{
+"name": "Ákos",
+"kind": "given",
+"case": "SUB",
+"form": "Ákosra",
+"agreement": "both"
+},
+{
+"name": "Ákos",
+"kind": "given",
+"case": "DEL",
+"form": "Ákosról",
+"agreement": "both"
+},
+{
+"name": "Ákos",
+"kind": "given",
+"case": "ADE",
+"form": "Ákosnál",
+"agreement": "both"
+},
+{
+"name": "Ákos",
+"kind": "given",
+"case": "ABL",
+"form": "Ákostól",
+"agreement": "both"
+},
+{
+"name": "Ákos",
+"kind": "given",
+"case": "ALL",
+"form": "Ákoshoz",
+"agreement": "both"
+},
+{
+"name": "Ákos",
+"kind": "given",
+"case": "CAU",
+"form": "Ákosért",
+"agreement": "both"
+},
+{
+"name": "Ákos",
+"kind": "given",
+"case": "ESS",
+"form": "Ákosként",
+"agreement": "both"
+},
+{
+"name": "Ákos",
+"kind": "given",
+"case": "POSS",
+"form": "Ákosé",
+"agreement": "both"
+},
+{
+"name": "Dávid",
+"kind": "given",
+"case": "NOM",
+"form": "Dávid",
+"agreement": "both"
+},
+{
+"name": "Dávid",
+"kind": "given",
+"case": "ACC",
+"form": "Dávidot",
+"agreement": "both"
+},
+{
+"name": "Dávid",
+"kind": "given",
+"case": "DAT",
+"form": "Dávidnak",
+"agreement": "both"
+},
+{
+"name": "Dávid",
+"kind": "given",
+"case": "INS",
+"form": "Dáviddal",
+"agreement": "both"
+},
+{
+"name": "Dávid",
+"kind": "given",
+"case": "SUB",
+"form": "Dávidra",
+"agreement": "both"
+},
+{
+"name": "Dávid",
+"kind": "given",
+"case": "DEL",
+"form": "Dávidról",
+"agreement": "both"
+},
+{
+"name": "Dávid",
+"kind": "given",
+"case": "ADE",
+"form": "Dávidnál",
+"agreement": "both"
+},
+{
+"name": "Dávid",
+"kind": "given",
+"case": "ABL",
+"form": "Dávidtól",
+"agreement": "both"
+},
+{
+"name": "Dávid",
+"kind": "given",
+"case": "ALL",
+"form": "Dávidhoz",
+"agreement": "both"
+},
+{
+"name": "Dávid",
+"kind": "given",
+"case": "CAU",
+"form": "Dávidért",
+"agreement": "both"
+},
+{
+"name": "Dávid",
+"kind": "given",
+"case": "ESS",
+"form": "Dávidként",
+"agreement": "both"
+},
+{
+"name": "Dávid",
+"kind": "given",
+"case": "POSS",
+"form": "Dávidé",
+"agreement": "both"
+},
+{
+"name": "Miklós",
+"kind": "given",
+"case": "NOM",
+"form": "Miklós",
+"agreement": "both"
+},
+{
+"name": "Miklós",
+"kind": "given",
+"case": "ACC",
+"form": "Miklóst",
+"agreement": "both"
+},
+{
+"name": "Miklós",
+"kind": "given",
+"case": "DAT",
+"form": "Miklósnak",
+"agreement": "both"
+},
+{
+"name": "Miklós",
+"kind": "given",
+"case": "INS",
+"form": "Miklóssal",
+"agreement": "both"
+},
+{
+"name": "Miklós",
+"kind": "given",
+"case": "SUB",
+"form": "Miklósra",
+"agreement": "both"
+},
+{
+"name": "Miklós",
+"kind": "given",
+"case": "DEL",
+"form": "Miklósról",
+"agreement": "both"
+},
+{
+"name": "Miklós",
+"kind": "given",
+"case": "ADE",
+"form": "Miklósnál",
+"agreement": "both"
+},
+{
+"name": "Miklós",
+"kind": "given",
+"case": "ABL",
+"form": "Miklóstól",
+"agreement": "both"
+},
+{
+"name": "Miklós",
+"kind": "given",
+"case": "ALL",
+"form": "Miklóshoz",
+"agreement": "both"
+},
+{
+"name": "Miklós",
+"kind": "given",
+"case": "CAU",
+"form": "Miklósért",
+"agreement": "both"
+},
+{
+"name": "Miklós",
+"kind": "given",
+"case": "ESS",
+"form": "Miklósként",
+"agreement": "both"
+},
+{
+"name": "Miklós",
+"kind": "given",
+"case": "POSS",
+"form": "Miklósé",
+"agreement": "both"
+},
+{
+"name": "Lajos",
+"kind": "given",
+"case": "NOM",
+"form": "Lajos",
+"agreement": "both"
+},
+{
+"name": "Lajos",
+"kind": "given",
+"case": "ACC",
+"form": "Lajost",
+"agreement": "both"
+},
+{
+"name": "Lajos",
+"kind": "given",
+"case": "DAT",
+"form": "Lajosnak",
+"agreement": "both"
+},
+{
+"name": "Lajos",
+"kind": "given",
+"case": "INS",
+"form": "Lajossal",
+"agreement": "both"
+},
+{
+"name": "Lajos",
+"kind": "given",
+"case": "SUB",
+"form": "Lajosra",
+"agreement": "both"
+},
+{
+"name": "Lajos",
+"kind": "given",
+"case": "DEL",
+"form": "Lajosról",
+"agreement": "both"
+},
+{
+"name": "Lajos",
+"kind": "given",
+"case": "ADE",
+"form": "Lajosnál",
+"agreement": "both"
+},
+{
+"name": "Lajos",
+"kind": "given",
+"case": "ABL",
+"form": "Lajostól",
+"agreement": "both"
+},
+{
+"name": "Lajos",
+"kind": "given",
+"case": "ALL",
+"form": "Lajoshoz",
+"agreement": "both"
+},
+{
+"name": "Lajos",
+"kind": "given",
+"case": "CAU",
+"form": "Lajosért",
+"agreement": "both"
+},
+{
+"name": "Lajos",
+"kind": "given",
+"case": "ESS",
+"form": "Lajosként",
+"agreement": "both"
+},
+{
+"name": "Lajos",
+"kind": "given",
+"case": "POSS",
+"form": "Lajosé",
+"agreement": "both"
+},
+{
+"name": "Viktor",
+"kind": "given",
+"case": "NOM",
+"form": "Viktor",
+"agreement": "both"
+},
+{
+"name": "Viktor",
+"kind": "given",
+"case": "ACC",
+"form": "Viktort",
+"agreement": "both"
+},
+{
+"name": "Viktor",
+"kind": "given",
+"case": "DAT",
+"form": "Viktornak",
+"agreement": "both"
+},
+{
+"name": "Viktor",
+"kind": "given",
+"case": "INS",
+"form": "Viktorral",
+"agreement": "both"
+},
+{
+"name": "Viktor",
+"kind": "given",
+"case": "SUB",
+"form": "Viktorra",
+"agreement": "both"
+},
+{
+"name": "Viktor",
+"kind": "given",
+"case": "DEL",
+"form": "Viktorról",
+"agreement": "both"
+},
+{
+"name": "Viktor",
+"kind": "given",
+"case": "ADE",
+"form": "Viktornál",
+"agreement": "both"
+},
+{
+"name": "Viktor",
+"kind": "given",
+"case": "ABL",
+"form": "Viktortól",
+"agreement": "both"
+},
+{
+"name": "Viktor",
+"kind": "given",
+"case": "ALL",
+"form": "Viktorhoz",
+"agreement": "both"
+},
+{
+"name": "Viktor",
+"kind": "given",
+"case": "CAU",
+"form": "Viktorért",
+"agreement": "both"
+},
+{
+"name": "Viktor",
+"kind": "given",
+"case": "ESS",
+"form": "Viktorként",
+"agreement": "both"
+},
+{
+"name": "Viktor",
+"kind": "given",
+"case": "POSS",
+"form": "Viktoré",
+"agreement": "both"
+},
+{
+"name": "Norbert",
+"kind": "given",
+"case": "NOM",
+"form": "Norbert",
+"agreement": "both"
+},
+{
+"name": "Norbert",
+"kind": "given",
+"case": "ACC",
+"form": "Norbertet",
+"agreement": "both"
+},
+{
+"name": "Norbert",
+"kind": "given",
+"case": "DAT",
+"form": "Norbertnek",
+"agreement": "both"
+},
+{
+"name": "Norbert",
+"kind": "given",
+"case": "INS",
+"form": "Norberttel",
+"agreement": "both"
+},
+{
+"name": "Norbert",
+"kind": "given",
+"case": "SUB",
+"form": "Norbertre",
+"agreement": "both"
+},
+{
+"name": "Norbert",
+"kind": "given",
+"case": "DEL",
+"form": "Norbertről",
+"agreement": "both"
+},
+{
+"name": "Norbert",
+"kind": "given",
+"case": "ADE",
+"form": "Norbertnél",
+"agreement": "both"
+},
+{
+"name": "Norbert",
+"kind": "given",
+"case": "ABL",
+"form": "Norberttől",
+"agreement": "both"
+},
+{
+"name": "Norbert",
+"kind": "given",
+"case": "ALL",
+"form": "Norberthez",
+"agreement": "both"
+},
+{
+"name": "Norbert",
+"kind": "given",
+"case": "CAU",
+"form": "Norbertért",
+"agreement": "both"
+},
+{
+"name": "Norbert",
+"kind": "given",
+"case": "ESS",
+"form": "Norbertként",
+"agreement": "both"
+},
+{
+"name": "Norbert",
+"kind": "given",
+"case": "POSS",
+"form": "Norberté",
+"agreement": "both"
+},
+{
+"name": "Krisztián",
+"kind": "given",
+"case": "NOM",
+"form": "Krisztián",
+"agreement": "both"
+},
+{
+"name": "Krisztián",
+"kind": "given",
+"case": "ACC",
+"form": "Krisztiánt",
+"agreement": "both"
+},
+{
+"name": "Krisztián",
+"kind": "given",
+"case": "DAT",
+"form": "Krisztiánnak",
+"agreement": "both"
+},
+{
+"name": "Krisztián",
+"kind": "given",
+"case": "INS",
+"form": "Krisztiánnal",
+"agreement": "both"
+},
+{
+"name": "Krisztián",
+"kind": "given",
+"case": "SUB",
+"form": "Krisztiánra",
+"agreement": "both"
+},
+{
+"name": "Krisztián",
+"kind": "given",
+"case": "DEL",
+"form": "Krisztiánról",
+"agreement": "both"
+},
+{
+"name": "Krisztián",
+"kind": "given",
+"case": "ADE",
+"form": "Krisztiánnál",
+"agreement": "both"
+},
+{
+"name": "Krisztián",
+"kind": "given",
+"case": "ABL",
+"form": "Krisztiántól",
+"agreement": "both"
+},
+{
+"name": "Krisztián",
+"kind": "given",
+"case": "ALL",
+"form": "Krisztiánhoz",
+"agreement": "both"
+},
+{
+"name": "Krisztián",
+"kind": "given",
+"case": "CAU",
+"form": "Krisztiánért",
+"agreement": "both"
+},
+{
+"name": "Krisztián",
+"kind": "given",
+"case": "ESS",
+"form": "Krisztiánként",
+"agreement": "both"
+},
+{
+"name": "Krisztián",
+"kind": "given",
+"case": "POSS",
+"form": "Krisztiáné",
+"agreement": "both"
+},
+{
+"name": "Kristóf",
+"kind": "given",
+"case": "NOM",
+"form": "Kristóf",
+"agreement": "both"
+},
+{
+"name": "Kristóf",
+"kind": "given",
+"case": "ACC",
+"form": "Kristófot",
+"agreement": "both"
+},
+{
+"name": "Kristóf",
+"kind": "given",
+"case": "DAT",
+"form": "Kristófnak",
+"agreement": "both"
+},
+{
+"name": "Kristóf",
+"kind": "given",
+"case": "INS",
+"form": "Kristóffal",
+"agreement": "both"
+},
+{
+"name": "Kristóf",
+"kind": "given",
+"case": "SUB",
+"form": "Kristófra",
+"agreement": "both"
+},
+{
+"name": "Kristóf",
+"kind": "given",
+"case": "DEL",
+"form": "Kristófról",
+"agreement": "both"
+},
+{
+"name": "Kristóf",
+"kind": "given",
+"case": "ADE",
+"form": "Kristófnál",
+"agreement": "both"
+},
+{
+"name": "Kristóf",
+"kind": "given",
+"case": "ABL",
+"form": "Kristóftól",
+"agreement": "both"
+},
+{
+"name": "Kristóf",
+"kind": "given",
+"case": "ALL",
+"form": "Kristófhoz",
+"agreement": "both"
+},
+{
+"name": "Kristóf",
+"kind": "given",
+"case": "CAU",
+"form": "Kristófért",
+"agreement": "both"
+},
+{
+"name": "Kristóf",
+"kind": "given",
+"case": "ESS",
+"form": "Kristófként",
+"agreement": "both"
+},
+{
+"name": "Kristóf",
+"kind": "given",
+"case": "POSS",
+"form": "Kristófé",
+"agreement": "both"
+},
+{
+"name": "Árpád",
+"kind": "given",
+"case": "NOM",
+"form": "Árpád",
+"agreement": "both"
+},
+{
+"name": "Árpád",
+"kind": "given",
+"case": "ACC",
+"form": "Árpádot",
+"agreement": "both"
+},
+{
+"name": "Árpád",
+"kind": "given",
+"case": "DAT",
+"form": "Árpádnak",
+"agreement": "both"
+},
+{
+"name": "Árpád",
+"kind": "given",
+"case": "INS",
+"form": "Árpáddal",
+"agreement": "both"
+},
+{
+"name": "Árpád",
+"kind": "given",
+"case": "SUB",
+"form": "Árpádra",
+"agreement": "both"
+},
+{
+"name": "Árpád",
+"kind": "given",
+"case": "DEL",
+"form": "Árpádról",
+"agreement": "both"
+},
+{
+"name": "Árpád",
+"kind": "given",
+"case": "ADE",
+"form": "Árpádnál",
+"agreement": "both"
+},
+{
+"name": "Árpád",
+"kind": "given",
+"case": "ABL",
+"form": "Árpádtól",
+"agreement": "both"
+},
+{
+"name": "Árpád",
+"kind": "given",
+"case": "ALL",
+"form": "Árpádhoz",
+"agreement": "both"
+},
+{
+"name": "Árpád",
+"kind": "given",
+"case": "CAU",
+"form": "Árpádért",
+"agreement": "both"
+},
+{
+"name": "Árpád",
+"kind": "given",
+"case": "ESS",
+"form": "Árpádként",
+"agreement": "both"
+},
+{
+"name": "Árpád",
+"kind": "given",
+"case": "POSS",
+"form": "Árpádé",
+"agreement": "both"
+},
+{
+"name": "Judit",
+"kind": "given",
+"case": "NOM",
+"form": "Judit",
+"agreement": "both"
+},
+{
+"name": "Judit",
+"kind": "given",
+"case": "ACC",
+"form": "Juditot",
+"agreement": "both"
+},
+{
+"name": "Judit",
+"kind": "given",
+"case": "DAT",
+"form": "Juditnak",
+"agreement": "both"
+},
+{
+"name": "Judit",
+"kind": "given",
+"case": "INS",
+"form": "Judittal",
+"agreement": "both"
+},
+{
+"name": "Judit",
+"kind": "given",
+"case": "SUB",
+"form": "Juditra",
+"agreement": "both"
+},
+{
+"name": "Judit",
+"kind": "given",
+"case": "DEL",
+"form": "Juditról",
+"agreement": "both"
+},
+{
+"name": "Judit",
+"kind": "given",
+"case": "ADE",
+"form": "Juditnál",
+"agreement": "both"
+},
+{
+"name": "Judit",
+"kind": "given",
+"case": "ABL",
+"form": "Judittól",
+"agreement": "both"
+},
+{
+"name": "Judit",
+"kind": "given",
+"case": "ALL",
+"form": "Judithoz",
+"agreement": "both"
+},
+{
+"name": "Judit",
+"kind": "given",
+"case": "CAU",
+"form": "Juditért",
+"agreement": "both"
+},
+{
+"name": "Judit",
+"kind": "given",
+"case": "ESS",
+"form": "Juditként",
+"agreement": "both"
+},
+{
+"name": "Judit",
+"kind": "given",
+"case": "POSS",
+"form": "Judité",
+"agreement": "both"
+},
+{
+"name": "Edit",
+"kind": "given",
+"case": "NOM",
+"form": "Edit",
+"agreement": "both"
+},
+{
+"name": "Edit",
+"kind": "given",
+"case": "ACC",
+"form": "Editet",
+"agreement": "both"
+},
+{
+"name": "Edit",
+"kind": "given",
+"case": "DAT",
+"form": "Editnek",
+"agreement": "both"
+},
+{
+"name": "Edit",
+"kind": "given",
+"case": "INS",
+"form": "Edittel",
+"agreement": "both"
+},
+{
+"name": "Edit",
+"kind": "given",
+"case": "SUB",
+"form": "Editre",
+"agreement": "both"
+},
+{
+"name": "Edit",
+"kind": "given",
+"case": "DEL",
+"form": "Editről",
+"agreement": "both"
+},
+{
+"name": "Edit",
+"kind": "given",
+"case": "ADE",
+"form": "Editnél",
+"agreement": "both"
+},
+{
+"name": "Edit",
+"kind": "given",
+"case": "ABL",
+"form": "Edittől",
+"agreement": "both"
+},
+{
+"name": "Edit",
+"kind": "given",
+"case": "ALL",
+"form": "Edithez",
+"agreement": "both"
+},
+{
+"name": "Edit",
+"kind": "given",
+"case": "CAU",
+"form": "Editért",
+"agreement": "both"
+},
+{
+"name": "Edit",
+"kind": "given",
+"case": "ESS",
+"form": "Editként",
+"agreement": "both"
+},
+{
+"name": "Edit",
+"kind": "given",
+"case": "POSS",
+"form": "Edité",
+"agreement": "both"
+},
+{
+"name": "Ildikó",
+"kind": "given",
+"case": "NOM",
+"form": "Ildikó",
+"agreement": "both"
+},
+{
+"name": "Ildikó",
+"kind": "given",
+"case": "ACC",
+"form": "Ildikót",
+"agreement": "both"
+},
+{
+"name": "Ildikó",
+"kind": "given",
+"case": "DAT",
+"form": "Ildikónak",
+"agreement": "both"
+},
+{
+"name": "Ildikó",
+"kind": "given",
+"case": "INS",
+"form": "Ildikóval",
+"agreement": "both"
+},
+{
+"name": "Ildikó",
+"kind": "given",
+"case": "SUB",
+"form": "Ildikóra",
+"agreement": "both"
+},
+{
+"name": "Ildikó",
+"kind": "given",
+"case": "DEL",
+"form": "Ildikóról",
+"agreement": "both"
+},
+{
+"name": "Ildikó",
+"kind": "given",
+"case": "ADE",
+"form": "Ildikónál",
+"agreement": "both"
+},
+{
+"name": "Ildikó",
+"kind": "given",
+"case": "ABL",
+"form": "Ildikótól",
+"agreement": "both"
+},
+{
+"name": "Ildikó",
+"kind": "given",
+"case": "ALL",
+"form": "Ildikóhoz",
+"agreement": "both"
+},
+{
+"name": "Ildikó",
+"kind": "given",
+"case": "CAU",
+"form": "Ildikóért",
+"agreement": "both"
+},
+{
+"name": "Ildikó",
+"kind": "given",
+"case": "ESS",
+"form": "Ildikóként",
+"agreement": "both"
+},
+{
+"name": "Ildikó",
+"kind": "given",
+"case": "POSS",
+"form": "Ildikóé",
+"agreement": "both"
+},
+{
+"name": "Enikő",
+"kind": "given",
+"case": "NOM",
+"form": "Enikő",
+"agreement": "both"
+},
+{
+"name": "Enikő",
+"kind": "given",
+"case": "ACC",
+"form": "Enikőt",
+"agreement": "both"
+},
+{
+"name": "Enikő",
+"kind": "given",
+"case": "DAT",
+"form": "Enikőnek",
+"agreement": "both"
+},
+{
+"name": "Enikő",
+"kind": "given",
+"case": "INS",
+"form": "Enikővel",
+"agreement": "both"
+},
+{
+"name": "Enikő",
+"kind": "given",
+"case": "SUB",
+"form": "Enikőre",
+"agreement": "both"
+},
+{
+"name": "Enikő",
+"kind": "given",
+"case": "DEL",
+"form": "Enikőről",
+"agreement": "both"
+},
+{
+"name": "Enikő",
+"kind": "given",
+"case": "ADE",
+"form": "Enikőnél",
+"agreement": "both"
+},
+{
+"name": "Enikő",
+"kind": "given",
+"case": "ABL",
+"form": "Enikőtől",
+"agreement": "both"
+},
+{
+"name": "Enikő",
+"kind": "given",
+"case": "ALL",
+"form": "Enikőhöz",
+"agreement": "both"
+},
+{
+"name": "Enikő",
+"kind": "given",
+"case": "CAU",
+"form": "Enikőért",
+"agreement": "both"
+},
+{
+"name": "Enikő",
+"kind": "given",
+"case": "ESS",
+"form": "Enikőként",
+"agreement": "both"
+},
+{
+"name": "Enikő",
+"kind": "given",
+"case": "POSS",
+"form": "Enikőé",
+"agreement": "both"
+},
+{
+"name": "Ingrid",
+"kind": "given",
+"case": "NOM",
+"form": "Ingrid",
+"agreement": "both"
+},
+{
+"name": "Ingrid",
+"kind": "given",
+"case": "ACC",
+"form": "Ingridet",
+"agreement": "both"
+},
+{
+"name": "Ingrid",
+"kind": "given",
+"case": "DAT",
+"form": "Ingridnek",
+"agreement": "both"
+},
+{
+"name": "Ingrid",
+"kind": "given",
+"case": "INS",
+"form": "Ingriddel",
+"agreement": "both"
+},
+{
+"name": "Ingrid",
+"kind": "given",
+"case": "SUB",
+"form": "Ingridre",
+"agreement": "both"
+},
+{
+"name": "Ingrid",
+"kind": "given",
+"case": "DEL",
+"form": "Ingridről",
+"agreement": "both"
+},
+{
+"name": "Ingrid",
+"kind": "given",
+"case": "ADE",
+"form": "Ingridnél",
+"agreement": "both"
+},
+{
+"name": "Ingrid",
+"kind": "given",
+"case": "ABL",
+"form": "Ingridtől",
+"agreement": "both"
+},
+{
+"name": "Ingrid",
+"kind": "given",
+"case": "ALL",
+"form": "Ingridhez",
+"agreement": "both"
+},
+{
+"name": "Ingrid",
+"kind": "given",
+"case": "CAU",
+"form": "Ingridért",
+"agreement": "both"
+},
+{
+"name": "Ingrid",
+"kind": "given",
+"case": "ESS",
+"form": "Ingridként",
+"agreement": "both"
+},
+{
+"name": "Ingrid",
+"kind": "given",
+"case": "POSS",
+"form": "Ingridé",
+"agreement": "both"
+},
+{
+"name": "Erzsébet",
+"kind": "given",
+"case": "NOM",
+"form": "Erzsébet",
+"agreement": "both"
+},
+{
+"name": "Erzsébet",
+"kind": "given",
+"case": "ACC",
+"form": "Erzsébetet",
+"agreement": "both"
+},
+{
+"name": "Erzsébet",
+"kind": "given",
+"case": "DAT",
+"form": "Erzsébetnek",
+"agreement": "both"
+},
+{
+"name": "Erzsébet",
+"kind": "given",
+"case": "INS",
+"form": "Erzsébettel",
+"agreement": "both"
+},
+{
+"name": "Erzsébet",
+"kind": "given",
+"case": "SUB",
+"form": "Erzsébetre",
+"agreement": "both"
+},
+{
+"name": "Erzsébet",
+"kind": "given",
+"case": "DEL",
+"form": "Erzsébetről",
+"agreement": "both"
+},
+{
+"name": "Erzsébet",
+"kind": "given",
+"case": "ADE",
+"form": "Erzsébetnél",
+"agreement": "both"
+},
+{
+"name": "Erzsébet",
+"kind": "given",
+"case": "ABL",
+"form": "Erzsébettől",
+"agreement": "both"
+},
+{
+"name": "Erzsébet",
+"kind": "given",
+"case": "ALL",
+"form": "Erzsébethez",
+"agreement": "both"
+},
+{
+"name": "Erzsébet",
+"kind": "given",
+"case": "CAU",
+"form": "Erzsébetért",
+"agreement": "both"
+},
+{
+"name": "Erzsébet",
+"kind": "given",
+"case": "ESS",
+"form": "Erzsébetként",
+"agreement": "both"
+},
+{
+"name": "Erzsébet",
+"kind": "given",
+"case": "POSS",
+"form": "Erzsébeté",
+"agreement": "both"
+},
+{
+"name": "Margit",
+"kind": "given",
+"case": "NOM",
+"form": "Margit",
+"agreement": "both"
+},
+{
+"name": "Margit",
+"kind": "given",
+"case": "ACC",
+"form": "Margitot",
+"agreement": "both"
+},
+{
+"name": "Margit",
+"kind": "given",
+"case": "DAT",
+"form": "Margitnak",
+"agreement": "both"
+},
+{
+"name": "Margit",
+"kind": "given",
+"case": "INS",
+"form": "Margittal",
+"agreement": "both"
+},
+{
+"name": "Margit",
+"kind": "given",
+"case": "SUB",
+"form": "Margitra",
+"agreement": "both"
+},
+{
+"name": "Margit",
+"kind": "given",
+"case": "DEL",
+"form": "Margitról",
+"agreement": "both"
+},
+{
+"name": "Margit",
+"kind": "given",
+"case": "ADE",
+"form": "Margitnál",
+"agreement": "both"
+},
+{
+"name": "Margit",
+"kind": "given",
+"case": "ABL",
+"form": "Margittól",
+"agreement": "both"
+},
+{
+"name": "Margit",
+"kind": "given",
+"case": "ALL",
+"form": "Margithoz",
+"agreement": "both"
+},
+{
+"name": "Margit",
+"kind": "given",
+"case": "CAU",
+"form": "Margitért",
+"agreement": "both"
+},
+{
+"name": "Margit",
+"kind": "given",
+"case": "ESS",
+"form": "Margitként",
+"agreement": "both"
+},
+{
+"name": "Margit",
+"kind": "given",
+"case": "POSS",
+"form": "Margité",
+"agreement": "both"
+},
+{
+"name": "Nikolett",
+"kind": "given",
+"case": "NOM",
+"form": "Nikolett",
+"agreement": "both"
+},
+{
+"name": "Nikolett",
+"kind": "given",
+"case": "ACC",
+"form": "Nikolettet",
+"agreement": "both"
+},
+{
+"name": "Nikolett",
+"kind": "given",
+"case": "DAT",
+"form": "Nikolettnek",
+"agreement": "both"
+},
+{
+"name": "Nikolett",
+"kind": "given",
+"case": "INS",
+"form": "Nikolett-tel",
+"agreement": "both"
+},
+{
+"name": "Nikolett",
+"kind": "given",
+"case": "SUB",
+"form": "Nikolettre",
+"agreement": "both"
+},
+{
+"name": "Nikolett",
+"kind": "given",
+"case": "DEL",
+"form": "Nikolettről",
+"agreement": "both"
+},
+{
+"name": "Nikolett",
+"kind": "given",
+"case": "ADE",
+"form": "Nikolettnél",
+"agreement": "both"
+},
+{
+"name": "Nikolett",
+"kind": "given",
+"case": "ABL",
+"form": "Nikolett-től",
+"agreement": "both"
+},
+{
+"name": "Nikolett",
+"kind": "given",
+"case": "ALL",
+"form": "Nikoletthez",
+"agreement": "both"
+},
+{
+"name": "Nikolett",
+"kind": "given",
+"case": "CAU",
+"form": "Nikolettért",
+"agreement": "both"
+},
+{
+"name": "Nikolett",
+"kind": "given",
+"case": "ESS",
+"form": "Nikolettként",
+"agreement": "both"
+},
+{
+"name": "Nikolett",
+"kind": "given",
+"case": "POSS",
+"form": "Nikoletté",
+"agreement": "both"
+},
+{
+"name": "Bernadett",
+"kind": "given",
+"case": "NOM",
+"form": "Bernadett",
+"agreement": "both"
+},
+{
+"name": "Bernadett",
+"kind": "given",
+"case": "ACC",
+"form": "Bernadettet",
+"agreement": "both"
+},
+{
+"name": "Bernadett",
+"kind": "given",
+"case": "DAT",
+"form": "Bernadettnek",
+"agreement": "both"
+},
+{
+"name": "Bernadett",
+"kind": "given",
+"case": "INS",
+"form": "Bernadett-tel",
+"agreement": "both"
+},
+{
+"name": "Bernadett",
+"kind": "given",
+"case": "SUB",
+"form": "Bernadettre",
+"agreement": "both"
+},
+{
+"name": "Bernadett",
+"kind": "given",
+"case": "DEL",
+"form": "Bernadettről",
+"agreement": "both"
+},
+{
+"name": "Bernadett",
+"kind": "given",
+"case": "ADE",
+"form": "Bernadettnél",
+"agreement": "both"
+},
+{
+"name": "Bernadett",
+"kind": "given",
+"case": "ABL",
+"form": "Bernadett-től",
+"agreement": "both"
+},
+{
+"name": "Bernadett",
+"kind": "given",
+"case": "ALL",
+"form": "Bernadetthez",
+"agreement": "both"
+},
+{
+"name": "Bernadett",
+"kind": "given",
+"case": "CAU",
+"form": "Bernadettért",
+"agreement": "both"
+},
+{
+"name": "Bernadett",
+"kind": "given",
+"case": "ESS",
+"form": "Bernadettként",
+"agreement": "both"
+},
+{
+"name": "Bernadett",
+"kind": "given",
+"case": "POSS",
+"form": "Bernadetté",
+"agreement": "both"
+},
+{
+"name": "Ágnes",
+"kind": "given",
+"case": "NOM",
+"form": "Ágnes",
+"agreement": "both"
+},
+{
+"name": "Ágnes",
+"kind": "given",
+"case": "ACC",
+"form": "Ágnest",
+"agreement": "both"
+},
+{
+"name": "Ágnes",
+"kind": "given",
+"case": "DAT",
+"form": "Ágnesnek",
+"agreement": "both"
+},
+{
+"name": "Ágnes",
+"kind": "given",
+"case": "INS",
+"form": "Ágnessel",
+"agreement": "both"
+},
+{
+"name": "Ágnes",
+"kind": "given",
+"case": "SUB",
+"form": "Ágnesre",
+"agreement": "both"
+},
+{
+"name": "Ágnes",
+"kind": "given",
+"case": "DEL",
+"form": "Ágnesről",
+"agreement": "both"
+},
+{
+"name": "Ágnes",
+"kind": "given",
+"case": "ADE",
+"form": "Ágnesnél",
+"agreement": "both"
+},
+{
+"name": "Ágnes",
+"kind": "given",
+"case": "ABL",
+"form": "Ágnestől",
+"agreement": "both"
+},
+{
+"name": "Ágnes",
+"kind": "given",
+"case": "ALL",
+"form": "Ágneshez",
+"agreement": "both"
+},
+{
+"name": "Ágnes",
+"kind": "given",
+"case": "CAU",
+"form": "Ágnesért",
+"agreement": "both"
+},
+{
+"name": "Ágnes",
+"kind": "given",
+"case": "ESS",
+"form": "Ágnesként",
+"agreement": "both"
+},
+{
+"name": "Ágnes",
+"kind": "given",
+"case": "POSS",
+"form": "Ágnesé",
+"agreement": "both"
+},
+{
+"name": "Eszter",
+"kind": "given",
+"case": "NOM",
+"form": "Eszter",
+"agreement": "both"
+},
+{
+"name": "Eszter",
+"kind": "given",
+"case": "ACC",
+"form": "Esztert",
+"agreement": "both"
+},
+{
+"name": "Eszter",
+"kind": "given",
+"case": "DAT",
+"form": "Eszternek",
+"agreement": "both"
+},
+{
+"name": "Eszter",
+"kind": "given",
+"case": "INS",
+"form": "Eszterrel",
+"agreement": "both"
+},
+{
+"name": "Eszter",
+"kind": "given",
+"case": "SUB",
+"form": "Eszterre",
+"agreement": "both"
+},
+{
+"name": "Eszter",
+"kind": "given",
+"case": "DEL",
+"form": "Eszterről",
+"agreement": "both"
+},
+{
+"name": "Eszter",
+"kind": "given",
+"case": "ADE",
+"form": "Eszternél",
+"agreement": "both"
+},
+{
+"name": "Eszter",
+"kind": "given",
+"case": "ABL",
+"form": "Esztertől",
+"agreement": "both"
+},
+{
+"name": "Eszter",
+"kind": "given",
+"case": "ALL",
+"form": "Eszterhez",
+"agreement": "both"
+},
+{
+"name": "Eszter",
+"kind": "given",
+"case": "CAU",
+"form": "Eszterért",
+"agreement": "both"
+},
+{
+"name": "Eszter",
+"kind": "given",
+"case": "ESS",
+"form": "Eszterként",
+"agreement": "both"
+},
+{
+"name": "Eszter",
+"kind": "given",
+"case": "POSS",
+"form": "Eszteré",
+"agreement": "both"
+},
+{
+"name": "Mariann",
+"kind": "given",
+"case": "NOM",
+"form": "Mariann",
+"agreement": "both"
+},
+{
+"name": "Mariann",
+"kind": "given",
+"case": "ACC",
+"form": "Mariannt",
+"agreement": "both"
+},
+{
+"name": "Mariann",
+"kind": "given",
+"case": "DAT",
+"form": "Mariann-nak",
+"agreement": "both"
+},
+{
+"name": "Mariann",
+"kind": "given",
+"case": "INS",
+"form": "Mariann-nal",
+"agreement": "both"
+},
+{
+"name": "Mariann",
+"kind": "given",
+"case": "SUB",
+"form": "Mariannra",
+"agreement": "both"
+},
+{
+"name": "Mariann",
+"kind": "given",
+"case": "DEL",
+"form": "Mariannról",
+"agreement": "both"
+},
+{
+"name": "Mariann",
+"kind": "given",
+"case": "ADE",
+"form": "Mariann-nál",
+"agreement": "both"
+},
+{
+"name": "Mariann",
+"kind": "given",
+"case": "ABL",
+"form": "Marianntól",
+"agreement": "both"
+},
+{
+"name": "Mariann",
+"kind": "given",
+"case": "ALL",
+"form": "Mariannhoz",
+"agreement": "both"
+},
+{
+"name": "Mariann",
+"kind": "given",
+"case": "CAU",
+"form": "Mariannért",
+"agreement": "both"
+},
+{
+"name": "Mariann",
+"kind": "given",
+"case": "ESS",
+"form": "Mariannként",
+"agreement": "both"
+},
+{
+"name": "Mariann",
+"kind": "given",
+"case": "POSS",
+"form": "Marianné",
+"agreement": "both"
+},
+{
+"name": "Kitti",
+"kind": "given",
+"case": "NOM",
+"form": "Kitti",
+"agreement": "both"
+},
+{
+"name": "Kitti",
+"kind": "given",
+"case": "ACC",
+"form": "Kittit",
+"agreement": "both"
+},
+{
+"name": "Kitti",
+"kind": "given",
+"case": "DAT",
+"form": "Kittinek",
+"agreement": "both"
+},
+{
+"name": "Kitti",
+"kind": "given",
+"case": "INS",
+"form": "Kittivel",
+"agreement": "both"
+},
+{
+"name": "Kitti",
+"kind": "given",
+"case": "SUB",
+"form": "Kittire",
+"agreement": "both"
+},
+{
+"name": "Kitti",
+"kind": "given",
+"case": "DEL",
+"form": "Kittiről",
+"agreement": "both"
+},
+{
+"name": "Kitti",
+"kind": "given",
+"case": "ADE",
+"form": "Kittinél",
+"agreement": "both"
+},
+{
+"name": "Kitti",
+"kind": "given",
+"case": "ABL",
+"form": "Kittitől",
+"agreement": "both"
+},
+{
+"name": "Kitti",
+"kind": "given",
+"case": "ALL",
+"form": "Kittihez",
+"agreement": "both"
+},
+{
+"name": "Kitti",
+"kind": "given",
+"case": "CAU",
+"form": "Kittiért",
+"agreement": "both"
+},
+{
+"name": "Kitti",
+"kind": "given",
+"case": "ESS",
+"form": "Kittiként",
+"agreement": "both"
+},
+{
+"name": "Kitti",
+"kind": "given",
+"case": "POSS",
+"form": "Kittié",
+"agreement": "both"
+},
+{
+"name": "Vivien",
+"kind": "given",
+"case": "NOM",
+"form": "Vivien",
+"agreement": "both"
+},
+{
+"name": "Vivien",
+"kind": "given",
+"case": "ACC",
+"form": "Vivient",
+"agreement": "both"
+},
+{
+"name": "Vivien",
+"kind": "given",
+"case": "DAT",
+"form": "Viviennek",
+"agreement": "both"
+},
+{
+"name": "Vivien",
+"kind": "given",
+"case": "INS",
+"form": "Viviennel",
+"agreement": "both"
+},
+{
+"name": "Vivien",
+"kind": "given",
+"case": "SUB",
+"form": "Vivienre",
+"agreement": "both"
+},
+{
+"name": "Vivien",
+"kind": "given",
+"case": "DEL",
+"form": "Vivienről",
+"agreement": "both"
+},
+{
+"name": "Vivien",
+"kind": "given",
+"case": "ADE",
+"form": "Viviennél",
+"agreement": "both"
+},
+{
+"name": "Vivien",
+"kind": "given",
+"case": "ABL",
+"form": "Vivientől",
+"agreement": "both"
+},
+{
+"name": "Vivien",
+"kind": "given",
+"case": "ALL",
+"form": "Vivienhez",
+"agreement": "both"
+},
+{
+"name": "Vivien",
+"kind": "given",
+"case": "CAU",
+"form": "Vivienért",
+"agreement": "both"
+},
+{
+"name": "Vivien",
+"kind": "given",
+"case": "ESS",
+"form": "Vivienként",
+"agreement": "both"
+},
+{
+"name": "Vivien",
+"kind": "given",
+"case": "POSS",
+"form": "Viviené",
+"agreement": "both"
+},
+{
+"name": "Andi",
+"kind": "given",
+"case": "NOM",
+"form": "Andi",
+"agreement": "both"
+},
+{
+"name": "Andi",
+"kind": "given",
+"case": "ACC",
+"form": "Andit",
+"agreement": "both"
+},
+{
+"name": "Andi",
+"kind": "given",
+"case": "DAT",
+"form": "Andinak",
+"agreement": "both"
+},
+{
+"name": "Andi",
+"kind": "given",
+"case": "INS",
+"form": "Andival",
+"agreement": "both"
+},
+{
+"name": "Andi",
+"kind": "given",
+"case": "SUB",
+"form": "Andira",
+"agreement": "both"
+},
+{
+"name": "Andi",
+"kind": "given",
+"case": "DEL",
+"form": "Andiról",
+"agreement": "both"
+},
+{
+"name": "Andi",
+"kind": "given",
+"case": "ADE",
+"form": "Andinál",
+"agreement": "both"
+},
+{
+"name": "Andi",
+"kind": "given",
+"case": "ABL",
+"form": "Anditól",
+"agreement": "both"
+},
+{
+"name": "Andi",
+"kind": "given",
+"case": "ALL",
+"form": "Andihoz",
+"agreement": "both"
+},
+{
+"name": "Andi",
+"kind": "given",
+"case": "CAU",
+"form": "Andiért",
+"agreement": "both"
+},
+{
+"name": "Andi",
+"kind": "given",
+"case": "ESS",
+"form": "Andiként",
+"agreement": "both"
+},
+{
+"name": "Andi",
+"kind": "given",
+"case": "POSS",
+"form": "Andié",
+"agreement": "both"
+},
+{
+"name": "Zsuzsi",
+"kind": "given",
+"case": "NOM",
+"form": "Zsuzsi",
+"agreement": "both"
+},
+{
+"name": "Zsuzsi",
+"kind": "given",
+"case": "ACC",
+"form": "Zsuzsit",
+"agreement": "both"
+},
+{
+"name": "Zsuzsi",
+"kind": "given",
+"case": "DAT",
+"form": "Zsuzsinak",
+"agreement": "both"
+},
+{
+"name": "Zsuzsi",
+"kind": "given",
+"case": "INS",
+"form": "Zsuzsival",
+"agreement": "both"
+},
+{
+"name": "Zsuzsi",
+"kind": "given",
+"case": "SUB",
+"form": "Zsuzsira",
+"agreement": "both"
+},
+{
+"name": "Zsuzsi",
+"kind": "given",
+"case": "DEL",
+"form": "Zsuzsiról",
+"agreement": "both"
+},
+{
+"name": "Zsuzsi",
+"kind": "given",
+"case": "ADE",
+"form": "Zsuzsinál",
+"agreement": "both"
+},
+{
+"name": "Zsuzsi",
+"kind": "given",
+"case": "ABL",
+"form": "Zsuzsitól",
+"agreement": "both"
+},
+{
+"name": "Zsuzsi",
+"kind": "given",
+"case": "ALL",
+"form": "Zsuzsihoz",
+"agreement": "both"
+},
+{
+"name": "Zsuzsi",
+"kind": "given",
+"case": "CAU",
+"form": "Zsuzsiért",
+"agreement": "both"
+},
+{
+"name": "Zsuzsi",
+"kind": "given",
+"case": "ESS",
+"form": "Zsuzsiként",
+"agreement": "both"
+},
+{
+"name": "Zsuzsi",
+"kind": "given",
+"case": "POSS",
+"form": "Zsuzsié",
+"agreement": "both"
+},
+{
+"name": "Barbi",
+"kind": "given",
+"case": "NOM",
+"form": "Barbi",
+"agreement": "both"
+},
+{
+"name": "Barbi",
+"kind": "given",
+"case": "ACC",
+"form": "Barbit",
+"agreement": "both"
+},
+{
+"name": "Barbi",
+"kind": "given",
+"case": "DAT",
+"form": "Barbinak",
+"agreement": "both"
+},
+{
+"name": "Barbi",
+"kind": "given",
+"case": "INS",
+"form": "Barbival",
+"agreement": "both"
+},
+{
+"name": "Barbi",
+"kind": "given",
+"case": "SUB",
+"form": "Barbira",
+"agreement": "both"
+},
+{
+"name": "Barbi",
+"kind": "given",
+"case": "DEL",
+"form": "Barbiról",
+"agreement": "both"
+},
+{
+"name": "Barbi",
+"kind": "given",
+"case": "ADE",
+"form": "Barbinál",
+"agreement": "both"
+},
+{
+"name": "Barbi",
+"kind": "given",
+"case": "ABL",
+"form": "Barbitól",
+"agreement": "both"
+},
+{
+"name": "Barbi",
+"kind": "given",
+"case": "ALL",
+"form": "Barbihoz",
+"agreement": "both"
+},
+{
+"name": "Barbi",
+"kind": "given",
+"case": "CAU",
+"form": "Barbiért",
+"agreement": "both"
+},
+{
+"name": "Barbi",
+"kind": "given",
+"case": "ESS",
+"form": "Barbiként",
+"agreement": "both"
+},
+{
+"name": "Barbi",
+"kind": "given",
+"case": "POSS",
+"form": "Barbié",
+"agreement": "both"
+},
+{
+"name": "Jázmin",
+"kind": "given",
+"case": "NOM",
+"form": "Jázmin",
+"agreement": "both"
+},
+{
+"name": "Jázmin",
+"kind": "given",
+"case": "ACC",
+"form": "Jázmint",
+"agreement": "both"
+},
+{
+"name": "Jázmin",
+"kind": "given",
+"case": "DAT",
+"form": "Jázminnak",
+"agreement": "both"
+},
+{
+"name": "Jázmin",
+"kind": "given",
+"case": "INS",
+"form": "Jázminnal",
+"agreement": "both"
+},
+{
+"name": "Jázmin",
+"kind": "given",
+"case": "SUB",
+"form": "Jázminra",
+"agreement": "both"
+},
+{
+"name": "Jázmin",
+"kind": "given",
+"case": "DEL",
+"form": "Jázminról",
+"agreement": "both"
+},
+{
+"name": "Jázmin",
+"kind": "given",
+"case": "ADE",
+"form": "Jázminnál",
+"agreement": "both"
+},
+{
+"name": "Jázmin",
+"kind": "given",
+"case": "ABL",
+"form": "Jázmintól",
+"agreement": "both"
+},
+{
+"name": "Jázmin",
+"kind": "given",
+"case": "ALL",
+"form": "Jázminhoz",
+"agreement": "both"
+},
+{
+"name": "Jázmin",
+"kind": "given",
+"case": "CAU",
+"form": "Jázminért",
+"agreement": "both"
+},
+{
+"name": "Jázmin",
+"kind": "given",
+"case": "ESS",
+"form": "Jázminként",
+"agreement": "both"
+},
+{
+"name": "Jázmin",
+"kind": "given",
+"case": "POSS",
+"form": "Jázminé",
+"agreement": "both"
+},
+{
+"name": "Klári",
+"kind": "given",
+"case": "NOM",
+"form": "Klári",
+"agreement": "both"
+},
+{
+"name": "Klári",
+"kind": "given",
+"case": "ACC",
+"form": "Klárit",
+"agreement": "both"
+},
+{
+"name": "Klári",
+"kind": "given",
+"case": "DAT",
+"form": "Klárinak",
+"agreement": "both"
+},
+{
+"name": "Klári",
+"kind": "given",
+"case": "INS",
+"form": "Klárival",
+"agreement": "both"
+},
+{
+"name": "Klári",
+"kind": "given",
+"case": "SUB",
+"form": "Klárira",
+"agreement": "both"
+},
+{
+"name": "Klári",
+"kind": "given",
+"case": "DEL",
+"form": "Kláriról",
+"agreement": "both"
+},
+{
+"name": "Klári",
+"kind": "given",
+"case": "ADE",
+"form": "Klárinál",
+"agreement": "both"
+},
+{
+"name": "Klári",
+"kind": "given",
+"case": "ABL",
+"form": "Kláritól",
+"agreement": "both"
+},
+{
+"name": "Klári",
+"kind": "given",
+"case": "ALL",
+"form": "Klárihoz",
+"agreement": "both"
+},
+{
+"name": "Klári",
+"kind": "given",
+"case": "CAU",
+"form": "Kláriért",
+"agreement": "both"
+},
+{
+"name": "Klári",
+"kind": "given",
+"case": "ESS",
+"form": "Kláriként",
+"agreement": "both"
+},
+{
+"name": "Klári",
+"kind": "given",
+"case": "POSS",
+"form": "Klárié",
+"agreement": "both"
+},
+{
+"name": "Molnár",
+"kind": "surname",
+"case": "NOM",
+"form": "Molnár",
+"agreement": "both"
+},
+{
+"name": "Molnár",
+"kind": "surname",
+"case": "ACC",
+"form": "Molnárt",
+"agreement": "both"
+},
+{
+"name": "Molnár",
+"kind": "surname",
+"case": "DAT",
+"form": "Molnárnak",
+"agreement": "both"
+},
+{
+"name": "Molnár",
+"kind": "surname",
+"case": "INS",
+"form": "Molnárral",
+"agreement": "both"
+},
+{
+"name": "Molnár",
+"kind": "surname",
+"case": "SUB",
+"form": "Molnárra",
+"agreement": "both"
+},
+{
+"name": "Molnár",
+"kind": "surname",
+"case": "DEL",
+"form": "Molnárról",
+"agreement": "both"
+},
+{
+"name": "Molnár",
+"kind": "surname",
+"case": "ADE",
+"form": "Molnárnál",
+"agreement": "both"
+},
+{
+"name": "Molnár",
+"kind": "surname",
+"case": "ABL",
+"form": "Molnártól",
+"agreement": "both"
+},
+{
+"name": "Molnár",
+"kind": "surname",
+"case": "ALL",
+"form": "Molnárhoz",
+"agreement": "both"
+},
+{
+"name": "Molnár",
+"kind": "surname",
+"case": "CAU",
+"form": "Molnárért",
+"agreement": "both"
+},
+{
+"name": "Molnár",
+"kind": "surname",
+"case": "ESS",
+"form": "Molnárként",
+"agreement": "both"
+},
+{
+"name": "Molnár",
+"kind": "surname",
+"case": "POSS",
+"form": "Molnáré",
+"agreement": "both"
+},
+{
+"name": "Fodor",
+"kind": "surname",
+"case": "NOM",
+"form": "Fodor",
+"agreement": "both"
+},
+{
+"name": "Fodor",
+"kind": "surname",
+"case": "ACC",
+"form": "Fodort",
+"agreement": "both"
+},
+{
+"name": "Fodor",
+"kind": "surname",
+"case": "DAT",
+"form": "Fodornak",
+"agreement": "both"
+},
+{
+"name": "Fodor",
+"kind": "surname",
+"case": "INS",
+"form": "Fodorral",
+"agreement": "both"
+},
+{
+"name": "Fodor",
+"kind": "surname",
+"case": "SUB",
+"form": "Fodorra",
+"agreement": "both"
+},
+{
+"name": "Fodor",
+"kind": "surname",
+"case": "DEL",
+"form": "Fodorról",
+"agreement": "both"
+},
+{
+"name": "Fodor",
+"kind": "surname",
+"case": "ADE",
+"form": "Fodornál",
+"agreement": "both"
+},
+{
+"name": "Fodor",
+"kind": "surname",
+"case": "ABL",
+"form": "Fodortól",
+"agreement": "both"
+},
+{
+"name": "Fodor",
+"kind": "surname",
+"case": "ALL",
+"form": "Fodorhoz",
+"agreement": "both"
+},
+{
+"name": "Fodor",
+"kind": "surname",
+"case": "CAU",
+"form": "Fodorért",
+"agreement": "both"
+},
+{
+"name": "Fodor",
+"kind": "surname",
+"case": "ESS",
+"form": "Fodorként",
+"agreement": "both"
+},
+{
+"name": "Fodor",
+"kind": "surname",
+"case": "POSS",
+"form": "Fodoré",
+"agreement": "both"
+},
+{
+"name": "Sipos",
+"kind": "surname",
+"case": "NOM",
+"form": "Sipos",
+"agreement": "both"
+},
+{
+"name": "Sipos",
+"kind": "surname",
+"case": "ACC",
+"form": "Sipost",
+"agreement": "both"
+},
+{
+"name": "Sipos",
+"kind": "surname",
+"case": "DAT",
+"form": "Siposnak",
+"agreement": "both"
+},
+{
+"name": "Sipos",
+"kind": "surname",
+"case": "INS",
+"form": "Sipossal",
+"agreement": "both"
+},
+{
+"name": "Sipos",
+"kind": "surname",
+"case": "SUB",
+"form": "Siposra",
+"agreement": "both"
+},
+{
+"name": "Sipos",
+"kind": "surname",
+"case": "DEL",
+"form": "Siposról",
+"agreement": "both"
+},
+{
+"name": "Sipos",
+"kind": "surname",
+"case": "ADE",
+"form": "Siposnál",
+"agreement": "both"
+},
+{
+"name": "Sipos",
+"kind": "surname",
+"case": "ABL",
+"form": "Sipostól",
+"agreement": "both"
+},
+{
+"name": "Sipos",
+"kind": "surname",
+"case": "ALL",
+"form": "Siposhoz",
+"agreement": "both"
+},
+{
+"name": "Sipos",
+"kind": "surname",
+"case": "CAU",
+"form": "Siposért",
+"agreement": "both"
+},
+{
+"name": "Sipos",
+"kind": "surname",
+"case": "ESS",
+"form": "Siposként",
+"agreement": "both"
+},
+{
+"name": "Sipos",
+"kind": "surname",
+"case": "POSS",
+"form": "Siposé",
+"agreement": "both"
+},
+{
+"name": "Halmi",
+"kind": "surname",
+"case": "NOM",
+"form": "Halmi",
+"agreement": "both"
+},
+{
+"name": "Halmi",
+"kind": "surname",
+"case": "ACC",
+"form": "Halmit",
+"agreement": "both"
+},
+{
+"name": "Halmi",
+"kind": "surname",
+"case": "DAT",
+"form": "Halminak",
+"agreement": "both"
+},
+{
+"name": "Halmi",
+"kind": "surname",
+"case": "INS",
+"form": "Halmival",
+"agreement": "both"
+},
+{
+"name": "Halmi",
+"kind": "surname",
+"case": "SUB",
+"form": "Halmira",
+"agreement": "both"
+},
+{
+"name": "Halmi",
+"kind": "surname",
+"case": "DEL",
+"form": "Halmiról",
+"agreement": "both"
+},
+{
+"name": "Halmi",
+"kind": "surname",
+"case": "ADE",
+"form": "Halminál",
+"agreement": "both"
+},
+{
+"name": "Halmi",
+"kind": "surname",
+"case": "ABL",
+"form": "Halmitól",
+"agreement": "both"
+},
+{
+"name": "Halmi",
+"kind": "surname",
+"case": "ALL",
+"form": "Halmihoz",
+"agreement": "both"
+},
+{
+"name": "Halmi",
+"kind": "surname",
+"case": "CAU",
+"form": "Halmiért",
+"agreement": "both"
+},
+{
+"name": "Halmi",
+"kind": "surname",
+"case": "ESS",
+"form": "Halmiként",
+"agreement": "both"
+},
+{
+"name": "Halmi",
+"kind": "surname",
+"case": "POSS",
+"form": "Halmié",
+"agreement": "both"
+},
+{
+"name": "Somogyi",
+"kind": "surname",
+"case": "NOM",
+"form": "Somogyi",
+"agreement": "both"
+},
+{
+"name": "Somogyi",
+"kind": "surname",
+"case": "ACC",
+"form": "Somogyit",
+"agreement": "both"
+},
+{
+"name": "Somogyi",
+"kind": "surname",
+"case": "DAT",
+"form": "Somogyinak",
+"agreement": "both"
+},
+{
+"name": "Somogyi",
+"kind": "surname",
+"case": "INS",
+"form": "Somogyival",
+"agreement": "both"
+},
+{
+"name": "Somogyi",
+"kind": "surname",
+"case": "SUB",
+"form": "Somogyira",
+"agreement": "both"
+},
+{
+"name": "Somogyi",
+"kind": "surname",
+"case": "DEL",
+"form": "Somogyiról",
+"agreement": "both"
+},
+{
+"name": "Somogyi",
+"kind": "surname",
+"case": "ADE",
+"form": "Somogyinál",
+"agreement": "both"
+},
+{
+"name": "Somogyi",
+"kind": "surname",
+"case": "ABL",
+"form": "Somogyitól",
+"agreement": "both"
+},
+{
+"name": "Somogyi",
+"kind": "surname",
+"case": "ALL",
+"form": "Somogyihoz",
+"agreement": "both"
+},
+{
+"name": "Somogyi",
+"kind": "surname",
+"case": "CAU",
+"form": "Somogyiért",
+"agreement": "both"
+},
+{
+"name": "Somogyi",
+"kind": "surname",
+"case": "ESS",
+"form": "Somogyiként",
+"agreement": "both"
+},
+{
+"name": "Somogyi",
+"kind": "surname",
+"case": "POSS",
+"form": "Somogyié",
+"agreement": "both"
+},
+{
+"name": "Hegedűs",
+"kind": "surname",
+"case": "NOM",
+"form": "Hegedűs",
+"agreement": "both"
+},
+{
+"name": "Hegedűs",
+"kind": "surname",
+"case": "ACC",
+"form": "Hegedűst",
+"agreement": "both"
+},
+{
+"name": "Hegedűs",
+"kind": "surname",
+"case": "DAT",
+"form": "Hegedűsnek",
+"agreement": "both"
+},
+{
+"name": "Hegedűs",
+"kind": "surname",
+"case": "INS",
+"form": "Hegedűssel",
+"agreement": "both"
+},
+{
+"name": "Hegedűs",
+"kind": "surname",
+"case": "SUB",
+"form": "Hegedűsre",
+"agreement": "both"
+},
+{
+"name": "Hegedűs",
+"kind": "surname",
+"case": "DEL",
+"form": "Hegedűsről",
+"agreement": "both"
+},
+{
+"name": "Hegedűs",
+"kind": "surname",
+"case": "ADE",
+"form": "Hegedűsnél",
+"agreement": "both"
+},
+{
+"name": "Hegedűs",
+"kind": "surname",
+"case": "ABL",
+"form": "Hegedűstől",
+"agreement": "both"
+},
+{
+"name": "Hegedűs",
+"kind": "surname",
+"case": "ALL",
+"form": "Hegedűshöz",
+"agreement": "both"
+},
+{
+"name": "Hegedűs",
+"kind": "surname",
+"case": "CAU",
+"form": "Hegedűsért",
+"agreement": "both"
+},
+{
+"name": "Hegedűs",
+"kind": "surname",
+"case": "ESS",
+"form": "Hegedűsként",
+"agreement": "both"
+},
+{
+"name": "Hegedűs",
+"kind": "surname",
+"case": "POSS",
+"form": "Hegedűsé",
+"agreement": "both"
+},
+{
+"name": "Pintér",
+"kind": "surname",
+"case": "NOM",
+"form": "Pintér",
+"agreement": "both"
+},
+{
+"name": "Pintér",
+"kind": "surname",
+"case": "ACC",
+"form": "Pintért",
+"agreement": "both"
+},
+{
+"name": "Pintér",
+"kind": "surname",
+"case": "DAT",
+"form": "Pintérnek",
+"agreement": "both"
+},
+{
+"name": "Pintér",
+"kind": "surname",
+"case": "INS",
+"form": "Pintérrel",
+"agreement": "both"
+},
+{
+"name": "Pintér",
+"kind": "surname",
+"case": "SUB",
+"form": "Pintérre",
+"agreement": "both"
+},
+{
+"name": "Pintér",
+"kind": "surname",
+"case": "DEL",
+"form": "Pintérről",
+"agreement": "both"
+},
+{
+"name": "Pintér",
+"kind": "surname",
+"case": "ADE",
+"form": "Pintérnél",
+"agreement": "both"
+},
+{
+"name": "Pintér",
+"kind": "surname",
+"case": "ABL",
+"form": "Pintértől",
+"agreement": "both"
+},
+{
+"name": "Pintér",
+"kind": "surname",
+"case": "ALL",
+"form": "Pintérhez",
+"agreement": "both"
+},
+{
+"name": "Pintér",
+"kind": "surname",
+"case": "CAU",
+"form": "Pintérért",
+"agreement": "both"
+},
+{
+"name": "Pintér",
+"kind": "surname",
+"case": "ESS",
+"form": "Pintérként",
+"agreement": "both"
+},
+{
+"name": "Pintér",
+"kind": "surname",
+"case": "POSS",
+"form": "Pintéré",
+"agreement": "both"
+},
+{
+"name": "Fülöp",
+"kind": "surname",
+"case": "NOM",
+"form": "Fülöp",
+"agreement": "both"
+},
+{
+"name": "Fülöp",
+"kind": "surname",
+"case": "ACC",
+"form": "Fülöpöt",
+"agreement": "both"
+},
+{
+"name": "Fülöp",
+"kind": "surname",
+"case": "DAT",
+"form": "Fülöpnek",
+"agreement": "both"
+},
+{
+"name": "Fülöp",
+"kind": "surname",
+"case": "INS",
+"form": "Fülöppel",
+"agreement": "both"
+},
+{
+"name": "Fülöp",
+"kind": "surname",
+"case": "SUB",
+"form": "Fülöpre",
+"agreement": "both"
+},
+{
+"name": "Fülöp",
+"kind": "surname",
+"case": "DEL",
+"form": "Fülöpről",
+"agreement": "both"
+},
+{
+"name": "Fülöp",
+"kind": "surname",
+"case": "ADE",
+"form": "Fülöpnél",
+"agreement": "both"
+},
+{
+"name": "Fülöp",
+"kind": "surname",
+"case": "ABL",
+"form": "Fülöptől",
+"agreement": "both"
+},
+{
+"name": "Fülöp",
+"kind": "surname",
+"case": "ALL",
+"form": "Fülöphöz",
+"agreement": "both"
+},
+{
+"name": "Fülöp",
+"kind": "surname",
+"case": "CAU",
+"form": "Fülöpért",
+"agreement": "both"
+},
+{
+"name": "Fülöp",
+"kind": "surname",
+"case": "ESS",
+"form": "Fülöpként",
+"agreement": "both"
+},
+{
+"name": "Fülöp",
+"kind": "surname",
+"case": "POSS",
+"form": "Fülöpé",
+"agreement": "both"
+},
+{
+"name": "Bodnár",
+"kind": "surname",
+"case": "NOM",
+"form": "Bodnár",
+"agreement": "both"
+},
+{
+"name": "Bodnár",
+"kind": "surname",
+"case": "ACC",
+"form": "Bodnárt",
+"agreement": "both"
+},
+{
+"name": "Bodnár",
+"kind": "surname",
+"case": "DAT",
+"form": "Bodnárnak",
+"agreement": "both"
+},
+{
+"name": "Bodnár",
+"kind": "surname",
+"case": "INS",
+"form": "Bodnárral",
+"agreement": "both"
+},
+{
+"name": "Bodnár",
+"kind": "surname",
+"case": "SUB",
+"form": "Bodnárra",
+"agreement": "both"
+},
+{
+"name": "Bodnár",
+"kind": "surname",
+"case": "DEL",
+"form": "Bodnárról",
+"agreement": "both"
+},
+{
+"name": "Bodnár",
+"kind": "surname",
+"case": "ADE",
+"form": "Bodnárnál",
+"agreement": "both"
+},
+{
+"name": "Bodnár",
+"kind": "surname",
+"case": "ABL",
+"form": "Bodnártól",
+"agreement": "both"
+},
+{
+"name": "Bodnár",
+"kind": "surname",
+"case": "ALL",
+"form": "Bodnárhoz",
+"agreement": "both"
+},
+{
+"name": "Bodnár",
+"kind": "surname",
+"case": "CAU",
+"form": "Bodnárért",
+"agreement": "both"
+},
+{
+"name": "Bodnár",
+"kind": "surname",
+"case": "ESS",
+"form": "Bodnárként",
+"agreement": "both"
+},
+{
+"name": "Bodnár",
+"kind": "surname",
+"case": "POSS",
+"form": "Bodnáré",
+"agreement": "both"
+},
+{
+"name": "Antal",
+"kind": "surname",
+"case": "NOM",
+"form": "Antal",
+"agreement": "both"
+},
+{
+"name": "Antal",
+"kind": "surname",
+"case": "ACC",
+"form": "Antalt",
+"agreement": "both"
+},
+{
+"name": "Antal",
+"kind": "surname",
+"case": "DAT",
+"form": "Antalnak",
+"agreement": "both"
+},
+{
+"name": "Antal",
+"kind": "surname",
+"case": "INS",
+"form": "Antallal",
+"agreement": "both"
+},
+{
+"name": "Antal",
+"kind": "surname",
+"case": "SUB",
+"form": "Antalra",
+"agreement": "both"
+},
+{
+"name": "Antal",
+"kind": "surname",
+"case": "DEL",
+"form": "Antalról",
+"agreement": "both"
+},
+{
+"name": "Antal",
+"kind": "surname",
+"case": "ADE",
+"form": "Antalnál",
+"agreement": "both"
+},
+{
+"name": "Antal",
+"kind": "surname",
+"case": "ABL",
+"form": "Antaltól",
+"agreement": "both"
+},
+{
+"name": "Antal",
+"kind": "surname",
+"case": "ALL",
+"form": "Antalhoz",
+"agreement": "both"
+},
+{
+"name": "Antal",
+"kind": "surname",
+"case": "CAU",
+"form": "Antalért",
+"agreement": "both"
+},
+{
+"name": "Antal",
+"kind": "surname",
+"case": "ESS",
+"form": "Antalként",
+"agreement": "both"
+},
+{
+"name": "Antal",
+"kind": "surname",
+"case": "POSS",
+"form": "Antalé",
+"agreement": "both"
+},
+{
+"name": "Kardos",
+"kind": "surname",
+"case": "NOM",
+"form": "Kardos",
+"agreement": "both"
+},
+{
+"name": "Kardos",
+"kind": "surname",
+"case": "ACC",
+"form": "Kardost",
+"agreement": "both"
+},
+{
+"name": "Kardos",
+"kind": "surname",
+"case": "DAT",
+"form": "Kardosnak",
+"agreement": "both"
+},
+{
+"name": "Kardos",
+"kind": "surname",
+"case": "INS",
+"form": "Kardossal",
+"agreement": "both"
+},
+{
+"name": "Kardos",
+"kind": "surname",
+"case": "SUB",
+"form": "Kardosra",
+"agreement": "both"
+},
+{
+"name": "Kardos",
+"kind": "surname",
+"case": "DEL",
+"form": "Kardosról",
+"agreement": "both"
+},
+{
+"name": "Kardos",
+"kind": "surname",
+"case": "ADE",
+"form": "Kardosnál",
+"agreement": "both"
+},
+{
+"name": "Kardos",
+"kind": "surname",
+"case": "ABL",
+"form": "Kardostól",
+"agreement": "both"
+},
+{
+"name": "Kardos",
+"kind": "surname",
+"case": "ALL",
+"form": "Kardoshoz",
+"agreement": "both"
+},
+{
+"name": "Kardos",
+"kind": "surname",
+"case": "CAU",
+"form": "Kardosért",
+"agreement": "both"
+},
+{
+"name": "Kardos",
+"kind": "surname",
+"case": "ESS",
+"form": "Kardosként",
+"agreement": "both"
+},
+{
+"name": "Kardos",
+"kind": "surname",
+"case": "POSS",
+"form": "Kardosé",
+"agreement": "both"
+},
+{
+"name": "Bogdán",
+"kind": "surname",
+"case": "NOM",
+"form": "Bogdán",
+"agreement": "both"
+},
+{
+"name": "Bogdán",
+"kind": "surname",
+"case": "ACC",
+"form": "Bogdánt",
+"agreement": "both"
+},
+{
+"name": "Bogdán",
+"kind": "surname",
+"case": "DAT",
+"form": "Bogdánnak",
+"agreement": "both"
+},
+{
+"name": "Bogdán",
+"kind": "surname",
+"case": "INS",
+"form": "Bogdánnal",
+"agreement": "both"
+},
+{
+"name": "Bogdán",
+"kind": "surname",
+"case": "SUB",
+"form": "Bogdánra",
+"agreement": "both"
+},
+{
+"name": "Bogdán",
+"kind": "surname",
+"case": "DEL",
+"form": "Bogdánról",
+"agreement": "both"
+},
+{
+"name": "Bogdán",
+"kind": "surname",
+"case": "ADE",
+"form": "Bogdánnál",
+"agreement": "both"
+},
+{
+"name": "Bogdán",
+"kind": "surname",
+"case": "ABL",
+"form": "Bogdántól",
+"agreement": "both"
+},
+{
+"name": "Bogdán",
+"kind": "surname",
+"case": "ALL",
+"form": "Bogdánhoz",
+"agreement": "both"
+},
+{
+"name": "Bogdán",
+"kind": "surname",
+"case": "CAU",
+"form": "Bogdánért",
+"agreement": "both"
+},
+{
+"name": "Bogdán",
+"kind": "surname",
+"case": "ESS",
+"form": "Bogdánként",
+"agreement": "both"
+},
+{
+"name": "Bogdán",
+"kind": "surname",
+"case": "POSS",
+"form": "Bogdáné",
+"agreement": "both"
+},
+{
+"name": "Szalai",
+"kind": "surname",
+"case": "NOM",
+"form": "Szalai",
+"agreement": "both"
+},
+{
+"name": "Szalai",
+"kind": "surname",
+"case": "ACC",
+"form": "Szalait",
+"agreement": "both"
+},
+{
+"name": "Szalai",
+"kind": "surname",
+"case": "DAT",
+"form": "Szalainak",
+"agreement": "both"
+},
+{
+"name": "Szalai",
+"kind": "surname",
+"case": "INS",
+"form": "Szalaival",
+"agreement": "both"
+},
+{
+"name": "Szalai",
+"kind": "surname",
+"case": "SUB",
+"form": "Szalaira",
+"agreement": "both"
+},
+{
+"name": "Szalai",
+"kind": "surname",
+"case": "DEL",
+"form": "Szalairól",
+"agreement": "both"
+},
+{
+"name": "Szalai",
+"kind": "surname",
+"case": "ADE",
+"form": "Szalainál",
+"agreement": "both"
+},
+{
+"name": "Szalai",
+"kind": "surname",
+"case": "ABL",
+"form": "Szalaitól",
+"agreement": "both"
+},
+{
+"name": "Szalai",
+"kind": "surname",
+"case": "ALL",
+"form": "Szalaihoz",
+"agreement": "both"
+},
+{
+"name": "Szalai",
+"kind": "surname",
+"case": "CAU",
+"form": "Szalaiért",
+"agreement": "both"
+},
+{
+"name": "Szalai",
+"kind": "surname",
+"case": "ESS",
+"form": "Szalaiként",
+"agreement": "both"
+},
+{
+"name": "Szalai",
+"kind": "surname",
+"case": "POSS",
+"form": "Szalaié",
+"agreement": "both"
+},
+{
+"name": "Kelemen",
+"kind": "surname",
+"case": "NOM",
+"form": "Kelemen",
+"agreement": "both"
+},
+{
+"name": "Kelemen",
+"kind": "surname",
+"case": "ACC",
+"form": "Kelement",
+"agreement": "both"
+},
+{
+"name": "Kelemen",
+"kind": "surname",
+"case": "DAT",
+"form": "Kelemennek",
+"agreement": "both"
+},
+{
+"name": "Kelemen",
+"kind": "surname",
+"case": "INS",
+"form": "Kelemennel",
+"agreement": "both"
+},
+{
+"name": "Kelemen",
+"kind": "surname",
+"case": "SUB",
+"form": "Kelemenre",
+"agreement": "both"
+},
+{
+"name": "Kelemen",
+"kind": "surname",
+"case": "DEL",
+"form": "Kelemenről",
+"agreement": "both"
+},
+{
+"name": "Kelemen",
+"kind": "surname",
+"case": "ADE",
+"form": "Kelemennél",
+"agreement": "both"
+},
+{
+"name": "Kelemen",
+"kind": "surname",
+"case": "ABL",
+"form": "Kelementől",
+"agreement": "both"
+},
+{
+"name": "Kelemen",
+"kind": "surname",
+"case": "ALL",
+"form": "Kelemenhez",
+"agreement": "both"
+},
+{
+"name": "Kelemen",
+"kind": "surname",
+"case": "CAU",
+"form": "Kelemenért",
+"agreement": "both"
+},
+{
+"name": "Kelemen",
+"kind": "surname",
+"case": "ESS",
+"form": "Kelemenként",
+"agreement": "both"
+},
+{
+"name": "Kelemen",
+"kind": "surname",
+"case": "POSS",
+"form": "Kelemené",
+"agreement": "both"
+},
+{
+"name": "Szilágyi",
+"kind": "surname",
+"case": "NOM",
+"form": "Szilágyi",
+"agreement": "both"
+},
+{
+"name": "Szilágyi",
+"kind": "surname",
+"case": "ACC",
+"form": "Szilágyit",
+"agreement": "both"
+},
+{
+"name": "Szilágyi",
+"kind": "surname",
+"case": "DAT",
+"form": "Szilágyinak",
+"agreement": "both"
+},
+{
+"name": "Szilágyi",
+"kind": "surname",
+"case": "INS",
+"form": "Szilágyival",
+"agreement": "both"
+},
+{
+"name": "Szilágyi",
+"kind": "surname",
+"case": "SUB",
+"form": "Szilágyira",
+"agreement": "both"
+},
+{
+"name": "Szilágyi",
+"kind": "surname",
+"case": "DEL",
+"form": "Szilágyiról",
+"agreement": "both"
+},
+{
+"name": "Szilágyi",
+"kind": "surname",
+"case": "ADE",
+"form": "Szilágyinál",
+"agreement": "both"
+},
+{
+"name": "Szilágyi",
+"kind": "surname",
+"case": "ABL",
+"form": "Szilágyitól",
+"agreement": "both"
+},
+{
+"name": "Szilágyi",
+"kind": "surname",
+"case": "ALL",
+"form": "Szilágyihoz",
+"agreement": "both"
+},
+{
+"name": "Szilágyi",
+"kind": "surname",
+"case": "CAU",
+"form": "Szilágyiért",
+"agreement": "both"
+},
+{
+"name": "Szilágyi",
+"kind": "surname",
+"case": "ESS",
+"form": "Szilágyiként",
+"agreement": "both"
+},
+{
+"name": "Szilágyi",
+"kind": "surname",
+"case": "POSS",
+"form": "Szilágyié",
+"agreement": "both"
+},
+{
+"name": "Bánfi",
+"kind": "surname",
+"case": "NOM",
+"form": "Bánfi",
+"agreement": "both"
+},
+{
+"name": "Bánfi",
+"kind": "surname",
+"case": "ACC",
+"form": "Bánfit",
+"agreement": "both"
+},
+{
+"name": "Bánfi",
+"kind": "surname",
+"case": "DAT",
+"form": "Bánfinak",
+"agreement": "both"
+},
+{
+"name": "Bánfi",
+"kind": "surname",
+"case": "INS",
+"form": "Bánfival",
+"agreement": "both"
+},
+{
+"name": "Bánfi",
+"kind": "surname",
+"case": "SUB",
+"form": "Bánfira",
+"agreement": "both"
+},
+{
+"name": "Bánfi",
+"kind": "surname",
+"case": "DEL",
+"form": "Bánfiról",
+"agreement": "both"
+},
+{
+"name": "Bánfi",
+"kind": "surname",
+"case": "ADE",
+"form": "Bánfinál",
+"agreement": "both"
+},
+{
+"name": "Bánfi",
+"kind": "surname",
+"case": "ABL",
+"form": "Bánfitól",
+"agreement": "both"
+},
+{
+"name": "Bánfi",
+"kind": "surname",
+"case": "ALL",
+"form": "Bánfihoz",
+"agreement": "both"
+},
+{
+"name": "Bánfi",
+"kind": "surname",
+"case": "CAU",
+"form": "Bánfiért",
+"agreement": "both"
+},
+{
+"name": "Bánfi",
+"kind": "surname",
+"case": "ESS",
+"form": "Bánfiként",
+"agreement": "both"
+},
+{
+"name": "Bánfi",
+"kind": "surname",
+"case": "POSS",
+"form": "Bánfié",
+"agreement": "both"
+},
+{
+"name": "Rédei",
+"kind": "surname",
+"case": "NOM",
+"form": "Rédei",
+"agreement": "both"
+},
+{
+"name": "Rédei",
+"kind": "surname",
+"case": "ACC",
+"form": "Rédeit",
+"agreement": "both"
+},
+{
+"name": "Rédei",
+"kind": "surname",
+"case": "DAT",
+"form": "Rédeinek",
+"agreement": "both"
+},
+{
+"name": "Rédei",
+"kind": "surname",
+"case": "INS",
+"form": "Rédeivel",
+"agreement": "both"
+},
+{
+"name": "Rédei",
+"kind": "surname",
+"case": "SUB",
+"form": "Rédeire",
+"agreement": "both"
+},
+{
+"name": "Rédei",
+"kind": "surname",
+"case": "DEL",
+"form": "Rédeiről",
+"agreement": "both"
+},
+{
+"name": "Rédei",
+"kind": "surname",
+"case": "ADE",
+"form": "Rédeinél",
+"agreement": "both"
+},
+{
+"name": "Rédei",
+"kind": "surname",
+"case": "ABL",
+"form": "Rédeitől",
+"agreement": "both"
+},
+{
+"name": "Rédei",
+"kind": "surname",
+"case": "ALL",
+"form": "Rédeihez",
+"agreement": "both"
+},
+{
+"name": "Rédei",
+"kind": "surname",
+"case": "CAU",
+"form": "Rédeiért",
+"agreement": "both"
+},
+{
+"name": "Rédei",
+"kind": "surname",
+"case": "ESS",
+"form": "Rédeiként",
+"agreement": "both"
+},
+{
+"name": "Rédei",
+"kind": "surname",
+"case": "POSS",
+"form": "Rédeié",
+"agreement": "both"
+},
+{
+"name": "Kántor",
+"kind": "surname",
+"case": "NOM",
+"form": "Kántor",
+"agreement": "both"
+},
+{
+"name": "Kántor",
+"kind": "surname",
+"case": "ACC",
+"form": "Kántort",
+"agreement": "both"
+},
+{
+"name": "Kántor",
+"kind": "surname",
+"case": "DAT",
+"form": "Kántornak",
+"agreement": "both"
+},
+{
+"name": "Kántor",
+"kind": "surname",
+"case": "INS",
+"form": "Kántorral",
+"agreement": "both"
+},
+{
+"name": "Kántor",
+"kind": "surname",
+"case": "SUB",
+"form": "Kántorra",
+"agreement": "both"
+},
+{
+"name": "Kántor",
+"kind": "surname",
+"case": "DEL",
+"form": "Kántorról",
+"agreement": "both"
+},
+{
+"name": "Kántor",
+"kind": "surname",
+"case": "ADE",
+"form": "Kántornál",
+"agreement": "both"
+},
+{
+"name": "Kántor",
+"kind": "surname",
+"case": "ABL",
+"form": "Kántortól",
+"agreement": "both"
+},
+{
+"name": "Kántor",
+"kind": "surname",
+"case": "ALL",
+"form": "Kántorhoz",
+"agreement": "both"
+},
+{
+"name": "Kántor",
+"kind": "surname",
+"case": "CAU",
+"form": "Kántorért",
+"agreement": "both"
+},
+{
+"name": "Kántor",
+"kind": "surname",
+"case": "ESS",
+"form": "Kántorként",
+"agreement": "both"
+},
+{
+"name": "Kántor",
+"kind": "surname",
+"case": "POSS",
+"form": "Kántoré",
+"agreement": "both"
+},
+{
+"name": "Szekeres",
+"kind": "surname",
+"case": "NOM",
+"form": "Szekeres",
+"agreement": "both"
+},
+{
+"name": "Szekeres",
+"kind": "surname",
+"case": "ACC",
+"form": "Szekerest",
+"agreement": "both"
+},
+{
+"name": "Szekeres",
+"kind": "surname",
+"case": "DAT",
+"form": "Szekeresnek",
+"agreement": "both"
+},
+{
+"name": "Szekeres",
+"kind": "surname",
+"case": "INS",
+"form": "Szekeressel",
+"agreement": "both"
+},
+{
+"name": "Szekeres",
+"kind": "surname",
+"case": "SUB",
+"form": "Szekeresre",
+"agreement": "both"
+},
+{
+"name": "Szekeres",
+"kind": "surname",
+"case": "DEL",
+"form": "Szekeresről",
+"agreement": "both"
+},
+{
+"name": "Szekeres",
+"kind": "surname",
+"case": "ADE",
+"form": "Szekeresnél",
+"agreement": "both"
+},
+{
+"name": "Szekeres",
+"kind": "surname",
+"case": "ABL",
+"form": "Szekerestől",
+"agreement": "both"
+},
+{
+"name": "Szekeres",
+"kind": "surname",
+"case": "ALL",
+"form": "Szekereshez",
+"agreement": "both"
+},
+{
+"name": "Szekeres",
+"kind": "surname",
+"case": "CAU",
+"form": "Szekeresért",
+"agreement": "both"
+},
+{
+"name": "Szekeres",
+"kind": "surname",
+"case": "ESS",
+"form": "Szekeresként",
+"agreement": "both"
+},
+{
+"name": "Szekeres",
+"kind": "surname",
+"case": "POSS",
+"form": "Szekeresé",
+"agreement": "both"
+},
+{
+"name": "Bartos",
+"kind": "surname",
+"case": "NOM",
+"form": "Bartos",
+"agreement": "both"
+},
+{
+"name": "Bartos",
+"kind": "surname",
+"case": "ACC",
+"form": "Bartost",
+"agreement": "both"
+},
+{
+"name": "Bartos",
+"kind": "surname",
+"case": "DAT",
+"form": "Bartosnak",
+"agreement": "both"
+},
+{
+"name": "Bartos",
+"kind": "surname",
+"case": "INS",
+"form": "Bartossal",
+"agreement": "both"
+},
+{
+"name": "Bartos",
+"kind": "surname",
+"case": "SUB",
+"form": "Bartosra",
+"agreement": "both"
+},
+{
+"name": "Bartos",
+"kind": "surname",
+"case": "DEL",
+"form": "Bartosról",
+"agreement": "both"
+},
+{
+"name": "Bartos",
+"kind": "surname",
+"case": "ADE",
+"form": "Bartosnál",
+"agreement": "both"
+},
+{
+"name": "Bartos",
+"kind": "surname",
+"case": "ABL",
+"form": "Bartostól",
+"agreement": "both"
+},
+{
+"name": "Bartos",
+"kind": "surname",
+"case": "ALL",
+"form": "Bartoshoz",
+"agreement": "both"
+},
+{
+"name": "Bartos",
+"kind": "surname",
+"case": "CAU",
+"form": "Bartosért",
+"agreement": "both"
+},
+{
+"name": "Bartos",
+"kind": "surname",
+"case": "ESS",
+"form": "Bartosként",
+"agreement": "both"
+},
+{
+"name": "Bartos",
+"kind": "surname",
+"case": "POSS",
+"form": "Bartosé",
+"agreement": "both"
+},
+{
+"name": "Dobos",
+"kind": "surname",
+"case": "NOM",
+"form": "Dobos",
+"agreement": "both"
+},
+{
+"name": "Dobos",
+"kind": "surname",
+"case": "ACC",
+"form": "Dobost",
+"agreement": "both"
+},
+{
+"name": "Dobos",
+"kind": "surname",
+"case": "DAT",
+"form": "Dobosnak",
+"agreement": "both"
+},
+{
+"name": "Dobos",
+"kind": "surname",
+"case": "INS",
+"form": "Dobossal",
+"agreement": "both"
+},
+{
+"name": "Dobos",
+"kind": "surname",
+"case": "SUB",
+"form": "Dobosra",
+"agreement": "both"
+},
+{
+"name": "Dobos",
+"kind": "surname",
+"case": "DEL",
+"form": "Dobosról",
+"agreement": "both"
+},
+{
+"name": "Dobos",
+"kind": "surname",
+"case": "ADE",
+"form": "Dobosnál",
+"agreement": "both"
+},
+{
+"name": "Dobos",
+"kind": "surname",
+"case": "ABL",
+"form": "Dobostól",
+"agreement": "both"
+},
+{
+"name": "Dobos",
+"kind": "surname",
+"case": "ALL",
+"form": "Doboshoz",
+"agreement": "both"
+},
+{
+"name": "Dobos",
+"kind": "surname",
+"case": "CAU",
+"form": "Dobosért",
+"agreement": "both"
+},
+{
+"name": "Dobos",
+"kind": "surname",
+"case": "ESS",
+"form": "Dobosként",
+"agreement": "both"
+},
+{
+"name": "Dobos",
+"kind": "surname",
+"case": "POSS",
+"form": "Dobosé",
+"agreement": "both"
+},
+{
+"name": "Berényi",
+"kind": "surname",
+"case": "NOM",
+"form": "Berényi",
+"agreement": "both"
+},
+{
+"name": "Berényi",
+"kind": "surname",
+"case": "ACC",
+"form": "Berényit",
+"agreement": "both"
+},
+{
+"name": "Berényi",
+"kind": "surname",
+"case": "DAT",
+"form": "Berényinek",
+"agreement": "both"
+},
+{
+"name": "Berényi",
+"kind": "surname",
+"case": "INS",
+"form": "Berényivel",
+"agreement": "both"
+},
+{
+"name": "Berényi",
+"kind": "surname",
+"case": "SUB",
+"form": "Berényire",
+"agreement": "both"
+},
+{
+"name": "Berényi",
+"kind": "surname",
+"case": "DEL",
+"form": "Berényiről",
+"agreement": "both"
+},
+{
+"name": "Berényi",
+"kind": "surname",
+"case": "ADE",
+"form": "Berényinél",
+"agreement": "both"
+},
+{
+"name": "Berényi",
+"kind": "surname",
+"case": "ABL",
+"form": "Berényitől",
+"agreement": "both"
+},
+{
+"name": "Berényi",
+"kind": "surname",
+"case": "ALL",
+"form": "Berényihez",
+"agreement": "both"
+},
+{
+"name": "Berényi",
+"kind": "surname",
+"case": "CAU",
+"form": "Berényiért",
+"agreement": "both"
+},
+{
+"name": "Berényi",
+"kind": "surname",
+"case": "ESS",
+"form": "Berényiként",
+"agreement": "both"
+},
+{
+"name": "Berényi",
+"kind": "surname",
+"case": "POSS",
+"form": "Berényié",
+"agreement": "both"
+},
+{
+"name": "Járai",
+"kind": "surname",
+"case": "NOM",
+"form": "Járai",
+"agreement": "both"
+},
+{
+"name": "Járai",
+"kind": "surname",
+"case": "ACC",
+"form": "Járait",
+"agreement": "both"
+},
+{
+"name": "Járai",
+"kind": "surname",
+"case": "DAT",
+"form": "Járainak",
+"agreement": "both"
+},
+{
+"name": "Járai",
+"kind": "surname",
+"case": "INS",
+"form": "Járaival",
+"agreement": "both"
+},
+{
+"name": "Járai",
+"kind": "surname",
+"case": "SUB",
+"form": "Járaira",
+"agreement": "both"
+},
+{
+"name": "Járai",
+"kind": "surname",
+"case": "DEL",
+"form": "Járairól",
+"agreement": "both"
+},
+{
+"name": "Járai",
+"kind": "surname",
+"case": "ADE",
+"form": "Járainál",
+"agreement": "both"
+},
+{
+"name": "Járai",
+"kind": "surname",
+"case": "ABL",
+"form": "Járaitól",
+"agreement": "both"
+},
+{
+"name": "Járai",
+"kind": "surname",
+"case": "ALL",
+"form": "Járaihoz",
+"agreement": "both"
+},
+{
+"name": "Járai",
+"kind": "surname",
+"case": "CAU",
+"form": "Járaiért",
+"agreement": "both"
+},
+{
+"name": "Járai",
+"kind": "surname",
+"case": "ESS",
+"form": "Járaiként",
+"agreement": "both"
+},
+{
+"name": "Járai",
+"kind": "surname",
+"case": "POSS",
+"form": "Járaié",
+"agreement": "both"
+},
+{
+"name": "Kocsis",
+"kind": "surname",
+"case": "NOM",
+"form": "Kocsis",
+"agreement": "both"
+},
+{
+"name": "Kocsis",
+"kind": "surname",
+"case": "ACC",
+"form": "Kocsist",
+"agreement": "both"
+},
+{
+"name": "Kocsis",
+"kind": "surname",
+"case": "DAT",
+"form": "Kocsisnak",
+"agreement": "both"
+},
+{
+"name": "Kocsis",
+"kind": "surname",
+"case": "INS",
+"form": "Kocsissal",
+"agreement": "both"
+},
+{
+"name": "Kocsis",
+"kind": "surname",
+"case": "SUB",
+"form": "Kocsisra",
+"agreement": "both"
+},
+{
+"name": "Kocsis",
+"kind": "surname",
+"case": "DEL",
+"form": "Kocsisról",
+"agreement": "both"
+},
+{
+"name": "Kocsis",
+"kind": "surname",
+"case": "ADE",
+"form": "Kocsisnál",
+"agreement": "both"
+},
+{
+"name": "Kocsis",
+"kind": "surname",
+"case": "ABL",
+"form": "Kocsistól",
+"agreement": "both"
+},
+{
+"name": "Kocsis",
+"kind": "surname",
+"case": "ALL",
+"form": "Kocsishoz",
+"agreement": "both"
+},
+{
+"name": "Kocsis",
+"kind": "surname",
+"case": "CAU",
+"form": "Kocsisért",
+"agreement": "both"
+},
+{
+"name": "Kocsis",
+"kind": "surname",
+"case": "ESS",
+"form": "Kocsisként",
+"agreement": "both"
+},
+{
+"name": "Kocsis",
+"kind": "surname",
+"case": "POSS",
+"form": "Kocsisé",
+"agreement": "both"
+},
+{
+"name": "Zöldmező Építő Kft.",
+"kind": "company",
+"case": "NOM",
+"form": "Zöldmező Építő Kft.",
+"agreement": "both"
+},
+{
+"name": "Zöldmező Építő Kft.",
+"kind": "company",
+"case": "ACC",
+"form": "Zöldmező Építő Kft.-t",
+"agreement": "both"
+},
+{
+"name": "Zöldmező Építő Kft.",
+"kind": "company",
+"case": "DAT",
+"form": "Zöldmező Építő Kft.-nek",
+"agreement": "both"
+},
+{
+"name": "Zöldmező Építő Kft.",
+"kind": "company",
+"case": "INS",
+"form": "Zöldmező Építő Kft.-vel",
+"agreement": "both"
+},
+{
+"name": "Zöldmező Építő Kft.",
+"kind": "company",
+"case": "INE",
+"form": "Zöldmező Építő Kft.-ben",
+"agreement": "both"
+},
+{
+"name": "Zöldmező Építő Kft.",
+"kind": "company",
+"case": "ILL",
+"form": "Zöldmező Építő Kft.-be",
+"agreement": "both"
+},
+{
+"name": "Zöldmező Építő Kft.",
+"kind": "company",
+"case": "ELA",
+"form": "Zöldmező Építő Kft.-ből",
+"agreement": "both"
+},
+{
+"name": "Zöldmező Építő Kft.",
+"kind": "company",
+"case": "SUP",
+"form": "Zöldmező Építő Kft.-n",
+"agreement": "both"
+},
+{
+"name": "Zöldmező Építő Kft.",
+"kind": "company",
+"case": "DEL",
+"form": "Zöldmező Építő Kft.-ről",
+"agreement": "both"
+},
+{
+"name": "Zöldmező Építő Kft.",
+"kind": "company",
+"case": "ABL",
+"form": "Zöldmező Építő Kft.-től",
+"agreement": "both"
+},
+{
+"name": "Zöldmező Építő Kft.",
+"kind": "company",
+"case": "ALL",
+"form": "Zöldmező Építő Kft.-hez",
+"agreement": "both"
+},
+{
+"name": "Zöldmező Építő Kft.",
+"kind": "company",
+"case": "ADE",
+"form": "Zöldmező Építő Kft.-nél",
+"agreement": "both"
+},
+{
+"name": "Fehér és Társa Bt.",
+"kind": "company",
+"case": "NOM",
+"form": "Fehér és Társa Bt.",
+"agreement": "both"
+},
+{
+"name": "Fehér és Társa Bt.",
+"kind": "company",
+"case": "ACC",
+"form": "Fehér és Társa Bt.-t",
+"agreement": "both"
+},
+{
+"name": "Fehér és Társa Bt.",
+"kind": "company",
+"case": "DAT",
+"form": "Fehér és Társa Bt.-nek",
+"agreement": "both"
+},
+{
+"name": "Fehér és Társa Bt.",
+"kind": "company",
+"case": "INS",
+"form": "Fehér és Társa Bt.-vel",
+"agreement": "both"
+},
+{
+"name": "Fehér és Társa Bt.",
+"kind": "company",
+"case": "INE",
+"form": "Fehér és Társa Bt.-ben",
+"agreement": "both"
+},
+{
+"name": "Fehér és Társa Bt.",
+"kind": "company",
+"case": "ILL",
+"form": "Fehér és Társa Bt.-be",
+"agreement": "both"
+},
+{
+"name": "Fehér és Társa Bt.",
+"kind": "company",
+"case": "ELA",
+"form": "Fehér és Társa Bt.-ből",
+"agreement": "both"
+},
+{
+"name": "Fehér és Társa Bt.",
+"kind": "company",
+"case": "SUP",
+"form": "Fehér és Társa Bt.-n",
+"agreement": "both"
+},
+{
+"name": "Fehér és Társa Bt.",
+"kind": "company",
+"case": "DEL",
+"form": "Fehér és Társa Bt.-ről",
+"agreement": "both"
+},
+{
+"name": "Fehér és Társa Bt.",
+"kind": "company",
+"case": "ABL",
+"form": "Fehér és Társa Bt.-től",
+"agreement": "both"
+},
+{
+"name": "Fehér és Társa Bt.",
+"kind": "company",
+"case": "ALL",
+"form": "Fehér és Társa Bt.-hez",
+"agreement": "both"
+},
+{
+"name": "Fehér és Társa Bt.",
+"kind": "company",
+"case": "ADE",
+"form": "Fehér és Társa Bt.-nél",
+"agreement": "both"
+},
+{
+"name": "Alfa Kereskedelmi Zrt.",
+"kind": "company",
+"case": "NOM",
+"form": "Alfa Kereskedelmi Zrt.",
+"agreement": "both"
+},
+{
+"name": "Alfa Kereskedelmi Zrt.",
+"kind": "company",
+"case": "ACC",
+"form": "Alfa Kereskedelmi Zrt.-t",
+"agreement": "both"
+},
+{
+"name": "Alfa Kereskedelmi Zrt.",
+"kind": "company",
+"case": "DAT",
+"form": "Alfa Kereskedelmi Zrt.-nek",
+"agreement": "both"
+},
+{
+"name": "Alfa Kereskedelmi Zrt.",
+"kind": "company",
+"case": "INS",
+"form": "Alfa Kereskedelmi Zrt.-vel",
+"agreement": "both"
+},
+{
+"name": "Alfa Kereskedelmi Zrt.",
+"kind": "company",
+"case": "INE",
+"form": "Alfa Kereskedelmi Zrt.-ben",
+"agreement": "both"
+},
+{
+"name": "Alfa Kereskedelmi Zrt.",
+"kind": "company",
+"case": "ILL",
+"form": "Alfa Kereskedelmi Zrt.-be",
+"agreement": "both"
+},
+{
+"name": "Alfa Kereskedelmi Zrt.",
+"kind": "company",
+"case": "ELA",
+"form": "Alfa Kereskedelmi Zrt.-ből",
+"agreement": "both"
+},
+{
+"name": "Alfa Kereskedelmi Zrt.",
+"kind": "company",
+"case": "SUP",
+"form": "Alfa Kereskedelmi Zrt.-n",
+"agreement": "both"
+},
+{
+"name": "Alfa Kereskedelmi Zrt.",
+"kind": "company",
+"case": "DEL",
+"form": "Alfa Kereskedelmi Zrt.-ről",
+"agreement": "both"
+},
+{
+"name": "Alfa Kereskedelmi Zrt.",
+"kind": "company",
+"case": "ABL",
+"form": "Alfa Kereskedelmi Zrt.-től",
+"agreement": "both"
+},
+{
+"name": "Alfa Kereskedelmi Zrt.",
+"kind": "company",
+"case": "ALL",
+"form": "Alfa Kereskedelmi Zrt.-hez",
+"agreement": "both"
+},
+{
+"name": "Alfa Kereskedelmi Zrt.",
+"kind": "company",
+"case": "ADE",
+"form": "Alfa Kereskedelmi Zrt.-nél",
+"agreement": "both"
+},
+{
+"name": "Duna Logisztika Kft.",
+"kind": "company",
+"case": "NOM",
+"form": "Duna Logisztika Kft.",
+"agreement": "both"
+},
+{
+"name": "Duna Logisztika Kft.",
+"kind": "company",
+"case": "ACC",
+"form": "Duna Logisztika Kft.-t",
+"agreement": "both"
+},
+{
+"name": "Duna Logisztika Kft.",
+"kind": "company",
+"case": "DAT",
+"form": "Duna Logisztika Kft.-nek",
+"agreement": "both"
+},
+{
+"name": "Duna Logisztika Kft.",
+"kind": "company",
+"case": "INS",
+"form": "Duna Logisztika Kft.-vel",
+"agreement": "both"
+},
+{
+"name": "Duna Logisztika Kft.",
+"kind": "company",
+"case": "INE",
+"form": "Duna Logisztika Kft.-ben",
+"agreement": "both"
+},
+{
+"name": "Duna Logisztika Kft.",
+"kind": "company",
+"case": "ILL",
+"form": "Duna Logisztika Kft.-be",
+"agreement": "both"
+},
+{
+"name": "Duna Logisztika Kft.",
+"kind": "company",
+"case": "ELA",
+"form": "Duna Logisztika Kft.-ből",
+"agreement": "both"
+},
+{
+"name": "Duna Logisztika Kft.",
+"kind": "company",
+"case": "SUP",
+"form": "Duna Logisztika Kft.-n",
+"agreement": "both"
+},
+{
+"name": "Duna Logisztika Kft.",
+"kind": "company",
+"case": "DEL",
+"form": "Duna Logisztika Kft.-ről",
+"agreement": "both"
+},
+{
+"name": "Duna Logisztika Kft.",
+"kind": "company",
+"case": "ABL",
+"form": "Duna Logisztika Kft.-től",
+"agreement": "both"
+},
+{
+"name": "Duna Logisztika Kft.",
+"kind": "company",
+"case": "ALL",
+"form": "Duna Logisztika Kft.-hez",
+"agreement": "both"
+},
+{
+"name": "Duna Logisztika Kft.",
+"kind": "company",
+"case": "ADE",
+"form": "Duna Logisztika Kft.-nél",
+"agreement": "both"
+},
+{
+"name": "Pannon Könyvelő Bt.",
+"kind": "company",
+"case": "NOM",
+"form": "Pannon Könyvelő Bt.",
+"agreement": "both"
+},
+{
+"name": "Pannon Könyvelő Bt.",
+"kind": "company",
+"case": "ACC",
+"form": "Pannon Könyvelő Bt.-t",
+"agreement": "both"
+},
+{
+"name": "Pannon Könyvelő Bt.",
+"kind": "company",
+"case": "DAT",
+"form": "Pannon Könyvelő Bt.-nek",
+"agreement": "both"
+},
+{
+"name": "Pannon Könyvelő Bt.",
+"kind": "company",
+"case": "INS",
+"form": "Pannon Könyvelő Bt.-vel",
+"agreement": "both"
+},
+{
+"name": "Pannon Könyvelő Bt.",
+"kind": "company",
+"case": "INE",
+"form": "Pannon Könyvelő Bt.-ben",
+"agreement": "both"
+},
+{
+"name": "Pannon Könyvelő Bt.",
+"kind": "company",
+"case": "ILL",
+"form": "Pannon Könyvelő Bt.-be",
+"agreement": "both"
+},
+{
+"name": "Pannon Könyvelő Bt.",
+"kind": "company",
+"case": "ELA",
+"form": "Pannon Könyvelő Bt.-ből",
+"agreement": "both"
+},
+{
+"name": "Pannon Könyvelő Bt.",
+"kind": "company",
+"case": "SUP",
+"form": "Pannon Könyvelő Bt.-n",
+"agreement": "both"
+},
+{
+"name": "Pannon Könyvelő Bt.",
+"kind": "company",
+"case": "DEL",
+"form": "Pannon Könyvelő Bt.-ről",
+"agreement": "both"
+},
+{
+"name": "Pannon Könyvelő Bt.",
+"kind": "company",
+"case": "ABL",
+"form": "Pannon Könyvelő Bt.-től",
+"agreement": "both"
+},
+{
+"name": "Pannon Könyvelő Bt.",
+"kind": "company",
+"case": "ALL",
+"form": "Pannon Könyvelő Bt.-hez",
+"agreement": "both"
+},
+{
+"name": "Pannon Könyvelő Bt.",
+"kind": "company",
+"case": "ADE",
+"form": "Pannon Könyvelő Bt.-nél",
+"agreement": "both"
+},
+{
+"name": "Kovács és Fiai Kkt.",
+"kind": "company",
+"case": "NOM",
+"form": "Kovács és Fiai Kkt.",
+"agreement": "both"
+},
+{
+"name": "Kovács és Fiai Kkt.",
+"kind": "company",
+"case": "ACC",
+"form": "Kovács és Fiai Kkt.-t",
+"agreement": "both"
+},
+{
+"name": "Kovács és Fiai Kkt.",
+"kind": "company",
+"case": "DAT",
+"form": "Kovács és Fiai Kkt.-nek",
+"agreement": "both"
+},
+{
+"name": "Kovács és Fiai Kkt.",
+"kind": "company",
+"case": "INS",
+"form": "Kovács és Fiai Kkt.-vel",
+"agreement": "both"
+},
+{
+"name": "Kovács és Fiai Kkt.",
+"kind": "company",
+"case": "INE",
+"form": "Kovács és Fiai Kkt.-ben",
+"agreement": "both"
+},
+{
+"name": "Kovács és Fiai Kkt.",
+"kind": "company",
+"case": "ILL",
+"form": "Kovács és Fiai Kkt.-be",
+"agreement": "both"
+},
+{
+"name": "Kovács és Fiai Kkt.",
+"kind": "company",
+"case": "ELA",
+"form": "Kovács és Fiai Kkt.-ből",
+"agreement": "both"
+},
+{
+"name": "Kovács és Fiai Kkt.",
+"kind": "company",
+"case": "SUP",
+"form": "Kovács és Fiai Kkt.-n",
+"agreement": "both"
+},
+{
+"name": "Kovács és Fiai Kkt.",
+"kind": "company",
+"case": "DEL",
+"form": "Kovács és Fiai Kkt.-ről",
+"agreement": "both"
+},
+{
+"name": "Kovács és Fiai Kkt.",
+"kind": "company",
+"case": "ABL",
+"form": "Kovács és Fiai Kkt.-től",
+"agreement": "both"
+},
+{
+"name": "Kovács és Fiai Kkt.",
+"kind": "company",
+"case": "ALL",
+"form": "Kovács és Fiai Kkt.-hez",
+"agreement": "both"
+},
+{
+"name": "Kovács és Fiai Kkt.",
+"kind": "company",
+"case": "ADE",
+"form": "Kovács és Fiai Kkt.-nél",
+"agreement": "both"
+},
+{
+"name": "Észak-Alföldi Agrár Zrt.",
+"kind": "company",
+"case": "NOM",
+"form": "Észak-Alföldi Agrár Zrt.",
+"agreement": "both"
+},
+{
+"name": "Észak-Alföldi Agrár Zrt.",
+"kind": "company",
+"case": "ACC",
+"form": "Észak-Alföldi Agrár Zrt.-t",
+"agreement": "both"
+},
+{
+"name": "Észak-Alföldi Agrár Zrt.",
+"kind": "company",
+"case": "DAT",
+"form": "Észak-Alföldi Agrár Zrt.-nek",
+"agreement": "both"
+},
+{
+"name": "Észak-Alföldi Agrár Zrt.",
+"kind": "company",
+"case": "INS",
+"form": "Észak-Alföldi Agrár Zrt.-vel",
+"agreement": "both"
+},
+{
+"name": "Észak-Alföldi Agrár Zrt.",
+"kind": "company",
+"case": "INE",
+"form": "Észak-Alföldi Agrár Zrt.-ben",
+"agreement": "both"
+},
+{
+"name": "Észak-Alföldi Agrár Zrt.",
+"kind": "company",
+"case": "ILL",
+"form": "Észak-Alföldi Agrár Zrt.-be",
+"agreement": "both"
+},
+{
+"name": "Észak-Alföldi Agrár Zrt.",
+"kind": "company",
+"case": "ELA",
+"form": "Észak-Alföldi Agrár Zrt.-ből",
+"agreement": "both"
+},
+{
+"name": "Észak-Alföldi Agrár Zrt.",
+"kind": "company",
+"case": "SUP",
+"form": "Észak-Alföldi Agrár Zrt.-n",
+"agreement": "both"
+},
+{
+"name": "Észak-Alföldi Agrár Zrt.",
+"kind": "company",
+"case": "DEL",
+"form": "Észak-Alföldi Agrár Zrt.-ről",
+"agreement": "both"
+},
+{
+"name": "Észak-Alföldi Agrár Zrt.",
+"kind": "company",
+"case": "ABL",
+"form": "Észak-Alföldi Agrár Zrt.-től",
+"agreement": "both"
+},
+{
+"name": "Észak-Alföldi Agrár Zrt.",
+"kind": "company",
+"case": "ALL",
+"form": "Észak-Alföldi Agrár Zrt.-hez",
+"agreement": "both"
+},
+{
+"name": "Észak-Alföldi Agrár Zrt.",
+"kind": "company",
+"case": "ADE",
+"form": "Észak-Alföldi Agrár Zrt.-nél",
+"agreement": "both"
+},
+{
+"name": "Napfény Egészségügyi Kft.",
+"kind": "company",
+"case": "NOM",
+"form": "Napfény Egészségügyi Kft.",
+"agreement": "both"
+},
+{
+"name": "Napfény Egészségügyi Kft.",
+"kind": "company",
+"case": "ACC",
+"form": "Napfény Egészségügyi Kft.-t",
+"agreement": "both"
+},
+{
+"name": "Napfény Egészségügyi Kft.",
+"kind": "company",
+"case": "DAT",
+"form": "Napfény Egészségügyi Kft.-nek",
+"agreement": "both"
+},
+{
+"name": "Napfény Egészségügyi Kft.",
+"kind": "company",
+"case": "INS",
+"form": "Napfény Egészségügyi Kft.-vel",
+"agreement": "both"
+},
+{
+"name": "Napfény Egészségügyi Kft.",
+"kind": "company",
+"case": "INE",
+"form": "Napfény Egészségügyi Kft.-ben",
+"agreement": "both"
+},
+{
+"name": "Napfény Egészségügyi Kft.",
+"kind": "company",
+"case": "ILL",
+"form": "Napfény Egészségügyi Kft.-be",
+"agreement": "both"
+},
+{
+"name": "Napfény Egészségügyi Kft.",
+"kind": "company",
+"case": "ELA",
+"form": "Napfény Egészségügyi Kft.-ből",
+"agreement": "both"
+},
+{
+"name": "Napfény Egészségügyi Kft.",
+"kind": "company",
+"case": "SUP",
+"form": "Napfény Egészségügyi Kft.-n",
+"agreement": "both"
+},
+{
+"name": "Napfény Egészségügyi Kft.",
+"kind": "company",
+"case": "DEL",
+"form": "Napfény Egészségügyi Kft.-ről",
+"agreement": "both"
+},
+{
+"name": "Napfény Egészségügyi Kft.",
+"kind": "company",
+"case": "ABL",
+"form": "Napfény Egészségügyi Kft.-től",
+"agreement": "both"
+},
+{
+"name": "Napfény Egészségügyi Kft.",
+"kind": "company",
+"case": "ALL",
+"form": "Napfény Egészségügyi Kft.-hez",
+"agreement": "both"
+},
+{
+"name": "Napfény Egészségügyi Kft.",
+"kind": "company",
+"case": "ADE",
+"form": "Napfény Egészségügyi Kft.-nél",
+"agreement": "both"
+},
+{
+"name": "Rácz Ügyvédi Iroda",
+"kind": "company",
+"case": "NOM",
+"form": "Rácz Ügyvédi Iroda",
+"agreement": "both"
+},
+{
+"name": "Rácz Ügyvédi Iroda",
+"kind": "company",
+"case": "ACC",
+"form": "Rácz Ügyvédi Irodát",
+"agreement": "both"
+},
+{
+"name": "Rácz Ügyvédi Iroda",
+"kind": "company",
+"case": "DAT",
+"form": "Rácz Ügyvédi Irodának",
+"agreement": "both"
+},
+{
+"name": "Rácz Ügyvédi Iroda",
+"kind": "company",
+"case": "INS",
+"form": "Rácz Ügyvédi Irodával",
+"agreement": "both"
+},
+{
+"name": "Rácz Ügyvédi Iroda",
+"kind": "company",
+"case": "INE",
+"form": "Rácz Ügyvédi Irodában",
+"agreement": "both"
+},
+{
+"name": "Rácz Ügyvédi Iroda",
+"kind": "company",
+"case": "ILL",
+"form": "Rácz Ügyvédi Irodába",
+"agreement": "both"
+},
+{
+"name": "Rácz Ügyvédi Iroda",
+"kind": "company",
+"case": "ELA",
+"form": "Rácz Ügyvédi Irodából",
+"agreement": "both"
+},
+{
+"name": "Rácz Ügyvédi Iroda",
+"kind": "company",
+"case": "SUP",
+"form": "Rácz Ügyvédi Irodán",
+"agreement": "both"
+},
+{
+"name": "Rácz Ügyvédi Iroda",
+"kind": "company",
+"case": "DEL",
+"form": "Rácz Ügyvédi Irodáról",
+"agreement": "both"
+},
+{
+"name": "Rácz Ügyvédi Iroda",
+"kind": "company",
+"case": "ABL",
+"form": "Rácz Ügyvédi Irodától",
+"agreement": "both"
+},
+{
+"name": "Rácz Ügyvédi Iroda",
+"kind": "company",
+"case": "ALL",
+"form": "Rácz Ügyvédi Irodához",
+"agreement": "both"
+},
+{
+"name": "Rácz Ügyvédi Iroda",
+"kind": "company",
+"case": "ADE",
+"form": "Rácz Ügyvédi Irodánál",
+"agreement": "both"
+},
+{
+"name": "MediCare Hungary Kft.",
+"kind": "company",
+"case": "NOM",
+"form": "MediCare Hungary Kft.",
+"agreement": "both"
+},
+{
+"name": "MediCare Hungary Kft.",
+"kind": "company",
+"case": "ACC",
+"form": "MediCare Hungary Kft.-t",
+"agreement": "both"
+},
+{
+"name": "MediCare Hungary Kft.",
+"kind": "company",
+"case": "DAT",
+"form": "MediCare Hungary Kft.-nek",
+"agreement": "both"
+},
+{
+"name": "MediCare Hungary Kft.",
+"kind": "company",
+"case": "INS",
+"form": "MediCare Hungary Kft.-vel",
+"agreement": "both"
+},
+{
+"name": "MediCare Hungary Kft.",
+"kind": "company",
+"case": "INE",
+"form": "MediCare Hungary Kft.-ben",
+"agreement": "both"
+},
+{
+"name": "MediCare Hungary Kft.",
+"kind": "company",
+"case": "ILL",
+"form": "MediCare Hungary Kft.-be",
+"agreement": "both"
+},
+{
+"name": "MediCare Hungary Kft.",
+"kind": "company",
+"case": "ELA",
+"form": "MediCare Hungary Kft.-ből",
+"agreement": "both"
+},
+{
+"name": "MediCare Hungary Kft.",
+"kind": "company",
+"case": "SUP",
+"form": "MediCare Hungary Kft.-n",
+"agreement": "both"
+},
+{
+"name": "MediCare Hungary Kft.",
+"kind": "company",
+"case": "DEL",
+"form": "MediCare Hungary Kft.-ről",
+"agreement": "both"
+},
+{
+"name": "MediCare Hungary Kft.",
+"kind": "company",
+"case": "ABL",
+"form": "MediCare Hungary Kft.-től",
+"agreement": "both"
+},
+{
+"name": "MediCare Hungary Kft.",
+"kind": "company",
+"case": "ALL",
+"form": "MediCare Hungary Kft.-hez",
+"agreement": "both"
+},
+{
+"name": "MediCare Hungary Kft.",
+"kind": "company",
+"case": "ADE",
+"form": "MediCare Hungary Kft.-nél",
+"agreement": "both"
+},
+{
+"name": "Gyöngyház Nyrt.",
+"kind": "company",
+"case": "NOM",
+"form": "Gyöngyház Nyrt.",
+"agreement": "both"
+},
+{
+"name": "Gyöngyház Nyrt.",
+"kind": "company",
+"case": "ACC",
+"form": "Gyöngyház Nyrt.-t",
+"agreement": "both"
+},
+{
+"name": "Gyöngyház Nyrt.",
+"kind": "company",
+"case": "DAT",
+"form": "Gyöngyház Nyrt.-nek",
+"agreement": "both"
+},
+{
+"name": "Gyöngyház Nyrt.",
+"kind": "company",
+"case": "INS",
+"form": "Gyöngyház Nyrt.-vel",
+"agreement": "both"
+},
+{
+"name": "Gyöngyház Nyrt.",
+"kind": "company",
+"case": "INE",
+"form": "Gyöngyház Nyrt.-ben",
+"agreement": "both"
+},
+{
+"name": "Gyöngyház Nyrt.",
+"kind": "company",
+"case": "ILL",
+"form": "Gyöngyház Nyrt.-be",
+"agreement": "both"
+},
+{
+"name": "Gyöngyház Nyrt.",
+"kind": "company",
+"case": "ELA",
+"form": "Gyöngyház Nyrt.-ből",
+"agreement": "both"
+},
+{
+"name": "Gyöngyház Nyrt.",
+"kind": "company",
+"case": "SUP",
+"form": "Gyöngyház Nyrt.-n",
+"agreement": "both"
+},
+{
+"name": "Gyöngyház Nyrt.",
+"kind": "company",
+"case": "DEL",
+"form": "Gyöngyház Nyrt.-ről",
+"agreement": "both"
+},
+{
+"name": "Gyöngyház Nyrt.",
+"kind": "company",
+"case": "ABL",
+"form": "Gyöngyház Nyrt.-től",
+"agreement": "both"
+},
+{
+"name": "Gyöngyház Nyrt.",
+"kind": "company",
+"case": "ALL",
+"form": "Gyöngyház Nyrt.-hez",
+"agreement": "both"
+},
+{
+"name": "Gyöngyház Nyrt.",
+"kind": "company",
+"case": "ADE",
+"form": "Gyöngyház Nyrt.-nél",
+"agreement": "both"
+},
+{
+"name": "Tölgyfa Bútor Kft.",
+"kind": "company",
+"case": "NOM",
+"form": "Tölgyfa Bútor Kft.",
+"agreement": "both"
+},
+{
+"name": "Tölgyfa Bútor Kft.",
+"kind": "company",
+"case": "ACC",
+"form": "Tölgyfa Bútor Kft.-t",
+"agreement": "both"
+},
+{
+"name": "Tölgyfa Bútor Kft.",
+"kind": "company",
+"case": "DAT",
+"form": "Tölgyfa Bútor Kft.-nek",
+"agreement": "both"
+},
+{
+"name": "Tölgyfa Bútor Kft.",
+"kind": "company",
+"case": "INS",
+"form": "Tölgyfa Bútor Kft.-vel",
+"agreement": "both"
+},
+{
+"name": "Tölgyfa Bútor Kft.",
+"kind": "company",
+"case": "INE",
+"form": "Tölgyfa Bútor Kft.-ben",
+"agreement": "both"
+},
+{
+"name": "Tölgyfa Bútor Kft.",
+"kind": "company",
+"case": "ILL",
+"form": "Tölgyfa Bútor Kft.-be",
+"agreement": "both"
+},
+{
+"name": "Tölgyfa Bútor Kft.",
+"kind": "company",
+"case": "ELA",
+"form": "Tölgyfa Bútor Kft.-ből",
+"agreement": "both"
+},
+{
+"name": "Tölgyfa Bútor Kft.",
+"kind": "company",
+"case": "SUP",
+"form": "Tölgyfa Bútor Kft.-n",
+"agreement": "both"
+},
+{
+"name": "Tölgyfa Bútor Kft.",
+"kind": "company",
+"case": "DEL",
+"form": "Tölgyfa Bútor Kft.-ről",
+"agreement": "both"
+},
+{
+"name": "Tölgyfa Bútor Kft.",
+"kind": "company",
+"case": "ABL",
+"form": "Tölgyfa Bútor Kft.-től",
+"agreement": "both"
+},
+{
+"name": "Tölgyfa Bútor Kft.",
+"kind": "company",
+"case": "ALL",
+"form": "Tölgyfa Bútor Kft.-hez",
+"agreement": "both"
+},
+{
+"name": "Tölgyfa Bútor Kft.",
+"kind": "company",
+"case": "ADE",
+"form": "Tölgyfa Bútor Kft.-nél",
+"agreement": "both"
+},
+{
+"name": "Aranyhíd Kft.",
+"kind": "company",
+"case": "NOM",
+"form": "Aranyhíd Kft.",
+"agreement": "both"
+},
+{
+"name": "Aranyhíd Kft.",
+"kind": "company",
+"case": "ACC",
+"form": "Aranyhíd Kft.-t",
+"agreement": "both"
+},
+{
+"name": "Aranyhíd Kft.",
+"kind": "company",
+"case": "DAT",
+"form": "Aranyhíd Kft.-nek",
+"agreement": "both"
+},
+{
+"name": "Aranyhíd Kft.",
+"kind": "company",
+"case": "INS",
+"form": "Aranyhíd Kft.-vel",
+"agreement": "both"
+},
+{
+"name": "Aranyhíd Kft.",
+"kind": "company",
+"case": "INE",
+"form": "Aranyhíd Kft.-ben",
+"agreement": "both"
+},
+{
+"name": "Aranyhíd Kft.",
+"kind": "company",
+"case": "ILL",
+"form": "Aranyhíd Kft.-be",
+"agreement": "both"
+},
+{
+"name": "Aranyhíd Kft.",
+"kind": "company",
+"case": "ELA",
+"form": "Aranyhíd Kft.-ből",
+"agreement": "both"
+},
+{
+"name": "Aranyhíd Kft.",
+"kind": "company",
+"case": "SUP",
+"form": "Aranyhíd Kft.-n",
+"agreement": "both"
+},
+{
+"name": "Aranyhíd Kft.",
+"kind": "company",
+"case": "DEL",
+"form": "Aranyhíd Kft.-ről",
+"agreement": "both"
+},
+{
+"name": "Aranyhíd Kft.",
+"kind": "company",
+"case": "ABL",
+"form": "Aranyhíd Kft.-től",
+"agreement": "both"
+},
+{
+"name": "Aranyhíd Kft.",
+"kind": "company",
+"case": "ALL",
+"form": "Aranyhíd Kft.-hez",
+"agreement": "both"
+},
+{
+"name": "Aranyhíd Kft.",
+"kind": "company",
+"case": "ADE",
+"form": "Aranyhíd Kft.-nél",
+"agreement": "both"
+},
+{
+"name": "Kékmadár Kft.",
+"kind": "company",
+"case": "NOM",
+"form": "Kékmadár Kft.",
+"agreement": "both"
+},
+{
+"name": "Kékmadár Kft.",
+"kind": "company",
+"case": "ACC",
+"form": "Kékmadár Kft.-t",
+"agreement": "both"
+},
+{
+"name": "Kékmadár Kft.",
+"kind": "company",
+"case": "DAT",
+"form": "Kékmadár Kft.-nek",
+"agreement": "both"
+},
+{
+"name": "Kékmadár Kft.",
+"kind": "company",
+"case": "INS",
+"form": "Kékmadár Kft.-vel",
+"agreement": "both"
+},
+{
+"name": "Kékmadár Kft.",
+"kind": "company",
+"case": "INE",
+"form": "Kékmadár Kft.-ben",
+"agreement": "both"
+},
+{
+"name": "Kékmadár Kft.",
+"kind": "company",
+"case": "ILL",
+"form": "Kékmadár Kft.-be",
+"agreement": "both"
+},
+{
+"name": "Kékmadár Kft.",
+"kind": "company",
+"case": "ELA",
+"form": "Kékmadár Kft.-ből",
+"agreement": "both"
+},
+{
+"name": "Kékmadár Kft.",
+"kind": "company",
+"case": "SUP",
+"form": "Kékmadár Kft.-n",
+"agreement": "both"
+},
+{
+"name": "Kékmadár Kft.",
+"kind": "company",
+"case": "DEL",
+"form": "Kékmadár Kft.-ről",
+"agreement": "both"
+},
+{
+"name": "Kékmadár Kft.",
+"kind": "company",
+"case": "ABL",
+"form": "Kékmadár Kft.-től",
+"agreement": "both"
+},
+{
+"name": "Kékmadár Kft.",
+"kind": "company",
+"case": "ALL",
+"form": "Kékmadár Kft.-hez",
+"agreement": "both"
+},
+{
+"name": "Kékmadár Kft.",
+"kind": "company",
+"case": "ADE",
+"form": "Kékmadár Kft.-nél",
+"agreement": "both"
+},
+{
+"name": "Ezüstfenyő Kft.",
+"kind": "company",
+"case": "NOM",
+"form": "Ezüstfenyő Kft.",
+"agreement": "both"
+},
+{
+"name": "Ezüstfenyő Kft.",
+"kind": "company",
+"case": "ACC",
+"form": "Ezüstfenyő Kft.-t",
+"agreement": "both"
+},
+{
+"name": "Ezüstfenyő Kft.",
+"kind": "company",
+"case": "DAT",
+"form": "Ezüstfenyő Kft.-nek",
+"agreement": "both"
+},
+{
+"name": "Ezüstfenyő Kft.",
+"kind": "company",
+"case": "INS",
+"form": "Ezüstfenyő Kft.-vel",
+"agreement": "both"
+},
+{
+"name": "Ezüstfenyő Kft.",
+"kind": "company",
+"case": "INE",
+"form": "Ezüstfenyő Kft.-ben",
+"agreement": "both"
+},
+{
+"name": "Ezüstfenyő Kft.",
+"kind": "company",
+"case": "ILL",
+"form": "Ezüstfenyő Kft.-be",
+"agreement": "both"
+},
+{
+"name": "Ezüstfenyő Kft.",
+"kind": "company",
+"case": "ELA",
+"form": "Ezüstfenyő Kft.-ből",
+"agreement": "both"
+},
+{
+"name": "Ezüstfenyő Kft.",
+"kind": "company",
+"case": "SUP",
+"form": "Ezüstfenyő Kft.-n",
+"agreement": "both"
+},
+{
+"name": "Ezüstfenyő Kft.",
+"kind": "company",
+"case": "DEL",
+"form": "Ezüstfenyő Kft.-ről",
+"agreement": "both"
+},
+{
+"name": "Ezüstfenyő Kft.",
+"kind": "company",
+"case": "ABL",
+"form": "Ezüstfenyő Kft.-től",
+"agreement": "both"
+},
+{
+"name": "Ezüstfenyő Kft.",
+"kind": "company",
+"case": "ALL",
+"form": "Ezüstfenyő Kft.-hez",
+"agreement": "both"
+},
+{
+"name": "Ezüstfenyő Kft.",
+"kind": "company",
+"case": "ADE",
+"form": "Ezüstfenyő Kft.-nél",
+"agreement": "both"
+},
+{
+"name": "Napkorong Kft.",
+"kind": "company",
+"case": "NOM",
+"form": "Napkorong Kft.",
+"agreement": "both"
+},
+{
+"name": "Napkorong Kft.",
+"kind": "company",
+"case": "ACC",
+"form": "Napkorong Kft.-t",
+"agreement": "both"
+},
+{
+"name": "Napkorong Kft.",
+"kind": "company",
+"case": "DAT",
+"form": "Napkorong Kft.-nek",
+"agreement": "both"
+},
+{
+"name": "Napkorong Kft.",
+"kind": "company",
+"case": "INS",
+"form": "Napkorong Kft.-vel",
+"agreement": "both"
+},
+{
+"name": "Napkorong Kft.",
+"kind": "company",
+"case": "INE",
+"form": "Napkorong Kft.-ben",
+"agreement": "both"
+},
+{
+"name": "Napkorong Kft.",
+"kind": "company",
+"case": "ILL",
+"form": "Napkorong Kft.-be",
+"agreement": "both"
+},
+{
+"name": "Napkorong Kft.",
+"kind": "company",
+"case": "ELA",
+"form": "Napkorong Kft.-ből",
+"agreement": "both"
+},
+{
+"name": "Napkorong Kft.",
+"kind": "company",
+"case": "SUP",
+"form": "Napkorong Kft.-n",
+"agreement": "both"
+},
+{
+"name": "Napkorong Kft.",
+"kind": "company",
+"case": "DEL",
+"form": "Napkorong Kft.-ről",
+"agreement": "both"
+},
+{
+"name": "Napkorong Kft.",
+"kind": "company",
+"case": "ABL",
+"form": "Napkorong Kft.-től",
+"agreement": "both"
+},
+{
+"name": "Napkorong Kft.",
+"kind": "company",
+"case": "ALL",
+"form": "Napkorong Kft.-hez",
+"agreement": "both"
+},
+{
+"name": "Napkorong Kft.",
+"kind": "company",
+"case": "ADE",
+"form": "Napkorong Kft.-nél",
+"agreement": "both"
+},
+{
+"name": "Tölgyliget Kft.",
+"kind": "company",
+"case": "NOM",
+"form": "Tölgyliget Kft.",
+"agreement": "both"
+},
+{
+"name": "Tölgyliget Kft.",
+"kind": "company",
+"case": "ACC",
+"form": "Tölgyliget Kft.-t",
+"agreement": "both"
+},
+{
+"name": "Tölgyliget Kft.",
+"kind": "company",
+"case": "DAT",
+"form": "Tölgyliget Kft.-nek",
+"agreement": "both"
+},
+{
+"name": "Tölgyliget Kft.",
+"kind": "company",
+"case": "INS",
+"form": "Tölgyliget Kft.-vel",
+"agreement": "both"
+},
+{
+"name": "Tölgyliget Kft.",
+"kind": "company",
+"case": "INE",
+"form": "Tölgyliget Kft.-ben",
+"agreement": "both"
+},
+{
+"name": "Tölgyliget Kft.",
+"kind": "company",
+"case": "ILL",
+"form": "Tölgyliget Kft.-be",
+"agreement": "both"
+},
+{
+"name": "Tölgyliget Kft.",
+"kind": "company",
+"case": "ELA",
+"form": "Tölgyliget Kft.-ből",
+"agreement": "both"
+},
+{
+"name": "Tölgyliget Kft.",
+"kind": "company",
+"case": "SUP",
+"form": "Tölgyliget Kft.-n",
+"agreement": "both"
+},
+{
+"name": "Tölgyliget Kft.",
+"kind": "company",
+"case": "DEL",
+"form": "Tölgyliget Kft.-ről",
+"agreement": "both"
+},
+{
+"name": "Tölgyliget Kft.",
+"kind": "company",
+"case": "ABL",
+"form": "Tölgyliget Kft.-től",
+"agreement": "both"
+},
+{
+"name": "Tölgyliget Kft.",
+"kind": "company",
+"case": "ALL",
+"form": "Tölgyliget Kft.-hez",
+"agreement": "both"
+},
+{
+"name": "Tölgyliget Kft.",
+"kind": "company",
+"case": "ADE",
+"form": "Tölgyliget Kft.-nél",
+"agreement": "both"
+},
+{
+"name": "Hársmező Kft.",
+"kind": "company",
+"case": "NOM",
+"form": "Hársmező Kft.",
+"agreement": "both"
+},
+{
+"name": "Hársmező Kft.",
+"kind": "company",
+"case": "ACC",
+"form": "Hársmező Kft.-t",
+"agreement": "both"
+},
+{
+"name": "Hársmező Kft.",
+"kind": "company",
+"case": "DAT",
+"form": "Hársmező Kft.-nek",
+"agreement": "both"
+},
+{
+"name": "Hársmező Kft.",
+"kind": "company",
+"case": "INS",
+"form": "Hársmező Kft.-vel",
+"agreement": "both"
+},
+{
+"name": "Hársmező Kft.",
+"kind": "company",
+"case": "INE",
+"form": "Hársmező Kft.-ben",
+"agreement": "both"
+},
+{
+"name": "Hársmező Kft.",
+"kind": "company",
+"case": "ILL",
+"form": "Hársmező Kft.-be",
+"agreement": "both"
+},
+{
+"name": "Hársmező Kft.",
+"kind": "company",
+"case": "ELA",
+"form": "Hársmező Kft.-ből",
+"agreement": "both"
+},
+{
+"name": "Hársmező Kft.",
+"kind": "company",
+"case": "SUP",
+"form": "Hársmező Kft.-n",
+"agreement": "both"
+},
+{
+"name": "Hársmező Kft.",
+"kind": "company",
+"case": "DEL",
+"form": "Hársmező Kft.-ről",
+"agreement": "both"
+},
+{
+"name": "Hársmező Kft.",
+"kind": "company",
+"case": "ABL",
+"form": "Hársmező Kft.-től",
+"agreement": "both"
+},
+{
+"name": "Hársmező Kft.",
+"kind": "company",
+"case": "ALL",
+"form": "Hársmező Kft.-hez",
+"agreement": "both"
+},
+{
+"name": "Hársmező Kft.",
+"kind": "company",
+"case": "ADE",
+"form": "Hársmező Kft.-nél",
+"agreement": "both"
+},
+{
+"name": "Fenyőpart Kft.",
+"kind": "company",
+"case": "NOM",
+"form": "Fenyőpart Kft.",
+"agreement": "both"
+},
+{
+"name": "Fenyőpart Kft.",
+"kind": "company",
+"case": "ACC",
+"form": "Fenyőpart Kft.-t",
+"agreement": "both"
+},
+{
+"name": "Fenyőpart Kft.",
+"kind": "company",
+"case": "DAT",
+"form": "Fenyőpart Kft.-nek",
+"agreement": "both"
+},
+{
+"name": "Fenyőpart Kft.",
+"kind": "company",
+"case": "INS",
+"form": "Fenyőpart Kft.-vel",
+"agreement": "both"
+},
+{
+"name": "Fenyőpart Kft.",
+"kind": "company",
+"case": "INE",
+"form": "Fenyőpart Kft.-ben",
+"agreement": "both"
+},
+{
+"name": "Fenyőpart Kft.",
+"kind": "company",
+"case": "ILL",
+"form": "Fenyőpart Kft.-be",
+"agreement": "both"
+},
+{
+"name": "Fenyőpart Kft.",
+"kind": "company",
+"case": "ELA",
+"form": "Fenyőpart Kft.-ből",
+"agreement": "both"
+},
+{
+"name": "Fenyőpart Kft.",
+"kind": "company",
+"case": "SUP",
+"form": "Fenyőpart Kft.-n",
+"agreement": "both"
+},
+{
+"name": "Fenyőpart Kft.",
+"kind": "company",
+"case": "DEL",
+"form": "Fenyőpart Kft.-ről",
+"agreement": "both"
+},
+{
+"name": "Fenyőpart Kft.",
+"kind": "company",
+"case": "ABL",
+"form": "Fenyőpart Kft.-től",
+"agreement": "both"
+},
+{
+"name": "Fenyőpart Kft.",
+"kind": "company",
+"case": "ALL",
+"form": "Fenyőpart Kft.-hez",
+"agreement": "both"
+},
+{
+"name": "Fenyőpart Kft.",
+"kind": "company",
+"case": "ADE",
+"form": "Fenyőpart Kft.-nél",
+"agreement": "both"
+},
+{
+"name": "Gyöngyház Kft.",
+"kind": "company",
+"case": "NOM",
+"form": "Gyöngyház Kft.",
+"agreement": "both"
+},
+{
+"name": "Gyöngyház Kft.",
+"kind": "company",
+"case": "ACC",
+"form": "Gyöngyház Kft.-t",
+"agreement": "both"
+},
+{
+"name": "Gyöngyház Kft.",
+"kind": "company",
+"case": "DAT",
+"form": "Gyöngyház Kft.-nek",
+"agreement": "both"
+},
+{
+"name": "Gyöngyház Kft.",
+"kind": "company",
+"case": "INS",
+"form": "Gyöngyház Kft.-vel",
+"agreement": "both"
+},
+{
+"name": "Gyöngyház Kft.",
+"kind": "company",
+"case": "INE",
+"form": "Gyöngyház Kft.-ben",
+"agreement": "both"
+},
+{
+"name": "Gyöngyház Kft.",
+"kind": "company",
+"case": "ILL",
+"form": "Gyöngyház Kft.-be",
+"agreement": "both"
+},
+{
+"name": "Gyöngyház Kft.",
+"kind": "company",
+"case": "ELA",
+"form": "Gyöngyház Kft.-ből",
+"agreement": "both"
+},
+{
+"name": "Gyöngyház Kft.",
+"kind": "company",
+"case": "SUP",
+"form": "Gyöngyház Kft.-n",
+"agreement": "both"
+},
+{
+"name": "Gyöngyház Kft.",
+"kind": "company",
+"case": "DEL",
+"form": "Gyöngyház Kft.-ről",
+"agreement": "both"
+},
+{
+"name": "Gyöngyház Kft.",
+"kind": "company",
+"case": "ABL",
+"form": "Gyöngyház Kft.-től",
+"agreement": "both"
+},
+{
+"name": "Gyöngyház Kft.",
+"kind": "company",
+"case": "ALL",
+"form": "Gyöngyház Kft.-hez",
+"agreement": "both"
+},
+{
+"name": "Gyöngyház Kft.",
+"kind": "company",
+"case": "ADE",
+"form": "Gyöngyház Kft.-nél",
+"agreement": "both"
+},
+{
+"name": "Vadgesztenye Kft.",
+"kind": "company",
+"case": "NOM",
+"form": "Vadgesztenye Kft.",
+"agreement": "both"
+},
+{
+"name": "Vadgesztenye Kft.",
+"kind": "company",
+"case": "ACC",
+"form": "Vadgesztenye Kft.-t",
+"agreement": "both"
+},
+{
+"name": "Vadgesztenye Kft.",
+"kind": "company",
+"case": "DAT",
+"form": "Vadgesztenye Kft.-nek",
+"agreement": "both"
+},
+{
+"name": "Vadgesztenye Kft.",
+"kind": "company",
+"case": "INS",
+"form": "Vadgesztenye Kft.-vel",
+"agreement": "both"
+},
+{
+"name": "Vadgesztenye Kft.",
+"kind": "company",
+"case": "INE",
+"form": "Vadgesztenye Kft.-ben",
+"agreement": "both"
+},
+{
+"name": "Vadgesztenye Kft.",
+"kind": "company",
+"case": "ILL",
+"form": "Vadgesztenye Kft.-be",
+"agreement": "both"
+},
+{
+"name": "Vadgesztenye Kft.",
+"kind": "company",
+"case": "ELA",
+"form": "Vadgesztenye Kft.-ből",
+"agreement": "both"
+},
+{
+"name": "Vadgesztenye Kft.",
+"kind": "company",
+"case": "SUP",
+"form": "Vadgesztenye Kft.-n",
+"agreement": "both"
+},
+{
+"name": "Vadgesztenye Kft.",
+"kind": "company",
+"case": "DEL",
+"form": "Vadgesztenye Kft.-ről",
+"agreement": "both"
+},
+{
+"name": "Vadgesztenye Kft.",
+"kind": "company",
+"case": "ABL",
+"form": "Vadgesztenye Kft.-től",
+"agreement": "both"
+},
+{
+"name": "Vadgesztenye Kft.",
+"kind": "company",
+"case": "ALL",
+"form": "Vadgesztenye Kft.-hez",
+"agreement": "both"
+},
+{
+"name": "Vadgesztenye Kft.",
+"kind": "company",
+"case": "ADE",
+"form": "Vadgesztenye Kft.-nél",
+"agreement": "both"
+},
+{
+"name": "Szélmalom Kft.",
+"kind": "company",
+"case": "NOM",
+"form": "Szélmalom Kft.",
+"agreement": "both"
+},
+{
+"name": "Szélmalom Kft.",
+"kind": "company",
+"case": "ACC",
+"form": "Szélmalom Kft.-t",
+"agreement": "both"
+},
+{
+"name": "Szélmalom Kft.",
+"kind": "company",
+"case": "DAT",
+"form": "Szélmalom Kft.-nek",
+"agreement": "both"
+},
+{
+"name": "Szélmalom Kft.",
+"kind": "company",
+"case": "INS",
+"form": "Szélmalom Kft.-vel",
+"agreement": "both"
+},
+{
+"name": "Szélmalom Kft.",
+"kind": "company",
+"case": "INE",
+"form": "Szélmalom Kft.-ben",
+"agreement": "both"
+},
+{
+"name": "Szélmalom Kft.",
+"kind": "company",
+"case": "ILL",
+"form": "Szélmalom Kft.-be",
+"agreement": "both"
+},
+{
+"name": "Szélmalom Kft.",
+"kind": "company",
+"case": "ELA",
+"form": "Szélmalom Kft.-ből",
+"agreement": "both"
+},
+{
+"name": "Szélmalom Kft.",
+"kind": "company",
+"case": "SUP",
+"form": "Szélmalom Kft.-n",
+"agreement": "both"
+},
+{
+"name": "Szélmalom Kft.",
+"kind": "company",
+"case": "DEL",
+"form": "Szélmalom Kft.-ről",
+"agreement": "both"
+},
+{
+"name": "Szélmalom Kft.",
+"kind": "company",
+"case": "ABL",
+"form": "Szélmalom Kft.-től",
+"agreement": "both"
+},
+{
+"name": "Szélmalom Kft.",
+"kind": "company",
+"case": "ALL",
+"form": "Szélmalom Kft.-hez",
+"agreement": "both"
+},
+{
+"name": "Szélmalom Kft.",
+"kind": "company",
+"case": "ADE",
+"form": "Szélmalom Kft.-nél",
+"agreement": "both"
+},
+{
+"name": "Kőhíd Kft.",
+"kind": "company",
+"case": "NOM",
+"form": "Kőhíd Kft.",
+"agreement": "both"
+},
+{
+"name": "Kőhíd Kft.",
+"kind": "company",
+"case": "ACC",
+"form": "Kőhíd Kft.-t",
+"agreement": "both"
+},
+{
+"name": "Kőhíd Kft.",
+"kind": "company",
+"case": "DAT",
+"form": "Kőhíd Kft.-nek",
+"agreement": "both"
+},
+{
+"name": "Kőhíd Kft.",
+"kind": "company",
+"case": "INS",
+"form": "Kőhíd Kft.-vel",
+"agreement": "both"
+},
+{
+"name": "Kőhíd Kft.",
+"kind": "company",
+"case": "INE",
+"form": "Kőhíd Kft.-ben",
+"agreement": "both"
+},
+{
+"name": "Kőhíd Kft.",
+"kind": "company",
+"case": "ILL",
+"form": "Kőhíd Kft.-be",
+"agreement": "both"
+},
+{
+"name": "Kőhíd Kft.",
+"kind": "company",
+"case": "ELA",
+"form": "Kőhíd Kft.-ből",
+"agreement": "both"
+},
+{
+"name": "Kőhíd Kft.",
+"kind": "company",
+"case": "SUP",
+"form": "Kőhíd Kft.-n",
+"agreement": "both"
+},
+{
+"name": "Kőhíd Kft.",
+"kind": "company",
+"case": "DEL",
+"form": "Kőhíd Kft.-ről",
+"agreement": "both"
+},
+{
+"name": "Kőhíd Kft.",
+"kind": "company",
+"case": "ABL",
+"form": "Kőhíd Kft.-től",
+"agreement": "both"
+},
+{
+"name": "Kőhíd Kft.",
+"kind": "company",
+"case": "ALL",
+"form": "Kőhíd Kft.-hez",
+"agreement": "both"
+},
+{
+"name": "Kőhíd Kft.",
+"kind": "company",
+"case": "ADE",
+"form": "Kőhíd Kft.-nél",
+"agreement": "both"
+},
+{
+"name": "Ködvár Kft.",
+"kind": "company",
+"case": "NOM",
+"form": "Ködvár Kft.",
+"agreement": "both"
+},
+{
+"name": "Ködvár Kft.",
+"kind": "company",
+"case": "ACC",
+"form": "Ködvár Kft.-t",
+"agreement": "both"
+},
+{
+"name": "Ködvár Kft.",
+"kind": "company",
+"case": "DAT",
+"form": "Ködvár Kft.-nek",
+"agreement": "both"
+},
+{
+"name": "Ködvár Kft.",
+"kind": "company",
+"case": "INS",
+"form": "Ködvár Kft.-vel",
+"agreement": "both"
+},
+{
+"name": "Ködvár Kft.",
+"kind": "company",
+"case": "INE",
+"form": "Ködvár Kft.-ben",
+"agreement": "both"
+},
+{
+"name": "Ködvár Kft.",
+"kind": "company",
+"case": "ILL",
+"form": "Ködvár Kft.-be",
+"agreement": "both"
+},
+{
+"name": "Ködvár Kft.",
+"kind": "company",
+"case": "ELA",
+"form": "Ködvár Kft.-ből",
+"agreement": "both"
+},
+{
+"name": "Ködvár Kft.",
+"kind": "company",
+"case": "SUP",
+"form": "Ködvár Kft.-n",
+"agreement": "both"
+},
+{
+"name": "Ködvár Kft.",
+"kind": "company",
+"case": "DEL",
+"form": "Ködvár Kft.-ről",
+"agreement": "both"
+},
+{
+"name": "Ködvár Kft.",
+"kind": "company",
+"case": "ABL",
+"form": "Ködvár Kft.-től",
+"agreement": "both"
+},
+{
+"name": "Ködvár Kft.",
+"kind": "company",
+"case": "ALL",
+"form": "Ködvár Kft.-hez",
+"agreement": "both"
+},
+{
+"name": "Ködvár Kft.",
+"kind": "company",
+"case": "ADE",
+"form": "Ködvár Kft.-nél",
+"agreement": "both"
+},
+{
+"name": "Sasfészek Kft.",
+"kind": "company",
+"case": "NOM",
+"form": "Sasfészek Kft.",
+"agreement": "both"
+},
+{
+"name": "Sasfészek Kft.",
+"kind": "company",
+"case": "ACC",
+"form": "Sasfészek Kft.-t",
+"agreement": "both"
+},
+{
+"name": "Sasfészek Kft.",
+"kind": "company",
+"case": "DAT",
+"form": "Sasfészek Kft.-nek",
+"agreement": "both"
+},
+{
+"name": "Sasfészek Kft.",
+"kind": "company",
+"case": "INS",
+"form": "Sasfészek Kft.-vel",
+"agreement": "both"
+},
+{
+"name": "Sasfészek Kft.",
+"kind": "company",
+"case": "INE",
+"form": "Sasfészek Kft.-ben",
+"agreement": "both"
+},
+{
+"name": "Sasfészek Kft.",
+"kind": "company",
+"case": "ILL",
+"form": "Sasfészek Kft.-be",
+"agreement": "both"
+},
+{
+"name": "Sasfészek Kft.",
+"kind": "company",
+"case": "ELA",
+"form": "Sasfészek Kft.-ből",
+"agreement": "both"
+},
+{
+"name": "Sasfészek Kft.",
+"kind": "company",
+"case": "SUP",
+"form": "Sasfészek Kft.-n",
+"agreement": "both"
+},
+{
+"name": "Sasfészek Kft.",
+"kind": "company",
+"case": "DEL",
+"form": "Sasfészek Kft.-ről",
+"agreement": "both"
+},
+{
+"name": "Sasfészek Kft.",
+"kind": "company",
+"case": "ABL",
+"form": "Sasfészek Kft.-től",
+"agreement": "both"
+},
+{
+"name": "Sasfészek Kft.",
+"kind": "company",
+"case": "ALL",
+"form": "Sasfészek Kft.-hez",
+"agreement": "both"
+},
+{
+"name": "Sasfészek Kft.",
+"kind": "company",
+"case": "ADE",
+"form": "Sasfészek Kft.-nél",
+"agreement": "both"
+},
+{
+"name": "Diófás Kft.",
+"kind": "company",
+"case": "NOM",
+"form": "Diófás Kft.",
+"agreement": "both"
+},
+{
+"name": "Diófás Kft.",
+"kind": "company",
+"case": "ACC",
+"form": "Diófás Kft.-t",
+"agreement": "both"
+},
+{
+"name": "Diófás Kft.",
+"kind": "company",
+"case": "DAT",
+"form": "Diófás Kft.-nek",
+"agreement": "both"
+},
+{
+"name": "Diófás Kft.",
+"kind": "company",
+"case": "INS",
+"form": "Diófás Kft.-vel",
+"agreement": "both"
+},
+{
+"name": "Diófás Kft.",
+"kind": "company",
+"case": "INE",
+"form": "Diófás Kft.-ben",
+"agreement": "both"
+},
+{
+"name": "Diófás Kft.",
+"kind": "company",
+"case": "ILL",
+"form": "Diófás Kft.-be",
+"agreement": "both"
+},
+{
+"name": "Diófás Kft.",
+"kind": "company",
+"case": "ELA",
+"form": "Diófás Kft.-ből",
+"agreement": "both"
+},
+{
+"name": "Diófás Kft.",
+"kind": "company",
+"case": "SUP",
+"form": "Diófás Kft.-n",
+"agreement": "both"
+},
+{
+"name": "Diófás Kft.",
+"kind": "company",
+"case": "DEL",
+"form": "Diófás Kft.-ről",
+"agreement": "both"
+},
+{
+"name": "Diófás Kft.",
+"kind": "company",
+"case": "ABL",
+"form": "Diófás Kft.-től",
+"agreement": "both"
+},
+{
+"name": "Diófás Kft.",
+"kind": "company",
+"case": "ALL",
+"form": "Diófás Kft.-hez",
+"agreement": "both"
+},
+{
+"name": "Diófás Kft.",
+"kind": "company",
+"case": "ADE",
+"form": "Diófás Kft.-nél",
+"agreement": "both"
+},
+{
+"name": "Mandulavirág Kft.",
+"kind": "company",
+"case": "NOM",
+"form": "Mandulavirág Kft.",
+"agreement": "both"
+},
+{
+"name": "Mandulavirág Kft.",
+"kind": "company",
+"case": "ACC",
+"form": "Mandulavirág Kft.-t",
+"agreement": "both"
+},
+{
+"name": "Mandulavirág Kft.",
+"kind": "company",
+"case": "DAT",
+"form": "Mandulavirág Kft.-nek",
+"agreement": "both"
+},
+{
+"name": "Mandulavirág Kft.",
+"kind": "company",
+"case": "INS",
+"form": "Mandulavirág Kft.-vel",
+"agreement": "both"
+},
+{
+"name": "Mandulavirág Kft.",
+"kind": "company",
+"case": "INE",
+"form": "Mandulavirág Kft.-ben",
+"agreement": "both"
+},
+{
+"name": "Mandulavirág Kft.",
+"kind": "company",
+"case": "ILL",
+"form": "Mandulavirág Kft.-be",
+"agreement": "both"
+},
+{
+"name": "Mandulavirág Kft.",
+"kind": "company",
+"case": "ELA",
+"form": "Mandulavirág Kft.-ből",
+"agreement": "both"
+},
+{
+"name": "Mandulavirág Kft.",
+"kind": "company",
+"case": "SUP",
+"form": "Mandulavirág Kft.-n",
+"agreement": "both"
+},
+{
+"name": "Mandulavirág Kft.",
+"kind": "company",
+"case": "DEL",
+"form": "Mandulavirág Kft.-ről",
+"agreement": "both"
+},
+{
+"name": "Mandulavirág Kft.",
+"kind": "company",
+"case": "ABL",
+"form": "Mandulavirág Kft.-től",
+"agreement": "both"
+},
+{
+"name": "Mandulavirág Kft.",
+"kind": "company",
+"case": "ALL",
+"form": "Mandulavirág Kft.-hez",
+"agreement": "both"
+},
+{
+"name": "Mandulavirág Kft.",
+"kind": "company",
+"case": "ADE",
+"form": "Mandulavirág Kft.-nél",
+"agreement": "both"
+}
+]
+}
