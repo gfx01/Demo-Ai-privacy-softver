@@ -45,6 +45,16 @@ model_list:
     litellm_params:
       model: privacyhub-canary/canary
 
+  # --- self-hosted model (docker compose --profile local-llm) ---------------
+  # llama.cpp server on the internal "providers" network; the model file is
+  # chosen in .env (LOCAL_LLM_GGUF). Add "local-llm" to PROVIDER_MODELS to
+  # offer it to users. Masking stays on for this model too.
+  - model_name: local-llm
+    litellm_params:
+      model: openai/local-llm
+      api_base: http://local-llm:8080/v1
+      api_key: os.environ/LOCAL_LLM_API_KEY
+
   # --- real providers: active only when the API key env var is set ---------
   # Wildcards avoid hard-coding model ids, which change often; request e.g.
   # "anthropic/<model-id>" with an id from the provider's documentation.

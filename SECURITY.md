@@ -13,6 +13,11 @@ This is an MVP / demo. Read this before using it with real data.
   `title` texts of tool definitions and JSON-schema response formats. The
   `user` field and `metadata.user_id` are replaced by an HMAC pseudonym;
   participant `name` fields of user/assistant/system messages are dropped.
+* Images and files attached inline (`image_url` data URLs, `file` parts with
+  `file_data`) are first sent to the internal OCR service and replaced by
+  their text, which is then masked; the provider never receives the image or
+  file. Files uploaded in Open WebUI go through the same OCR service and
+  reach the gateway as message text.
 * **Sent unmasked**: anything detection misses (see Known limits), `stop`
   sequences, tool/function and schema names, enum and default values,
   parameter names, and parameters an admin allows through
@@ -22,15 +27,18 @@ This is an MVP / demo. Read this before using it with real data.
   `PRIVACY_HUB_MAPPING_TTL_S` (default 300 s) and deleted after the response
   has been restored.
 * It fails closed: if detection, the settings database or the audit log is
-  unavailable, or the request contains content it cannot inspect (images,
-  audio, files, non-chat endpoints, unknown message fields, unknown request
-  parameters whose value is text, a list or an object), the request is
-  blocked. If the mapping store (Redis) is unavailable, every request in which
-  something was detected is blocked; a request with nothing to mask does not
+  unavailable, or the request contains content it cannot inspect (audio,
+  remote image URLs, provider file ids, non-chat endpoints, unknown message
+  fields, unknown request parameters whose value is text, a list or an
+  object), the request is blocked. A request with an attached image or file
+  is blocked if the OCR service is unavailable, slow or fails. If the
+  mapping store (Redis) is unavailable, every request in which something was
+  detected is blocked; a request with nothing to mask does not
   need Redis and is forwarded. Unknown parameters with a number, boolean or
   null value are let through. Integration tests prove the blocking for a
-  stopped or hanging analyzer, a stopped Redis and a denied audit insert: the
-  client gets an error and the provider receives nothing.
+  stopped or hanging analyzer, a stopped Redis, a denied audit insert and a
+  stopped OCR service (for requests with images): the client gets an error
+  and the provider receives nothing.
 * Text is Unicode-normalised before detection: NFC, and removal of invisible
   characters (all Unicode format characters such as zero-width spaces and
   joiners, soft hyphen, bidi marks and isolates, word joiner, BOM, tag
@@ -95,8 +103,12 @@ This is an MVP / demo. Read this before using it with real data.
    in its spend logs. Plan retention and backups accordingly.
 9. **Untested parts.** No real LLM provider was called while building this
    (no provider API keys were configured); no penetration test, load test or external security review
-   has been done. HuSpaCy and transformer NER backends are wired up but were
-   not runnable in the build environment (see `docs/LIMITATIONS.md`).
+   has been done. HuSpaCy and transformer NER backends, the Surya OCR engine
+   and the llama.cpp local model service are wired up but were not runnable
+   in the build environment (see `docs/LIMITATIONS.md`).
+10. **OCR errors leak.** A name the OCR misreads (missing accents, wrong
+   letters) may not be detected and is then sent in clear text. OCR accuracy
+   on Hungarian scans was not measured.
 
 ## Trust boundaries
 
@@ -113,6 +125,14 @@ This is an MVP / demo. Read this before using it with real data.
   verify. Whoever holds this key can claim any user id. The key is in `.env`,
   in the Open WebUI container and in the one-shot bootstrap job that
   registers it. Prefer per-user keys from the portal.
+* **OCR key** (`OCR_API_KEY`) is shared by Open WebUI and the gateway. The
+  OCR service only returns the text of what it is sent and sits on an
+  internal network without internet access, but it parses untrusted files
+  (PDF via pdfium, images via Pillow, DOCX/XLSX via python-docx and openpyxl
+  with defusedxml). It runs as a non-root user on a read-only file system,
+  refuses ZIP bombs and oversized images, and never hands uploaded bytes to
+  the old image codecs bundled in the Tesseract wheel. It does not log file
+  contents, file names or the user headers Open WebUI sends.
 * **Analyzer token** protects the analyzer, which returns the mapping
   (original values) to the gateway. The portal's preview endpoint never
   requests the mapping.
@@ -135,6 +155,9 @@ This is an MVP / demo. Read this before using it with real data.
 * Generate all secrets with `scripts/init-env.sh`; keep `.env` out of git and
   backups readable only by admins. Rotate `LITELLM_MASTER_KEY`,
   `PRIVACY_HUB_MAPPING_KEY` and `PRIVACY_HUB_PSEUDONYM_KEY` periodically.
+* If no data may leave the server at all, run a local model in local-only
+  mode (`docker-compose.local-only.yml`): the gateway loses internet access
+  and refuses to start with any model outside the internal network.
 * Use strict mode for teams that should not send personal data: it blocks
   any request in which an enabled entity type is detected instead of masking
   it. It is not a guarantee: whatever detection misses still goes out (with

@@ -18,6 +18,9 @@ Design rules (fail closed):
 * Any error while masking (analyzer down/slow/malformed, store or audit
   unavailable, unsupported content) raises -> LiteLLM returns an error and
   never calls the provider.
+* With an OCR service configured, inline images and files are replaced by
+  their extracted text first (``privacy_hub.attachments``) and masked like
+  any other text; an OCR failure blocks the request.
 * The mapping is kept out of the request dict (LiteLLM logs request metadata);
   only a random request id is put there. The mapping itself goes to the
   encrypted, TTL-bound store.
@@ -44,6 +47,7 @@ from litellm.integrations.custom_guardrail import CustomGuardrail
 from litellm.types.guardrails import GuardrailEventHooks
 
 from .analyzer_client import AnalyzerClient, AnalyzerError
+from .attachments import OcrClient, OcrUnavailableError
 from .audit import AuditEvent, AuditSink, AuditUnavailableError, LogAuditSink, PostgresAuditSink
 from .config import Config, FatalConfigError
 from .crypto import MappingCipher
@@ -93,6 +97,11 @@ class PrivacyHubGuardrail(CustomGuardrail):
             else RedisMappingStore(self.cipher, self.cfg.store_url)
         )
         self.analyzer = AnalyzerClient(self.cfg.analyzer_url, self.cfg.analyzer_token, self.cfg.analyzer_timeout_s)
+        self.ocr: OcrClient | None = (
+            OcrClient(self.cfg.ocr_url, self.cfg.ocr_token, self.cfg.ocr_timeout_s, self.cfg.ocr_max_bytes, self.cfg.mapping_ttl_s)
+            if self.cfg.ocr_url
+            else None
+        )
         self.db = Database(self.cfg.database_url) if self.cfg.database_url else None
         self.settings = SettingsProvider(self.cfg, self.db)
         self.audit: AuditSink = PostgresAuditSink(self.db) if self.db else LogAuditSink()
@@ -196,11 +205,18 @@ class PrivacyHubGuardrail(CustomGuardrail):
 
         try:
             check_request_params(data, self.cfg.extra_allowed_params)
+            if self.ocr is not None:
+                # images/files -> text parts, masked below like any other text
+                await self.ocr.convert(data.get("messages"), settings.language)
             slots = collect_request_slots(data.get("messages"), self.cfg.allow_non_text_content)
             slots += collect_definition_slots(data)
         except UnsupportedContentError as exc:
             await self._audit(ev("blocked_unsupported_content", settings, error_class="UnsupportedContent"), required=False)
             raise _blocked(400, "privacy_hub_unsupported_content", str(exc))
+        except OcrUnavailableError as exc:
+            log.error("OCR failed, blocking request %s: %s", request_id, exc)
+            await self._audit(ev("blocked_error", settings, error_class="OcrUnavailable"), required=False)
+            raise _blocked(503, "privacy_hub_unavailable", "OCR unavailable; request with attachments blocked (fail closed).")
 
         texts = [s.get() for s in slots]
         try:

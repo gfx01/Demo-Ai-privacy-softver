@@ -60,6 +60,12 @@ class Config:
     canary_model: str
     settings_cache_s: float
     extra_allowed_params: frozenset[str] = frozenset()
+    # Internal OCR service for images/files attached to chat messages
+    # (privacy_hub.attachments); empty = attachments are blocked.
+    ocr_url: str = ""
+    ocr_token: str = field(default="", repr=False)
+    ocr_timeout_s: float = 120.0
+    ocr_max_bytes: int = 20 * 1024 * 1024
 
     @classmethod
     def from_env(cls) -> "Config":
@@ -90,6 +96,10 @@ class Config:
             extra_allowed_params=frozenset(
                 p.strip() for p in os.environ.get("PRIVACY_HUB_EXTRA_ALLOWED_PARAMS", "").split(",") if p.strip()
             ),
+            ocr_url=os.environ.get("PRIVACY_HUB_OCR_URL", "").rstrip("/"),
+            ocr_token=os.environ.get("PRIVACY_HUB_OCR_TOKEN", ""),
+            ocr_timeout_s=_float("PRIVACY_HUB_OCR_TIMEOUT_S", 120.0),
+            ocr_max_bytes=_int("PRIVACY_HUB_OCR_MAX_BYTES", 20 * 1024 * 1024),
         )
         cfg.validate()
         return cfg
@@ -108,6 +118,10 @@ class Config:
             problems.append("PRIVACY_HUB_MAPPING_TTL_S must be between 1 and 3600")
         if not 0.1 <= self.analyzer_timeout_s <= 60:
             problems.append("PRIVACY_HUB_ANALYZER_TIMEOUT_S must be between 0.1 and 60")
+        if self.ocr_url and len(self.ocr_token) < 16:
+            problems.append("PRIVACY_HUB_OCR_URL needs PRIVACY_HUB_OCR_TOKEN (>= 16 chars)")
+        if not 1 <= self.ocr_timeout_s <= 600:
+            problems.append("PRIVACY_HUB_OCR_TIMEOUT_S must be between 1 and 600")
         if self.audit_required and not self.database_url:
             problems.append("PRIVACY_HUB_AUDIT_REQUIRED=true needs PRIVACY_HUB_DATABASE_URL")
         if problems:

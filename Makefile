@@ -4,8 +4,9 @@
 
 GATEWAY_VENV := .venv-gateway
 ANALYZER_VENV := .venv-analyzer
+OCR_VENV := .venv-ocr
 
-.PHONY: env up down logs ps venvs test test-unit test-analyzer test-integration eval report nerkor clean
+.PHONY: env up down logs ps venvs test test-unit test-analyzer test-ocr test-integration eval report nerkor clean
 
 env:
 	./scripts/init-env.sh
@@ -24,7 +25,7 @@ ps:
 
 $(GATEWAY_VENV):
 	uv venv $(GATEWAY_VENV) -p 3.12
-	uv pip install -p $(GATEWAY_VENV) "litellm[proxy]==1.105.1" "psycopg[binary]" pytest pytest-asyncio httpx pyyaml
+	uv pip install -p $(GATEWAY_VENV) "litellm[proxy]==1.105.1" "psycopg[binary]" pytest pytest-asyncio httpx pyyaml pillow
 
 $(ANALYZER_VENV):
 	uv venv --seed $(ANALYZER_VENV) -p 3.12  # --seed: install_model.py needs pip
@@ -33,7 +34,12 @@ $(ANALYZER_VENV):
 	  https://github.com/explosion/spacy-models/releases/download/en_core_web_md-3.8.0/en_core_web_md-3.8.0-py3-none-any.whl \
 	  5e6329fe3fecedb1d1a02c3ea2172ee0fede6cea6e4aefb6a02d832dba78a310
 
-venvs: $(GATEWAY_VENV) $(ANALYZER_VENV)
+$(OCR_VENV):
+	uv venv $(OCR_VENV) -p 3.12
+	uv pip install -p $(OCR_VENV) -r services/ocr/requirements.txt pytest httpx
+	$(OCR_VENV)/bin/python services/ocr/fetch_tessdata.py models/tessdata
+
+venvs: $(GATEWAY_VENV) $(ANALYZER_VENV) $(OCR_VENV)
 
 test-unit: $(GATEWAY_VENV)
 	$(GATEWAY_VENV)/bin/python -m pytest tests/unit -q
@@ -41,17 +47,22 @@ test-unit: $(GATEWAY_VENV)
 test-analyzer: $(ANALYZER_VENV)
 	$(ANALYZER_VENV)/bin/python -m pytest tests/analyzer -q
 
+test-ocr: $(OCR_VENV)
+	OCR_TESSDATA_DIR=models/tessdata $(OCR_VENV)/bin/python -m pytest tests/ocr -q
+
 test-integration: $(GATEWAY_VENV)
 	$(GATEWAY_VENV)/bin/python -m pytest tests/integration -q
 
-test: test-unit test-analyzer test-integration
+test: test-unit test-analyzer test-ocr test-integration
 
 # Detection + restoration evaluation, then docs/EVALUATION.md.
 eval: $(ANALYZER_VENV) $(GATEWAY_VENV)
 	python3 eval/build_testset.py dev eval/data/raw/dev_generated_verified.json
 	python3 eval/build_testset.py heldout eval/data/raw/heldout_generated_verified.json
+	python3 eval/build_testset.py heldout2 eval/data/raw/heldout2_generated_verified.json
 	PYTHONPATH=services/analyzer:src PRIVACY_HUB_PSEUDONYM_KEY=eval-only-not-a-secret-key $(ANALYZER_VENV)/bin/python eval/evaluate.py detection --dataset dev
 	PYTHONPATH=services/analyzer:src PRIVACY_HUB_PSEUDONYM_KEY=eval-only-not-a-secret-key $(ANALYZER_VENV)/bin/python eval/evaluate.py detection --dataset heldout
+	PYTHONPATH=services/analyzer:src PRIVACY_HUB_PSEUDONYM_KEY=eval-only-not-a-secret-key $(ANALYZER_VENV)/bin/python eval/evaluate.py detection --dataset heldout2
 	PRIVACY_HUB_PSEUDONYM_KEY=eval-only-not-a-secret-key $(GATEWAY_VENV)/bin/python eval/restore_eval.py --set dev
 	PRIVACY_HUB_PSEUDONYM_KEY=eval-only-not-a-secret-key $(GATEWAY_VENV)/bin/python eval/restore_eval.py --set heldout
 	python3 eval/report.py
@@ -67,4 +78,4 @@ nerkor: $(ANALYZER_VENV)
 	$(ANALYZER_VENV)/bin/python scripts/train_nerkor.py .nerkor-src models/hu_nerkor_cnn
 
 clean:
-	rm -rf $(GATEWAY_VENV) $(ANALYZER_VENV) .pytest_cache .nerkor-src
+	rm -rf $(GATEWAY_VENV) $(ANALYZER_VENV) $(OCR_VENV) .pytest_cache .nerkor-src

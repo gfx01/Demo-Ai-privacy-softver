@@ -22,6 +22,16 @@ Grouped by area; items within an area are not ranked (docs/LIMITATIONS.md shows 
 - [ ] Decide whether public authorities such as *NAV* should be masked: they are labelled ORG in the test sets and count as misses, but their names are not personal data and masking them makes prompts harder to answer.
 - [ ] Confirm with a native-speaker linguist the adjudicated harmony of "Kkt." endings (engine: *Kkt.-val*, per the AkH pronunciation rule; *Kkt.-vel* is common in usage).
 
+## Documents, images and local models
+- [ ] Hungarian OCR evaluation: scanned letters, contracts, invoices, medical reports and phone photos with known text; measure character error rate on ő/ű and how many personal-data items are still masked after OCR, for Tesseract (fast vs best models) and Surya.
+- [ ] Surya: get Datalab's written answer on the competitor clause (2(c)) and a quote for an on-premises/OEM licence; have counsel review the share-alike and attribution clauses on Output. Until then keep Tesseract as the default.
+- [ ] Run the Surya engine end-to-end on a GPU host (surya-vlm profile, pinned weight revision with SHA-256) and the llama.cpp local-llm profile with a real model; neither was run here.
+- [ ] Pick a local LLM with a Hungarian task set (letters, legal and medical summaries, Q&A over documents), human-reviewed; archive the weight licence files with their SHA-256; measure speed on CPU-only and single-GPU servers.
+- [ ] Decide whether a self-hosted model should get unmasked text ("trusted local" mode) or keep masking as defence in depth.
+- [ ] OCR images embedded in PDF pages that also have a text layer; footnotes, comments and text boxes of DOCX; ODT and PPTX.
+- [ ] Rate-limit OCR per user (one slow 50-page scan blocks the service for others; the service processes one document at a time).
+- [ ] Local-only mode: Open WebUI keeps internet access through its published-port network; put a reverse proxy on an internal network in front of it if that matters.
+
 ## Restoration
 - [ ] Measure restore rates with real models (OpenAI, Anthropic, Gemini) on the gold set (`eval/restore_eval.py` uses a simulated model).
 - [ ] Number-suffix harmony for identifiers ("123-mal" vs "123-mel") needs the spoken form of the number.

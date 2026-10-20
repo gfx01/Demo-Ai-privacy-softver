@@ -285,3 +285,92 @@ async def test_streaming_tool_call_arguments_are_restored(env):
     assert json.loads(joined) == {"to": EMAIL, "name": NAME}
     names = [tc.function.name for c in chunks for ch in c.choices for tc in (ch.delta.tool_calls or []) if tc.function.name]
     assert names == ["send_mail"]
+
+
+# -- attachments: OCR before masking ---------------------------------------------
+PNG_URL = "data:image/png;base64," + base64.b64encode(b"\x89PNG fake image bytes").decode()
+PDF_URL = "data:application/pdf;base64," + base64.b64encode(b"%PDF-1.4 fake").decode()
+
+
+def with_ocr(g, handler):
+    from privacy_hub.attachments import OcrClient
+
+    g.ocr = OcrClient("http://ocr:8000", "o" * 32, 2.0, 1_000_000, 300, transport=httpx.MockTransport(handler))
+    return g
+
+
+def image_request(*parts):
+    return {"model": "mock-gpt", "messages": [{"role": "user", "content": [{"type": "text", "text": "Mi áll a képen?"}, *parts]}]}
+
+
+async def test_image_is_ocrd_then_masked(env):
+    calls = []
+
+    def ocr(request: httpx.Request) -> httpx.Response:
+        calls.append((request.headers["content-type"], request.headers["authorization"], request.content))
+        return httpx.Response(200, json={"page_content": f"Levél {NAME} részére, {EMAIL}", "metadata": {}})
+
+    g = with_ocr(make_guardrail(env), ocr)
+    out = await g.async_pre_call_hook(UAK(), None, image_request({"type": "image_url", "image_url": {"url": PNG_URL}}), "acompletion")
+    sent = json.dumps(out["messages"], ensure_ascii=False)
+    assert "image_url" not in sent and "base64" not in sent
+    assert NAME not in sent and EMAIL not in sent
+    assert "[Text of attached image (OCR)]" in sent and "[PERSON_1]" in sent
+    assert calls == [("image/png", "Bearer " + "o" * 32, b"\x89PNG fake image bytes")]
+    # the same image in the next turn comes from the cache
+    await g.async_pre_call_hook(UAK(), None, image_request({"type": "image_url", "image_url": PNG_URL}), "acompletion")
+    assert len(calls) == 1
+
+
+async def test_inline_file_is_extracted_and_its_name_masked(env):
+    def ocr(request: httpx.Request) -> httpx.Response:
+        assert request.headers["x-filename"] == "John%20Smith%20CV.pdf"
+        return httpx.Response(200, json={"page_content": "Tapasztalat: 10 év", "metadata": {}})
+
+    g = with_ocr(make_guardrail(env), ocr)
+    part = {"type": "file", "file": {"file_data": PDF_URL, "filename": f"{NAME} CV.pdf"}}
+    out = await g.async_pre_call_hook(UAK(), None, image_request(part), "acompletion")
+    sent = json.dumps(out["messages"], ensure_ascii=False)
+    assert NAME not in sent and "Tapasztalat: 10 év" in sent and "[PERSON_1] CV.pdf" in sent
+
+
+@pytest.mark.parametrize(
+    "part",
+    [
+        {"type": "image_url", "image_url": {"url": "https://example.com/scan.png"}},
+        {"type": "image_url", "image_url": {"url": "data:image/png;base64,***not base64***"}},
+        {"type": "file", "file": {"file_id": "file-abc123"}},
+    ],
+)
+async def test_attachments_that_cannot_be_inspected_are_refused(env, part):
+    def ocr(request):  # pragma: no cover - must not be called
+        raise AssertionError("OCR must not be called")
+
+    g = with_ocr(make_guardrail(env), ocr)
+    with pytest.raises(HTTPException) as exc:
+        await g.async_pre_call_hook(UAK(), None, image_request(part), "acompletion")
+    assert exc.value.status_code == 400
+
+
+async def test_unreadable_attachment_is_a_client_error(env):
+    g = with_ocr(make_guardrail(env), lambda r: httpx.Response(415, json={"detail": "file type not supported: image/x-foo"}))
+    with pytest.raises(HTTPException) as exc:
+        await g.async_pre_call_hook(UAK(), None, image_request({"type": "image_url", "image_url": {"url": PNG_URL}}), "acompletion")
+    assert exc.value.status_code == 400 and "not supported" in exc.value.detail["message"]
+
+
+@pytest.mark.parametrize("failure", ["down", "500", "malformed"])
+async def test_ocr_failure_blocks_the_request(env, failure):
+    def ocr(request: httpx.Request) -> httpx.Response:
+        if failure == "down":
+            raise httpx.ConnectError("refused", request=request)
+        if failure == "500":
+            return httpx.Response(503, json={"detail": "engine down"})
+        return httpx.Response(200, json={"text": "wrong key"})
+
+    g = with_ocr(make_guardrail(env), ocr)
+    data = image_request({"type": "image_url", "image_url": {"url": PNG_URL}})
+    with pytest.raises(HTTPException) as exc:
+        await g.async_pre_call_hook(UAK(), None, data, "acompletion")
+    assert exc.value.status_code == 503
+    assert g.audit.events[-1].error_class == "OcrUnavailable"

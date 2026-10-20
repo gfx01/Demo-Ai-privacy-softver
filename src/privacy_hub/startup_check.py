@@ -18,6 +18,7 @@ from typing import Any
 
 import yaml
 
+from . import local_only
 from .config import Config, FatalConfigError
 
 GUARDRAIL_CLASS = "privacy_hub.guardrail.PrivacyHubGuardrail"
@@ -72,7 +73,11 @@ def check_config(cfg: dict[str, Any], env: dict[str, str]) -> list[str]:
         if (m.get("litellm_params") or {}).get("guardrails"):
             problems.append(f"model {m.get('model_name')!r} sets its own guardrails; not allowed")
 
-    # 6. secrets present and not demo defaults
+    # 6. local-only mode: no model may call an external provider
+    if local_only.enabled(env):
+        problems.extend(local_only.problems(cfg, env))
+
+    # 7. secrets present and not demo defaults
     master = env.get("LITELLM_MASTER_KEY", "")
     if len(master) < 32 or master in {"sk-1234", "sk-change-me"}:
         problems.append("LITELLM_MASTER_KEY must be set to a random value of >= 32 characters")

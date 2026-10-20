@@ -85,8 +85,8 @@ used alone (*szabóval*, *váradynál*), foreign street addresses (*Linz,
 Landstraße 41*) and amounts written as *150e Ft* are missed too.
 
 Not measured at all: English-language detection quality, very long
-documents, OCR'd text, tables, mixed Hungarian-English text, real chat
-histories.
+documents, OCR'd text (see section 8), tables, mixed Hungarian-English text,
+real chat histories.
 
 ### Identifier check digits
 
@@ -144,8 +144,9 @@ ambiguous formats (e.g. the személyi azonosító) they are required.
 * **No detection of quasi-identifiers or special categories**: diagnoses,
   medication, religion, job titles, rare events, small-town details are sent
   as they are. Not suitable as the only safeguard for health data.
-* **Images, audio and files are blocked**, not inspected. Documents pasted as
-  text are masked like any other text.
+* **Images and files become text before masking** (see section 8): the
+  model receives the masked OCR text, never the image or file. Audio, remote
+  image URLs and provider file ids are blocked, not inspected.
 * **Only chat completions** pass the gateway: nginx forwards only
   `/v1/chat/completions`, `/chat/completions` and the model list to LiteLLM.
   As a second layer the guardrail rejects other call types it sees
@@ -234,3 +235,90 @@ redistributing a built image.
 Foreign cities, Budapest quarters and Hungarian regions come from short
 built-in lists in `hu_places.py`.
 
+## 8. Documents, images and local models
+
+### OCR quality and its effect on masking
+
+* **Hungarian OCR accuracy was not measured** on real scans, photos,
+  handwriting, stamps or forms. Tesseract was only checked on clean images
+  of rendered text (all Hungarian letters read correctly) and on one scanned
+  PDF made from such an image. Datalab's own figure for Surya (90.6% on
+  Hungarian) comes from an unpublished internal benchmark.
+* **An OCR error can defeat masking.** A name read without accents
+  (*Kovacs*), with a wrong letter or split across lines may not be recognised,
+  and is then sent unmasked. The only correction applied is õ/ô → ő and
+  û/ũ → ű (look-alikes some fonts and models produce).
+* Layout is lost: tables become tab-separated lines, columns may be merged,
+  pictures without text yield nothing. The model does not see the image.
+* PDFs: a page that has a text layer is not OCR'd, so text inside images on
+  such a page is neither read nor sent. Limits per document: 50 pages,
+  25 MB, 40 megapixels per image, 180 s (configurable).
+* DOCX: body text, tables, headers and footers are read; footnotes, comments
+  and text boxes are not (and are therefore not sent either). Other formats
+  (DOC, ODT, PPTX, RTF) are refused.
+
+### Where extracted text is kept
+
+* Open WebUI stores uploaded files and their extracted text **unmasked** in
+  its own volume, like the chat history.
+* The gateway keeps OCR results of chat attachments in process memory for at
+  most the mapping TTL (default 300 s, at most 64 attachments), because Open
+  WebUI resends the whole conversation on every turn. The OCR service keeps
+  nothing.
+
+### Surya licence (read before enabling `OCR_ENGINE=surya`)
+
+Checked on 2026-10-20 against the files of surya-ocr 0.22.1:
+
+* The code is Apache-2.0. The model weights use a modified "AI Pubs Open
+  RAIL-M" licence (`MODEL_LICENSE` in the surya repository).
+* Use "for any purpose" is excluded, except personal use or research, if the
+  organisation, counting "your employer, or the entity you are affiliated
+  with", had more than USD 5M gross revenue in the prior year, or has raised
+  more than USD 5M in equity or debt funding (Attachment A 2(a), 2(b)).
+* Use is excluded **regardless of size** if the organisation offers a
+  product or service that competes with Datalab's (2(c)). Whether an
+  on-premises document privacy gateway counts is a legal question we cannot
+  answer.
+* Distributing the weights (including hosting them for others) requires
+  passing the use restrictions on in an enforceable agreement and giving
+  recipients the licence. Attribution and share-alike clauses also refer to
+  the "Output" (the OCR text), which is unusual; have counsel review them.
+* A paid licence is offered by Datalab; its price and whether a vendor may
+  sublicense to customers could not be checked (datalab.to was unreachable).
+* Not run in this repository: PyTorch for the client and the weights could
+  not be downloaded, and no GPU was available. The engine code follows the
+  surya-ocr 0.22.1 source and was tested with a stub of its result objects.
+
+### Tesseract build note
+
+The tesserocr wheel bundles Tesseract 5.5.1 with old image codecs
+(libpng 1.6.34, libtiff 4.0.9, libwebp 1.0.0, which have known
+vulnerabilities). The service never passes uploaded bytes to them: images
+are decoded with Pillow 12.3.0 and PDFs rendered with pdfium (pypdfium2
+5.14.0), and Tesseract only receives raw grayscale pixels.
+
+### Local LLM and local-only mode
+
+* **No local model was run here.** The llama.cpp server image could not be
+  pulled (GHCR blobs were blocked) and no model weights could be downloaded.
+  Its settings were checked against the server README of the pinned build
+  (b11749), not by running it.
+* No model is recommended: no Hungarian benchmark of the newest open models
+  (Gemma 4, Qwen3.5 and later, EuroLLM-22B) was found. Weight licences seen
+  only in secondary sources (Gemma 4, EuroLLM-22B, Qwen3.6/3.8) must be read
+  at the source before shipping. Speed on CPU-only servers is unknown;
+  measure it on the target hardware.
+* Masking stays on for the local model. This protects logs and the model
+  server, but placeholders may make answers worse; a "trusted local" mode
+  without masking is not implemented.
+* Local-only mode was tried once by hand: with docker-compose.local-only.yml
+  the gateway could not reach api.openai.com or pypi.org, the external
+  provider entries were removed, and the mock model worked with masking and
+  restore. The startup check and the config filter are covered by tests.
+  Open WebUI stays on the `frontend` network, which has internet access
+  (Docker cannot publish ports on internal networks); it runs in offline mode
+  and sends model traffic only to the gateway.
+* With `ENABLE_PERSISTENT_CONFIG=false`, Open WebUI settings changed in its
+  admin UI last only until the next restart; the compose file is the source
+  of truth.
