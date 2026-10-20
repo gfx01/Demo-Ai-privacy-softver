@@ -21,6 +21,13 @@ model_list:
     model_info:
       input_cost_per_token: 0.00001
       output_cost_per_token: 0.00002
+  # Anthropic Messages API code path against the mock (test only: not in
+  # any team's model list, so only the master key can call it).
+  - model_name: mock-claude
+    litellm_params:
+      model: anthropic/mock-claude
+      api_base: http://mock-llm:8080
+      api_key: os.environ/MOCK_LLM_API_KEY
   - model_name: mock-error
     litellm_params:
       model: openai/mock-error

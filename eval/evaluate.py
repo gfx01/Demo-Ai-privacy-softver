@@ -10,9 +10,10 @@ Metrics (per entity type and micro-averaged):
 * exact    - same type, same span (ignoring surrounding whitespace and a
              trailing period)
 * overlap  - same type, spans overlap (one-to-one greedy matching)
-* leak     - type-agnostic: a gold entity counts as protected if >= 50% of
-             its characters are covered by ANY predicted span (a name masked
-             as an organisation is still masked). This is the privacy metric.
+* leak     - type-agnostic, by the share of the gold entity's characters
+             covered by ANY predicted span (a name masked as an organisation
+             is still masked): >= 95% protected, 50-95% partially protected,
+             < 50% leaked. This is the privacy metric.
 95% Wilson intervals are reported because the test set is small.
 """
 

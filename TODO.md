@@ -1,24 +1,24 @@
 # TODO: from demo to production
 
-Ordered roughly by risk. Nothing below is done unless stated.
+Grouped by area; items within an area are not ranked (docs/LIMITATIONS.md shows where the measured risk is highest). Nothing below is done unless stated.
 
 ## Identity, access, tenancy
 - [ ] SSO for the portal and chat (OIDC: Entra ID / Google Workspace / Keycloak). Config keys are reserved in `services/portal/portal/auth.py`; the login flow is not implemented.
 - [ ] Map SSO users to LiteLLM users/keys automatically (no manual key hand-out); per-user keys for Open WebUI users instead of one shared key + forwarded user header.
-- [ ] Multi-tenant admin: organisation-scoped admins (currently one platform admin sees all organisations), tenant isolation tests, per-tenant encryption keys.
+- [ ] Multi-tenant admin: organisation-scoped admins (currently one platform admin sees all organisations), per-tenant encryption keys. Cross-organisation isolation is unit-tested only for the encrypted placeholder mapping; there are no isolation tests for the admin portal, audit data or LiteLLM keys/teams.
 - [ ] Row-level security in Postgres for `audit_events` by `organisation_id`.
 - [ ] Retention policy and deletion jobs for audit rows, LiteLLM spend logs and Open WebUI chat history (GDPR storage limitation).
 
 ## Detection quality
 - [ ] Native-speaker review of the synthetic test set and the gold inflection table (both were produced by AI agents and cross-checked by other AI agents, not by humans).
-- [ ] Larger, realistic evaluation set (with consent / properly anonymised real documents) per customer segment: law firms, accountants, clinics.
+- [ ] Larger, realistic evaluation set (with consent / properly anonymised real documents) per customer segment: law firms, accountants, clinics. The current sets are synthetic and small; items are tagged by domain (legal, invoice, clinic, email, misc, hard) but metrics are not yet reported per domain.
 - [ ] Run and benchmark HuSpaCy (`hu_core_news_md/lg/trf`) and a Hungarian transformer NER where Hugging Face is reachable; pick the default backend from measured recall/latency/cost.
 - [ ] Confirm the bank-account (GIRO) and adószám check-digit rules against the official MNB / NAV texts (currently library-documented; see `docs/LIMITATIONS.md`).
 - [ ] Quasi-identifiers and special categories (diagnoses, health data, religion, ethnicity) are not detected.
-- [ ] Lower-case and nickname handling, initials ("K. Péter"), foreign names in Hungarian text.
+- [ ] Nicknames beyond the built-in list in `hu_names.py` (diminutives such as *Bencike*), lower-case names outside greetings, initials ("K. Péter"), foreign names in Hungarian text.
 - [ ] Per-organisation allow/deny lists (e.g. never mask the firm's own name; always mask client list).
 
-- [ ] Lower-case names in chat-style text and foreign surnames with Hungarian endings are the largest remaining leak classes (held-out set); numeric birth dates without a cue word are missed.
+- [ ] Lower-case names in chat-style text are the largest remaining leak class (10 of 25 leaked entities on the held-out set with the recommended setup). Smaller ones: organisations without a legal form or public bodies (5), inflected place names (3), birth dates (3; numeric dates without a cue word), foreign surnames with endings (2), -né/-ék forms (2). With the default configuration, place names (34 leaked) and organisations (22) dominate.
 - [ ] Confirm with a native-speaker linguist the adjudicated harmony of "Kkt." endings (engine: *Kkt.-val*, per the AkH pronunciation rule; *Kkt.-vel* is common in usage).
 
 ## Restoration
@@ -26,6 +26,7 @@ Ordered roughly by risk. Nothing below is done unless stated.
 - [ ] Number-suffix harmony for identifiers ("123-mal" vs "123-mel") needs the spoken form of the number.
 
 - [ ] Rate limiting per user/key (nginx limits per client IP; all Open WebUI users share one IP).
+- [ ] Decide what to do with client `metadata` keys that LiteLLM stores (`tags`, `spend_logs_metadata`, `session_id`): strip, mask or reject them in the guardrail.
 
 ## Operations
 - [ ] Backups: Postgres (LiteLLM keys/budgets, audit log) with tested restore; document RPO/RTO.

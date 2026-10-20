@@ -124,11 +124,13 @@ async def test_mask_then_restore_roundtrip(env):
     g = make_guardrail(env)
     data = request()
     data["metadata"][REQUEST_ID_KEY] = "attacker-chosen-id"
+    data["metadata"]["user_id"] = "Kovacs Peter"  # LiteLLM forwards this to Anthropic
     out = await g.async_pre_call_hook(UAK(), None, data, "acompletion")
     sent = json.dumps(out["messages"])
     assert NAME not in sent and EMAIL not in sent
     assert "[PERSON_1]" in sent and "[EMAIL_1]" in sent
     assert out["user"].startswith("u_") and "alice" not in out["user"]
+    assert out["metadata"]["user_id"].startswith("u_") and "Kovacs" not in out["metadata"]["user_id"]
     request_id = out["metadata"][REQUEST_ID_KEY]
     assert request_id != "attacker-chosen-id"
     # the store holds ciphertext only

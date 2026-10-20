@@ -6,8 +6,9 @@ placeholders **before it leaves the company** and restored in the answer,
 with correct Hungarian endings (*[PERSON_1]-nek* → *Kovács Péternek*).
 
 > **Demo, not production.** With the recommended setup, about 1 in 12
-> personal-data items in our synthetic Hungarian test texts still got through
-> unmasked; with the 10-minute default setup, about 1 in 4. Masking is
+> personal-data items in our synthetic Hungarian test texts were not fully
+> masked (about 1 in 26 stayed mostly in clear text); with the 10-minute
+> default setup, about 1 in 4 (1 in 7 mostly in clear text). Masking is
 > pseudonymisation, not anonymisation. Read [docs/LIMITATIONS.md](docs/LIMITATIONS.md)
 > and [SECURITY.md](SECURITY.md) before using real data.
 
@@ -22,15 +23,17 @@ with correct Hungarian endings (*[PERSON_1]-nek* → *Kovács Péternek*).
 
 Egy saját szerveren futtatható átjáró ügyvédi irodáknak, könyvelőknek,
 rendelőknek, kkv-knak. A munkatársak egy felületen (Open WebUI vagy a beépített
-chat) érik el a nagy nyelvi modelleket. Minden kérésből a gateway kiszűri a
-személyes adatokat (nevek, e-mail, telefonszám, TAJ, adóazonosító, adószám,
-bankszámlaszám, IBAN, cégjegyzékszám, személyi igazolvány, cím, rendszám,
-összegek, cégnevek), helyőrzőre vagy álnévre cseréli, és csak ezt küldi tovább
-a szolgáltatónak. A válaszban visszaírja az eredeti adatokat, magyar
+chat) érik el a nagy nyelvi modelleket. Minden kérés átmegy a gateway kötelező
+szűrőjén: a felismert személyes adatokat (nevek, e-mail, telefonszám, TAJ,
+adóazonosító, adószám, bankszámlaszám, IBAN, cégjegyzékszám, személyi
+igazolvány, cím, rendszám, összegek, cégnevek) helyőrzőre vagy álnévre
+cseréli, és csak ezt küldi tovább a szolgáltatónak. A felismerés nem teljes
+(lásd lent és a [korlátokat](docs/LIMITATIONS.md)). A válaszban visszaírja az eredeti adatokat, magyar
 toldalékkal együtt.
 
-* **Fail closed:** ha a felismerés, a titkosított tár vagy a napló nem
-  elérhető, a kérés nem megy ki.
+* **Fail closed:** ha a felismerés vagy a napló nem elérhető, a kérés nem
+  megy ki; ha a titkosított tár (Redis) nem elérhető, akkor nem megy ki,
+  ha volt benne maszkolandó adat.
 * **Napló:** ki, mikor, melyik modellt, hány és milyen típusú adatot – a
   szöveg és a helyőrző-tábla soha nem kerül a naplóba.
 * **Keretek:** felhasználói és szervezeti költségkeret (LiteLLM).
@@ -45,7 +48,7 @@ Kell: Docker Compose v2-vel, `openssl`, kb. 8 GB szabad hely.
 ```sh
 git clone <repo-url> ai-privacy-hub && cd ai-privacy-hub
 ./scripts/init-env.sh            # .env véletlen titkokkal
-docker compose up -d --build     # első indításkor kb. 3,5 GB image letöltés
+docker compose up -d --build     # első indításkor image-letöltés (kicsomagolva kb. 3,5 GB)
 docker compose ps                # várjuk meg, hogy a litellm "healthy" legyen
 ```
 
@@ -72,8 +75,9 @@ A válaszban viszont már *Kovács Péternek* áll.
 
 Az alapbeállítás (`ANALYZER_HU_NER=none`) csak mintákkal és névlistával dolgozik:
 gyors, de a helyneveket egyáltalán nem, a cégneveket és a neveket részben nem
-ismeri fel (76,8% a független teszthalmazon). A NerKor korpuszon tanított kis
-modellel ez 91,9%:
+ismeri fel: a független teszthalmaz adatainak 76,8%-át maszkolja teljesen
+(az első futáson 72,9% volt; az ott talált e-mail-hibát utána javítottuk). A
+NerKor korpuszon tanított kis modellel ez 91,9% (első futás: 88,0%):
 
 ```sh
 make nerkor          # kb. 20 perc 4 vCPU-n; NYTK-NerKor, CC BY-SA 4.0
@@ -104,15 +108,17 @@ adatokhoz önmagában nem elég. Részletek: [docs/LIMITATIONS.md](docs/LIMITATI
 ### What it is
 
 A self-hosted gateway for law firms, accountants, clinics and SMEs. Employees
-use LLMs through Open WebUI or the built-in chat. Every request is checked for
-personal data: names, e-mails, phones, Hungarian IDs (TAJ, adóazonosító,
+use LLMs through Open WebUI or the built-in chat. Every request passes a
+mandatory guardrail that looks for personal data (detection is not complete,
+see below): names, e-mails, phones, Hungarian IDs (TAJ, adóazonosító,
 adószám, bank account, IBAN, cégjegyzékszám, ID card), addresses, licence
 plates, amounts and company names. These are replaced with placeholders or
 pseudonyms, and only the masked text goes to the provider. The answer is
 restored, including Hungarian case endings.
 
-* **Fail closed**: if detection, the encrypted mapping store or the audit log
-  is unavailable, nothing is sent. The startup check refuses unsafe LiteLLM
+* **Fail closed**: if detection or the audit log is unavailable, nothing is
+  sent; if the encrypted mapping store (Redis) is unavailable, every request
+  with something to mask is blocked. The startup check refuses unsafe LiteLLM
   configuration. A canary self-test at startup proves masking works.
 * **Audit log**: who, when, which model, entity counts and types, outcome. It
   never stores prompt text, answers or the mapping.
@@ -128,7 +134,7 @@ Requirements: Docker with Compose v2, `openssl`, ~8 GB free disk.
 ```sh
 git clone <repo-url> ai-privacy-hub && cd ai-privacy-hub
 ./scripts/init-env.sh            # creates .env with random secrets
-docker compose up -d --build     # first run downloads ~3.5 GB of images
+docker compose up -d --build     # first run downloads the images (~3.5 GB unpacked)
 docker compose ps                # wait until litellm is "healthy"
 ```
 
@@ -156,8 +162,9 @@ the answer you get back says *Kovács Péternek* again.
 
 The default (`ANALYZER_HU_NER=none`) uses patterns and a name list only. It is
 fast and precise, but misses all place names and some organisation and person
-names: 76.8% of entities fully masked on the held-out set. A small model
-trained on NYTK-NerKor raises this to 91.9%:
+names: 76.8% of entities fully masked on the held-out set (72.9% on the first
+run, before an e-mail bug that run revealed was fixed). A small model trained
+on NYTK-NerKor raises this to 91.9% (first run: 88.0%):
 
 ```sh
 make nerkor          # ~20 min on 4 vCPU; NYTK-NerKor data, CC BY-SA 4.0
@@ -184,7 +191,7 @@ processing where required, and zero-retention terms.
 Restoration was measured with a simulated model. On held-out names, the
 grammatically exact restore rate was 98.9% (bracket) and 99.6% (pseudonym) on
 the first run. The right value came back 100% of the time. Without suffix
-handling, only 1.5% of mentions get the right ending.
+handling (`bracket_naive`), only 1.6–1.8% of mentions get the right ending.
 See [docs/EVALUATION.md](docs/EVALUATION.md).
 
 ---
@@ -203,7 +210,10 @@ See [docs/EVALUATION.md](docs/EVALUATION.md).
 * `src/privacy_hub/`: guardrail, masking strategies, Hungarian morphology,
   restorer (batch and streaming), encrypted store, audit, startup check, self-test.
 * `services/analyzer/`: Presidio analyzer with Hungarian recognizers
-  (checksum-validated IDs where the rule is documented) and pluggable NER.
+  (check digits enforced where the rule could be confirmed from law, a
+  standard or well-documented libraries: TAJ, adóazonosító jel, adószám, bank
+  account, IBAN; the other IDs are matched by format and context only) and
+  pluggable NER.
 * `services/portal/`: admin pages, preview-before-send chat, bootstrap job.
 * `services/gateway/`: nginx route allowlist (only chat completions and the
   model list reach LiteLLM).
@@ -220,10 +230,10 @@ committed); see [.env.example](.env.example). Important settings:
 
 | variable | default | meaning |
 |---|---|---|
-| `ANALYZER_HU_NER` | `none` | `none`, `spacy:/app/models/hu_nerkor_cnn`, `spacy:xx_ent_wiki_sm`, `spacy:hu_core_news_md` (HuSpaCy build arg, untested), `transformers:<model>` (untested) |
+| `ANALYZER_HU_NER` | `none` | `none`, `spacy:/app/models/hu_nerkor_cnn`, `spacy:xx_ent_wiki_sm`, `spacy:hu_core_news_md` (HuSpaCy build arg, untested), `transformers:<model>` (code hook only: the image has no torch/transformers, so this needs a custom build; untested) |
 | `ANALYZER_LANGUAGES` | `hu,en` | languages loaded by the analyzer |
 | `PRIVACY_HUB_MAPPING_TTL_S` | `300` | lifetime of an encrypted mapping (deleted after the response anyway) |
-| `PRIVACY_HUB_EXTRA_ALLOWED_PARAMS` | empty | extra request parameters to accept (only parameters without free text) |
+| `PRIVACY_HUB_EXTRA_ALLOWED_PARAMS` | empty | comma-separated extra request parameters to let through. By default an unknown parameter whose value is text, a list or an object is rejected (HTTP 400); numbers, booleans and null pass. Listed parameters are **not** inspected or masked, so list only parameters that cannot carry free text |
 | `PROVIDER_MODELS` | empty | provider model wildcards users may call |
 
 Organisation settings (mode, strategy, language, masked types) are edited in
@@ -245,8 +255,10 @@ Redis and all container logs contain no raw test PII.
 
 The test data is synthetic (written and labelled by AI agents, not
 native-speaker humans): 146 development texts and 78 held-out texts in
-Hungarian. See [docs/EVALUATION.md](docs/EVALUATION.md) for all numbers and
-their confidence intervals.
+Hungarian. The held-out texts were written after tuning; fixes prompted by
+their first run are reported separately. See [docs/EVALUATION.md](docs/EVALUATION.md)
+for all numbers; 95% intervals are given for the protection rate and
+per-type recall, the other figures are point estimates.
 
 ## Documents
 

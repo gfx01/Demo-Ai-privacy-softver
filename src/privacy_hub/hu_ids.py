@@ -48,7 +48,7 @@ PROVENANCE: dict[str, Provenance] = {
         "adószám törzsszám (company tax number, first 8 digits)",
         "library_documented",
         "8-1-2 format; törzsszám check digit d8 = (10 − (9·d1+7·d2+3·d3+1·d4+9·d5+7·d6+3·d7) mod 10) mod 10. "
-        "Same as python-stdnum stdnum.hu.anum and NAV Online Számla client-side validation code.",
+        "Same as python-stdnum stdnum.hu.anum and NAV's M2M XML Editor (github.com/nav-gov-hu/m2m-xml-editor, PartnerService.java); NAV's manual for that tool confirms a check-digit test but does not spell out the formula.",
     ),
     "HU_BANK_ACCOUNT": Provenance(
         "pénzforgalmi jelzőszám (bank account number, 2×8 or 3×8 digits)",

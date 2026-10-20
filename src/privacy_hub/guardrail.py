@@ -32,6 +32,7 @@ from __future__ import annotations
 import copy
 import hashlib
 import hmac
+import json
 import logging
 import time
 import uuid
@@ -230,6 +231,13 @@ class PrivacyHubGuardrail(CustomGuardrail):
             slot.set(masked)
         if isinstance(data.get("user"), str) and data["user"]:
             data["user"] = self._pseudonymous_user(data["user"])
+        # LiteLLM 1.105.1 forwards a client-supplied metadata.user_id to
+        # Anthropic (llms/anthropic/chat/transformation.py), taking precedence
+        # over the pseudonymised `user`: pseudonymise it the same way.
+        for holder in (data.get("metadata"), data.get("litellm_metadata")):
+            if isinstance(holder, dict) and holder.get("user_id") not in (None, ""):
+                uid = holder["user_id"]
+                holder["user_id"] = self._pseudonymous_user(uid if isinstance(uid, str) else json.dumps(uid, sort_keys=True))
 
         if len(result.mapping):
             try:

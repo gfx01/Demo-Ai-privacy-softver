@@ -7,6 +7,9 @@ Models (``model`` field):
                 that inflects placeholders
   mock-error    always fails with HTTP 500 (provider-error path)
 
+``POST /v1/messages`` is a minimal, non-streaming Anthropic Messages API
+endpoint (echo) so that LiteLLM's anthropic/* code path can be tested too.
+
 Every received request body is kept in a small in-memory ring buffer so
 integration tests can prove what a provider would have seen
 (``GET /_mock/requests``, bearer token ``MOCK_LLM_INSPECT_TOKEN``). This is a
@@ -114,6 +117,30 @@ async def chat(request: Request):
         yield "data: [DONE]\n\n"
 
     return StreamingResponse(events(), media_type="text/event-stream")
+
+
+@app.post("/v1/messages")
+async def anthropic_messages(request: Request):
+    body = await request.json()
+    RECEIVED.append({"received_at": time.time(), "body": body, "api": "anthropic"})
+    messages = []
+    for m in body.get("messages") or []:
+        content = m.get("content")
+        if isinstance(content, list):
+            content = " ".join(p.get("text", "") for p in content if isinstance(p, dict))
+        messages.append({"role": m.get("role"), "content": content})
+    reply = _reply("mock-echo", messages)
+    usage = _usage(messages, reply)
+    return {
+        "id": f"msg_{uuid.uuid4().hex[:16]}",
+        "type": "message",
+        "role": "assistant",
+        "model": body.get("model", "mock-claude"),
+        "content": [{"type": "text", "text": reply}],
+        "stop_reason": "end_turn",
+        "stop_sequence": None,
+        "usage": {"input_tokens": usage["prompt_tokens"], "output_tokens": usage["completion_tokens"]},
+    }
 
 
 @app.get("/_mock/requests")

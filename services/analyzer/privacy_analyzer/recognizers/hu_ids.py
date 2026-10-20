@@ -30,7 +30,7 @@ class TaxIdRecognizer(HuRegexRecognizer):
 
 class VatNumberRecognizer(HuRegexRecognizer):
     """Adószám (8-1-2) and EU VAT (HU + 8). Törzsszám check digit:
-    library-documented (python-stdnum hu.anum, NAV client code)."""
+    library-documented (python-stdnum hu.anum, NAV M2M XML Editor)."""
 
     ENTITY = "HU_VAT_NUMBER"
     PATTERNS = (

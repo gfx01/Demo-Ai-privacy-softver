@@ -90,3 +90,22 @@ def test_preview_model_returns_masked_text(gateway, user_key, mock_provider):
     assert status == 200
     assert "[PERSON_1]" in text and NAME not in text and EMAIL not in text
     assert mock_provider.received() == []  # preview never reaches a provider
+
+
+def test_anthropic_code_path_masks_and_pseudonymises_metadata_user(gateway, master_key, mock_provider):
+    """LiteLLM forwards metadata.user_id to Anthropic; it must arrive pseudonymised,
+    and the Anthropic request format (separate system prompt) must be masked."""
+    body = {
+        "model": "mock-claude",
+        "messages": [{"role": "system", "content": f"Ügyfél: {NAME}."}, {"role": "user", "content": PROMPT}],
+        "metadata": {"user_id": "kovacs.peter.belso.azonosito"},
+    }
+    r = gateway.post("/v1/chat/completions", json=body, headers={"Authorization": f"Bearer {master_key}"})
+    assert r.status_code == 200, r.text
+    assert NAME in r.json()["choices"][0]["message"]["content"]  # restored
+    received = mock_provider.received()
+    assert len(received) == 1
+    sent = json.dumps(received[0], ensure_ascii=False)
+    for value in (NAME, EMAIL, PHONE, "Kovács", "kovacs.peter.belso"):
+        assert value not in sent, value
+    assert received[0]["metadata"]["user_id"].startswith("u_")
