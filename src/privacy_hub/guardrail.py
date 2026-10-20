@@ -49,7 +49,14 @@ from .crypto import MappingCipher
 from .db import Database
 from .masking import StreamingRestorer, build_restorer
 from .masking.model import Mapping
-from .messages import UnsupportedContentError, collect_request_slots, restore_json_text, restore_message_in_place
+from .messages import (
+    UnsupportedContentError,
+    check_request_params,
+    collect_definition_slots,
+    collect_request_slots,
+    restore_json_text,
+    restore_message_in_place,
+)
 from .org_settings import OrgSettings, SettingsProvider, SettingsUnavailableError
 from .store import InMemoryMappingStore, MappingStore, RedisMappingStore
 
@@ -125,6 +132,26 @@ class PrivacyHubGuardrail(CustomGuardrail):
             if required and self.cfg.audit_required:
                 raise _blocked(503, "privacy_hub_audit_unavailable", "Audit log unavailable; request blocked.")
 
+    # The request id travels in request metadata, which a client can also
+    # write: ids are HMAC-tagged so a forged one never selects a mapping to
+    # load or delete, nor ends up in the audit log.
+    def _new_request_id(self) -> str:
+        rid = uuid.uuid4().hex
+        return f"{rid}.{self._request_id_tag(rid)}"
+
+    def _request_id_tag(self, rid: str) -> str:
+        return hmac.new(self.cfg.mapping_key, b"request-id|" + rid.encode(), hashlib.sha256).hexdigest()[:20]
+
+    def _request_id(self, data: Any) -> str | None:
+        meta = data.get("metadata") if isinstance(data, dict) else None
+        if not isinstance(meta, dict) and isinstance(data, dict):
+            meta = data.get("litellm_metadata")
+        value = meta.get(REQUEST_ID_KEY) if isinstance(meta, dict) else None
+        if not isinstance(value, str) or value.count(".") != 1:
+            return None
+        rid, tag = value.split(".")
+        return value if hmac.compare_digest(tag, self._request_id_tag(rid)) else None
+
     def _pseudonymous_user(self, user: str) -> str:
         digest = hmac.new(self.cfg.mapping_key, user.encode(), hashlib.sha256).hexdigest()[:24]
         return f"u_{digest}"
@@ -132,7 +159,7 @@ class PrivacyHubGuardrail(CustomGuardrail):
     # -- request -----------------------------------------------------------
     async def async_pre_call_hook(self, user_api_key_dict, cache, data: dict, call_type):  # noqa: C901
         started = time.perf_counter()
-        request_id = uuid.uuid4().hex
+        request_id = self._new_request_id()
         org_id = self._org_id(user_api_key_dict)
         model = data.get("model") if isinstance(data, dict) else None
         meta = _meta(data)
@@ -167,7 +194,9 @@ class PrivacyHubGuardrail(CustomGuardrail):
             settings = OrgSettings(org_id, "mask", settings.strategy, settings.language)
 
         try:
+            check_request_params(data, self.cfg.extra_allowed_params)
             slots = collect_request_slots(data.get("messages"), self.cfg.allow_non_text_content)
+            slots += collect_definition_slots(data)
         except UnsupportedContentError as exc:
             await self._audit(ev("blocked_unsupported_content", settings, error_class="UnsupportedContent"), required=False)
             raise _blocked(400, "privacy_hub_unsupported_content", str(exc))
@@ -216,8 +245,7 @@ class PrivacyHubGuardrail(CustomGuardrail):
 
     # -- response (non-streaming) -------------------------------------------
     async def _load_mapping(self, data: dict, uak: Any) -> tuple[str | None, Mapping | None]:
-        meta = data.get("metadata") if isinstance(data.get("metadata"), dict) else data.get("litellm_metadata")
-        request_id = meta.get(REQUEST_ID_KEY) if isinstance(meta, dict) else None
+        request_id = self._request_id(data)
         if not request_id:
             return None, None
         try:
@@ -344,8 +372,7 @@ class PrivacyHubGuardrail(CustomGuardrail):
 
     # -- failures ------------------------------------------------------------
     async def async_post_call_failure_hook(self, request_data, original_exception, user_api_key_dict, traceback_str=None):
-        meta = request_data.get("metadata") if isinstance(request_data, dict) else None
-        request_id = meta.get(REQUEST_ID_KEY) if isinstance(meta, dict) else None
+        request_id = self._request_id(request_data)
         if request_id and not isinstance(original_exception, HTTPException):
             await self._finish(
                 user_api_key_dict,

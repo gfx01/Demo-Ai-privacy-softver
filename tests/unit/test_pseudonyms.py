@@ -99,3 +99,19 @@ def test_bracket_fallback_types_inside_pseudonym_mode():
     (masked,), s = session([(text, [Span("LOCATION", 0, 10), Span("MONEY", 11, 23)])])
     assert "[LOCATION_1]" in masked and "[AMOUNT_1]" in masked
     assert build_restorer(s.mapping).restore(masked) == text
+
+
+def test_middle_names_titles_and_western_order():
+    text = "Kovács Anna Éva, dr. Szabó Péter és Gábor Nagy."
+    spans = [Span("PERSON", text.index(n), text.index(n) + len(n)) for n in ("Kovács Anna Éva", "dr. Szabó Péter", "Gábor Nagy")]
+    (masked,), s = session([(text, spans)])
+    for original in ("Kovács", "Anna", "Éva", "Szabó", "Péter", "Gábor", "Nagy"):
+        assert original not in masked
+    e1, e2, e3 = s.mapping.entries
+    assert [p[1] for p in e1.parts] == ["Kovács", "Anna", "Éva"]
+    assert e1.parts[1][0] in FEMALE and e1.parts[2][0] in FEMALE
+    assert e2.replacement.startswith("dr. ") and [p[1] for p in e2.parts] == ["Szabó", "Péter"]
+    # Western order: the known given name comes first
+    assert e3.parts[0][0] in MALE and e3.parts[1][0] in SURNAMES
+    out = build_restorer(s.mapping).restore(f"{inflect(e1.replacement, 'DAT')} és {e3.replacement}")
+    assert out == f"{inflect('Kovács Anna Éva', 'DAT')} és Gábor Nagy"

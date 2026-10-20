@@ -96,3 +96,13 @@ def test_mask_hungarian_bracket(engine):
     res = engine.mask(["Beszéltem Kovács Péterrel és Szabó Annának írtam."], "hu", "bracket")
     assert res.masked_texts[0] == "Beszéltem [PERSON_1]-vel és [PERSON_2]-nek írtam."
     assert [e.original for e in res.mapping.entries] == ["Kovács Péter", "Szabó Anna"]
+
+
+def test_decomposed_accents_and_invisible_characters_are_normalised(engine):
+    import unicodedata
+
+    text = unicodedata.normalize("NFD", "Kovács Péternek írtam.").replace("Kov", "Ko\u200bv")
+    assert "\u0301" in text and "\u200b" in text
+    result = engine.mask([text], "hu", "bracket")
+    assert "Kov" not in result.masked_texts[0] and "ter" not in result.masked_texts[0]
+    assert result.masked_texts[0].startswith("[PERSON_1]")

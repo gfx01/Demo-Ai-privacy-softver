@@ -43,12 +43,12 @@ VALID_LANGUAGES = {"hu", "en"}
 @dataclass(frozen=True)
 class Config:
     analyzer_url: str
-    analyzer_token: str
+    analyzer_token: str = field(repr=False)
     analyzer_timeout_s: float
     mapping_key: bytes = field(repr=False)
     mapping_ttl_s: int
     keep_mapping_after_response: bool
-    store_url: str
+    store_url: str = field(repr=False)  # may embed the Redis password
     database_url: str | None = field(repr=False)
     default_org: str
     default_language: str
@@ -59,6 +59,7 @@ class Config:
     preview_model: str
     canary_model: str
     settings_cache_s: float
+    extra_allowed_params: frozenset[str] = frozenset()
 
     @classmethod
     def from_env(cls) -> "Config":
@@ -84,6 +85,11 @@ class Config:
             preview_model=os.environ.get("PRIVACY_HUB_PREVIEW_MODEL", "privacy-preview"),
             canary_model=os.environ.get("PRIVACY_HUB_CANARY_MODEL", "privacy-canary"),
             settings_cache_s=_float("PRIVACY_HUB_SETTINGS_CACHE_S", 10.0),
+            # Escape hatch for request parameters this version does not know.
+            # Only add parameters that cannot carry free text.
+            extra_allowed_params=frozenset(
+                p.strip() for p in os.environ.get("PRIVACY_HUB_EXTRA_ALLOWED_PARAMS", "").split(",") if p.strip()
+            ),
         )
         cfg.validate()
         return cfg

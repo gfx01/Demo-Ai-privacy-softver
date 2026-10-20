@@ -16,7 +16,34 @@ from typing import Any
 
 class UnsupportedContentError(Exception):
     """The request contains content the guardrail cannot inspect (images,
-    audio, files). Blocking is the fail-closed default."""
+    audio, files, unknown parameters). Blocking is the fail-closed default."""
+
+
+# OpenAI chat-completion parameters accepted from clients. Anything else is
+# rejected: an unknown field may carry text that is never masked (e.g.
+# ``prediction``, ``extra_body``, per-fallback ``messages`` overrides).
+CLIENT_PARAMS = frozenset({
+    "model", "messages", "stream", "stream_options", "temperature", "top_p", "n", "stop",
+    "max_tokens", "max_completion_tokens", "presence_penalty", "frequency_penalty", "logit_bias",
+    "logprobs", "top_logprobs", "seed", "user", "response_format", "tools", "tool_choice",
+    "parallel_tool_calls", "reasoning_effort", "service_tier", "verbosity", "metadata",
+})
+# Keys LiteLLM 1.105.1 itself adds to the request before guardrails run.
+LITELLM_INTERNAL_KEYS = frozenset({
+    "proxy_server_request", "secret_fields", "litellm_call_id", "litellm_logging_obj",
+    "litellm_metadata", "metadata", "user_api_key_dict",
+})
+MESSAGE_KEYS = frozenset({"role", "content", "name", "tool_calls", "tool_call_id", "function_call", "cache_control"})
+
+
+def check_request_params(data: dict, extra_allowed: frozenset[str] = frozenset()) -> None:
+    """Reject unknown parameters that could carry text. Unknown keys holding a
+    number, boolean, None or a non-JSON object (LiteLLM-internal state such as
+    ``_litellm_strip_stream_usage``) cannot carry text and are let through."""
+    known = CLIENT_PARAMS | LITELLM_INTERNAL_KEYS | extra_allowed
+    unknown = sorted(k for k, v in data.items() if k not in known and isinstance(v, (str, list, tuple, dict)))
+    if unknown:
+        raise UnsupportedContentError(f"request parameter(s) not allowed through the privacy gateway: {', '.join(unknown)}")
 
 
 @dataclass
@@ -82,6 +109,46 @@ def _json_string_slots(holder: dict, key: str, where: str) -> list[TextSlot]:
     return slots
 
 
+def _tree_string_slots(node: Any, where: str, only_keys: frozenset[str] | None = None) -> list[TextSlot]:
+    """Slots for string values inside a dict/list tree (edited in place).
+    With ``only_keys``, only strings stored under those dict keys."""
+    slots: list[TextSlot] = []
+
+    def walk(obj: Any, path: str) -> None:
+        items = obj.items() if isinstance(obj, dict) else enumerate(obj) if isinstance(obj, list) else ()
+        for k, v in items:
+            if isinstance(v, str):
+                if only_keys is None or (isinstance(obj, dict) and k in only_keys):
+                    slots.append(_dict_slot(obj, k, f"{path}[{k!r}]"))
+            else:
+                walk(v, f"{path}[{k!r}]")
+
+    walk(node, where)
+    return slots
+
+
+def _arguments_slots(holder: dict, where: str) -> list[TextSlot]:
+    if isinstance(holder.get("arguments"), (dict, list)):
+        return _tree_string_slots(holder["arguments"], where)
+    return _json_string_slots(holder, "arguments", where)
+
+
+DESCRIPTION_KEYS = frozenset({"description", "title"})
+
+
+def collect_definition_slots(data: dict) -> list[TextSlot]:
+    """Free text in tool definitions and JSON-schema response formats
+    (descriptions, titles). Names, enums and types are left alone: changing
+    them would break the client's own tool handling."""
+    slots: list[TextSlot] = []
+    if data.get("tools") is not None:
+        slots.extend(_tree_string_slots(data["tools"], "tools", DESCRIPTION_KEYS))
+    rf = data.get("response_format")
+    if isinstance(rf, dict) and rf.get("type") not in (None, "text", "json_object"):
+        slots.extend(_tree_string_slots(rf, "response_format", DESCRIPTION_KEYS))
+    return slots
+
+
 def collect_request_slots(messages: list[dict], allow_non_text: bool = False) -> list[TextSlot]:
     if not isinstance(messages, list):
         raise UnsupportedContentError("messages must be a list")
@@ -89,6 +156,9 @@ def collect_request_slots(messages: list[dict], allow_non_text: bool = False) ->
     for i, msg in enumerate(messages):
         if not isinstance(msg, dict):
             raise UnsupportedContentError(f"messages[{i}] is not an object")
+        unknown = sorted(set(msg) - MESSAGE_KEYS)
+        if unknown:
+            raise UnsupportedContentError(f"messages[{i}] field(s) cannot be inspected: {', '.join(unknown)}")
         content = msg.get("content")
         if isinstance(content, str):
             slots.append(_dict_slot(msg, "content", f"messages[{i}].content"))
@@ -109,10 +179,10 @@ def collect_request_slots(messages: list[dict], allow_non_text: bool = False) ->
         for k, call in enumerate(msg.get("tool_calls") or []):
             fn = call.get("function") if isinstance(call, dict) else None
             if isinstance(fn, dict):
-                slots.extend(_json_string_slots(fn, "arguments", f"messages[{i}].tool_calls[{k}].function.arguments"))
+                slots.extend(_arguments_slots(fn, f"messages[{i}].tool_calls[{k}].function.arguments"))
         fn_call = msg.get("function_call")
         if isinstance(fn_call, dict):
-            slots.extend(_json_string_slots(fn_call, "arguments", f"messages[{i}].function_call.arguments"))
+            slots.extend(_arguments_slots(fn_call, f"messages[{i}].function_call.arguments"))
         # The optional participant name of user/assistant/system messages is
         # often a real name; tool/function messages use it for the function.
         if msg.get("name") and msg.get("role") in {"user", "assistant", "system", "developer"}:

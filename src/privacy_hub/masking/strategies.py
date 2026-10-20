@@ -24,7 +24,8 @@ if TYPE_CHECKING:
     from .restore import Restorer
 
 # Anything in the *input* that already looks like one of our bracket tokens.
-EXISTING_TOKEN_RE = re.compile(r"\[\s*([A-Za-z][A-Za-z0-9_]*?)[ _-]?(\d+)\s*\]")
+# Bounded quantifiers: this runs on untrusted input and must not backtrack badly.
+EXISTING_TOKEN_RE = re.compile(r"\[\s{0,3}([A-Za-z][A-Za-z0-9_]{0,40}?)[ _-]?(\d{1,6})\s{0,3}\]")
 
 
 class Strategy(ABC):

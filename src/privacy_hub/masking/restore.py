@@ -75,8 +75,8 @@ class BracketRestorer(Restorer):
         labels = sorted({k.rsplit("_", 1)[0] for k in self.by_key}, key=len, reverse=True)
         if labels:
             alt = "|".join(re.escape(lab) for lab in labels)
-            bracketed = rf"\[\s*(?P<bl>(?i:{alt}))[ _\-]?(?P<bn>\d+)\s*\]"
-            bare = rf"(?<![\w\[])(?P<pl>{alt})_(?P<pn>\d+)(?!\d)"
+            bracketed = rf"\[\s{{0,3}}(?P<bl>(?i:{alt}))[ _\-]?(?P<bn>\d{{1,6}})\s{{0,3}}\]"
+            bare = rf"(?<![\w\[])(?P<pl>{alt})_(?P<pn>\d{{1,6}})(?!\d)"
             # Closing markdown between token and ending ("**[PERSON_1]**-nek")
             # is moved after the restored, inflected name ("**Kovács Péternek**").
             markup = r"(?P<md>\*\*|__|\*|_|`)?"

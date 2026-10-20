@@ -138,14 +138,34 @@ class PseudonymStrategy(Strategy):
             else:
                 fake = rng.choice(SURNAMES)
             return fake, [[fake, words[0]]]
-        surname, given = words[0], words[-1]
-        gender = self._gender_of(given)
-        pool = MALE if gender == "male" else FEMALE if gender == "female" else MALE + FEMALE
-        fake_given = rng.choice(pool)
-        fake_surname = rng.choice(SURNAMES)
-        parts = [[fake_surname, surname], [fake_given, given]]
-        middle = words[1:-1]
-        return " ".join([fake_surname, *middle, fake_given]), parts
+        # Every word is replaced (middle names too): known given names by a
+        # given name of the same gender, other words by a surname. Without any
+        # known given name, Hungarian order is assumed (surname first).
+        # Titles and initials ("dr.", "ifj.", "P.") are kept as they are.
+        kept = [w.endswith(".") or not any(c.isalpha() for c in w) for w in words]
+        genders: list[str | None] = [None if k else self._gender_of(w) for w, k in zip(words, kept)]
+        known = [g for g in genders if g]
+        person_gender = known[-1] if known else None
+        if not known:
+            first = next((i for i, k in enumerate(kept) if not k), 0)
+            genders = [None if i <= first else "given" for i in range(len(words))]
+        out: list[str] = []
+        parts: list[list[str]] = []
+        used: set[str] = set()
+        for word, keep, gender in zip(words, kept, genders):
+            if keep:
+                out.append(word)
+                continue
+            if gender is None:
+                pool = SURNAMES
+            else:
+                g = person_gender if gender == "given" else gender
+                pool = MALE if g == "male" else FEMALE if g == "female" else MALE + FEMALE
+            fake = rng.choice([p for p in pool if p not in used] or list(pool))
+            used.add(fake)
+            out.append(fake)
+            parts.append([fake, word])
+        return " ".join(out), parts
 
     def render(self, entry, inflection, morphology):
         if entry.replacement.startswith("["):

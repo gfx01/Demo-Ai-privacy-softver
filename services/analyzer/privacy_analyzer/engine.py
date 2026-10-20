@@ -22,6 +22,7 @@ import logging
 import os
 import tempfile
 import time
+import unicodedata
 from dataclasses import dataclass, field
 from functools import partial
 from pathlib import Path
@@ -64,6 +65,13 @@ NER_MAPPING = {
 NER_RECOGNIZERS = {"SpacyRecognizer", "TransformersRecognizer", "StanzaRecognizer"}
 NER_IGNORE = ["MISC", "CARDINAL", "ORDINAL", "QUANTITY", "PERCENT", "WORK_OF_ART", "LANGUAGE", "EVENT",
               "PRODUCT", "LAW", "MONEY"]
+
+
+INVISIBLE = dict.fromkeys(map(ord, "\u00ad\u200b\u200c\u200d\u2060\ufeff"))
+
+
+def normalize_text(text: str) -> str:
+    return unicodedata.normalize("NFC", text).translate(INVISIBLE)
 
 
 @dataclass
@@ -200,6 +208,10 @@ class PrivacyEngine:
     ) -> MaskResult:
         if language not in self.analyzers:
             raise ValueError(f"language {language!r} is not loaded (available: {self.languages})")
+        # Decomposed accents ("a" + U+0301) and invisible characters inside a
+        # word would make names and numbers invisible to the recognizers. The
+        # normalised text is what gets masked and sent on.
+        texts = [normalize_text(t) for t in texts]
         strat = PseudonymStrategy(gender_of=self.gender_of) if strategy == "pseudonym" else strategy
         session = MaskingSession(strat, get_morphology(language, self._lexicon), existing_texts=texts, language=language)
         analyzed = [self.analyze(t, language, entities, score_threshold, disabled_entities) for t in texts]
