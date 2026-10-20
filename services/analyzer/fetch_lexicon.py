@@ -9,6 +9,9 @@ Surnames: the 100 most frequent Hungarian surnames from the MIT-licensed
 Faker package (faker/providers/person/hu_HU), read from the pinned wheel
 without installing it.
 
+Countries: Hungarian country and territory names from Unicode CLDR 46.0.0
+(cldr-json, Unicode License V3), pinned tag + SHA-256.
+
 Usage: python fetch_lexicon.py OUTPUT_DIR
 """
 
@@ -44,6 +47,32 @@ FAKER_WHEEL = (
     "faker-40.43.0-py3-none-any.whl",
     "9dd7c0ddfaf30c842b05502d3cf641c135e0120a3a19047008ba8525b72953ed",
 )
+
+
+CLDR_TERRITORIES = (
+    "https://raw.githubusercontent.com/unicode-org/cldr-json/46.0.0/"
+    "cldr-json/cldr-localenames-full/main/hu/territories.json",
+    "1082a55f3d107cff857dd41e6bc493a191f44021b1b7ad3ff53c9727a08996d2",
+)
+# Region codes that are not places (EU, euro area, UN, "unknown", pseudo-locales)
+CLDR_NOT_PLACES = {"EU", "EZ", "UN", "QO", "ZZ", "XA", "XB"}
+
+
+def fetch_pinned(url: str, sha: str) -> bytes:
+    raw = fetch(url)
+    if hashlib.sha256(raw).hexdigest() != sha:
+        raise SystemExit(f"SHA-256 mismatch for {url}")
+    return raw
+
+
+def countries() -> list[str]:
+    data = json.loads(fetch_pinned(*CLDR_TERRITORIES))
+    territories = data["main"]["hu"]["localeDisplayNames"]["territories"]
+    return sorted({
+        unicodedata.normalize("NFC", name)
+        for code, name in territories.items()
+        if "-alt-" not in code and code.isalpha() and code not in CLDR_NOT_PLACES
+    })
 
 
 def fetch(url: str, timeout: int = 60) -> bytes:
@@ -134,6 +163,10 @@ def main() -> int:
                         "licence": "MIT (Faker)"}
     for kind in ("male", "female"):
         (out / f"common_given_{kind}.txt").write_text("\n".join(faker[f"first_names_{kind}"]) + "\n", encoding="utf-8")
+    names = countries()
+    (out / "countries.txt").write_text("\n".join(names) + "\n", encoding="utf-8")
+    meta["countries"] = {"source": CLDR_TERRITORIES[0], "sha256": CLDR_TERRITORIES[1], "count": len(names),
+                         "licence": "Unicode License V3 (CLDR)"}
     (out / "SOURCES.json").write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(meta, ensure_ascii=False))
     return 0

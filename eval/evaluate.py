@@ -13,7 +13,10 @@ Metrics (per entity type and micro-averaged):
 * leak     - type-agnostic, by the share of the gold entity's characters
              covered by ANY predicted span (a name masked as an organisation
              is still masked): >= 95% protected, 50-95% partially protected,
-             < 50% leaked. This is the privacy metric.
+             < 50% leaked. This is the privacy metric. Leading titles of a
+             PERSON ("dr.", "ifj.", "özv.", "Mr.") do not count as characters
+             that must be masked: they are not personal data on their own and
+             the recognizers leave them in clear text on purpose.
 95% Wilson intervals are reported because the test set is small.
 """
 
@@ -23,6 +26,7 @@ import argparse
 import json
 import math
 import os
+import re
 import statistics
 import subprocess
 import sys
@@ -142,6 +146,10 @@ def wilson(k: int, n: int, z: float = 1.96) -> tuple[float, float]:
     return (round(max(0.0, centre - half), 3), round(min(1.0, centre + half), 3))
 
 
+# "dr. ", "ifj. ", "özv. ", "Mr. " ... at the start of a PERSON span
+TITLE_PREFIX = re.compile(r"(?:dr|ifj|id|özv|prof|néhai|mr|mrs|ms)\.?\s+", re.IGNORECASE)
+
+
 def _norm(text: str, start: int, end: int) -> tuple[int, int]:
     while start < end and text[start] in " \t\n(\"„":
         start += 1
@@ -198,7 +206,11 @@ def score(items: list[dict], predictions: dict[str, list[dict]]) -> dict:
             used_p.add(k)
             tp_overlap[gold[gi][0]] += 1
         for gi, g in enumerate(gold):
-            chars = [i for i in range(g[1], g[2]) if not text[i].isspace()]
+            lo = g[1]
+            if g[0] == "PERSON":  # titles are not personal data and are deliberately left in clear text
+                while (m := TITLE_PREFIX.match(text, lo, g[2])) and m.end() < g[2]:
+                    lo = m.end()
+            chars = [i for i in range(lo, g[2]) if not text[i].isspace()]
             covered = sum(1 for i in chars if any(p[1] <= i < p[2] for p in pred))
             frac = covered / len(chars) if chars else 1.0
             dom[0] += 1

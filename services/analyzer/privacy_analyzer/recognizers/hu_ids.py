@@ -125,17 +125,19 @@ class BirthDateRecognizer(HuRegexRecognizer):
     PATTERNS = (
         Pattern(
             "date_text",
-            NB + rf"(?P<value>(?:19|20)\d{{2}}\.\s?(?:{MONTHS})\s?\d{{1,2}}\.?)",
+            NB + rf"(?P<value>(?:19|20)\d{{2}}\.\s?(?:{MONTHS})\s?\d{{1,2}}(?!\d)\.?)",
             0.4,
             needs_context=True,
         ),
         Pattern(
             "date_num",
-            NB + r"(?P<value>(?:19|20)\d{2}[.\-/]\s?(?:0?[1-9]|1[0-2])[.\-/]\s?(?:0?[1-9]|[12]\d|3[01])\.?)",
+            # longest day alternative first + (?!\d): "1988.02.14." must not stop at "1988.02.1"
+            NB + r"(?P<value>(?:19|20)\d{2}[.\-/]\s?(?:1[0-2]|0?[1-9])[.\-/]\s?(?:[12]\d|3[01]|0?[1-9])(?!\d)\.?)",
             0.4,
             needs_context=True,
         ),
     )
-    CONTEXT = r"születe|\bszül\.|\bszd\.|szül\. ?idő|birth|\bsz\. ?d|életkor|\bkora\b"
+    # "szület" covers született, születési, születésű, születés
+    CONTEXT = r"szület|\bszül\.|\bszd\.|birth|\bborn\b|\bsz\. ?d|életkor|\bkora\b"
     CONTEXT_BEFORE = 40
-    CONTEXT_AFTER = 5
+    CONTEXT_AFTER = 25  # "... 1991. augusztus 23. napján született"

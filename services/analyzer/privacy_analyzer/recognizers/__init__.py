@@ -25,13 +25,16 @@ from .hu_ids import (
     VatNumberRecognizer,
 )
 from .hu_names import HuNameRecognizer
+from .hu_places import HuPlaceRecognizer
 from .hu_text import (
     HuAddressRecognizer,
     HuCompanyRecognizer,
     HuInstitutionRecognizer,
     HuPhoneRecognizer,
+    HuStreetRecognizer,
     MoneyRecognizer,
 )
+
 
 class AnyTldEmailRecognizer(EmailRecognizer):
     """Presidio's EmailRecognizer only accepts domains whose suffix is in the
@@ -58,6 +61,7 @@ PATTERN_RECOGNIZERS = (
     BirthDateRecognizer,
     HuPhoneRecognizer,
     HuAddressRecognizer,
+    HuStreetRecognizer,
     HuCompanyRecognizer,
     HuInstitutionRecognizer,
     MoneyRecognizer,
@@ -75,7 +79,8 @@ def hungarian_recognizers(*, gazetteer: bool = True, lexicon_dir: str | None = N
     ]
     if gazetteer:
         recognizers.append(HuNameRecognizer(lexicon_dir=lexicon_dir, supported_language="hu"))
+        recognizers.append(HuPlaceRecognizer(lexicon_dir=lexicon_dir, supported_language="hu"))
     return recognizers
 
 
-__all__ = ["hungarian_recognizers", "PATTERN_RECOGNIZERS", "HuNameRecognizer", "AnyTldEmailRecognizer"]
+__all__ = ["hungarian_recognizers", "PATTERN_RECOGNIZERS", "HuNameRecognizer", "HuPlaceRecognizer", "AnyTldEmailRecognizer"]

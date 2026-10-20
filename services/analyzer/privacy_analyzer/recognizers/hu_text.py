@@ -62,7 +62,13 @@ _STREET_TYPES = (
     r"hegy|domb|part|zug|köre|forduló|kapu|tető|szél|ösvény|főút|országút"
 )
 _HOUSE = r"\d{1,4}(?:\s?[/\-–]\s?\d{1,4})?(?:\s?/?\s?[A-Za-z])?\.?"
-_FLOOR = rf"(?:,?\s*(?:\d{{1,2}}\.\s?(?:em(?:elet)?\.?|lph\.?)|fszt\.?|földszint|félemelet|mfszt\.?)\s*(?:\d{{1,3}}\.?\s?(?:ajtó|a\.)?)?(?:\s*\d{{1,3}}\.)?)?"
+# Floor / door after the house number: "3. em. 12. ajtó", "I. emelet 4.", "fsz. 1.",
+# "fszt. 1/A", "2/7" (floor/door). Left out, they would stay in clear text.
+_FLOOR = (
+    rf"(?:,?\s*(?:(?:\d{{1,2}}|[IVX]{{1,4}})\.\s?(?:em(?:elet)?\.?|lph\.?)|fszt?\.?|földszint|félemelet|mfszt\.?)"
+    rf"(?:\s*\d{{1,3}}(?:/[A-Za-z0-9]{{1,3}})?\.?\s?(?:ajtó|a\.)?)?(?:\s*\d{{1,3}}\.)?"
+    rf"|,?\s+\d{{1,2}}\s?/\s?\d{{1,3}}[A-Za-z]?\.?(?![\d/]))?"
+)
 _STREET_NAME = rf"(?:[{UPPER}0-9][{LOWER}A-Za-z0-9\-\.]*\s+){{0,4}}"
 _CITY = rf"[{UPPER}][{LOWER}\-]+(?:[\s\-][{UPPER}][{LOWER}]+)?(?:\s+[IVXL]+\.(?:\s?ker(?:ület)?\.?)?)?"
 
@@ -107,11 +113,44 @@ class HuAddressRecognizer(HuRegexRecognizer):
         return cleaned
 
 
+class HuStreetRecognizer(HuRegexRecognizer):
+    """Street names without a house number ("a Ráday utcában", "Kerepesi
+    úton", "a Fő téren"): a quasi-identifier when combined with a person.
+    Inside a full address the address match (containing span) wins."""
+
+    ENTITY = "LOCATION"
+    _STREET = (
+        r"utc[aá](?:ban|ba|ból|ra|ról|n|t|nál|hoz|tól|ig)?|útj?[aá]?(?:on|ra|ról|ig|n|t|nál)?|úton|útra|útról|"
+        r"t[eé]r(?:en|re|ről|t|ig)?|körút(?:on|ra|ról|ig)?|köz(?:ben|be|ből|re|ön|t)?|sor(?:on|ra|ról|ba|ban)?|"
+        r"fasor(?:ban|ba|ból|on|ra)?|sétány(?:on|ra|ról)?|rakpart(?:on|ra|ról)?|sugárút(?:on|ra|ról)?|lépcső(?:n|re|ről)?"
+    )
+    PATTERNS = (
+        Pattern(
+            "street_no_number",
+            rf"(?<![\w])(?P<value>(?:[{UPPER}][{LOWER}]+(?:-[{UPPER}]?[{LOWER}]+)?\s+){{1,3}}(?:{_STREET}))(?![\w])(?!\s+\d)",
+            0.5,
+        ),
+    )
+
+    def analyze(self, text, entities, nlp_artifacts=None):
+        out = []
+        for r in super().analyze(text, entities, nlp_artifacts):
+            start = r.start
+            while True:  # "A Ráday utcában" -> "Ráday utcában"
+                m = re.match(r"([^\s]+)\s+", text[start : r.end])
+                if not m or m.group(1).rstrip(",:") not in _STOP:
+                    break
+                start += m.end()
+            if re.search(r"\s", text[start : r.end].strip()):
+                out.append(RecognizerResult(r.entity_type, start, r.end, r.score, r.analysis_explanation))
+        return out
+
+
 # Company legal forms (case-insensitive in chat style: "kft.", "KFT").
 _LEGAL_FORMS = (
     r"Nonprofit\s+(?:Kft|Zrt|Bt)\.?|Kft\.?|Zrt\.?|Nyrt\.?|Bt\.?|Kkt\.?|Rt\.?|Kht\.?|Kv\.?|Szövetkezet|"
     r"Ügyvédi\s+Iroda|Közjegyzői\s+Iroda|Könyvelőiroda|Könyvelő\s+Iroda|e\.\s?v\.|Egyéni\s+Cég|"
-    r"Ltd\.?|GmbH|LLC|Inc\.?|S\.?A\.|AG|B\.?V\."
+    r"Ltd\.?|GmbH|LLC|Inc\.?|S\.?A\.|AG|B\.?V\.|s\.\s?r\.\s?o\.|Sp\.\s?z\s?o\.\s?o\.|S\.?R\.?L\.?|d\.o\.o\.|Kft-"
 )
 # Capitalised words that start sentences but are not part of a company name.
 _STOP = {
@@ -157,11 +196,24 @@ class HuCompanyRecognizer(HuRegexRecognizer):
         return out
 
 
-_INSTITUTION_HEADS = (
-    r"Iroda|Kórház|Rendelőintézet|Rendelő|Magánrendelő|Klinika|Bíróság|Járásbíróság|Törvényszék|Ítélőtábla|"
-    r"Egyetem|Főiskola|Iskola|Gimnázium|Óvoda|Hivatal|Kormányhivatal|Önkormányzat|Alapítvány|Egyesület|"
-    r"Szövetség|Kamara|Bank|Takarékszövetkezet|Biztosító|Patika|Gyógyszertár|Hotel|Szálloda|Étterem|Intézet|"
-    r"Központ|Ügynökség|Stúdió|Szalon|Kereskedés|Áruház|Klub|Társaság|Csoport|Holding"
+# Head nouns of organisation names, also at the end of a compound word
+# ("Magánkórházban", "Vesecentrumba", "Cégbíróságánál", "Tüdőgondozóban").
+_INSTITUTION_HEAD_WORDS = (
+    r"iroda|kórház|rendelőintézet|rendelő|klinika|bíróság|törvényszék|ítélőtábla|"
+    r"egyetem|főiskola|iskola|gimnázium|óvoda|bölcsőde|kollégium|hivatal|önkormányzat|alapítvány|egyesület|"
+    r"szövetség|kamara|bank|szövetkezet|biztosító|patika|gyógyszertár|hotel|szálloda|szálló|panzió|vendégház|"
+    r"étterem|vendéglő|kávézó|cukrászda|pékség|intézet|központ|centrum|szolgálat|gondozó|egészségház|labor|"
+    r"laboratórium|fogászat|ügynökség|stúdió|szalon|műhely|kereskedés|áruház|klub|társaság|csoport|holding|"
+    r"könyvtár|múzeum|színház|plébánia|egyházközség"
+)
+# final a/e lengthens before endings: "Irodától", "Klinikára"
+_INSTITUTION_HEADS = "|".join(
+    h[:-1] + {"a": "[aá]", "e": "[eé]"}[h[-1]] if h[-1] in "ae" else h for h in _INSTITUTION_HEAD_WORDS.split("|")
+)
+# Possessive and case endings after the head ("Irodája", "Cégbíróságánál", "Klubbal")
+_ORG_ENDING = (
+    r"(?:(?:j?[aeáé]|j?[ae]i)?(?:nak|nek|nál|nél|hoz|hez|höz|tól|től|ból|ből|ban|ben|ba|be|ra|re|ról|ről|"
+    r"val|vel|vá|vé|ig|ért|ként|t|n|é)|[bcdfghjklmnprstvz]?(?:al|el)|ot|et|öt|at|on|en|ön|j?[aeáé]|j?[ae]i)?"
 )
 
 
@@ -173,7 +225,7 @@ class HuInstitutionRecognizer(HuRegexRecognizer):
     PATTERNS = (
         Pattern(
             "head_noun",
-            rf"(?<![\w])(?P<value>(?:[{UPPER}][\w\-]*\s+){{1,5}}(?:{_INSTITUTION_HEADS})[{LOWER}]{{0,8}})(?![\w])",
+            rf"(?<![\w])(?P<value>(?:[{UPPER}][\w\-]*\s+){{1,5}}(?=[{UPPER}])[{UPPER}{LOWER}]*?(?i:{_INSTITUTION_HEADS}){_ORG_ENDING})(?![\w])",
             0.55,
         ),
     )

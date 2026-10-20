@@ -117,3 +117,54 @@ def test_email_on_any_top_level_domain(engine, address):
 def test_invisible_characters_cannot_split_a_name(engine, invisible):
     result = engine.mask([f"Írj Kov{invisible}ács Péternek a tárgyalásról."], "hu", "bracket")
     assert result.masked_texts[0].startswith("Írj [PERSON_1]"), repr(result.masked_texts[0])
+
+
+@pytest.mark.parametrize("text, expected", [
+    # birth dates: whole day, "születési" context, cue after the date
+    ("ifj. Kerekes János (szül.: 1988.02.14.) eladó", ("HU_BIRTH_DATE", "1988.02.14.")),
+    ("születési dátum: 1993. február 17. és", ("HU_BIRTH_DATE", "1993. február 17.")),
+    ("a kérelmező 1991. augusztus 23. napján született Pécsen", ("HU_BIRTH_DATE", "1991. augusztus 23.")),
+    # married / family forms, both vowel harmonies, unknown surnames
+    ("Fodor Lászlónéhoz fordultunk.", ("PERSON", "Fodor Lászlónéhoz")),
+    ("továbbítani Vargáéknak is", ("PERSON", "Vargáéknak")),
+    ("a mellékletet Bartosnénak küldtem", ("PERSON", "Bartosnénak")),
+    ("Holnap Erdősné hoz sütit.", ("PERSON", "Erdősné")),
+    # cues: title or salutation before an unknown surname
+    ("Tisztelt Mr. O'Brien!", ("PERSON", "O'Brien")),
+    ("Tisztelt Bencze Úr!", ("PERSON", "Bencze")),
+    ("szintén Dr. Kerekeshez fordulj", ("PERSON", "Kerekeshez")),
+    ("a zárót küldd át dr. rozsnyainak", ("PERSON", "rozsnyainak")),
+    ("Beteg: Kertész Péter, szül.: 1971.08.23.", ("PERSON", "Kertész Péter")),
+    # chat style without accents, line break inside a name, Latin Extended-A
+    ("nalunk szabo gabi intezi", ("PERSON", "szabo gabi")),
+    ("segits pls: a kovacs petinek irj", ("PERSON", "kovacs petinek")),
+    ("Küldjétek meg Szilágyi\nNórának.", ("PERSON", "Szilágyi\nNórának")),
+    ("kilépési interjú: Ana Petrović.", ("PERSON", "Ana Petrović")),
+    # repeated part of a name, foreign given name with an ending
+    ("Thomas Becker jön, Beckerrel egyeztess.", ("PERSON", "Beckerrel")),
+    ("Becker nem beszél magyarul: Becker Thomast hívd", ("PERSON", "Becker Thomast")),
+    # address tails (floor / door)
+    ("Lakcíme 7400 Kaposvár, Dózsa György utca 15. 2/7, TAJ", ("HU_ADDRESS", "7400 Kaposvár, Dózsa György utca 15. 2/7")),
+    ("címe: 1054 Budapest, Báthory utca 20. I. emelet 4. Értesítjük", ("HU_ADDRESS", "1054 Budapest, Báthory utca 20. I. emelet 4.")),
+    ("5000 Szolnok, Baross Gábor utca 27. fszt. 1/A szám alatt", ("HU_ADDRESS", "5000 Szolnok, Baross Gábor utca 27. fszt. 1/A")),
+    # organisations: compound heads, lengthened head, foreign legal forms
+    ("a Mecsek Utazási Irodától", ("ORGANIZATION", "Mecsek Utazási Irodától")),
+    ("a Fővárosi Törvényszék Cégbíróságánál", ("ORGANIZATION", "Fővárosi Törvényszék Cégbíróságánál")),
+    ("a Somogyi Vesecentrumba", ("ORGANIZATION", "Somogyi Vesecentrumba")),
+    ("a Hornád Soft s.r.o. kéri", ("HU_COMPANY", "Hornád Soft s.r.o.")),
+])
+def test_round2_positives(engine, text, expected):
+    assert expected in found(engine, text)
+
+
+@pytest.mark.parametrize("text", [
+    "Kedves Kollégák!",
+    "Tisztelt Ügyfélszolgálat!",
+    "A szerződés 2021. március 3. napján lépett hatályba.",
+    "Számla kelte: 2023.04.12.",
+    "Az Excel Bankkártya menüben kattints.",
+    "Holnap Iskolába megyek.",
+    "dr. med. univ.",
+])
+def test_round2_negatives(engine, text):
+    assert found(engine, text) == set()
