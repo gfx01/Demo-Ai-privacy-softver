@@ -19,6 +19,8 @@ class OrgSettings:
     strategy: str  # "bracket" | "pseudonym"
     language: str  # "hu" | "en"
     disabled_entities: tuple[str, ...] = field(default_factory=tuple)
+    # "standard" | "maximum" (also masks unknown words; see docs/LIMITATIONS.md)
+    detection: str = "standard"
 
 
 class SettingsUnavailableError(RuntimeError):
@@ -41,6 +43,7 @@ class SettingsProvider:
             mode=self._cfg.default_mode,
             strategy=self._cfg.default_strategy,
             language=self._cfg.default_language,
+            detection=self._cfg.default_detection,
         )
 
     async def get(self, org_id: str) -> OrgSettings:
@@ -53,7 +56,7 @@ class SettingsProvider:
         else:
             try:
                 row = await self._db.fetchone(
-                    "SELECT mode, strategy, language, disabled_entities FROM org_settings WHERE organisation_id = %s",
+                    "SELECT mode, strategy, language, disabled_entities, detection FROM org_settings WHERE organisation_id = %s",
                     (org_id,),
                 )
             except Exception as exc:  # noqa: BLE001 - any DB error must block
@@ -61,6 +64,6 @@ class SettingsProvider:
             if row is None:
                 settings = self.defaults(org_id)
             else:
-                settings = OrgSettings(org_id, row[0], row[1], row[2], tuple(row[3] or ()))
+                settings = OrgSettings(org_id, row[0], row[1], row[2], tuple(row[3] or ()), row[4])
         self._cache[org_id] = (now + self._cfg.settings_cache_s, settings)
         return settings

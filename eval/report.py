@@ -57,7 +57,8 @@ def detection_section(name: str, data: dict) -> list[str]:
         "³ resident memory (RSS) of the isolated evaluation process (one per backend, run from the analyzer "
         "venv on the host, not inside the container) after building a Hungarian-only engine (in parentheses: "
         "increase caused by building the engine incl. model). Build machine (4 vCPU); single-threaded, no batching.",
-        "⁴ predicted spans that overlap no labelled entity: ordinary text that would be masked (over-masking).",
+        "⁴ predicted spans that overlap no labelled entity: ordinary text that would be masked (over-masking); "
+        "the summary also gives the share of ordinary words masked.",
         "",
     ]
     for b, r in data["backends"].items():
@@ -124,8 +125,9 @@ def _cell(d: dict | None, b: str) -> str:
         return "–"
     m = d["backends"][b]["metrics"]
     spur = m.get("spurious_spans")
+    over = m.get("non_pii_words_masked_rate")
     return f"{pct(m['protected_rate'])} ({ci(m['protected_ci95'])}), {m['leaked']} leaked" + (
-        f", {spur} spurious" if spur is not None else "")
+        f", {spur} spurious" if spur is not None else "") + (f", {100 * over:.1f}% words over-masked" if over is not None else "")
 
 
 def summary_section() -> list[str]:
@@ -135,8 +137,27 @@ def summary_section() -> list[str]:
     held3_base, held3_first = _load("detection_heldout3_baseline.json"), _load("detection_heldout3_firstrun.json")
     # HuSpaCy could not be downloaded here (see section 6 of LIMITATIONS.md): rows without results are left out
     backends = [b for b, r in dev["backends"].items() if r.get("status") == "ok"] if dev else []
+    held5, held5_first = _load("detection_heldout5.json"), _load("detection_heldout5_firstrun.json")
     lines = ["## Summary", "",
-             "### Detection: share of entities protected (≥95% of characters masked, any type), 95% Wilson CI", "",
+             "### Detection: share of entities protected (≥95% of characters masked, any type), 95% Wilson CI", ""]
+    if held5_first:
+        ds = held5_first["dataset"]
+        lines += ["#### Round 4: the opt-in *maximum* detection level, held-out #5", "",
+                  f"Held-out #5 ({ds['items']} texts, {ds['entities']} entities: chat, recruitment, telecom, "
+                  "automotive, agriculture, retail) was written and verified by separate agents before the maximum "
+                  "level existed, and measured once with the finished code (*first run*). The standard rows are the "
+                  "same code as round 3. *Over-masked words* = share of words outside every labelled entity that "
+                  "end up masked (the usability price). After the first run three general bugs were fixed (a "
+                  "single letter \"A\" joined to a masked acronym, \"|\" not treated as a field separator, "
+                  "given names typed without accents in lower case); the last column includes them (optimistic).", "",
+                  "| backend | **held-out #5, first run** | held-out #5, after fixes |", "|---|---|---|"]
+        for b, r in held5_first["backends"].items():
+            if r.get("status") == "ok":
+                lines.append(f"| {b} | **{_cell(held5_first, b)}** | {_cell(held5, b)} |")
+        lines += ["", "*No configuration reaches 100%*; see docs/LIMITATIONS.md section 1 for why, and local-only "
+                  "mode for the only setting where nothing leaves the server.", "",
+                  "#### Round 3: standard detection, held-out #3 and #4", ""]
+    lines += [
              "**The honest numbers** come from held-out sets that were written before the code they test and were "
              "measured once with it. *Old code* is the state before round 3 (commit `a055555`), run on the same set "
              "for comparison. Held-out #3 was written before the round-3 changes and measured once after them "
@@ -153,6 +174,8 @@ def summary_section() -> list[str]:
               "|---|---|---|---|---|---|"]
     for b in backends:
         lines.append(f"| {b} | {_cell(held4, b)} | {_cell(held3, b)} | {_cell(held2, b)} | {_cell(held, b)} | {_cell(dev, b)} |")
+    lines += ["", "The maximum rows of the tuned table were tuned on these sets (they were already known when the "
+              "maximum level was written); only held-out #5 is honest for them."]
     lines += ["",
               "`gazetteer` is the default quickstart configuration (patterns + name, place and word lists, no NER "
               "model); `nerkor_cnn` is the recommended one (`make nerkor`). *spurious* = masked spans that overlap no "
@@ -273,6 +296,7 @@ def main() -> int:
     ]
     lines += summary_section()
     titles = {
+        "heldout5": "held-out set #5, current code (first run in the summary; three bugs it revealed were fixed — optimistic)",
         "heldout4": "held-out set #4, current code (first run in the summary; bugs it revealed were fixed — optimistic)",
         "heldout3": "held-out set #3 (final code; bugs it revealed were fixed — optimistic)",
         "heldout2": "held-out set #2 (honest in round 2, used for tuning in round 3 — optimistic)",
@@ -291,7 +315,7 @@ def main() -> int:
             lines += restore_section(data, title)
     sizes = []
     for name, label in (("dev", "dev"), ("heldout", "held-out #1"), ("heldout2", "held-out #2"),
-                        ("heldout3", "held-out #3"), ("heldout4", "held-out #4")):
+                        ("heldout3", "held-out #3"), ("heldout4", "held-out #4"), ("heldout5", "held-out #5")):
         data = _load(f"detection_{name}.json")
         if data:
             sizes.append(f"{label} {data['dataset']['items']} texts / {data['dataset']['entities']} entities")

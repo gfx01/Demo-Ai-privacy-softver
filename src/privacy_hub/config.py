@@ -38,6 +38,7 @@ def _float(name: str, default: float) -> float:
 VALID_MODES = {"mask", "strict"}
 VALID_STRATEGIES = {"bracket", "pseudonym", "bracket_naive"}
 VALID_LANGUAGES = {"hu", "en"}
+VALID_DETECTION = {"standard", "maximum"}
 
 
 @dataclass(frozen=True)
@@ -54,6 +55,7 @@ class Config:
     default_language: str
     default_mode: str
     default_strategy: str
+    default_detection: str
     audit_required: bool
     allow_non_text_content: bool
     preview_model: str
@@ -89,6 +91,7 @@ class Config:
             default_language=os.environ.get("PRIVACY_HUB_DEFAULT_LANGUAGE", "hu"),
             default_mode=os.environ.get("PRIVACY_HUB_DEFAULT_MODE", "mask"),
             default_strategy=os.environ.get("PRIVACY_HUB_DEFAULT_STRATEGY", "bracket"),
+            default_detection=os.environ.get("PRIVACY_HUB_DEFAULT_DETECTION", "standard"),
             audit_required=_bool("PRIVACY_HUB_AUDIT_REQUIRED", True),
             allow_non_text_content=_bool("PRIVACY_HUB_ALLOW_NON_TEXT_CONTENT", False),
             preview_model=os.environ.get("PRIVACY_HUB_PREVIEW_MODEL", "privacy-preview"),
@@ -117,6 +120,8 @@ class Config:
             problems.append(f"PRIVACY_HUB_DEFAULT_MODE must be one of {sorted(VALID_MODES)}")
         if self.default_strategy not in VALID_STRATEGIES:
             problems.append(f"PRIVACY_HUB_DEFAULT_STRATEGY must be one of {sorted(VALID_STRATEGIES)}")
+        if self.default_detection not in VALID_DETECTION:
+            problems.append(f"PRIVACY_HUB_DEFAULT_DETECTION must be one of {sorted(VALID_DETECTION)}")
         if self.default_language not in VALID_LANGUAGES:
             problems.append(f"PRIVACY_HUB_DEFAULT_LANGUAGE must be one of {sorted(VALID_LANGUAGES)}")
         if not 1 <= self.mapping_ttl_s <= 3600:

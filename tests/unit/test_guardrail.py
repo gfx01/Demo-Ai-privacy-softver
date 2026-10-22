@@ -456,3 +456,28 @@ async def test_unexpected_structure_is_blocked_with_audit(env, monkeypatch):
         await g.async_pre_call_hook(UAK(), None, request(), "acompletion")
     assert exc.value.status_code == 400
     assert g.audit.events[-1].error_class == "RecursionError"
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("detection", ["standard", "maximum"])
+async def test_detection_level_reaches_the_analyzer(env, detection):
+    seen = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        seen.append(json.loads(request.content).get("detection", "standard"))
+        return fake_mask_handler(request)
+
+    g = make_guardrail(env, handler=handler)
+
+    async def settings(org_id):
+        return OrgSettings(org_id, "mask", "bracket", "en", detection=detection)
+
+    g.settings.get = settings
+    await g.async_pre_call_hook(UAK(), None, request(), "acompletion")
+    assert seen == [detection]
+
+
+def test_default_detection_must_be_valid(env, monkeypatch):
+    monkeypatch.setenv("PRIVACY_HUB_DEFAULT_DETECTION", "paranoid")
+    with pytest.raises(FatalConfigError):
+        PrivacyHubGuardrail(guardrail_name="x", event_hook=["pre_call", "post_call"], default_on=True)

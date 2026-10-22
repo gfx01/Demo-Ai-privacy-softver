@@ -209,7 +209,7 @@ class PrivacyHubGuardrail(CustomGuardrail):
             raise _blocked(503, "privacy_hub_unavailable", "Privacy settings unavailable; request blocked.")
         is_canary = model == self.cfg.canary_model
         if is_canary:
-            settings = OrgSettings(org_id, "mask", settings.strategy, settings.language)
+            settings = OrgSettings(org_id, "mask", settings.strategy, settings.language, detection=settings.detection)
 
         try:
             check_request_params(data, self.cfg.extra_allowed_params)
@@ -248,6 +248,7 @@ class PrivacyHubGuardrail(CustomGuardrail):
                 strategy=settings.strategy,
                 entities=None,
                 disabled_entities=settings.disabled_entities,
+                detection=settings.detection,
                 org_id=org_id,
             )
         except AnalyzerRequestTooLarge:

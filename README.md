@@ -98,6 +98,43 @@ make nerkor          # kb. 20 perc 4 vCPU-n; NYTK-NerKor, CC BY-SA 4.0
 docker compose up -d --build analyzer
 ```
 
+### Maximális védelem (választható)
+
+100%-os felismerést egyetlen beállítás sem garantál: amit egy szabály vagy
+modell nem ismer fel, az kimegy. Az adminportálon szervezetenként bekapcsolható
+**maximális** felismerési szint (Felismerés / Detection → maximális) ezért
+megfordítja a logikát. Magyar szövegben minden olyan szót is maszkol, amelyről
+nem tudja, hogy hétköznapi szó:
+
+* mondat belsejében nagybetűs szót;
+* ismeretlen vagy névnek tűnő kisbetűs szót;
+* rövidítést;
+* betű-szám kódot;
+* 6+ jegyű számot;
+* régi dátumot;
+* URL-t.
+
+Egy új, előtte nem látott tesztkészleten (5.: 74 szöveg, 370 adat, egyszer
+mérve):
+
+| beállítás | védett | kiszivárgott | részben védett | feleslegesen maszkolt hétköznapi szavak |
+|---|---|---|---|---|
+| alap | 95,7% | 13 | 3 | 0,0% |
+| alap + maximális | **98,4%** | 2 | 4 | 2,2% |
+| NerKor + maximális | 98,1% | 3 | 4 | 3,4% |
+
+Ára, hogy a modell több helyőrzőt kap. Termék- és márkanevek, cikkszámok,
+űrlapcímkék, régi dátumok is eltűnnek, és ez ronthatja a választ. Ez sem 100%:
+kisbetűs, ékezet nélküli családnév-alakok (*fekete benceeknel*) vagy egy
+mondat eleji, hétköznapi szónak is olvasható vezetéknév átcsúszhat.
+
+**Valódi 100% csak a local-only mód** (lásd lent): ott az adat el sem hagyja
+a szervert.
+
+Meglévő telepítésnél előbb az adatbázist kell frissíteni
+(`db/migrations/001_detection_level.sql`), különben a gateway minden kérést
+blokkol.
+
 ### Valódi szolgáltató bekapcsolása
 
 A `.env`-ben adja meg az `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` /
@@ -271,6 +308,44 @@ make nerkor          # ~20 min on 4 vCPU; NYTK-NerKor data, CC BY-SA 4.0
 docker compose up -d --build analyzer
 ```
 
+### Maximum protection (opt-in)
+
+No setting can guarantee 100% detection: whatever a rule or model does not
+recognise goes out. The **maximum** detection level, switched on per
+organisation in the admin portal (Felismerés / Detection → maximum), turns
+the logic around. In Hungarian text it also masks every word it does not
+know to be ordinary:
+
+* capitalised words inside a sentence;
+* unknown or name-like lower-case words;
+* acronyms;
+* letter-digit codes;
+* numbers with 6+ digits;
+* past dates;
+* URLs.
+
+On a new held-out set it had not seen (#5: 74 texts, 370 entities, measured
+once):
+
+| configuration | protected | leaked | partly protected | ordinary words masked |
+|---|---|---|---|---|
+| default | 95.7% | 13 | 3 | 0.0% |
+| default + maximum | **98.4%** | 2 | 4 | 2.2% |
+| NerKor + maximum | 98.1% | 3 | 4 | 3.4% |
+
+The price is more placeholders for the model. Product and brand names,
+article numbers, form labels and past dates are masked too, which can make
+answers worse. It is not 100% either: lower-case family forms typed without
+accents (*fekete benceeknel*) or a surname at the start of a sentence that
+reads as an ordinary word can slip through.
+
+**Only local-only mode is really 100%** (see below): the data never leaves
+the server.
+
+For an existing installation, update the database first
+(`db/migrations/001_detection_level.sql`); otherwise the gateway blocks every
+request.
+
 ### Real providers
 
 Set `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` / `GEMINI_API_KEY` and
@@ -407,10 +482,11 @@ committed); see [.env.example](.env.example). Important settings:
 | `OCR_MAX_QUEUE` | `8` | documents waiting for the OCR service before it answers "busy" |
 | `OPENWEBUI_ENABLE_SIGNUP` | `false` | Open WebUI self-registration (the first admin account can always be created; changes made in Open WebUI's admin UI last until the next restart) |
 | `LOCAL_LLM_GGUF`, `LOCAL_LLM_CTX` | `model.gguf`, `8192` | model file in `LOCAL_LLM_MODEL_DIR` and context size of the llama.cpp server |
+| `PRIVACY_HUB_DEFAULT_DETECTION` | `standard` | detection level for organisations without a settings row: `standard` or `maximum` (per-organisation setting in the admin portal) |
 | `PRIVACY_HUB_LOCAL_ONLY` | `false` | refuse every model outside the compose network; use with `docker-compose.local-only.yml` (set `COMPOSE_FILE`, see "Local LLM"), which also cuts the gateway's internet access |
 
-Organisation settings (mode, strategy, language, masked types) are edited in
-the admin portal.
+Organisation settings (mode, strategy, language, detection level, masked
+types) are edited in the admin portal.
 
 ## Tests and evaluation
 

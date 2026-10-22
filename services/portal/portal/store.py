@@ -45,7 +45,7 @@ def connect():
 def organisations() -> list[dict[str, Any]]:
     with connect() as conn:
         return conn.execute(
-            "SELECT o.id, o.name, s.mode, s.strategy, s.language, s.disabled_entities, s.updated_at, s.updated_by "
+            "SELECT o.id, o.name, s.mode, s.strategy, s.language, s.disabled_entities, s.detection, s.updated_at, s.updated_by "
             "FROM organisations o LEFT JOIN org_settings s ON s.organisation_id = o.id ORDER BY o.id"
         ).fetchall()
 
@@ -58,19 +58,21 @@ def create_organisation(org_id: str, name: str, admin: str) -> None:
         )
 
 
-def update_settings(org_id: str, mode: str, strategy: str, language: str, disabled: list[str], admin: str) -> None:
+def update_settings(org_id: str, mode: str, strategy: str, language: str, disabled: list[str], detection: str,
+                    admin: str) -> None:
     with connect() as conn:
         conn.execute(
-            "UPDATE org_settings SET mode=%s, strategy=%s, language=%s, disabled_entities=%s, updated_at=now(), "
-            "updated_by=%s WHERE organisation_id=%s",
-            (mode, strategy, language, disabled, admin, org_id),
+            "UPDATE org_settings SET mode=%s, strategy=%s, language=%s, disabled_entities=%s, detection=%s, "
+            "updated_at=now(), updated_by=%s WHERE organisation_id=%s",
+            (mode, strategy, language, disabled, detection, admin, org_id),
         )
 
 
 def settings_for(org_id: str) -> dict[str, Any] | None:
     with connect() as conn:
         return conn.execute(
-            "SELECT mode, strategy, language, disabled_entities FROM org_settings WHERE organisation_id=%s", (org_id,)
+            "SELECT mode, strategy, language, disabled_entities, detection FROM org_settings WHERE organisation_id=%s",
+            (org_id,),
         ).fetchone()
 
 

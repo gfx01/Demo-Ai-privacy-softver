@@ -91,7 +91,8 @@ def preview(req: PreviewRequest, authorization: Annotated[str | None, Header()] 
         raise HTTPException(status_code=401, detail="invalid API key")
     meta = (info.get("info") or {}).get("metadata") or {}
     org_id = meta.get("organisation_id") or os.environ.get("PRIVACY_HUB_DEFAULT_ORG", "default")
-    settings = store.settings_for(org_id) or {"mode": "mask", "strategy": "bracket", "language": "hu", "disabled_entities": []}
+    settings = store.settings_for(org_id) or {"mode": "mask", "strategy": "bracket", "language": "hu", "disabled_entities": [],
+                                              "detection": "standard"}
     texts, where = [], []
     for i, m in enumerate(req.messages):
         content = m.get("content")
@@ -103,6 +104,7 @@ def preview(req: PreviewRequest, authorization: Annotated[str | None, Header()] 
             os.environ.get("PRIVACY_HUB_ANALYZER_URL", "http://analyzer:8000") + "/v1/mask",
             json={"texts": texts, "language": settings["language"], "strategy": settings["strategy"],
                   "disabled_entities": list(settings["disabled_entities"] or []), "org_id": org_id,
+                  "detection": settings.get("detection") or "standard",
                   "include_mapping": False},
             headers={"Authorization": f"Bearer {os.environ.get('PRIVACY_HUB_ANALYZER_TOKEN', '')}"},
             timeout=15,
@@ -146,12 +148,14 @@ async def admin_settings_save(org_id: str, request: Request, admin: Admin = Depe
     form = await request.form()
     check_csrf(admin, form.get("csrf"))
     mode, strategy, language = form.get("mode"), form.get("strategy"), form.get("language")
-    if mode not in ("mask", "strict") or strategy not in ("bracket", "pseudonym") or language not in ("hu", "en"):
+    detection = form.get("detection") or "standard"
+    if (mode not in ("mask", "strict") or strategy not in ("bracket", "pseudonym") or language not in ("hu", "en")
+            or detection not in ("standard", "maximum")):
         raise HTTPException(status_code=400, detail="invalid settings")
     allowed = {e for e, _ in store.ENTITY_CHOICES}
     # Checked boxes = entities that are masked; everything else is disabled.
     enabled = {v for v in form.getlist("enabled") if v in allowed}
-    store.update_settings(org_id, mode, strategy, language, sorted(allowed - enabled), admin.username)
+    store.update_settings(org_id, mode, strategy, language, sorted(allowed - enabled), detection, admin.username)
     return RedirectResponse(f"/admin/settings?saved={org_id}", status_code=303)
 
 

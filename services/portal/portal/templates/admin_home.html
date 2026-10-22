@@ -3,12 +3,12 @@
 <h1>Áttekintés / Overview</h1>
 <h2>Szervezetek / Organisations</h2>
 <table>
-  <tr><th>ID</th><th>Név / Name</th><th>Mód / Mode</th><th>Stratégia / Strategy</th><th>Nyelv</th><th>Kikapcsolt típusok / Disabled types</th></tr>
+  <tr><th>ID</th><th>Név / Name</th><th>Mód / Mode</th><th>Stratégia / Strategy</th><th>Nyelv</th><th>Felismerés / Detection</th><th>Kikapcsolt típusok / Disabled types</th></tr>
   {% for o in orgs %}
   <tr>
     <td>{{ o.id }}</td><td>{{ o.name }}</td>
     <td>{% if o.mode == 'strict' %}<span class="bad">strict (block)</span>{% else %}mask{% endif %}</td>
-    <td>{{ o.strategy }}</td><td>{{ o.language }}</td>
+    <td>{{ o.strategy }}</td><td>{{ o.language }}</td><td>{{ o.detection or 'standard' }}</td>
     <td>{% for e in o.disabled_entities or [] %}<span class="pill">{{ e }}</span>{% else %}<span class="muted">–</span>{% endfor %}</td>
   </tr>
   {% endfor %}

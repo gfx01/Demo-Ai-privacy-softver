@@ -31,6 +31,12 @@ LABELS: dict[str, str] = {
     "HU_LICENSE_PLATE": "PLATE",
     "HU_PHONE_NUMBER": "PHONE",
     "MONEY": "AMOUNT",
+    # "maximum" detection level
+    "PROPER_NOUN": "NAME",
+    "RARE_WORD": "WORD",
+    "NUMBER": "NUMBER",
+    "CODE": "CODE",
+    "PAST_DATE": "PAST_DATE",
 }
 
 LABEL_RE = re.compile(r"^[A-Z][A-Z0-9_]*[A-Z0-9]$")

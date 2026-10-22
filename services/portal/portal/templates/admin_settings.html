@@ -26,7 +26,18 @@
         <option value="hu" {% if o.language == 'hu' %}selected{% endif %}>magyar</option>
         <option value="en" {% if o.language == 'en' %}selected{% endif %}>English</option>
       </select></label>
+    <label>Felismerés / Detection
+      <select name="detection">
+        <option value="standard" {% if o.detection != 'maximum' %}selected{% endif %}>standard</option>
+        <option value="maximum" {% if o.detection == 'maximum' %}selected{% endif %}>maximális / maximum</option>
+      </select></label>
   </div>
+  <p class="muted">
+    <b>maximális</b>: minden ismeretlen tulajdonnevet, ritka szót, kódot és hosszú számot is maszkol (magyar szövegnél).
+    Kevesebb adat szivárog, de a modell több helyőrzőt kap (márkanevek, termékkódok, régi dátumok is eltűnnek).<br>
+    <b>maximum</b>: also masks unknown proper nouns, rare words, codes and long numbers (Hungarian text). Fewer leaks,
+    but the model sees more placeholders (brand names, product codes, past dates are masked too).
+  </p>
   <p><b>Maszkolt típusok / Masked entity types</b></p>
   <div class="row">
     {% for value, label in entities %}

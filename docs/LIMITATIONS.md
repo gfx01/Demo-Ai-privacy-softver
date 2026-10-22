@@ -14,7 +14,8 @@ characters are inside a masked span (of any type); 50–95% counts as
 partially protected, below 50% as leaked. A leading title of a person (dr.,
 ifj., özv., Mr.) does not have to be masked.
 
-Five test sets, all synthetic:
+Six test sets, all synthetic (held-out #5 and the opt-in maximum level are
+in the next subsection):
 
 * **dev** (146 texts, 1098 entities) and **held-out #1** (78 / 652): used for
   tuning, optimistic.
@@ -57,6 +58,87 @@ held-out #2, default setup 93.8%, recommended 98.8%; round 1 on held-out #1,
 * **Neither setup is complete.** On held-out #4 the recommended setup did
   not fully mask 11 of 565 entities, the default one 30 (about 1 in 19).
   Treat the gateway as risk reduction, not as a guarantee.
+
+### Why not 100%, and the opt-in maximum level
+
+100% detection cannot be promised by any recogniser: personal data has no
+closed form (any word can be a surname, any number a customer ID), and a
+synthetic test set at 100% would only show that the rules were fitted to it.
+The only setting in which nothing reaches a third party is **local-only
+mode** (section 8): the model runs on the same server.
+
+For organisations that accept worse answers in exchange for fewer leaks, the
+**maximum** detection level (admin portal, per organisation; Hungarian text
+only) masks, on top of the standard results, whatever it cannot show to be
+harmless:
+
+* capitalised words inside a sentence, except "Ön", contract roles, titles
+  and salutations;
+* at a sentence start, unknown words and known names or places;
+* capitalised runs next to a masked word or a found name;
+* every later mention of a masked word;
+* acronyms, except a short generic list;
+* lower-case words that are not ordinary words, or that are given names,
+  places or surnames that are not also ordinary words;
+* numbers with 6+ digits, letter-digit codes, full dates with a year at least
+  14 years back, URLs.
+
+"Ordinary" means a form among wordfreq's 46,702 most frequent Hungarian word
+forms, a Hunspell lemma, a lemma plus endings learnt from those lists, a
+verbal prefix plus a known word, or a compound of two known words, with or
+without accents.
+
+Held-out #5 (74 texts, 370 entities; chat, recruitment, telecom, automotive,
+agriculture, retail) was written and verified before this level existed and
+measured once with it:
+
+| configuration | **protected, first run** (95% CI) | leaked | partial | ordinary words masked |
+|---|---|---|---|---|
+| default (`gazetteer`) | 95.7% (93–97%) | 13 | 3 | 0.0% |
+| default + **maximum** | **98.4%** (96–99%) | 2 | 4 | 2.2% (54 of 2431) |
+| NerKor | 97.0% (95–98%) | 9 | 2 | 1.4% |
+| NerKor + maximum | 98.1% (96–99%) | 3 | 4 | 3.4% |
+| `xx_ent_wiki_sm` | 98.1% (96–99%) | 5 | 2 | 6.8% |
+
+* What still got through with the maximum level:
+  * a lower-case family form typed without accents (*fekete benceeknel*);
+  * a lower-case accent-less given name (*gabor*);
+  * two lower-case accent-less addresses, partly masked;
+  * two phone numbers, partly masked.
+
+  Fixed afterwards (counted only in the tuned numbers):
+  * accent-less given names;
+  * "|" as a field separator;
+  * the article *A* joined to a masked acronym.
+
+  With these fixes held-out #5 is at 98.6% (optimistic).
+* What it masks needlessly:
+  * product and plan names (*Flexi 300*);
+  * article, order and case numbers (*TJ-2207*, *2026/48812*);
+  * form labels (*Lakcím:*, *Bérigény:*);
+  * brand names (*Škoda*, *Excel*);
+  * rare and misspelt words (*thx*, *kazan*);
+  * dates of past years.
+
+  The model then works with placeholders instead (*[CODE_1]*, *[NAME_2]*,
+  *[WORD_1]*) and can answer worse. Restore still brings the original values
+  back.
+* Known blind spots by design:
+  * a surname that is also a frequent word at the start of a sentence
+    (*Fekete szerint ...*) is masked only when the same word is masked
+    elsewhere in the text;
+  * lower-case surnames that are ordinary words (*szabóval*, *nagy*);
+  * English text is not covered (the level applies to Hungarian only).
+* On the tuning sets (dev, held-out #1–#4, which were known when the level
+  was written) it reaches 99.5–100% with 1–3% of ordinary words masked:
+  optimistic.
+* Latency: about the same to +60% per text in the evaluation (p50 16 → 16 ms
+  on held-out #5, 20 → 33 ms on held-out #4; noisy); about 30 MB more memory
+  for the word list. The worst adversarial input found (200,000 characters
+  of random capitalised words) costs about 1–2 s extra.
+* Existing databases need `db/migrations/001_detection_level.sql` before the
+  new gateway starts. Without the column the gateway cannot read the
+  organisation settings and blocks every request (fail closed).
 
 ### What still leaks (held-out #4, first run, default setup)
 
@@ -208,8 +290,15 @@ ambiguous formats (e.g. the személyi azonosító) they are required.
   request stopped every other request. Now 56 adversarial patterns of
   50,000 characters each are masked in at most about 3 s; a regression test
   covers the worst ones. A 200,000-character request (the limit) still takes
-  3–6 s, and up to about 13 s for a long run of phone-like digits
-  (*06 06 06 …*); it blocks the single analyzer worker meanwhile.
+  3–9 s, and up to about 13 s for a long run of phone-like digits
+  (*06 06 06 …*); it blocks the single analyzer worker meanwhile. Round 4
+  found that 200,000 characters of random capitalised 30–40-letter words took
+  about 24 s: the word analysis tried every split point of every new long
+  word. It now tries only the last 8 letters (an ending is at most 5 letters
+  plus one changed stem letter; checked to give identical results on 75,000
+  words): about 9 s. Random lower-case 8–15-letter words still take about
+  9 s (≈1.5 ms per new word in the name analysis); the maximum level adds
+  about 1–2 s on top.
 * Not measured: sustained load, many users at once.
 
 ## 6. Models that could not be evaluated here
@@ -241,6 +330,7 @@ redistributing a built image.
 | settlements | andrasbarabas/hungarian-settlements (2020) | MIT | 3828 | ~35 newer settlements; more complete lists found had no licence |
 | ordinary words | LibreOffice Hunspell hu_HU (Magyar Ispell 1.9), lower-case lemmas without proper nouns | MPL-2.0 / LGPL-3.0+ | 71033 | used only to *avoid* masking words like *rózsa*, *kovács* |
 | countries | Unicode CLDR 46.0.0, Hungarian territory names | Unicode License V3 | 257 | counties and regions are not included (*Baranyából* was missed) |
+| frequent word forms (maximum level only) | wordfreq 3.1.1 *small_hu* list (pinned wheel + SHA-256) | data CC BY-SA 4.0, code Apache-2.0 | 46,428 alphabetic forms | built from web/subtitle text, so it contains some proper nouns (*sopron*, *máv*); names and places are checked against the lists above first |
 
 Hungarian names of foreign places (*Bécs*, *Pozsony*), Budapest quarters,
 Hungarian counties and regions, frequent nicknames and frequent surnames that

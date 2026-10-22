@@ -16,7 +16,7 @@ from typing import Annotated
 from fastapi import Depends, FastAPI, Header, HTTPException
 from pydantic import BaseModel, Field
 
-from .engine import PrivacyEngine
+from .engine import DETECTION_LEVELS, PrivacyEngine
 
 logging.basicConfig(level=os.environ.get("LOG_LEVEL", "INFO"))
 log = logging.getLogger("privacy_analyzer")
@@ -55,6 +55,7 @@ class MaskRequest(BaseModel):
     strategy: str = "bracket"
     entities: list[str] | None = None
     disabled_entities: list[str] = Field(default_factory=list, max_length=64)
+    detection: str = "standard"
     org_id: str | None = None
     include_mapping: bool = True
 
@@ -97,11 +98,15 @@ def mask(req: MaskRequest) -> dict:
         raise HTTPException(status_code=400, detail="unsupported language")
     if req.strategy not in {"bracket", "pseudonym", "bracket_naive"}:
         raise HTTPException(status_code=400, detail="unsupported strategy")
+    if req.detection not in DETECTION_LEVELS or (req.detection == "maximum" and engine.maximum is None):
+        raise HTTPException(status_code=400, detail="unsupported detection level")
     started = time.perf_counter()
-    result = engine.mask(req.texts, req.language, req.strategy, req.entities, disabled_entities=req.disabled_entities)
+    result = engine.mask(req.texts, req.language, req.strategy, req.entities, disabled_entities=req.disabled_entities,
+                         detection=req.detection)
     elapsed = (time.perf_counter() - started) * 1000
     # Log sizes and counts only - never text.
-    log.info("mask texts=%d chars=%d entities=%d ms=%.1f", len(req.texts), sum(map(len, req.texts)), result.entity_total, elapsed)
+    log.info("mask texts=%d chars=%d entities=%d detection=%s ms=%.1f", len(req.texts), sum(map(len, req.texts)),
+             result.entity_total, req.detection, elapsed)
     body = {
         "masked_texts": result.masked_texts,
         "entity_counts": result.entity_counts,

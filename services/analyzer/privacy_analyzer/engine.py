@@ -42,6 +42,7 @@ from presidio_analyzer.nlp_engine import NerModelConfiguration, NlpEngineProvide
 from privacy_hub.masking import MaskingSession, MaskResult, Span, get_morphology, resolve_overlaps
 from privacy_hub.masking.pseudonyms import PseudonymStrategy
 
+from .maximum import MaximumDetector
 from .recognizers import AnyTldEmailRecognizer, GuardedPhoneRecognizer, HuNameRecognizer, hungarian_recognizers
 
 log = logging.getLogger("privacy_analyzer.engine")
@@ -54,6 +55,8 @@ tldextract.extract = tldextract.TLDExtract(suffix_list_urls=(), cache_dir=None)
 # Entity types that are detected but not masked by default (too noisy / not
 # personal data on their own). Organisations can change this later.
 DEFAULT_IGNORED = {"DATE_TIME", "NRP", "URL", "IN_PAN", "US_DRIVER_LICENSE", "US_BANK_NUMBER"}
+# Detection levels: "maximum" adds MaximumDetector (Hungarian only) and masks URLs.
+DETECTION_LEVELS = ("standard", "maximum")
 
 NER_MAPPING = {
     "PER": "PERSON",
@@ -289,6 +292,12 @@ class PrivacyEngine:
         self._lexicon = (names.given | names.surnames) if names else set()
         self._male = names.male if names else set()
         self._female = names.female if names else set()
+        self.maximum: MaximumDetector | None = None
+        if "hu" in self.languages and gazetteer:
+            try:
+                self.maximum = MaximumDetector(lexicon_dir)
+            except RuntimeError as exc:
+                log.warning("maximum detection level unavailable: %s", exc)
         self.info = EngineInfo(
             self.languages,
             dict(self.nlp_backends),
@@ -309,7 +318,13 @@ class PrivacyEngine:
         entities: list[str] | None = None,
         score_threshold: float = 0.4,
         disabled_entities: list[str] | tuple[str, ...] = (),
+        detection: str = "standard",
     ) -> list[RecognizerResult]:
+        if detection not in DETECTION_LEVELS:
+            raise ValueError(f"unknown detection level {detection!r}")
+        maximum = detection == "maximum" and language == "hu"
+        if maximum and self.maximum is None:
+            raise ValueError("the maximum detection level is not available (needs the gazetteer and word_forms.txt)")
         analyzer = self.analyzers[language]
         results = analyzer.analyze(text=text, language=language, entities=entities, score_threshold=score_threshold)
         # A line break inside a name, number or address (wrapped lines of OCR
@@ -320,10 +335,12 @@ class PrivacyEngine:
         view = SOFT_LINE_BREAK.sub(" ", text) if "\n" in text else text
         if view != text:
             results += analyzer.analyze(text=view, language=language, entities=entities, score_threshold=score_threshold)
-        ignored = set(disabled_entities) | (DEFAULT_IGNORED if entities is None else set())
+        ignored = set(disabled_entities) | (DEFAULT_IGNORED - ({"URL"} if maximum else set()) if entities is None else set())
         results = [r for r in results if r.entity_type not in ignored]
         if language == "hu":
             results += repeated_org_names(text, results, ignored)
+        if maximum:
+            results += [r for r in self.maximum.detect(text, results) if r.entity_type not in ignored]
         # Resolve overlaps here (prefer higher score, then longer span) so that
         # pre-registration and Presidio's anonymizer see the same span set.
         keep = {
@@ -345,6 +362,7 @@ class PrivacyEngine:
         entities: list[str] | None = None,
         score_threshold: float = 0.4,
         disabled_entities: list[str] | tuple[str, ...] = (),
+        detection: str = "standard",
     ) -> MaskResult:
         if language not in self.analyzers:
             raise ValueError(f"language {language!r} is not loaded (available: {self.languages})")
@@ -354,7 +372,7 @@ class PrivacyEngine:
         texts = [normalize_text(t) for t in texts]
         strat = PseudonymStrategy(gender_of=self.gender_of) if strategy == "pseudonym" else strategy
         session = MaskingSession(strat, get_morphology(language, self._lexicon), existing_texts=texts, language=language)
-        analyzed = [self.analyze(t, language, entities, score_threshold, disabled_entities) for t in texts]
+        analyzed = [self.analyze(t, language, entities, score_threshold, disabled_entities, detection) for t in texts]
         for text, results in zip(texts, analyzed, strict=True):
             for r in results:
                 session.register(r.entity_type, text[r.start : r.end])

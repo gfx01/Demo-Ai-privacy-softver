@@ -121,7 +121,7 @@ def _org_form(html: str, org: str) -> dict:
     selected = dict(re.findall(r'<select name="(\w+)">.*?<option value="(\w+)" selected', block, re.S))
     enabled = re.findall(r'name="enabled" value="(\w+)" checked', block)
     return {"mode": selected["mode"], "strategy": selected["strategy"], "language": selected["language"],
-            "enabled": enabled}
+            "detection": selected.get("detection", "standard"), "enabled": enabled}
 
 
 def test_strict_mode_switch_blocks_then_mask_mode_restores(gateway, admin_auth, user_key, mock_provider):
@@ -154,6 +154,44 @@ def test_strict_mode_switch_blocks_then_mask_mode_restores(gateway, admin_auth, 
     deadline = time.monotonic() + 30
     while chat(gateway, user_key, prompt)[0] != 200:
         assert time.monotonic() < deadline, "mask mode never came back"
+        time.sleep(2)
+
+
+def test_maximum_detection_level_masks_unknown_names_end_to_end(gateway, admin_auth, user_key, mock_provider):
+    html = gateway.get("/admin/settings", auth=admin_auth).text
+    original = _org_form(html, "default")
+
+    def save(detection: str) -> None:
+        r = gateway.post("/admin/settings/default", auth=admin_auth, follow_redirects=False,
+                         data={**original, "detection": detection, "csrf": _csrf(html)})
+        assert r.status_code == 303, r.text
+
+    # an invented name no list knows, and an order code: only "maximum" masks them
+    prompt = "Holnap a Zebrafa Studióval egyeztetünk a TQ-88412/B rendelésről."
+    save("maximum")
+    try:
+        deadline = time.monotonic() + 30
+        while True:  # the gateway caches settings for ~10 s
+            mock_provider.clear()
+            status, text, _ = chat(gateway, user_key, prompt)
+            assert status == 200
+            sent = json.dumps(mock_provider.received(), ensure_ascii=False)
+            if "Zebrafa" not in sent:
+                break
+            assert time.monotonic() < deadline, "maximum detection never took effect"
+            time.sleep(2)
+        assert "TQ-88412" not in sent and "[NAME_1]-vel" in sent and "[CODE_1]" in sent
+        assert text == f"Mock reply: {prompt}"  # restored in full
+        assert 'value="maximum" selected' in gateway.get("/admin/settings", auth=admin_auth).text
+    finally:
+        save(original["detection"])
+    deadline = time.monotonic() + 30
+    while True:
+        mock_provider.clear()
+        chat(gateway, user_key, prompt)
+        if "Zebrafa" in json.dumps(mock_provider.received(), ensure_ascii=False):
+            break
+        assert time.monotonic() < deadline, "standard detection never came back"
         time.sleep(2)
 
 

@@ -37,6 +37,11 @@ dictionary (Magyar Ispell 1.9, MPL 2.0 / LGPL 3+), without proper nouns
 (morphology "po:noun_prs"). Used to avoid masking "rózsa", "virág", "kovács"
 when they are not names.
 
+Word forms: the 46,702 most frequent Hungarian word forms (inflected forms
+included) of wordfreq 3.1.1 ("small" list, pinned wheel + SHA-256; code
+Apache-2.0, data CC BY-SA 4.0, Robyn Speer). Used only by the opt-in
+"maximum" detection level to tell ordinary words from unknown ones.
+
 Usage: python fetch_lexicon.py OUTPUT_DIR
 """
 
@@ -83,6 +88,11 @@ GEONAMES_WHEEL = (
     "https://files.pythonhosted.org/packages/48/c2/52f1b29de8839b4b55cd2641dfd722a6a94953d74fa82514e26084a92318/"
     "geonamescache-3.0.2-py3-none-any.whl",
     "b830e8942f2d58c7e68782dcf4dff2ffe8c4104a35ee881ed1ad4023cefcdba4",
+)
+WORDFREQ_WHEEL = (
+    "https://files.pythonhosted.org/packages/24/61/62835c475d69872d30689f284497853fe33fe1d6dd18f57346d13305861d/"
+    "wordfreq-3.1.1-py3-none-any.whl",
+    "4b1c6ecffc6198be3396d5cf871c4423ca71c907c231348d352dd54d62b97473",
 )
 NEIGHBOURS = {"AT", "SK", "RO", "RS", "HR", "SI", "UA"}
 
@@ -163,6 +173,26 @@ def foreign_cities() -> list[str]:
         if len(name) >= 3 and all(_latin(part) for part in name.replace("-", " ").split()):
             names.add(name)
     return sorted(names)
+
+
+def word_forms(raw: bytes | None = None) -> list[str]:
+    """Hungarian word forms of wordfreq's small list (msgpack: a header, then
+    frequency buckets of words), letters only, in frequency order."""
+    import gzip
+
+    import srsly  # spaCy dependency, bundles msgpack
+
+    raw = raw or fetch_pinned(*WORDFREQ_WHEEL)
+    data = srsly.msgpack_loads(gzip.decompress(zipfile.ZipFile(io.BytesIO(raw)).read("wordfreq/data/small_hu.msgpack.gz")))
+    if data[0] != {"format": "cB", "version": 1}:
+        raise SystemExit("unexpected wordfreq data format")
+    seen: dict[str, None] = {}
+    for bucket in data[1:]:
+        for word in bucket:
+            word = unicodedata.normalize("NFC", word)
+            if word.isalpha():
+                seen.setdefault(word, None)
+    return list(seen)
 
 
 def extra_surnames() -> list[str]:
@@ -308,6 +338,11 @@ def main() -> int:
     (out / "common_words.txt").write_text("\n".join(common) + "\n", encoding="utf-8")
     meta["common_words"] = {"sources": [HUNSPELL_DIC[0], HUNSPELL_AFF[0]], "sha256": [HUNSPELL_DIC[1], HUNSPELL_AFF[1]],
                             "count": len(common), "licence": "MPL-2.0 / LGPL-3.0+ (Magyar Ispell, LibreOffice)"}
+    forms = word_forms()
+    (out / "word_forms.txt").write_text("\n".join(forms) + "\n", encoding="utf-8")
+    meta["word_forms"] = {"source": WORDFREQ_WHEEL[0], "sha256": WORDFREQ_WHEEL[1], "count": len(forms),
+                          "order": "most frequent first",
+                          "licence": "data CC BY-SA 4.0, code Apache-2.0 (wordfreq 3.1.1, Robyn Speer)"}
     names = countries()
     (out / "countries.txt").write_text("\n".join(names) + "\n", encoding="utf-8")
     meta["countries"] = {"source": CLDR_TERRITORIES[0], "sha256": CLDR_TERRITORIES[1], "count": len(names),

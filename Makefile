@@ -59,7 +59,7 @@ test-integration: $(GATEWAY_VENV)
 test: test-unit test-analyzer test-ocr test-integration
 
 # Detection + restoration evaluation, then docs/EVALUATION.md.
-EVAL_SETS := dev heldout heldout2 heldout3 heldout4
+EVAL_SETS := dev heldout heldout2 heldout3 heldout4 heldout5
 EVAL_ENV := PYTHONPATH=services/analyzer:src PRIVACY_HUB_PSEUDONYM_KEY=eval-only-not-a-secret-key
 eval: $(ANALYZER_VENV) $(GATEWAY_VENV)
 	for s in $(EVAL_SETS); do python3 eval/build_testset.py $$s eval/data/raw/$${s}_generated_verified.json || exit 1; done

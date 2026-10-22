@@ -25,7 +25,8 @@ This is an MVP / demo. Read this before using it with real data.
   extra keys or free text, and parameters such as `reasoning_effort`,
   `tool_choice`, `stream_options` and `logit_bias` must have the expected
   shape. Anything else is refused (HTTP 400).
-* **Sent unmasked**: anything detection misses (see Known limits), `stop`
+* **Sent unmasked**: anything detection misses (see Known limits; the opt-in
+  *maximum* detection level misses less but still not nothing), `stop`
   sequences, tool/function and schema names, enum, default, `const` and
   `examples` values of tool and response schemas, parameter names, and
   parameters an admin allows through `PRIVACY_HUB_EXTRA_ALLOWED_PARAMS`.

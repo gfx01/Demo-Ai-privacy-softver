@@ -256,6 +256,9 @@ def parse_raw_suffix(raw: str, stem: str = "") -> str | None:
 
 # Longest word the morphology analyses ("Kiskunfélegyházáról" is 19 letters).
 MAX_WORD_LENGTH = 40
+# Longest part of a word after the stem split point that an ending can
+# account for (measured maximum over the lexicon and all cases: 5).
+MAX_TAIL = 8
 
 class HungarianMorphology:
     name = "hu"
@@ -309,7 +312,11 @@ class HungarianMorphology:
                 return m.group(1), case, "-" + m.group(2)
         # (known_in_lexicon, productive_rule, stem, case, raw_suffix)
         candidates: list[tuple[int, int, str, str, str]] = []
-        for i in range(2, len(w)):
+        # A case ending changes at most the last letter of the stem and adds
+        # at most 5 letters ("Fikk" -> "Fikk-ként"), so only the last
+        # MAX_TAIL letters can follow the split point. (Trying every split
+        # of a long word cost ~7 ms per unique word: a DoS lever.)
+        for i in range(max(2, len(w) - MAX_TAIL), len(w)):
             prefix, rest = w[:i], w[i:]
             stems = {prefix}
             unlengthened = None
@@ -420,4 +427,4 @@ class HungarianMorphology:
         return "-" + _abbreviation_suffix(inflection.case) if inflection.case in SUFFIXES else ""
 
 
-INFLECTABLE_TYPES = {"PERSON", "HU_COMPANY", "ORGANIZATION", "LOCATION", "HU_PERSON"}
+INFLECTABLE_TYPES = {"PERSON", "HU_COMPANY", "ORGANIZATION", "LOCATION", "HU_PERSON", "PROPER_NOUN"}

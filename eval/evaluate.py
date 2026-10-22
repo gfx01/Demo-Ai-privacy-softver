@@ -70,6 +70,10 @@ BACKENDS = {
                    "desc": "patterns + gazetteer + CNN NER trained here on NYTK-NerKor"},
     "nerkor_cnn_no_gazetteer": {"hu_ner": f"spacy:{MODELS / 'hu_nerkor_cnn'}", "gazetteer": False,
                                 "desc": "patterns + CNN NER (NerKor), no gazetteer"},
+    "gazetteer_max": {"hu_ner": "none", "gazetteer": True, "detection": "maximum",
+                      "desc": "gazetteer + opt-in maximum detection level (masks unknown words; over-masks)"},
+    "nerkor_cnn_max": {"hu_ner": f"spacy:{MODELS / 'hu_nerkor_cnn'}", "gazetteer": True, "detection": "maximum",
+                       "desc": "NerKor CNN + gazetteer + opt-in maximum detection level"},
     "huspacy_md": {"hu_ner": "spacy:hu_core_news_md", "gazetteer": True,
                    "desc": "patterns + gazetteer + HuSpaCy hu_core_news_md"},
     "huspacy_lg": {"hu_ner": "spacy:hu_core_news_lg", "gazetteer": True,
@@ -107,11 +111,11 @@ def run_backend(name: str, dataset: str) -> dict:
     load_s = time.perf_counter() - t0
     rss_after = _rss_kb()
     for item in items[:3]:  # warm-up
-        engine.analyze(item["text"], "hu")
+        engine.analyze(item["text"], "hu", detection=cfg.get("detection", "standard"))
     preds, latencies = {}, []
     for item in items:
         t = time.perf_counter()
-        results = engine.analyze(item["text"], "hu")
+        results = engine.analyze(item["text"], "hu", detection=cfg.get("detection", "standard"))
         latencies.append((time.perf_counter() - t) * 1000)
         preds[item["id"]] = [
             {"type": r.entity_type, "start": r.start, "end": r.end, "score": round(r.score, 3)} for r in results
@@ -167,6 +171,8 @@ def score(items: list[dict], predictions: dict[str, list[dict]]) -> dict:
     # per domain: [gold, protected, partial, leaked, spurious spans, items, negative items, negatives with a hit]
     by_domain = defaultdict(lambda: [0, 0, 0, 0, 0, 0, 0, 0])
     spurious_total = 0
+    # over-masking by words: ordinary (non-gold) words that end up masked
+    plain_words = masked_words = 0
     for item in items:
         text = item["text"]
         gold = [(g["type"], *_norm(text, g["start"], g["end"]), g) for g in item["entities"]]
@@ -182,6 +188,11 @@ def score(items: list[dict], predictions: dict[str, list[dict]]) -> dict:
         spurious = sum(1 for p in pred if not any(min(g[2], p[2]) > max(g[1], p[1]) for g in gold))
         spurious_total += spurious
         dom[4] += spurious
+        for m in re.finditer(r"\w+", text):
+            if any(g[1] < m.end() and m.start() < g[2] for g in gold):
+                continue
+            plain_words += 1
+            masked_words += any(p[1] < m.end() and m.start() < p[2] for p in pred)
         if not gold:
             dom[6] += 1
             dom[7] += int(bool(pred))
@@ -266,6 +277,9 @@ def score(items: list[dict], predictions: dict[str, list[dict]]) -> dict:
         "recall_by_case": {k: {"recall": round(v[0] / v[1], 3) if v[1] else 0.0, "n": v[1]} for k, v in sorted(by_case.items())},
         "leak_examples": leaks,
         "spurious_spans": spurious_total,
+        "non_pii_words": plain_words,
+        "non_pii_words_masked": masked_words,
+        "non_pii_words_masked_rate": round(masked_words / plain_words, 4) if plain_words else 0.0,
         "per_domain": {
             d: {"gold": v[0], "protected": v[1], "partially_protected": v[2], "leaked": v[3],
                 "protected_rate": round(v[1] / v[0], 3) if v[0] else None, "protected_ci95": wilson(v[1], v[0]) if v[0] else None,

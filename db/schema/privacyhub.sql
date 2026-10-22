@@ -14,6 +14,7 @@ CREATE TABLE org_settings (
     strategy          text NOT NULL DEFAULT 'bracket' CHECK (strategy IN ('bracket', 'pseudonym')),
     language          text NOT NULL DEFAULT 'hu' CHECK (language IN ('hu', 'en')),
     disabled_entities text[] NOT NULL DEFAULT '{}',
+    detection         text NOT NULL DEFAULT 'standard' CHECK (detection IN ('standard', 'maximum')),
     updated_at        timestamptz NOT NULL DEFAULT now(),
     updated_by        text
 );
