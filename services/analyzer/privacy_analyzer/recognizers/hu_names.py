@@ -311,10 +311,14 @@ class HuNameRecognizer(EntityRecognizer):
         stem = self._stem(token)[0]
         base = self._married_base(token) or stem
         family = self._family_base(token)
-        parts = {token, stem, base, *base.split("-")} | ({family} if family else set()) | self._possessive_bases(token)
-        # old spelling: "Várady" = "Váradi", "Csáky" = "Csáki"
-        parts |= {p[:-1] + "i" for p in parts if len(p) > 3 and p.endswith("y") and p[-2] not in "aeiouáéíóöőúüűgnlt"}
-        return any(p in self.surnames or self._stem(p)[0] in self.surnames for p in parts)
+        parts = {token, stem, base, *base.split("-")} | ({family} if family else set())
+        if any(p in self.surnames or self._stem(p)[0] in self.surnames for p in parts):
+            return True
+        # base forms only (no further stemming, which is slow on new words):
+        # possessive "Kovácsét", old spelling "Várady" = "Váradi", "Csáky" = "Csáki"
+        extra = self._possessive_bases(token)
+        extra |= {p[:-1] + "i" for p in parts | extra if len(p) > 3 and p.endswith("y") and p[-2] not in "aeiouáéíóöőúüűgnlt"}
+        return bool(extra & self.surnames)
 
     def is_given_plain(self, token: str) -> bool:
         """A given name typed without accents, also inflected or as a married

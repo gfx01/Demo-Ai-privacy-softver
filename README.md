@@ -7,9 +7,10 @@ placeholders **before it leaves the company** and restored in the answer,
 with correct Hungarian endings (*[PERSON_1]-nek* → *Kovács Péternek*).
 
 > **Demo, not production.** On our newest synthetic Hungarian test set
-> (74 texts, 406 personal-data items, not used for tuning), the recommended
-> setup did not fully mask 5 items and the 10-minute default setup 25 (about
-> 1 in 16). Real documents will be harder, and OCR of scans was not measured.
+> (74 texts, 565 personal-data items, measured once), the recommended setup
+> did not fully mask 11 items and the 10-minute default setup 30 (about 1 in
+> 19). Real documents will be harder; OCR was measured only on synthetic
+> renderings of the test texts, not on real scans.
 > Masking is pseudonymisation, not anonymisation. Read
 > [docs/LIMITATIONS.md](docs/LIMITATIONS.md) and [SECURITY.md](SECURITY.md)
 > before using real data.
@@ -82,12 +83,14 @@ A válaszban viszont már *Kovács Péternek* áll.
 ### Ajánlott: magyar névfelismerő modell
 
 Az alapbeállítás (`ANALYZER_HU_NER=none`) mintákkal, valamint név-, település-
-és szólistával dolgozik. A második független teszthalmazon (74 szöveg, 406
-adat) az adatok 93,8%-át maszkolja teljesen; 24 marad szinte teljesen
-olvasható, főleg ékezet nélkül írt nevek és helynevek, valamint külföldi nevek.
-A NerKor korpuszon tanított kis modellel ez 98,8%, 3 kiszivárgással, viszont
-több hétköznapi szót is maszkol. A hangoláshoz használt halmazokon magasabbak a
-számok, de azok optimista becslések (lásd [docs/LIMITATIONS.md](docs/LIMITATIONS.md)):
+és szólistával dolgozik. A legutóbbi független teszthalmazon (4. tesztkészlet:
+74 szöveg, 565 adat, egyszer mérve) az adatok 94,7%-át maszkolja teljesen; 28
+marad szinte teljesen olvasható, főleg jogi forma nélküli szervezetnevek,
+listákon nem szereplő külföldi helynevek és nevek, valamint kisbetűs,
+ékezet nélküli chatüzenetek. A NerKor korpuszon tanított kis modellel ez
+98,1%, 10 kiszivárgással, viszont több hétköznapi szót is maszkol. A hangoláshoz
+használt halmazokon magasabbak a számok, de azok optimista becslések (lásd
+[docs/LIMITATIONS.md](docs/LIMITATIONS.md)):
 
 ```sh
 make nerkor          # kb. 20 perc 4 vCPU-n; NYTK-NerKor, CC BY-SA 4.0
@@ -137,9 +140,12 @@ licenc kell. Bekapcsolása a `.env`-ben: `OCR_WITH_SURYA=1`,
 `docker compose --profile surya up -d --build`. Részletek:
 [docs/LIMITATIONS.md](docs/LIMITATIONS.md).
 
-A magyar OCR pontosságát valódi szkennelt dokumentumokon **nem mértük**. Ha
-az OCR elront egy nevet (pl. ékezet nélkül olvassa), a maszkoló is
-kihagyhatja.
+Az OCR-t csak a tesztszövegekből generált képeken mértük (tiszta nyomtatás,
+irodai szkennelés, telefonos fotó, képernyőkép utánzata); valódi szkennelt
+dokumentumokon **nem**. Ezeken a maszkolás után nagyjából ugyanannyi adat
+maradt olvasható, mint az eredeti szövegben (a telefonos fotón kicsit több); a
+részletek a [docs/EVALUATION.md](docs/EVALUATION.md)-ben vannak. Ha az OCR
+elront egy nevet, a maszkoló kihagyhatja.
 
 ### Saját szerveren futó nyelvi modell („local-only” mód)
 
@@ -251,10 +257,11 @@ the answer you get back says *Kovács Péternek* again.
 ### Recommended: Hungarian NER model
 
 The default (`ANALYZER_HU_NER=none`) uses patterns plus name, settlement and
-word lists. On held-out set #2 (74 texts, 406 entities, not used for tuning)
-it fully masks 93.8% of entities; 24 stay mostly readable, mainly names and
-places typed without accents and foreign names. A small model trained on
-NYTK-NerKor raises this to 98.8% with 3 leaks, at the cost of masking more
+word lists. On the latest held-out set (#4: 74 texts, 565 entities, measured
+once) it fully masks 94.7% of entities; 28 stay mostly readable, mainly
+organisation names without a legal form, foreign places and names that are not
+on its lists, and lower-case chat typed without accents. A small model trained
+on NYTK-NerKor raises this to 98.1% with 10 leaks, at the cost of masking more
 ordinary words. Numbers on the sets used for tuning are higher but optimistic
 (see [docs/LIMITATIONS.md](docs/LIMITATIONS.md)):
 
@@ -297,8 +304,11 @@ otherwise a paid licence is needed. To enable it: `OCR_WITH_SURYA=1`,
 `OCR_ENGINE=surya`, `OCR_SURYA_LICENSE_ACCEPTED=true`,
 `SURYA_INFERENCE_URL=http://surya-vlm:8000/v1`, weights in
 `models/surya/surya-ocr-2`, then `docker compose --profile surya up -d --build`.
-Hungarian OCR accuracy on real scans was **not measured**; an OCR error in a
-name can make the masking miss it.
+OCR was measured only on images rendered from the test texts (clean print,
+office scan, phone photo and screenshot imitations), **not on real scans**.
+After masking, about as much stayed readable as in the original texts (a
+little more on phone photos); see [docs/EVALUATION.md](docs/EVALUATION.md). An
+OCR error in a name can make the masking miss it.
 
 ### Local LLM and local-only mode
 
@@ -410,9 +420,11 @@ make test-analyzer      # Hungarian recognizers (separate venv: Presidio vs Lite
 make test-ocr           # OCR service: file types, limits, Tesseract on Hungarian text
 make test-integration   # against the running stack: E2E, fail-closed, OCR, audit, budgets, admin
 make eval               # detection + restore evaluation -> docs/EVALUATION.md
+make eval-ocr           # test texts rendered as images, OCR'd and masked (after make eval)
+make eval-perf          # latency and memory of the running stack (mock model)
 ```
 
-Last run: 262 unit, 101 analyzer, 32 OCR and 60 integration tests passed. The
+Last run: 263 unit, 192 analyzer, 32 OCR and 60 integration tests passed. The
 integration tests stop and pause services to prove fail-closed behaviour. They
 check that the mock provider receives nothing, and that a full Postgres dump,
 Redis and all container logs contain no raw test PII.

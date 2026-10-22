@@ -114,8 +114,15 @@ This is an MVP / demo. Read this before using it with real data.
    and the llama.cpp local model service are wired up but were not runnable
    in the build environment (see `docs/LIMITATIONS.md`).
 10. **OCR errors leak.** A name the OCR misreads (missing accents, wrong
-   letters) may not be detected and is then sent in clear text. OCR accuracy
-   on Hungarian scans was not measured.
+   letters) may not be detected and is then sent in clear text. The
+   recognizers tolerate the common Tesseract errors, but OCR was measured
+   only on synthetic renderings of the test texts, not on real scans.
+11. **Expensive input.** Crafted text could freeze the analyzer before round
+   3 (catastrophic regex backtracking, quadratic work on long words and on
+   texts with thousands of entities); these were fixed and are covered by a
+   regression test, but the analyzer has no per-request time limit, and a
+   200,000-character request takes seconds of a single worker. Keep the API
+   keys to people who need them and watch analyzer latency.
 
 ## Trust boundaries
 

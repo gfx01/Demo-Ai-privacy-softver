@@ -18,12 +18,13 @@ Grouped by area; items within an area are not ranked (docs/LIMITATIONS.md shows 
 - [ ] Nicknames beyond the built-in list in `hu_names.py` (diminutives such as *Bencike*), lower-case names (caught after a greeting or title, as a surname + given-name pair, as a lone given name that is not an ordinary word, or in an -né/-ék form), initials ("K. Péter"), foreign names in Hungarian text.
 - [ ] Per-organisation allow/deny lists (e.g. never mask the firm's own name; always mask client list).
 
-- [ ] Capitalised names and places typed without accents (*Reka*, *Halasz Tibornal*, *Szolnokrol*) are the largest remaining leak class with the default setup: 16 of 24 leaked entities on held-out set #2. Smaller ones: foreign given names and cities not on the lists (*Jeroen*, *Aoife Brennan*, *Rotterdamba*), counties and regions (*Baranyából*), streets named after a person in running text (*Mátyás király út*), lone surnames without a cue. Not fixed yet on purpose: fixing them now would tune on held-out #2. Write a fresh held-out set #3 before the next round, then fix and measure once.
+- [ ] Remaining leak classes (held-out #4, first run, default setup, 28 leaked): organisation names without a legal form (*Malomkert Rendezvénypajta*, *Stichting Brugwerk*), long public-body names, Hungarian names of foreign places not on the list (*Szatmárnémeti*, *Kréta*), lower-case chat surnames and nicknames (*hajdut*, *dodo*), given names that are also words at the start of a line (*Dalma:*), names missing from the source lists (*Mykola*). Held-out sets #1–#4 have all been used now: write a fresh held-out set #5 before the next round, then fix and measure once.
+- [ ] Hungarian exonyms of foreign places from a licensed source (GeoNames alternate names have no language tags in the geonamescache extract; the full GeoNames alternateNames table has them).
 - [ ] Decide whether public authorities such as *NAV* should be masked: they are labelled ORG in the test sets and count as misses, but their names are not personal data and masking them makes prompts harder to answer.
 - [ ] Confirm with a native-speaker linguist the adjudicated harmony of "Kkt." endings (engine: *Kkt.-val*, per the AkH pronunciation rule; *Kkt.-vel* is common in usage).
 
 ## Documents, images and local models
-- [ ] Hungarian OCR evaluation: scanned letters, contracts, invoices, medical reports and phone photos with known text; measure character error rate on ő/ű and how many personal-data items are still masked after OCR, for Tesseract (fast vs best models) and Surya.
+- [ ] Hungarian OCR evaluation on real documents: scanned letters, contracts, invoices, medical reports and phone photos with known text (`make eval-ocr` covers only synthetic renderings of the test texts); Tesseract fast vs best models and Surya.
 - [ ] Surya: get Datalab's written answer on the competitor clause (2(c)) and a quote for an on-premises/OEM licence; have counsel review the share-alike and attribution clauses on Output. Until then keep Tesseract as the default.
 - [ ] Run the Surya engine end-to-end on a GPU host (surya-vlm profile, pinned weight revision with SHA-256) and the llama.cpp local-llm profile with a real model; neither was run here.
 - [ ] Pick a local LLM with a Hungarian task set (letters, legal and medical summaries, Q&A over documents), human-reviewed; archive the weight licence files with their SHA-256; measure speed on CPU-only and single-GPU servers.
@@ -48,7 +49,7 @@ Grouped by area; items within an area are not ranked (docs/LIMITATIONS.md shows 
 
 ## Security testing
 - [ ] External penetration test (gateway bypass, prompt-injection against masking, tenant isolation, admin portal).
-- [ ] Fuzzing of the analyzer (ReDoS) and the restorer.
+- [ ] Fuzzing of the analyzer and the restorer. Round 3 fixed catastrophic backtracking and quadratic paths found with 56 hand-written adversarial patterns (regression test `test_no_catastrophic_backtracking`); a fuzzer would find more. Consider a per-request time limit in a separate analyzer process, since a stuck regex holds the interpreter lock.
 - [ ] Load and soak tests; failure-injection tests for every dependency (some exist as integration tests).
 
 ## Compliance documentation (ISO 27001-style)
