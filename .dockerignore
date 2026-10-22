@@ -10,5 +10,6 @@ tests
 docs
 models/lexicon
 models/*_work
+models/tessdata
 *.md
 !certs/README.md

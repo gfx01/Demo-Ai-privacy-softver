@@ -3,6 +3,8 @@ is confirmed (see privacy_hub.hu_ids.PROVENANCE); the rest is format only."""
 
 from __future__ import annotations
 
+import re
+
 from privacy_hub import hu_ids
 
 from .base import NA, NB, HuRegexRecognizer, Pattern
@@ -60,6 +62,47 @@ class BankAccountRecognizer(HuRegexRecognizer):
     checksum = staticmethod(hu_ids.is_valid_bank_account)
 
 
+class BankAccountOcrRecognizer(HuRegexRecognizer):
+    """A bank account number damaged by OCR or a typo: a digit doubled or
+    dropped, a space inside a group ("955031851-36678652-30484466",
+    "51959036-323697 10-65025995"). Accepted only next to a bank-account word;
+    when the check digits fail, with a lower score."""
+
+    ENTITY = "HU_BANK_ACCOUNT"
+    _GROUP = r"\d{1,9}(?: \d{1,8})?"
+    PATTERNS = (
+        Pattern("giro_ocr", NB + rf"(?P<value>{_GROUP}[-‐–]{_GROUP}(?:[-‐–]{_GROUP})?)" + NA, 0.4, needs_context=True),
+    )
+    CONTEXT = BankAccountRecognizer.CONTEXT
+
+    def validate(self, value: str) -> bool | None:
+        if len(hu_ids.digits(value)) not in (15, 16, 17, 23, 24, 25):
+            return False  # not shaped like an account number
+        if hu_ids.is_valid_bank_account(value):
+            return True
+        groups = re.split(r"[-‐–]", value)
+        if all(re.fullmatch(r"\d{8}", g) for g in groups):
+            return False  # clean 8-digit groups with wrong check digits: not an account ("termékkód 12345678-87654321")
+        return None  # visibly damaged: a digit doubled or dropped, a space inside a group
+
+
+class IbanOcrRecognizer(HuRegexRecognizer):
+    """A Hungarian IBAN in OCR output, where digits are read as letters
+    ("HUO8 ...", "HUS3 ..."): accepted when the check digits are right once the
+    usual confusions are undone (O->0, S->5, l/I/|->1, B->8, Z->2)."""
+
+    ENTITY = "IBAN_CODE"
+    _C = r"[0-9OoSsIl|BZ]"
+    PATTERNS = (Pattern("iban_ocr", rf"(?<![\w])(?P<value>[Hh][Uu]{_C}{{2}}(?:\s?{_C}{{4}}){{6}})(?![\w])", 0.6),)
+    _FIX = str.maketrans({"O": "0", "o": "0", "S": "5", "s": "5", "I": "1", "l": "1", "|": "1", "B": "8", "Z": "2"})
+
+    def validate(self, value: str) -> bool | None:
+        fixed = value[:2] + value[2:].translate(self._FIX)
+        if fixed == value:
+            return False  # an undamaged IBAN is found by the regular IBAN recognizer
+        return hu_ids.is_valid_iban(fixed)
+
+
 class CompanyRegRecognizer(HuRegexRecognizer):
     """Cégjegyzékszám: format only (no check digit known)."""
 
@@ -81,6 +124,9 @@ class IdCardRecognizer(HuRegexRecognizer):
     PATTERNS = (
         Pattern("card", NB + r"(?P<value>\d{6}[ -]?[A-Z]{2})(?![\w])", 0.45),
         Pattern("booklet", NB + r"(?P<value>[A-Z]{2}[ -]?(?:[IVX]+[ -])?\d{6})(?![\w])", 0.3, needs_context=True),
+        # OCR misreads the letters: O/0, I/l/1, J/], S/5 ("3580210A", "229277Al",
+        # "004861R]"); accepted only next to an ID-card word.
+        Pattern("card_ocr", NB + r"(?P<value>\d{6}[ -]?[A-Z0-9lI|\]\[{}()]{2,3})(?![\w\]\[|{}])", 0.4, needs_context=True),
     )
     CONTEXT = r"személyi ig|személyi\b|\bszig|igazolvány|okmányazonosító|szem\. ?ig|id ?card|útlevél"
     FLAGS = 0  # case-sensitive: the letters are upper case
@@ -137,7 +183,8 @@ class BirthDateRecognizer(HuRegexRecognizer):
             needs_context=True,
         ),
     )
-    # "szület" covers született, születési, születésű, születés
-    CONTEXT = r"szület|\bszül\.|\bszd\.|birth|\bborn\b|\bsz\. ?d|életkor|\bkora\b"
+    # "szület" covers született, születési, születésű, születés; also as OCR and
+    # accent-less typing render it ("sziil.", "szul.", "szuletett")
+    CONTEXT = r"sz(?:ü|u|ii|ű)let|\bsz(?:ü|u|ii|ű)l\.|\bszd\.|birth|\bborn\b|\bsz\. ?d|életkor|\bkora\b"
     CONTEXT_BEFORE = 40
     CONTEXT_AFTER = 25  # "... 1991. augusztus 23. napján született"

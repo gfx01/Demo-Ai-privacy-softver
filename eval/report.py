@@ -119,37 +119,42 @@ def _load(name: str) -> dict | None:
     return json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
 
 
+def _cell(d: dict | None, b: str) -> str:
+    if not d or d["backends"].get(b, {}).get("status") != "ok":
+        return "–"
+    m = d["backends"][b]["metrics"]
+    spur = m.get("spurious_spans")
+    return f"{pct(m['protected_rate'])} ({ci(m['protected_ci95'])}), {m['leaked']} leaked" + (
+        f", {spur} spurious" if spur is not None else "")
+
+
 def summary_section() -> list[str]:
-    dev, held, held2 = _load("detection_dev.json"), _load("detection_heldout.json"), _load("detection_heldout2.json")
-    held2_base = _load("detection_heldout2_baseline.json")
+    dev, held, held2, held3 = (_load(f"detection_{n}.json") for n in ("dev", "heldout", "heldout2", "heldout3"))
+    held4, held4_base = _load("detection_heldout4.json"), _load("detection_heldout4_baseline.json")
+    held3_base, held3_first = _load("detection_heldout3_baseline.json"), _load("detection_heldout3_firstrun.json")
+    backends = list(dev["backends"]) if dev else []
     lines = ["## Summary", "",
              "### Detection: share of entities protected (≥95% of characters masked, any type), 95% Wilson CI", "",
-             "**Held-out #2 is the honest number**: written before the round-2 recognizer changes, measured once with "
-             "the old code (baseline) and once with the final code; nothing was tuned on it. Dev and held-out #1 were "
-             "used for tuning in round 2, so their numbers are optimistic.", "",
-             "| backend | held-out #2, before round 2 | **held-out #2, after round 2** | held-out #1 (tuned) | dev (tuned) |",
+             "**The honest numbers** come from held-out sets that were written before the code they test and were "
+             "measured once with it. *Old code* is the state before round 3 (commit `a055555`), run on the same set "
+             "for comparison. Held-out #3 was written before the round-3 changes and measured once after them "
+             "(*first run*); the bugs it then revealed were fixed, so held-out #4 was written to measure the final "
+             "code once.", "",
+             "| backend | held-out #4, old code | **held-out #4, final code** | held-out #3, old code | **held-out #3, round-3 first run** |",
              "|---|---|---|---|---|"]
-    if dev:
-        for b, r in dev["backends"].items():
-            if r.get("status") != "ok":
-                lines.append(f"| {b} | not run | not run | not run | not run |")
-                continue
-
-            def cell(d):
-                if not d or d["backends"].get(b, {}).get("status") != "ok":
-                    return "–"
-                m = d["backends"][b]["metrics"]
-                spur = m.get("spurious_spans")
-                return f"{pct(m['protected_rate'])} ({ci(m['protected_ci95'])}), {m['leaked']} leaked" + (
-                    f", {spur} spurious" if spur is not None else "")
-
-            lines.append(f"| {b} | {cell(held2_base)} | **{cell(held2)}** | {cell(held)} | {cell(dev)} |")
+    for b in backends:
+        lines.append(f"| {b} | {_cell(held4_base, b)} | **{_cell(held4, b)}** | {_cell(held3_base, b)} | **{_cell(held3_first, b)}** |")
+    lines += ["", "**Tuned sets (optimistic):** used to find and fix leaks, so they overstate real-world protection.", "",
+              "| backend | held-out #3, final code | held-out #2 | held-out #1 | dev |", "|---|---|---|---|---|"]
+    for b in backends:
+        lines.append(f"| {b} | {_cell(held3, b)} | {_cell(held2, b)} | {_cell(held, b)} | {_cell(dev, b)} |")
     lines += ["",
               "`gazetteer` is the default quickstart configuration (patterns + name, place and word lists, no NER "
               "model); `nerkor_cnn` is the recommended one (`make nerkor`). *spurious* = masked spans that overlap no "
-              "labelled entity (over-masking of ordinary text).", "",
-              "History: in round 1 the held-out #1 first run (before an e-mail fix) was 88.0% for `nerkor_cnn` and "
-              "72.9% for `gazetteer`; round 2 then used held-out #1 for tuning. Since round 2 a leading title of a "
+              "labelled entity (over-masking of ordinary text). Authority acronyms (NAV, NAIH) are labelled ORG in "
+              "the test sets but deliberately not masked (public bodies, not personal data); they count as leaks here.", "",
+              "History: round 1 held-out #1 first run 88.0% (`nerkor_cnn`) / 72.9% (`gazetteer`); round 2 held-out #2 "
+              "first run 93.8% (`gazetteer`, before) and 98.0% (after, then tuned). Since round 2 a leading title of a "
               "person (dr., ifj., özv., Mr.) is not counted as a character that must be masked.", ""]
     rd, rh, rh1 = _load("restore.json"), _load("restore_heldout.json"), _load("restore_heldout_firstrun.json")
     if rd:
@@ -177,6 +182,72 @@ def summary_section() -> list[str]:
     return lines
 
 
+CONDITION_NAMES = {
+    "original": "original text", "clean300": "clean print, 300 dpi", "scan200": "office scan, 200 dpi",
+    "photo150": "phone photo, 150 dpi", "screen96": "screenshot, 96 dpi",
+}
+
+
+def ocr_section() -> list[str]:
+    sets = [(n, t) for n, t in (("heldout4", "held-out #4 (honest)"), ("heldout3", "held-out #3"),
+                                ("heldout2", "held-out #2 (tuned)"), ("heldout", "held-out #1 (tuned)"),
+                                ("dev", "dev (tuned)")) if _load(f"ocr_{n}.json")]
+    if not sets:
+        return []
+    conds = ["original", "clean300", "scan200", "photo150", "screen96"]
+    lines = ["## Documents and images: OCR", "",
+             "Every test text is rendered as an image in four synthetic conditions (not real scans), read back with "
+             "the production OCR code (Tesseract 5, `hun+eng`, tessdata_fast) and masked. *Leaked* = a labelled "
+             "entity still readable after masking (accent- and case-insensitive approximate match, rapidfuzz "
+             "partial ratio ≥ 85; exact match under 4 characters), so OCR text and original text are scored the "
+             "same way. *Spurious* = distinct masked strings that match no labelled entity (approximate).", ""]
+    for name, title in sets:
+        d = _load(f"ocr_{name}.json")
+        base = _load(f"ocr_{name}_baseline.json")
+        lines += [f"### OCR: {title}, {d['items']} texts", "",
+                  "| condition | CER mean / median | accented words read exactly | seconds per page, mean / p95 |",
+                  "|---|---|---|---|"]
+        for c in conds[1:]:
+            k = d["conditions"][c]
+            lines.append(f"| {CONDITION_NAMES[c]} | {pct(k['cer_mean'])} / {pct(k['cer_median'])} | "
+                         f"{pct(k['accented_words_exact'])} of {k['accented_words']} | {k['seconds_mean']} / {k['seconds_p95']} |")
+        lines += ["", "| backend | " + " | ".join(CONDITION_NAMES[c] for c in conds) + " |",
+                  "|---|" + "---|" * len(conds)]
+        for b, per in d["backends"].items():
+            if base and b in base["backends"]:
+                lines.append(f"| {b}, old code | " + " | ".join(
+                    f"{base['backends'][b][c]['leaked']} leaked" for c in conds) + " |")
+            lines.append(f"| {b}{', final code' if base else ''} | " + " | ".join(
+                f"{per[c]['leaked']} leaked, {per[c].get('spurious_strings', '–')} spurious" for c in conds) + " |")
+        lines += ["", f"Labelled entities per condition: {d['backends'][next(iter(d['backends']))]['original']['entities']}.", ""]
+    lines += ["The phone-photo condition has a long tail: a few pages are read very badly (high mean, low median "
+              "CER). Real scans, handwriting, tables and stamps are not covered.", ""]
+    return lines
+
+
+def perf_section() -> list[str]:
+    d = _load("perf_stack.json")
+    if not d:
+        return []
+    t, i, par = d["text_request"], d["image_request_ocr"], d["text_8_parallel"]
+    lines = ["## Performance of the whole stack", "",
+             "`eval/perf_stack.py` against the running stack (nginx, LiteLLM, guardrail, analyzer with the default "
+             "`gazetteer` configuration, OCR, Postgres, Redis) with the mock model, so the time is the privacy "
+             "hub's own overhead: masking before the call and restoring after it. 4 vCPU / 16 GB build machine.", "",
+             "| request | n | p50 | p95 | max |", "|---|---|---|---|---|",
+             f"| text prompt (~450 characters, 6 entities) | {t['n']} | {t['p50_ms']} ms | {t['p95_ms']} ms | {t['max_ms']} ms |",
+             f"| image (rendered letter, 1400×380 px, OCR + masking) | {i['n']} | {i['p50_ms']} ms | {i['p95_ms']} ms | {i['max_ms']} ms |",
+             f"| 16 text prompts from 8 threads at once | {par['n']} | {par['p50_ms']} ms | {par['p95_ms']} ms | "
+             f"{par['max_ms']} ms ({par['requests_per_s']} requests/s) |", "",
+             "Memory after the run (`docker stats`):", "",
+             "| container | memory |", "|---|---|"]
+    for name, mem in sorted(d["memory"].items()):
+        lines.append(f"| {name.replace('privacy-hub-', '').rsplit('-', 1)[0]} | {mem.split(' / ')[0]} |")
+    lines += ["", "With a real model the provider's response time dominates; a local LLM (llama.cpp) needs its own "
+              "memory and, without a GPU, is slow (not measured here).", ""]
+    return lines
+
+
 def main() -> int:
     lines = [
         "# Evaluation report",
@@ -192,18 +263,30 @@ def main() -> int:
         "",
     ]
     lines += summary_section()
-    for name in ("heldout2", "heldout", "dev"):
+    titles = {
+        "heldout4": "held-out set #4 (written before the final code, measured once — honest)",
+        "heldout3": "held-out set #3 (final code; bugs it revealed were fixed — optimistic)",
+        "heldout2": "held-out set #2 (honest in round 2, used for tuning in round 3 — optimistic)",
+        "heldout": "held-out set #1 (used for tuning — optimistic)",
+        "dev": "development set (used for tuning — optimistic)",
+    }
+    for name, title in titles.items():
         data = _load(f"detection_{name}.json")
         if data:
-            lines += detection_section(
-                {"heldout2": "held-out set #2 (written before round 2, measured once — the honest number)",
-                 "heldout": "held-out set #1 (used for tuning in round 2 — optimistic)",
-                 "dev": "development set (used for tuning — optimistic)"}[name], data)
+            lines += detection_section(title, data)
+    lines += ocr_section()
+    lines += perf_section()
     for name, title in (("restore.json", "development names"), ("restore_heldout.json", "held-out names, after fixes")):
         data = _load(name)
         if data:
             lines += restore_section(data, title)
-    lines += METHOD
+    sizes = []
+    for name, label in (("dev", "dev"), ("heldout", "held-out #1"), ("heldout2", "held-out #2"),
+                        ("heldout3", "held-out #3"), ("heldout4", "held-out #4")):
+        data = _load(f"detection_{name}.json")
+        if data:
+            sizes.append(f"{label} {data['dataset']['items']} texts / {data['dataset']['entities']} entities")
+    lines += [line.replace("SIZES", ", ".join(sizes)) for line in METHOD]
     DOC.parent.mkdir(parents=True, exist_ok=True)
     DOC.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"wrote {DOC}")
@@ -213,14 +296,15 @@ def main() -> int:
 METHOD = [
     "## Method",
     "",
-    "* **Test sets.** `eval/data/raw/*.json`: synthetic Hungarian texts (e-mails, legal, clinic, invoice, "
-    "everyday and deliberately hard cases) with entity labels written by AI agents (not by humans), including "
-    "inflected forms. Dev: 146 "
-    "texts / 1098 entities; held-out #1: 78 / 652 (round 1); held-out #2: 74 / 406, six new domains, written "
-    "before round 2. "
-    "Generated by AI agents, labels verified by a second, independent AI agent; contact data scrubbed "
-    "(`eval/scrub_raw.py`); identifiers with check digits are filled in from generators at build time "
-    "(`eval/build_testset.py`).",
+    "* **Test sets.** `eval/data/raw/*.json`: synthetic Hungarian texts (e-mails, chat, legal, health, HR, "
+    "public sector, sales, real estate, finance, IT, education, care, insurance, logistics, hospitality, "
+    "construction, social services, deliberately hard cases) with entity labels written by AI agents (not by "
+    "humans), including inflected forms; SIZES. Each held-out set was written before the recognizer changes it "
+    "tests, by agents that did not see the code; I did not read its texts before the first measurement. "
+    "Labels verified by a second, independent AI agent; contact data scrubbed (`eval/scrub_raw.py`); "
+    "identifiers with check digits are filled in from generators at build time (`eval/build_testset.py`).",
+    "* **Baselines** (*old code*): the same evaluation run from a git worktree at commit `a055555` (before "
+    "round 3) with the lexicon of that time.",
     "* **Detection metrics** (`eval/evaluate.py`): *exact* = same span and type; *overlap* = same type, spans "
     "overlap; *protected* = ≥95% of the entity's characters covered by any predicted span regardless of type "
     "(what matters for privacy). Wilson 95% intervals. Each backend runs in its own process; memory is RSS.",
@@ -230,8 +314,9 @@ METHOD = [
     "or en-dash endings, lower case, markdown, first-name-only or *X úr* mentions, upper case). The expected text "
     "comes from gold inflection tables (`eval/data/inflection_gold*.json`) written by two independent AI "
     "annotators (dev: plus an AI adjudicator), never from the engine under test.",
-    "* **Not measured:** real LLM behaviour, real documents, human-verified labels, multi-turn conversations, "
-    "English-language detection quality.",
+    "* **OCR** (`eval/ocr_eval.py`) and **stack performance** (`eval/perf_stack.py`): see their sections.",
+    "* **Not measured:** real LLM behaviour, real documents and scans, human-verified labels, multi-turn "
+    "conversations, English-language detection quality, Surya OCR and the local LLM.",
     "",
 ]
 

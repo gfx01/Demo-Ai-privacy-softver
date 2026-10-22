@@ -102,6 +102,10 @@ for _f in ACC_LINKING + ("at",):
     _PARSE[_f] = "ACC"
 
 
+def _strip_accents(s: str) -> str:
+    return "".join(c for c in unicodedata.normalize("NFD", s) if not unicodedata.combining(c)).lower()
+
+
 def _nfc(s: str) -> str:
     return unicodedata.normalize("NFC", s)
 
@@ -250,16 +254,43 @@ def parse_raw_suffix(raw: str, stem: str = "") -> str | None:
     return None
 
 
+# Longest word the morphology analyses ("Kiskunfélegyházáról" is 19 letters).
+MAX_WORD_LENGTH = 40
+
 class HungarianMorphology:
     name = "hu"
 
     def __init__(self, lexicon: Iterable[str] | None = None) -> None:
         self.lexicon = {_nfc(w).lower() for w in (lexicon or ())}
+        # accent-less form -> lexicon form, for words typed (or OCR'd) without
+        # accents: "reka" -> "réka"
+        self._plain_lexicon: dict[str, str] = {}
+        for w in sorted(self.lexicon):
+            self._plain_lexicon.setdefault(_strip_accents(w), w)
         self._cache: dict[str, tuple[str, str | None, str]] = {}
 
     # -- analysis ----------------------------------------------------------
+    def _plain_split(self, w: str) -> tuple[str, str, str] | None:
+        """A known word typed without accents, inflected: "Rekanak" -> ("Reka",
+        DAT, "nak"), "Tamast" -> ("Tamas", ACC, "t"), "Tamassal" -> ("Tamas",
+        INS, "sal"). The lexicon form is inflected and compared without accents."""
+        low = w.lower()
+        for i in range(len(w) - 1, 2, -1):  # longest stem first
+            known = self._plain_lexicon.get(low[:i])
+            if not known:
+                continue
+            for case in CASES:
+                if _strip_accents(inflect_word(known, case)) == low:
+                    return w[:i], case, w[i:]
+        return None
+
     def split_word(self, word: str) -> tuple[str, str | None, str]:
-        """(stem, case, raw_suffix) for one word; case None if not inflected."""
+        """(stem, case, raw_suffix) for one word; case None if not inflected.
+        Words longer than MAX_WORD_LENGTH are not analysed: no name or place
+        is that long, and the search is quadratic in the word length (a
+        200,000-character "word" in untrusted input would stall the caller)."""
+        if len(word) > MAX_WORD_LENGTH:
+            return word, None, ""
         hit = self._cache.get(word)
         if hit is None:
             if len(self._cache) > 50000:
@@ -302,6 +333,10 @@ class HungarianMorphology:
                         known = 1 if stem.lower() in self.lexicon else 0
                         productive = 1 if stem == unlengthened else 0  # "Annának" -> "Anna", not "Anná"
                         candidates.append((known, productive, stem, case, rest))
+        if not any(c[0] for c in candidates) and w.isascii() and self._plain_lexicon:
+            plain = self._plain_split(w)
+            if plain:
+                return plain
         if not candidates and self.lexicon:
             candidates = self._lenient_candidates(w)
         if not candidates:

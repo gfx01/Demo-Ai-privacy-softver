@@ -6,6 +6,8 @@ original value gets the same placeholder everywhere in the conversation.
 
 from __future__ import annotations
 
+import bisect
+
 import unicodedata
 from collections import Counter
 from collections.abc import Iterable, Sequence
@@ -121,15 +123,36 @@ def resolve_overlaps(spans: Sequence[Span]) -> list[Span]:
     longer span.
     """
     valid = [s for s in spans if s.end > s.start]
-    contained = {
-        id(s)
-        for s in valid
-        for o in valid
-        if o is not s and o.start <= s.start and s.end <= o.end and (o.end - o.start) > (s.end - s.start)
-    }
+    # s is "contained" if a strictly longer span covers it: one that starts
+    # earlier and ends no earlier, or starts no later and ends later. Prefix
+    # maxima of the end over the spans sorted by start answer this in
+    # O(n log n); the pairwise check was quadratic in the number of entities
+    # (a long text with thousands of hits took minutes).
+    by_start = sorted(valid, key=lambda s: s.start)
+    contained: set[int] = set()
+    best_before = -1  # max end of spans with start < current start
+    i = 0
+    while i < len(by_start):
+        j = i
+        while j < len(by_start) and by_start[j].start == by_start[i].start:
+            j += 1
+        group = by_start[i:j]
+        best_here = max(s.end for s in group)  # max end of spans with this start
+        for s in group:
+            if best_before >= s.end or best_here > s.end:
+                contained.add(id(s))
+        best_before = max(best_before, best_here)
+        i = j
     ranked = sorted(valid, key=lambda s: (id(s) in contained, -s.score, -(s.end - s.start), s.start))
+    # kept spans never overlap: one bisect finds the only candidate for a clash
+    starts: list[int] = []
+    ends: list[int] = []
     kept: list[Span] = []
     for s in ranked:
-        if all(s.end <= k.start or s.start >= k.end for k in kept):
-            kept.append(s)
+        k = bisect.bisect_left(starts, s.end)  # kept spans starting before s ends
+        if k and ends[k - 1] > s.start:
+            continue
+        starts.insert(k, s.start)
+        ends.insert(k, s.end)
+        kept.append(s)
     return sorted(kept, key=lambda s: s.start)

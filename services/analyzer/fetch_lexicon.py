@@ -21,6 +21,17 @@ names without the 23 Budapest districts), MIT licence
 (andrasbarabas/hungarian-settlements, 2020; misses ~35 newer settlements).
 More complete lists exist but carry no licence.
 
+Foreign given names: first names of 27 European and North American Faker
+locales (same pinned wheel), Latin script only. Used only inside runs of
+capitalised words ("Jeroen de Vries", "Becker Thomast"), never on their own.
+
+Foreign cities: names of European cities with at least 50,000 inhabitants
+and of cities in the neighbouring countries with at least 15,000, from the
+GeoNames "cities15000" extract shipped in the pinned geonamescache wheel
+(package MIT, data CC BY 4.0, GeoNames). Only the main (English/local) name;
+Hungarian names of foreign places ("Bécs", "Pozsony") are a curated list in
+the place recognizer.
+
 Ordinary words: lower-case lemmas of the LibreOffice Hunspell hu_HU
 dictionary (Magyar Ispell 1.9, MPL 2.0 / LGPL 3+), without proper nouns
 (morphology "po:noun_prs"). Used to avoid masking "rózsa", "virág", "kovács"
@@ -62,6 +73,18 @@ FAKER_WHEEL = (
     "9dd7c0ddfaf30c842b05502d3cf641c135e0120a3a19047008ba8525b72953ed",
 )
 
+# Person-name locales for foreign given names (Latin script only)
+FOREIGN_LOCALES = (
+    "en_US", "en_GB", "en_IE", "ga_IE", "de_DE", "de_AT", "de_CH", "nl_NL", "nl_BE", "fr_FR", "fr_BE", "it_IT",
+    "es_ES", "pt_PT", "pl_PL", "cs_CZ", "sk_SK", "sl_SI", "hr_HR", "ro_RO", "da_DK", "sv_SE", "no_NO", "fi_FI",
+    "lt_LT", "lv_LV", "tr_TR",
+)
+GEONAMES_WHEEL = (
+    "https://files.pythonhosted.org/packages/48/c2/52f1b29de8839b4b55cd2641dfd722a6a94953d74fa82514e26084a92318/"
+    "geonamescache-3.0.2-py3-none-any.whl",
+    "b830e8942f2d58c7e68782dcf4dff2ffe8c4104a35ee881ed1ad4023cefcdba4",
+)
+NEIGHBOURS = {"AT", "SK", "RO", "RS", "HR", "SI", "UA"}
 
 CLDR_TERRITORIES = (
     "https://raw.githubusercontent.com/unicode-org/cldr-json/46.0.0/"
@@ -100,6 +123,28 @@ def countries() -> list[str]:
         for code, name in territories.items()
         if "-alt-" not in code and code.isalpha() and code not in CLDR_NOT_PLACES
     })
+
+
+def _latin(name: str) -> bool:
+    return name.isalpha() and all(unicodedata.name(c, "").startswith("LATIN") for c in name)
+
+
+def foreign_cities() -> list[str]:
+    """European cities >= 50,000 inhabitants and neighbouring-country cities
+    >= 15,000 (GeoNames via geonamescache), main name, Latin script."""
+    raw = fetch_pinned(*GEONAMES_WHEEL)
+    cities = json.loads(zipfile.ZipFile(io.BytesIO(raw)).read("geonamescache/data/cities15000.json"))
+    names = set()
+    for c in cities.values():
+        if c["countrycode"] == "HU":
+            continue
+        european = c["timezone"].startswith("Europe/") and c["population"] >= 50_000
+        if not (european or c["countrycode"] in NEIGHBOURS):
+            continue
+        name = unicodedata.normalize("NFC", c["name"].strip())
+        if len(name) >= 3 and all(_latin(part) for part in name.replace("-", " ").split()):
+            names.add(name)
+    return sorted(names)
 
 
 def extra_surnames() -> list[str]:
@@ -185,9 +230,11 @@ def faker_lists(locale: str = "hu_HU", raw: bytes | None = None) -> dict[str, li
     out: dict[str, list[str]] = {}
     for node in ast.walk(ast.parse(src)):
         target = node.targets[0] if isinstance(node, ast.Assign) else getattr(node, "target", None)
-        if isinstance(target, ast.Name) and target.id in {"last_names", "first_names_male", "first_names_female"}:
+        if isinstance(target, ast.Name) and target.id in {"last_names", "first_names_male", "first_names_female", "first_names"}:
             value = node.value
             if isinstance(value, ast.Call):
+                if not value.args:
+                    continue
                 value = value.args[0]
             try:
                 data = ast.literal_eval(value)
@@ -214,15 +261,18 @@ def main() -> int:
     (out / "surnames.txt").write_text("\n".join(surnames) + "\n", encoding="utf-8")
     # Common foreign given names (only used inside multi-word name runs).
     foreign: set[str] = set()
-    for locale in ("en_US", "de_DE", "pl_PL", "sk_SK", "ro_RO"):
-        try:
-            lists = faker_lists(locale, wheel)
-        except KeyError:
-            continue
-        for key in ("first_names_male", "first_names_female"):
-            foreign.update(n for n in lists.get(key, []) if n.isalpha() and len(n) >= 3)
+    for locale in FOREIGN_LOCALES:
+        lists = faker_lists(locale, wheel)
+        for key in ("first_names_male", "first_names_female", "first_names"):
+            foreign.update(unicodedata.normalize("NFC", n) for n in lists.get(key, []) if _latin(n) and len(n) >= 3)
     (out / "foreign_given.txt").write_text("\n".join(sorted(foreign)) + "\n", encoding="utf-8")
-    meta["foreign_given"] = {"source": "Faker 40.43.0 en_US, de_DE, pl_PL, sk_SK, ro_RO", "count": len(foreign)}
+    meta["foreign_given"] = {"source": f"Faker 40.43.0 ({', '.join(FOREIGN_LOCALES)})", "count": len(foreign),
+                             "licence": "MIT (Faker)"}
+    cities = foreign_cities()
+    (out / "foreign_cities.txt").write_text("\n".join(cities) + "\n", encoding="utf-8")
+    meta["foreign_cities"] = {"source": GEONAMES_WHEEL[0], "sha256": GEONAMES_WHEEL[1], "count": len(cities),
+                              "selection": "Europe >= 50,000 inhabitants; AT, SK, RO, RS, HR, SI, UA >= 15,000; not HU",
+                              "licence": "data CC BY 4.0 (GeoNames, geonames.org); package MIT (geonamescache)"}
     meta["surnames"] = {"sources": [{"url": FAKER_WHEEL[0], "sha256": FAKER_WHEEL[1], "licence": "MIT (Faker)"},
                                     {"url": MAGYARISPELL_SURNAMES[0], "sha256": MAGYARISPELL_SURNAMES[1],
                                      "licence": "GPL-2.0+ / LGPL-2.1+ / MPL-1.1+ (Magyar Ispell)"}],

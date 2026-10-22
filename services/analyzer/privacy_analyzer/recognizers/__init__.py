@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import re
 
+import phonenumbers
 from presidio_analyzer import EntityRecognizer
 from presidio_analyzer.predefined_recognizers import (
     CreditCardRecognizer,
@@ -14,9 +15,11 @@ from presidio_analyzer.predefined_recognizers import (
 )
 
 from .hu_ids import (
+    BankAccountOcrRecognizer,
     BankAccountRecognizer,
     BirthDateRecognizer,
     CompanyRegRecognizer,
+    IbanOcrRecognizer,
     IdCardRecognizer,
     LicensePlateRecognizer,
     PersonalIdRecognizer,
@@ -33,6 +36,7 @@ from .hu_text import (
     HuPhoneRecognizer,
     HuStreetRecognizer,
     MoneyRecognizer,
+    OcrEmailRecognizer,
 )
 
 
@@ -49,17 +53,61 @@ class AnyTldEmailRecognizer(EmailRecognizer):
         return bool(self.TLD_RE.search(pattern_text))
 
 
+class GuardedPhoneRecognizer(PhoneRecognizer):
+    """libphonenumber matching for foreign numbers (Presidio), without the
+    matches that are references or dates, not phone numbers: part of a longer
+    code ("3.P.21.077/2025", "SZ-2026/001184"), starting with a date or year
+    ("2026.10.12. 21:40") or ending in a year ("077/2025"), and bare digit runs
+    without a trunk or international prefix ("ref: 7745012938"). Hungarian
+    numbers are found by HuPhoneRecognizer independently of this filter."""
+
+    PREFIX = re.compile(r"^(?:\+|00|0|\()")
+    YEAR_START = re.compile(r"^(?:19|20)\d{2}\s?[./\-]")
+    YEAR_END = re.compile(r"/\s?(?:19|20)\d{2}$")
+    # libphonenumber is run on short windows that can hold a number with a
+    # prefix, not on the whole text: on long digit runs ("1/1/1/...") the full
+    # scan took seconds per 20,000 characters.
+    WINDOW = re.compile(r"(?<![\w+])(?:\+|00|0|\()[\d\s()./\-–]{5,24}\d")
+
+    def _matches(self, text):
+        found = []
+        for w in self.WINDOW.finditer(text):
+            window = text[w.start() : w.end()]
+            for region in self.supported_regions:
+                for m in phonenumbers.PhoneNumberMatcher(window, region, leniency=self.leniency):
+                    r = self._get_recognizer_result(m, window, region, None)
+                    r.start, r.end = w.start() + m.start, w.start() + m.end
+                    found.append(r)
+        return EntityRecognizer.remove_duplicates(found)
+
+    def analyze(self, text, entities, nlp_artifacts=None):
+        out = []
+        for r in self._matches(text):
+            value = text[r.start : r.end]
+            before = text[r.start - 1] if r.start > 0 else " "
+            after = text[r.end] if r.end < len(text) else " "
+            if before.isalnum() or before in "-./" or after.isalnum() or after in "/-":
+                continue
+            if self.YEAR_START.match(value) or self.YEAR_END.search(value) or not self.PREFIX.match(value):
+                continue
+            out.append(r)
+        return out
+
+
 PATTERN_RECOGNIZERS = (
     TajRecognizer,
     TaxIdRecognizer,
     VatNumberRecognizer,
     BankAccountRecognizer,
+    BankAccountOcrRecognizer,
+    IbanOcrRecognizer,
     CompanyRegRecognizer,
     IdCardRecognizer,
     PersonalIdRecognizer,
     LicensePlateRecognizer,
     BirthDateRecognizer,
     HuPhoneRecognizer,
+    OcrEmailRecognizer,
     HuAddressRecognizer,
     HuCompanyRecognizer,
     HuInstitutionRecognizer,
@@ -74,7 +122,7 @@ def hungarian_recognizers(*, gazetteer: bool = True, lexicon_dir: str | None = N
         IbanRecognizer(supported_language="hu"),
         CreditCardRecognizer(supported_language="hu"),
         IpRecognizer(supported_language="hu"),
-        PhoneRecognizer(supported_regions=("HU", "AT", "DE", "SK", "RO", "UK", "US"), supported_language="hu"),
+        GuardedPhoneRecognizer(supported_regions=("HU", "AT", "DE", "SK", "RO", "UK", "US"), supported_language="hu"),
     ]
     recognizers.append(HuStreetRecognizer(supported_language="hu", lexicon_dir=lexicon_dir))
     if gazetteer:
@@ -83,4 +131,5 @@ def hungarian_recognizers(*, gazetteer: bool = True, lexicon_dir: str | None = N
     return recognizers
 
 
-__all__ = ["hungarian_recognizers", "PATTERN_RECOGNIZERS", "HuNameRecognizer", "HuPlaceRecognizer", "AnyTldEmailRecognizer"]
+__all__ = ["hungarian_recognizers", "PATTERN_RECOGNIZERS", "HuNameRecognizer", "HuPlaceRecognizer", "AnyTldEmailRecognizer",
+           "GuardedPhoneRecognizer"]

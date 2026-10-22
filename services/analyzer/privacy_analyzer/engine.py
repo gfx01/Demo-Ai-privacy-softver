@@ -2,9 +2,15 @@
 
 Detection: one Presidio ``AnalyzerEngine`` per language, each with its own
 pluggable NLP/NER backend, plus custom recognizers (Hungarian identifiers,
-gazetteer names). Replacement: Presidio ``AnonymizerEngine`` with a ``custom``
-operator whose lambda delegates to ``privacy_hub``'s ``MaskingSession``
-(placeholder strategy + Hungarian suffix handling).
+gazetteer names). Replacement: ``replace_spans`` (the behaviour of Presidio's
+``AnonymizerEngine`` with a ``custom`` operator, in linear time) delegating to
+``privacy_hub``'s ``MaskingSession`` (placeholder strategy + Hungarian suffix
+handling).
+
+Presidio's duplicate removal and the anonymizer's conflict check compare
+every pair of results; a long text with thousands of entities (or crafted
+input) then took minutes, holding the GIL. ``fast_remove_duplicates`` keeps
+Presidio's semantics in O(n log n) and is installed in its place.
 
 Hungarian NER backend (env ANALYZER_HU_NER):
   none                     no statistical NER (blank Hungarian tokenizer);
@@ -25,20 +31,18 @@ import tempfile
 import time
 import unicodedata
 from dataclasses import dataclass, field
-from functools import partial
+from bisect import bisect_left, bisect_right
+from collections import defaultdict
 from pathlib import Path
 
 import tldextract
-from presidio_analyzer import AnalysisExplanation, AnalyzerEngine, RecognizerRegistry, RecognizerResult
+from presidio_analyzer import AnalysisExplanation, AnalyzerEngine, EntityRecognizer, RecognizerRegistry, RecognizerResult
 from presidio_analyzer.nlp_engine import NerModelConfiguration, NlpEngineProvider
-from presidio_analyzer.predefined_recognizers import PhoneRecognizer
-from presidio_anonymizer import AnonymizerEngine
-from presidio_anonymizer.entities import OperatorConfig
 
 from privacy_hub.masking import MaskingSession, MaskResult, Span, get_morphology, resolve_overlaps
 from privacy_hub.masking.pseudonyms import PseudonymStrategy
 
-from .recognizers import AnyTldEmailRecognizer, HuNameRecognizer, hungarian_recognizers
+from .recognizers import AnyTldEmailRecognizer, GuardedPhoneRecognizer, HuNameRecognizer, hungarian_recognizers
 
 log = logging.getLogger("privacy_analyzer.engine")
 
@@ -90,6 +94,75 @@ def normalize_text(text: str) -> str:
         return text
     return "".join(ch for ch in text if _visible(ch))
 
+
+# a line break that is not part of an empty line (paragraph breaks stay)
+SOFT_LINE_BREAK = re.compile(r"(?<!\n)\n(?!\n)")
+
+
+def fast_remove_duplicates(results: list[RecognizerResult]) -> list[RecognizerResult]:
+    """Presidio's ``EntityRecognizer.remove_duplicates`` in O(n log n).
+
+    Same rules: equal results (span, type, score) collapse to one; by
+    descending score, then start, then length, a result is dropped when an
+    already kept result of the same type contains its span; zero scores are
+    dropped. Containment is a prefix-maximum query (a Fenwick tree over the
+    start positions of each type) instead of a scan of every kept result."""
+    unique: dict[tuple, RecognizerResult] = {}
+    for r in results:
+        unique.setdefault((r.start, r.end, r.score, r.entity_type), r)
+    ordered = sorted(unique.values(), key=lambda x: (-x.score, x.start, -(x.end - x.start)))
+    starts: dict[str, list[int]] = defaultdict(list)
+    for r in ordered:
+        starts[r.entity_type].append(r.start)
+    index = {t: sorted(set(v)) for t, v in starts.items()}
+    trees = {t: [-1] * (len(v) + 1) for t, v in index.items()}
+    kept = []
+    for r in ordered:
+        if r.score == 0:
+            continue
+        pos, tree = index[r.entity_type], trees[r.entity_type]
+        i, best = bisect_right(pos, r.start), -1  # max end of kept spans with start <= r.start
+        while i > 0:
+            best = max(best, tree[i])
+            i -= i & -i
+        if best >= r.end:
+            continue  # contained in a kept result of the same type
+        kept.append(r)
+        i = bisect_left(pos, r.start) + 1
+        while i < len(tree):
+            tree[i] = max(tree[i], r.end)
+            i += i & -i
+    return kept
+
+
+# Presidio calls it as EntityRecognizer.remove_duplicates(...) (AnalyzerEngine,
+# PatternRecognizer); the replacement is checked against the original in tests.
+PRESIDIO_REMOVE_DUPLICATES = EntityRecognizer.remove_duplicates
+EntityRecognizer.remove_duplicates = staticmethod(fast_remove_duplicates)
+
+
+def replace_spans(text: str, results: list[RecognizerResult], replacement) -> str:
+    """What Presidio's ``AnonymizerEngine.anonymize`` does with a custom
+    operator for non-overlapping results, in linear time: neighbours of the
+    same type separated only by spaces are merged ("Kovács" + "Péter"), and
+    the replacement function is called from the last entity to the first."""
+    merged: list[list] = []
+    for r in sorted(results, key=lambda x: (x.start, x.end)):
+        if merged and merged[-1][2] == r.entity_type and _SPACES.fullmatch(text, merged[-1][1], r.start):
+            merged[-1][1] = r.end
+        else:
+            merged.append([r.start, r.end, r.entity_type])
+    out = []
+    end = len(text)
+    for start, stop, etype in reversed(merged):
+        out.append(text[stop:end])
+        out.append(replacement(etype, text[start:stop]))
+        end = start
+    out.append(text[:end])
+    return "".join(reversed(out))
+
+
+_SPACES = re.compile(r" +")
 
 ORG_TYPES = ("HU_COMPANY", "ORGANIZATION")
 # Hungarian endings after a company's short name: "Bitkerttel", "Mecsek-Vill-lel", "Alfának"
@@ -208,9 +281,8 @@ class PrivacyEngine:
                 registry.remove_recognizer("PhoneRecognizer")
                 registry.remove_recognizer("EmailRecognizer")
                 registry.add_recognizer(AnyTldEmailRecognizer(supported_language=lang))
-                registry.add_recognizer(PhoneRecognizer(supported_regions=("HU", "US", "UK", "DE", "AT", "FR"), supported_language=lang))
+                registry.add_recognizer(GuardedPhoneRecognizer(supported_regions=("HU", "US", "UK", "DE", "AT", "FR"), supported_language=lang))
             self.analyzers[lang] = AnalyzerEngine(nlp_engine=nlp, registry=registry, supported_languages=[lang])
-        self.anonymizer = AnonymizerEngine()
         names = next((r for a in self.analyzers.values() for r in a.registry.recognizers if isinstance(r, HuNameRecognizer)), None)
         self._lexicon = (names.given | names.surnames) if names else set()
         self._male = names.male if names else set()
@@ -238,6 +310,14 @@ class PrivacyEngine:
     ) -> list[RecognizerResult]:
         analyzer = self.analyzers[language]
         results = analyzer.analyze(text=text, language=language, entities=entities, score_threshold=score_threshold)
+        # A line break inside a name, number or address (wrapped lines of OCR
+        # output, signature and address blocks) hides it from most
+        # recognizers: "Gál\nViktória", "HU54 5451 ... 8800\n5079 4192".
+        # A copy with single line breaks turned into spaces has the same
+        # length, so its spans map 1:1; whatever it adds is kept.
+        view = SOFT_LINE_BREAK.sub(" ", text) if "\n" in text else text
+        if view != text:
+            results += analyzer.analyze(text=view, language=language, entities=entities, score_threshold=score_threshold)
         ignored = set(disabled_entities) | (DEFAULT_IGNORED if entities is None else set())
         results = [r for r in results if r.entity_type not in ignored]
         if language == "hu":
@@ -281,9 +361,5 @@ class PrivacyEngine:
             if not results:
                 masked.append(text)
                 continue
-            operators = {
-                etype: OperatorConfig("custom", {"lambda": partial(session.replacement_for, etype)})
-                for etype in {r.entity_type for r in results}
-            }
-            masked.append(self.anonymizer.anonymize(text=text, analyzer_results=results, operators=operators).text)
+            masked.append(replace_spans(text, results, session.replacement_for))
         return session.result(masked)
