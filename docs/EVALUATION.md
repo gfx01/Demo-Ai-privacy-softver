@@ -53,11 +53,11 @@ Domains: h4-chat 14, h4-construction 12, h4-hospitality 12, h4-insurance 12, h4-
 
 | backend | status | protected¹ | leaked² | spurious⁴ | overlap P / R / F1 | exact F1 | load s | RSS MB³ | p50 / p95 ms | chars/s |
 |---|---|---|---|---|---|---|---|---|---|---|
-| regex_only | ok | 46.5% (42–51%) | 300 | 3 | 97.8% / 46.4% / 62.9% | 61.7% | 0.3 | 113.6 (+13.4) | 3.42 / 8.26 | 116600 |
-| gazetteer | ok | 96.1% (94–97%) | 20 | 7 | 97.6% / 94.9% / 96.2% | 91.4% | 0.68 | 149.4 (+49.5) | 23.5 / 38.19 | 20811 |
-| xx_ent_wiki_sm | ok | 98.8% (98–99%) | 6 | 177 | 61.4% / 79.3% / 69.2% | 62.7% | 2.46 | 422.2 (+322.3) | 32.36 / 59.64 | 14051 |
-| nerkor_cnn | ok | 98.8% (98–99%) | 6 | 32 | 87.4% / 89.7% / 88.6% | 82.3% | 0.76 | 188.9 (+88.8) | 28.73 / 57.54 | 15535 |
-| nerkor_cnn_no_gazetteer | ok | 92.2% (90–94%) | 43 | 28 | 87.3% / 83.7% / 85.5% | 79.7% | 0.49 | 161.3 (+61.2) | 8.93 / 17.15 | 49015 |
+| regex_only | ok | 46.5% (42–51%) | 300 | 3 | 97.8% / 46.4% / 62.9% | 61.7% | 0.35 | 113.7 (+13.5) | 3.98 / 10.08 | 110682 |
+| gazetteer | ok | 96.1% (94–97%) | 20 | 7 | 97.6% / 94.9% / 96.2% | 91.4% | 0.68 | 149.6 (+49.6) | 22.81 / 35.69 | 21099 |
+| xx_ent_wiki_sm | ok | 98.8% (98–99%) | 6 | 177 | 61.4% / 79.3% / 69.2% | 62.7% | 2.66 | 421.7 (+321.6) | 33.17 / 54.32 | 14362 |
+| nerkor_cnn | ok | 98.8% (98–99%) | 6 | 32 | 87.4% / 89.7% / 88.6% | 82.3% | 0.78 | 188.8 (+88.7) | 28.33 / 39.2 | 17212 |
+| nerkor_cnn_no_gazetteer | ok | 92.2% (90–94%) | 43 | 28 | 87.3% / 83.7% / 85.5% | 79.7% | 0.41 | 161.2 (+61.3) | 9.72 / 17.25 | 45786 |
 | huspacy_md | **not run**: RuntimeError: NER model 'hu_core_news_md' is not installed in the analyzer image | | | | | | | | | |
 | huspacy_lg | **not run**: RuntimeError: NER model 'hu_core_news_lg' is not installed in the analyzer image | | | | | | | | | |
 
@@ -255,11 +255,11 @@ Domains: h3-care 12, h3-chat 14, h3-education 12, h3-finance 12, h3-it 12, h3-re
 
 | backend | status | protected¹ | leaked² | spurious⁴ | overlap P / R / F1 | exact F1 | load s | RSS MB³ | p50 / p95 ms | chars/s |
 |---|---|---|---|---|---|---|---|---|---|---|
-| regex_only | ok | 48.6% (44–53%) | 235 | 0 | 99.5% / 48.4% / 65.1% | 65.1% | 0.44 | 113.4 (+13.5) | 3.9 / 9.46 | 86034 |
-| gazetteer | ok | 97.8% (96–99%) | 10 | 0 | 99.3% / 97.6% / 98.5% | 94.9% | 0.71 | 149.6 (+49.6) | 21.4 / 38.59 | 18450 |
-| xx_ent_wiki_sm | ok | 99.1% (98–100%) | 4 | 143 | 64.5% / 84.0% / 73.0% | 66.7% | 2.56 | 422.1 (+322.2) | 26.3 / 51.22 | 14312 |
-| nerkor_cnn | ok | 99.1% (98–100%) | 4 | 35 | 85.6% / 91.2% / 88.3% | 83.7% | 1.09 | 188.8 (+89.0) | 26.33 / 52.07 | 14704 |
-| nerkor_cnn_no_gazetteer | ok | 92.6% (90–95%) | 31 | 35 | 84.6% / 85.1% / 84.8% | 79.6% | 0.43 | 161.1 (+61.3) | 8.42 / 23.02 | 40862 |
+| regex_only | ok | 48.6% (44–53%) | 235 | 0 | 99.5% / 48.4% / 65.1% | 65.1% | 0.3 | 113.3 (+13.6) | 3.83 / 9.19 | 96419 |
+| gazetteer | ok | 97.8% (96–99%) | 10 | 0 | 99.3% / 97.6% / 98.5% | 94.9% | 0.78 | 149.6 (+49.6) | 18.61 / 31.47 | 21008 |
+| xx_ent_wiki_sm | ok | 99.1% (98–100%) | 4 | 143 | 64.5% / 84.0% / 73.0% | 66.7% | 2.35 | 422.0 (+322.2) | 25.1 / 46.19 | 15465 |
+| nerkor_cnn | ok | 99.1% (98–100%) | 4 | 35 | 85.6% / 91.2% / 88.3% | 83.7% | 0.89 | 188.9 (+89.0) | 28.17 / 46.88 | 14737 |
+| nerkor_cnn_no_gazetteer | ok | 92.6% (90–95%) | 31 | 35 | 84.6% / 85.1% / 84.8% | 79.6% | 0.49 | 161.2 (+61.3) | 7.78 / 16.18 | 44670 |
 | huspacy_md | **not run**: RuntimeError: NER model 'hu_core_news_md' is not installed in the analyzer image | | | | | | | | | |
 | huspacy_lg | **not run**: RuntimeError: NER model 'hu_core_news_lg' is not installed in the analyzer image | | | | | | | | | |
 
@@ -457,11 +457,11 @@ Domains: h2-chat 14, h2-health 12, h2-hr 12, h2-legal 12, h2-public 12, h2-sales
 
 | backend | status | protected¹ | leaked² | spurious⁴ | overlap P / R / F1 | exact F1 | load s | RSS MB³ | p50 / p95 ms | chars/s |
 |---|---|---|---|---|---|---|---|---|---|---|
-| regex_only | ok | 47.8% (43–53%) | 212 | 0 | 99.5% / 47.0% / 63.9% | 63.5% | 0.32 | 113.3 (+13.6) | 2.59 / 5.48 | 119572 |
-| gazetteer | ok | 100.0% (99–100%) | 0 | 1 | 99.3% / 99.0% / 99.1% | 97.9% | 0.68 | 149.6 (+49.7) | 14.86 / 29.2 | 21983 |
-| xx_ent_wiki_sm | ok | 100.0% (99–100%) | 0 | 98 | 66.8% / 82.3% / 73.7% | 69.8% | 2.34 | 421.5 (+321.8) | 20.39 / 38.54 | 15894 |
-| nerkor_cnn | ok | 100.0% (99–100%) | 0 | 26 | 88.5% / 93.1% / 90.8% | 83.8% | 0.9 | 188.6 (+88.9) | 19.52 / 29.18 | 17314 |
-| nerkor_cnn_no_gazetteer | ok | 94.8% (92–97%) | 18 | 25 | 88.5% / 89.2% / 88.8% | 80.7% | 0.47 | 161.2 (+61.5) | 6.5 / 9.92 | 51674 |
+| regex_only | ok | 47.8% (43–53%) | 212 | 0 | 99.5% / 47.0% / 63.9% | 63.5% | 0.31 | 113.6 (+13.6) | 2.33 / 4.26 | 136435 |
+| gazetteer | ok | 100.0% (99–100%) | 0 | 1 | 99.3% / 99.0% / 99.1% | 97.9% | 0.78 | 149.5 (+49.7) | 16.85 / 33.58 | 19400 |
+| xx_ent_wiki_sm | ok | 100.0% (99–100%) | 0 | 98 | 66.8% / 82.3% / 73.7% | 69.8% | 2.49 | 422.0 (+322.3) | 21.15 / 39.89 | 14713 |
+| nerkor_cnn | ok | 100.0% (99–100%) | 0 | 26 | 88.5% / 93.1% / 90.8% | 83.8% | 1.01 | 189.1 (+89.3) | 27.82 / 41.76 | 12660 |
+| nerkor_cnn_no_gazetteer | ok | 94.8% (92–97%) | 18 | 25 | 88.5% / 89.2% / 88.8% | 80.7% | 0.4 | 161.2 (+61.3) | 6.11 / 9.29 | 54701 |
 | huspacy_md | **not run**: RuntimeError: NER model 'hu_core_news_md' is not installed in the analyzer image | | | | | | | | | |
 | huspacy_lg | **not run**: RuntimeError: NER model 'hu_core_news_lg' is not installed in the analyzer image | | | | | | | | | |
 
@@ -659,11 +659,11 @@ Domains: ho-clinic 14, ho-email 14, ho-hard 12, ho-invoice 12, ho-legal 14, ho-m
 
 | backend | status | protected¹ | leaked² | spurious⁴ | overlap P / R / F1 | exact F1 | load s | RSS MB³ | p50 / p95 ms | chars/s |
 |---|---|---|---|---|---|---|---|---|---|---|
-| regex_only | ok | 56.0% (52–60%) | 282 | 0 | 98.4% / 56.0% / 71.4% | 71.4% | 0.39 | 113.4 (+13.3) | 3.48 / 5.71 | 120258 |
-| gazetteer | ok | 99.7% (99–100%) | 2 | 0 | 99.5% / 99.5% / 99.5% | 93.1% | 0.76 | 149.8 (+49.5) | 21.51 / 39.1 | 19889 |
-| xx_ent_wiki_sm | ok | 99.7% (99–100%) | 0 | 129 | 71.7% / 85.9% / 78.2% | 69.9% | 2.4 | 421.9 (+321.5) | 28.78 / 46.52 | 15551 |
-| nerkor_cnn | ok | 99.8% (99–100%) | 1 | 26 | 90.1% / 93.4% / 91.7% | 84.9% | 0.88 | 189.3 (+88.9) | 27.78 / 42.34 | 16692 |
-| nerkor_cnn_no_gazetteer | ok | 92.9% (91–95%) | 43 | 26 | 89.0% / 87.1% / 88.1% | 81.4% | 0.44 | 161.4 (+61.1) | 9.26 / 14.56 | 48339 |
+| regex_only | ok | 56.0% (52–60%) | 282 | 0 | 98.4% / 56.0% / 71.4% | 71.4% | 0.34 | 113.9 (+13.4) | 3.24 / 5.26 | 131730 |
+| gazetteer | ok | 99.7% (99–100%) | 2 | 0 | 99.5% / 99.5% / 99.5% | 93.1% | 0.72 | 149.6 (+49.4) | 21.69 / 41.62 | 19891 |
+| xx_ent_wiki_sm | ok | 99.7% (99–100%) | 0 | 129 | 71.7% / 85.9% / 78.2% | 69.9% | 2.22 | 422.0 (+321.9) | 26.27 / 41.69 | 17030 |
+| nerkor_cnn | ok | 99.8% (99–100%) | 1 | 26 | 90.1% / 93.4% / 91.7% | 84.9% | 0.81 | 188.8 (+88.6) | 25.06 / 37.29 | 18246 |
+| nerkor_cnn_no_gazetteer | ok | 92.9% (91–95%) | 43 | 26 | 89.0% / 87.1% / 88.1% | 81.4% | 0.49 | 161.6 (+61.1) | 8.64 / 13.79 | 52395 |
 | huspacy_md | **not run**: RuntimeError: NER model 'hu_core_news_md' is not installed in the analyzer image | | | | | | | | | |
 | huspacy_lg | **not run**: RuntimeError: NER model 'hu_core_news_lg' is not installed in the analyzer image | | | | | | | | | |
 
@@ -861,11 +861,11 @@ Domains: clinic 26, email 26, hard 22, invoice 24, legal 26, misc 22.
 
 | backend | status | protected¹ | leaked² | spurious⁴ | overlap P / R / F1 | exact F1 | load s | RSS MB³ | p50 / p95 ms | chars/s |
 |---|---|---|---|---|---|---|---|---|---|---|
-| regex_only | ok | 54.3% (51–57%) | 499 | 3 | 97.5% / 54.1% / 69.6% | 69.6% | 0.3 | 113.9 (+13.0) | 3.45 / 7.07 | 106173 |
-| gazetteer | ok | 99.1% (98–100%) | 10 | 3 | 99.1% / 98.6% / 98.9% | 93.2% | 0.74 | 149.9 (+49.1) | 18.71 / 33.4 | 21566 |
-| xx_ent_wiki_sm | ok | 99.5% (99–100%) | 4 | 258 | 69.3% / 85.2% / 76.5% | 68.7% | 2.19 | 422.6 (+321.7) | 22.64 / 37.4 | 17711 |
-| nerkor_cnn | ok | 99.5% (99–100%) | 4 | 62 | 89.6% / 94.6% / 92.0% | 85.2% | 0.79 | 189.4 (+88.4) | 21.7 / 30.27 | 19111 |
-| nerkor_cnn_no_gazetteer | ok | 93.3% (92–95%) | 66 | 62 | 88.6% / 89.3% / 89.0% | 81.3% | 0.44 | 161.8 (+60.7) | 7.03 / 12.14 | 53447 |
+| regex_only | ok | 54.3% (51–57%) | 499 | 3 | 97.5% / 54.1% / 69.6% | 69.6% | 0.37 | 113.8 (+13.0) | 3.03 / 4.89 | 128344 |
+| gazetteer | ok | 99.1% (98–100%) | 10 | 3 | 99.1% / 98.6% / 98.9% | 93.2% | 0.64 | 150.0 (+49.3) | 18.28 / 31.45 | 22342 |
+| xx_ent_wiki_sm | ok | 99.5% (99–100%) | 4 | 258 | 69.3% / 85.2% / 76.5% | 68.7% | 2.58 | 422.1 (+321.2) | 22.85 / 35.21 | 18073 |
+| nerkor_cnn | ok | 99.5% (99–100%) | 4 | 62 | 89.6% / 94.6% / 92.0% | 85.2% | 0.8 | 189.7 (+88.6) | 22.97 / 42.7 | 16962 |
+| nerkor_cnn_no_gazetteer | ok | 93.3% (92–95%) | 66 | 62 | 88.6% / 89.3% / 89.0% | 81.3% | 0.51 | 161.6 (+60.9) | 7.32 / 10.59 | 53180 |
 | huspacy_md | **not run**: RuntimeError: NER model 'hu_core_news_md' is not installed in the analyzer image | | | | | | | | | |
 | huspacy_lg | **not run**: RuntimeError: NER model 'hu_core_news_lg' is not installed in the analyzer image | | | | | | | | | |
 
@@ -1128,9 +1128,9 @@ Labelled entities per condition: 406.
 | backend | original text | clean print, 300 dpi | office scan, 200 dpi | phone photo, 150 dpi | screenshot, 96 dpi |
 |---|---|---|---|---|---|
 | gazetteer, old code | 7 leaked | 14 leaked | 13 leaked | 23 leaked | 20 leaked |
-| gazetteer, current code | 2 leaked, 1 spurious | 4 leaked, 1 spurious | 3 leaked, 1 spurious | 6 leaked, 4 spurious | 5 leaked, 2 spurious |
+| gazetteer, current code | 2 leaked, 1 spurious | 4 leaked, 1 spurious | 3 leaked, 1 spurious | 8 leaked, 4 spurious | 5 leaked, 2 spurious |
 | nerkor_cnn, old code | 2 leaked | 7 leaked | 8 leaked | 14 leaked | 13 leaked |
-| nerkor_cnn, current code | 1 leaked, 26 spurious | 1 leaked, 27 spurious | 2 leaked, 27 spurious | 4 leaked, 29 spurious | 2 leaked, 29 spurious |
+| nerkor_cnn, current code | 1 leaked, 26 spurious | 1 leaked, 27 spurious | 2 leaked, 27 spurious | 6 leaked, 29 spurious | 2 leaked, 29 spurious |
 
 Labelled entities per condition: 652.
 
@@ -1160,23 +1160,23 @@ The phone-photo condition has a long tail: a few pages are read very badly (high
 
 | request | n | p50 | p95 | max |
 |---|---|---|---|---|
-| text prompt (~450 characters, 6 entities) | 40 | 41.3 ms | 54.7 ms | 68.2 ms |
-| image (rendered letter, 1400×380 px, OCR + masking) | 12 | 262.9 ms | 317.1 ms | 328.1 ms |
-| 16 text prompts from 8 threads at once | 16 | 223.7 ms | 408.7 ms | 424.4 ms (28.6 requests/s) |
+| text prompt (~450 characters, 6 entities) | 40 | 37.2 ms | 43.2 ms | 56.4 ms |
+| image (rendered letter, 1400×380 px, OCR + masking) | 12 | 242.5 ms | 281.2 ms | 322.9 ms |
+| 16 text prompts from 8 threads at once | 16 | 138.6 ms | 246.2 ms | 264.4 ms (45.6 requests/s) |
 
 Memory after the run (`docker stats`):
 
 | container | memory |
 |---|---|
-| analyzer | 402.4MiB |
-| gateway | 5.824MiB |
-| litellm | 643.6MiB |
-| mock-llm | 46.3MiB |
-| ocr | 111.3MiB |
-| openwebui | 332MiB |
-| portal | 54.2MiB |
-| postgres | 79.48MiB |
-| redis | 3.82MiB |
+| analyzer | 400.8MiB |
+| gateway | 6.223MiB |
+| litellm | 653MiB |
+| mock-llm | 46.35MiB |
+| ocr | 110.9MiB |
+| openwebui | 351.1MiB |
+| portal | 55.45MiB |
+| postgres | 84.05MiB |
+| redis | 3.562MiB |
 
 With a real model the provider's response time dominates; a local LLM (llama.cpp) needs its own memory and, without a GPU, is slow (not measured here).
 

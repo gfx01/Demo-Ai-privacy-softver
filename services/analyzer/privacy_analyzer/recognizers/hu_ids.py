@@ -126,7 +126,8 @@ class IdCardRecognizer(HuRegexRecognizer):
         Pattern("booklet", NB + r"(?P<value>[A-Z]{2}[ -]?(?:[IVX]+[ -])?\d{6})(?![\w])", 0.3, needs_context=True),
         # OCR misreads the letters: O/0, I/l/1, J/], S/5 ("3580210A", "229277Al",
         # "004861R]"); accepted only next to an ID-card word.
-        Pattern("card_ocr", NB + r"(?P<value>\d{6}[ -]?[A-Z0-9lI|\]\[{}()]{2,3})(?![\w\]\[|{}])", 0.4, needs_context=True),
+        Pattern("card_ocr", NB + r"(?P<value>\d{6}[ -]?(?=[A-Z0-9lI|\]\[{}()]{0,2}[A-ZlI|\]\[{}()])[A-Z0-9lI|\]\[{}()]{2,3})(?![\w\]\[|{}])",
+                0.4, needs_context=True),
     )
     CONTEXT = r"személyi ig|személyi\b|\bszig|igazolvány|okmányazonosító|szem\. ?ig|id ?card|útlevél"
     FLAGS = 0  # case-sensitive: the letters are upper case

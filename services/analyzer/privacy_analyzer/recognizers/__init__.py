@@ -80,17 +80,37 @@ class GuardedPhoneRecognizer(PhoneRecognizer):
     # libphonenumber is run on short windows that can hold a number with a
     # prefix, not on the whole text: on long digit runs ("1/1/1/...") the full
     # scan took seconds per 20,000 characters.
-    WINDOW = re.compile(r"(?<![\w+])(?:\+|00|0|\()[\d\s()./\-–]{5,24}\d")
+    START = re.compile(r"(?<![\w+])(?:\+|00|0|\()")
+    WINDOW = re.compile(r"[\d\s()./\-–+]{6,25}\d")
+    NATIONAL_REGIONS = ("AT", "DE", "SK", "RO", "UK", "US")  # HU numbers: HuPhoneRecognizer
 
     def _matches(self, text):
+        """A window starts at every possible prefix (+, 00, 0, "("), so a window
+        cannot swallow the start of the next number; after a found number the
+        scan resumes behind it. On pathological input (thousands of prefixes
+        and no numbers) a budget switches to non-overlapping windows."""
         found = []
-        for w in self.WINDOW.finditer(text):
-            window = text[w.start() : w.end()]
-            for region in self.supported_regions:
+        resume = 0
+        budget = max(300, len(text) // 400)
+        for s in self.START.finditer(text):
+            start = s.start()
+            if start < resume:
+                continue
+            w = self.WINDOW.match(text, start)
+            if not w:
+                continue
+            window = text[start : w.end()]
+            international = window.startswith(("+", "00"))
+            regions = ("DE",) if international else self.NATIONAL_REGIONS  # any region parses +/00 numbers
+            hits = []
+            for region in regions:
                 for m in phonenumbers.PhoneNumberMatcher(window, region, leniency=self.leniency):
                     r = self._get_recognizer_result(m, window, region, None)
-                    r.start, r.end = w.start() + m.start, w.start() + m.end
-                    found.append(r)
+                    r.start, r.end = start + m.start, start + m.end
+                    hits.append(r)
+            found += hits
+            budget -= 1
+            resume = max((r.end for r in hits), default=start + 1 if budget > 0 else w.end())
         return EntityRecognizer.remove_duplicates(found)
 
     def analyze(self, text, entities, nlp_artifacts=None):

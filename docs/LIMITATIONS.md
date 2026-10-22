@@ -129,6 +129,9 @@ ambiguous formats (e.g. the személyi azonosító) they are required.
   the engine does not verbalise numbers and may pick the wrong form.
 * Pseudonym mode: if restoration fails, the reader sees a plausible but
   **fake name**, which is worse than a visible `[PERSON_1]`.
+* A name typed without accents and inflected (*Rekanak*, *Halasz Tibornal*)
+  comes back with an accented ending (*Rekának*, *Tibornál*): the stem is
+  restored as written, the ending follows the grammar.
 
 ## 3. What the gateway does not do
 
@@ -191,9 +194,9 @@ ambiguous formats (e.g. the személyi azonosító) they are required.
   old code (measured side by side on held-out #4). The figures move by ±30%
   between runs on this machine.
 * Whole stack with the mock model (`make eval-perf`, see
-  [EVALUATION.md](EVALUATION.md)): a typical prompt round trip about 40–60 ms
-  median, an image with OCR about 250 ms, 16 prompts from 8 threads at once
-  about 20–35 requests/s.
+  [EVALUATION.md](EVALUATION.md)): a typical prompt round trip about 40 ms
+  median (37–41 ms in the last runs; 47 ms before round 3), an image with OCR
+  about 250 ms, 16 prompts from 8 threads at once about 30–45 requests/s.
 * Memory at idle with the default configuration (`docker stats`): whole stack
   ≈ 1.6 GB (LiteLLM ≈ 650–700 MB, analyzer ≈ 400 MB, Open WebUI ≈ 330 MB). The
   NerKor model adds ≈ 90 MB and `xx_ent_wiki_sm` ≈ 320 MB to the analyzer.
@@ -203,9 +206,10 @@ ambiguous formats (e.g. the személyi azonosító) they are required.
   entities (Presidio's duplicate removal and conflict check, our overlap
   resolution). Python's regex engine holds the interpreter lock, so one such
   request stopped every other request. Now 56 adversarial patterns of
-  50,000 characters each are masked in at most 2.4 s; a regression test
-  covers the worst ones. A normal 200,000-character request (the limit) still
-  takes several seconds and blocks the single analyzer worker meanwhile.
+  50,000 characters each are masked in at most about 3 s; a regression test
+  covers the worst ones. A 200,000-character request (the limit) still takes
+  3–6 s, and up to about 13 s for a long run of phone-like digits
+  (*06 06 06 …*); it blocks the single analyzer worker meanwhile.
 * Not measured: sustained load, many users at once.
 
 ## 6. Models that could not be evaluated here

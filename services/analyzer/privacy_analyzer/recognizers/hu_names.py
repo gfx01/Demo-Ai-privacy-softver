@@ -61,7 +61,7 @@ WORD_SURNAMES = {
     "Kun", "Német", "Németh", "Orosz", "Tóth", "Horváth", "Oláh", "Rácz", "Lengyel", "Magyar", "Székely",
     "Pintér", "Kerekes", "Szekeres", "Kardos", "Bodnár", "Szénási", "Mohácsi", "Vass", "Farkas", "Balogh",
     # animals, occupations and other ordinary words that are established surnames
-    "Gombos", "Rigó", "Bárány", "Torma", "Péntek", "Szombat", "Holló", "Sólyom", "Sas", "Csóka", "Szarka", "Varjú",
+    "Gombos", "Rigó", "Bárány", "Torma", "Holló", "Sólyom", "Sas", "Csóka", "Szarka", "Varjú",
     "Galamb", "Fecske", "Medve", "Róka", "Kakas", "Csuka", "Csiszár", "Varró", "Szántó", "Kalapos", "Dobos", "Ötvös",
     "Csikós", "Huszár", "Barát", "Cseh", "Szász", "Polgár", "Gróf", "Hegyi", "Erdei", "Kecskés", "Borsos", "Gazdag",
     "Sánta", "Hajdú", "Darázs",
@@ -142,8 +142,8 @@ VEHICLE_MAKES = {
 OCR_SWAPS = (("m", "rn"), ("rn", "m"), ("o", "ő"), ("e", "ő"), ("é", "ő"), ("6", "ő"), ("u", "ű"), ("ii", "ü"),
              ("i", "í"), ("l", "í"), ("0", "o"))
 # Legal case names: "a Pálfi kontra Vasvári ügy"
-VERSUS = re.compile(r"\s+(?:kontra|vs\.?|v\.)\s+$")
-VERSUS_AFTER = re.compile(r"^\s+(?:kontra|vs\.?|v\.)\s+")
+VERSUS = re.compile(r"\s+kontra\s+$")  # not "v." (= "vagy") or "vs." (products, companies)
+VERSUS_AFTER = re.compile(r"^\s+kontra\s+")
 # Endings after the family suffix -ék: "Kovácsékkal", "Kisséknél", "Tóthékat"
 FAMILY_RE = re.compile(
     r"^(.{2,}?)ék(?:at|et|nak|nek|kal|kel|nál|nél|hoz|hez|höz|tól|től|ért|ra|re|ról|ről|on|en|ön|ban|ben|ba|be|"
@@ -215,6 +215,15 @@ def plain_stems(token: str) -> set[str]:
     if m and len(m.group(1)) >= 3:
         stems.add(m.group(1))
     return stems
+
+
+def covered_map(length: int, spans) -> bytearray:
+    """1 for every character inside one of the spans: an O(1) "already found?"
+    test (a scan of all spans per token was quadratic on long texts)."""
+    out = bytearray(length + 1)
+    for start, end in spans:
+        out[start:end] = b"\x01" * max(0, end - start)
+    return out
 
 
 def _nfc(s: str) -> str:
@@ -554,9 +563,10 @@ class HuNameRecognizer(EntityRecognizer):
 
     def _case_parties(self, text, tokens, taken):
         """Parties of a legal case: "a Pálfi kontra Vasvári ügyben"."""
+        covered = covered_map(len(text), taken)
         out = []
         for start, end, w in tokens:
-            if any(s <= start < e for s, e in taken) or not self._name_like(w) or w in STOPWORDS:
+            if covered[start] or not self._name_like(w) or w in STOPWORDS:
                 continue
             if not (VERSUS_AFTER.match(text[end:]) or VERSUS.search(text[max(0, start - 10) : start])):
                 continue
@@ -630,10 +640,10 @@ class HuNameRecognizer(EntityRecognizer):
         parts -= PARTICLES
         if not parts:
             return []
-        taken = [(r.start, r.end) for r in found]
+        covered = covered_map(len(text), [(r.start, r.end) for r in found])
         out = []
         for start, end, w in tokens:
-            if any(s <= start < e for s, e in taken) or not self._name_like(w) or w in STOPWORDS:
+            if covered[start] or not self._name_like(w) or w in STOPWORDS:
                 continue
             candidates = {w, self._stem(w)[0], self._married_base(w), self._family_base(w),
                           *self._foreign_bases(w), *self._possessive_bases(w)}
@@ -792,9 +802,10 @@ class HuNameRecognizer(EntityRecognizer):
         """Known surnames standing alone: with a title/honorific, inflected
         mid-sentence ("Kissnek"), as family form ("Kovácsékkal") or as a
         married-name form ("Kissné")."""
+        covered = covered_map(len(text), taken)
         out = []
         for start, end, w in tokens:
-            if any(s <= start < e for s, e in taken) or not self._capitalised(w) or w in STOPWORDS:
+            if covered[start] or not self._capitalised(w) or w in STOPWORDS:
                 continue
             initial = self._sentence_initial(text, start)
             if not self.is_known_surname(w):

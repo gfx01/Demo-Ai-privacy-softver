@@ -159,7 +159,7 @@ class HuStreetRecognizer(HuRegexRecognizer):
 
     ENTITY = "LOCATION"
     # street words that are also ordinary words: "Önhöz soron kívül", "Hosszú út áll előttünk"
-    _AMBIGUOUS_TYPES = re.compile(r"^(?:sor|köz|út|tér|ut|ter)", re.I)
+    _AMBIGUOUS_TYPES = re.compile(r"^(?:sor|köz|út|tér|ut(?!c)|ter)", re.I)
     _STREET = (
         r"utcai|úti|téri|utc[aá](?:ban|ba|ból|ra|ról|n|t|nál|hoz|tól|ig)?|útj?[aá]?(?:on|ra|ról|ig|n|t|nál)?|úton|útra|útról|"
         r"t[eé]r(?:en|re|ről|t|ig)?|körút(?:on|ra|ról|ig)?|köz(?:ben|be|ből|re|ön|t)?|sor(?:on|ra|ról|ba|ban)?|"
@@ -170,7 +170,7 @@ class HuStreetRecognizer(HuRegexRecognizer):
     # lower case, also without accents: "a kálvin térre", "a rakoczi uton"
     _STREET_LOWER = (
         r"utc[aá](?:ban|ba|ból|bol|ra|ról|rol|n|t|nál|nal|hoz|tól|tol|ig)?|útj?[aá]?(?:on|ra|ról|ig|n|t|nál)?|úton|útra|útról|"
-        r"utj?a?(?:on|ra|rol|n|t|nal)?|uton|utra|utrol|t[eé]r(?:en|re|ről|rol|t|ig|nél|nel)?|k[öo]r[uú]t(?:on|ra|ról|rol)?"
+        r"ut(?:on|ra|rol|ja|jan|nal)|t[eé]r(?:en|re|ről|rol|t|ig|nél|nel)?|k[öo]r[uú]t(?:on|ra|ról|rol)?"
     )
     # streets named after a person with a title: "Mátyás király út", "Szent István körút"
     _TITLE_IN_STREET = r"(?:(?:király|királyné|királynő|herceg|hercegnő|fejedelem|gróf|grófnő|báró|püspök|érsek|vezér|költő)\s+)?"
@@ -178,7 +178,7 @@ class HuStreetRecognizer(HuRegexRecognizer):
         # one-word German street names: "a Schönaugasse és a Münzgrabenstraße kereszteződésében"
         Pattern(
             "foreign_street_word",
-            r"(?<![\w])(?P<value>[A-ZÄÖÜ][a-zäöüß]{2,30}(?:gasse|straße|strasse|platz|allee|ring|damm|ufer)"
+            r"(?<![\w])(?P<value>[A-ZÄÖÜ][a-zäöüß]{2,30}(?:gasse|straße|strasse|platz|allee|damm|ufer)"
             r"(?:ban|ben|ba|be|ból|ből|on|en|ön|n|ra|re|nál|nél|hoz|hez|tól|től|ig|t|ot|et)?)(?![\w])",
             0.45,
         ),
@@ -380,6 +380,8 @@ class OcrEmailRecognizer(HuRegexRecognizer):
 
     ENTITY = "EMAIL_ADDRESS"
     _DOMAIN = rf"[a-z0-9][a-z0-9-]{{0,62}}(?:\.[a-z0-9-]{{1,63}}){{0,3}}\.\s?{_TLD}"
+    # no space before the TLD: "ment oda. de holnap" is not an address
+    _DOMAIN_TIGHT = rf"[a-z0-9][a-z0-9-]{{0,62}}(?:\.[a-z0-9-]{{1,63}}){{0,3}}\.{_TLD}"
     PATTERNS = (
         Pattern(
             "spaced_at",
@@ -389,24 +391,25 @@ class OcrEmailRecognizer(HuRegexRecognizer):
         ),
         Pattern(
             "misread_at",
-            rf"(?<![\w.])(?P<value>[a-z0-9][a-z0-9._%+-]{{0,62}}[a-z0-9][O0©®]{_DOMAIN})(?![\w])",
+            rf"(?<![\w.])(?P<value>(?!www\.)[a-z0-9][a-z0-9._%+-]{{0,62}}[a-z0-9][O©®]{_DOMAIN})(?![\w])",
             0.5,
         ),
         Pattern(
             "name_dot_name",
-            rf"(?<![\w.])(?P<value>(?!www\.)[a-z]{{2,30}}\.[a-z]{{2,30}}[0-9]{{0,4}}(?:\s?[o@q]|go)\s?{_DOMAIN})(?![\w])",
+            rf"(?<![\w.])(?P<value>(?!www\.)[a-z]{{2,30}}\.[a-z]{{2,30}}[0-9]{{0,4}}(?:\s?[o@q]|go)\s?{_DOMAIN_TIGHT})(?![\w])",
             0.4,
             needs_context=True,
         ),
         # "penzugy obakonyfa-kft.example": a word, then " o" glued to a domain
         Pattern(
             "word_space_o",
-            rf"(?<![\w.])(?P<value>[a-z][a-z0-9._-]{{2,63}}\so{_DOMAIN})(?![\w])",
+            rf"(?<![\w.])(?P<value>[a-z][a-z0-9._-]{{2,63}}\so{_DOMAIN_TIGHT})(?![\w])",
             0.4,
             needs_context=True,
         ),
         # an intact "@" whose domain lost its dot: "d.olah@hangfalbtexample"
-        Pattern("at_without_tld", r"(?<![\w.@])(?P<value>[A-Za-z0-9][A-Za-z0-9._%+-]{0,63}@[A-Za-z0-9][A-Za-z0-9-]{2,62})(?![\w.@])", 0.5),
+        Pattern("at_without_tld", r"(?<![\w.@])(?P<value>[A-Za-z0-9][A-Za-z0-9._%+-]{0,63}@[A-Za-z0-9][A-Za-z0-9]{2,62})(?![\w.@])",
+                0.5, needs_context=True),
     )
     CONTEXT = r"e-?mail|címre|címen|elérhetőség|levél|\bmail\b"
     CONTEXT_BEFORE = 40

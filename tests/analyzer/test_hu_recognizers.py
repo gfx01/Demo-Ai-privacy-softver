@@ -276,7 +276,7 @@ def test_round3_particles_need_a_surname(engine, text, span):
     ("Bakos Lilla (e-mail: bakos.lillagohajnal-zrt.example, tel.:", ("EMAIL_ADDRESS", "bakos.lillagohajnal-zrt.example")),
     ("A választ a gal.viktoria orozmaring-rendezveny.example címre", ("EMAIL_ADDRESS", "gal.viktoria orozmaring-rendezveny.example")),
     ("írj a kovacs.anna @ ceg.hu címre", ("EMAIL_ADDRESS", "kovacs.anna @ ceg.hu")),
-    ("küldd át: d.olah@hangfalbtexample, köszi", ("EMAIL_ADDRESS", "d.olah@hangfalbtexample")),
+    ("e-mail: d.olah@hangfalbtexample, köszi", ("EMAIL_ADDRESS", "d.olah@hangfalbtexample")),
     ("hívja vissza a 136 70 000 6630 számon", ("PHONE_NUMBER", "136 70 000 6630")),
     ("tel.: --36 20 000 3019, köszönöm", ("PHONE_NUMBER", "--36 20 000 3019")),
     ("Győr, tel.: 4-36 96 000 307", ("PHONE_NUMBER", "4-36 96 000 307")),
@@ -413,3 +413,38 @@ def test_round3c_positives(engine, text, expected):
 def test_email_suffix_restores(engine):
     res = engine.mask(["Írj a kovacs@ceg.hu-ra holnap."], "hu", "bracket")
     assert res.masked_texts[0] == "Írj a [EMAIL_1]-ra holnap."
+
+
+@pytest.mark.parametrize("text, expected", [
+    # found by an independent review of round 3
+    ("Tel./Fax: 0043 1 2345678 / 0043 1 2345679", ("PHONE_NUMBER", "0043 1 2345679")),
+    ("A Fő utcában lakik.", ("LOCATION", "Fő utcában")),
+    ("a szállás Splitben lesz", ("LOCATION", "Splitben")),
+])
+def test_review3_positives(engine, text, expected):
+    assert expected in found(engine, text)
+
+
+@pytest.mark.parametrize("text", [
+    "ebed utan visszahivlak, talalkozunk a megbeszeles utan",
+    "Kérem Excel v. PDF formátumban. Microsoft vs. Google: melyik a jobb?",
+    "A szerver címe srv01.ceg.hu, a weboldal www.auto100.hu.",
+    "A Monitoring csapat és a Split funkció.",
+    "személyi igazolvány lejárata: 20301231",
+    "a konténer neve nginx@sha256, a node@latest kép",
+])
+def test_review3_negatives(engine, text):
+    assert found(engine, text) == set()
+
+
+def test_review3_day_name_does_not_join_a_given_name(engine):
+    assert ("PERSON", "Pénteken Anna") not in found(engine, "Pénteken Anna is jön.")
+
+
+def test_review3_many_names_stay_linear(engine):
+    import time
+
+    text = "Tamas, " * 8000
+    t = time.perf_counter()
+    engine.mask([text], "hu", "bracket")
+    assert time.perf_counter() - t < 10

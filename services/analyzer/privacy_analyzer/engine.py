@@ -148,7 +148,7 @@ def replace_spans(text: str, results: list[RecognizerResult], replacement) -> st
     the replacement function is called from the last entity to the first."""
     merged: list[list] = []
     for r in sorted(results, key=lambda x: (x.start, x.end)):
-        if merged and merged[-1][2] == r.entity_type and _SPACES.fullmatch(text, merged[-1][1], r.start):
+        if merged and merged[-1][2] == r.entity_type and _SPACES.search(text[merged[-1][1] : r.start]):
             merged[-1][1] = r.end
         else:
             merged.append([r.start, r.end, r.entity_type])
@@ -162,7 +162,7 @@ def replace_spans(text: str, results: list[RecognizerResult], replacement) -> st
     return "".join(reversed(out))
 
 
-_SPACES = re.compile(r" +")
+_SPACES = re.compile(r"^( )+$")  # exactly Presidio's test, including its "spaces + final newline" case
 
 ORG_TYPES = ("HU_COMPANY", "ORGANIZATION")
 # Hungarian endings after a company's short name: "Bitkerttel", "Mecsek-Vill-lel", "Alfának"
@@ -179,15 +179,17 @@ def repeated_org_names(text: str, results: list[RecognizerResult], ignored: set[
     out: list[RecognizerResult] = []
     if ignored & set(ORG_TYPES):
         return out
-    taken = [(r.start, r.end) for r in results]
+    covered = bytearray(len(text) + 1)  # O(1) "already masked?" (a scan per match was quadratic)
+    for r in results:
+        covered[r.start : r.end] = b"\x01" * (r.end - r.start)
     for r in [r for r in results if r.entity_type in ORG_TYPES]:
         first = text[r.start : r.end].split()[0]
         if len(first) < 4 or not first[:1].isupper() or first in _ORG_COMMON_FIRST:
             continue
         for m in re.finditer(rf"(?<![\w-]){re.escape(first)}{_ORG_SHORT_ENDING}(?![\w])", text):
-            if any(s <= m.start() < e for s, e in taken):
+            if covered[m.start()]:
                 continue
-            taken.append((m.start(), m.end()))
+            covered[m.start() : m.end()] = b"\x01" * (m.end() - m.start())
             out.append(RecognizerResult(r.entity_type, m.start(), m.end(), 0.5,
                                         AnalysisExplanation(recognizer="RepeatedOrgName", original_score=0.5,
                                                             textual_explanation="short form of an organisation found in the same text")))

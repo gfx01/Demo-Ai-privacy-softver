@@ -424,7 +424,7 @@ make eval-ocr           # test texts rendered as images, OCR'd and masked (after
 make eval-perf          # latency and memory of the running stack (mock model)
 ```
 
-Last run: 263 unit, 192 analyzer, 32 OCR and 60 integration tests passed. The
+Last run: 263 unit, 203 analyzer, 32 OCR and 60 integration tests passed. The
 integration tests stop and pause services to prove fail-closed behaviour. They
 check that the mock provider receives nothing, and that a full Postgres dump,
 Redis and all container logs contain no raw test PII.

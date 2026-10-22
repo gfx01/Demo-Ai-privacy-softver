@@ -77,6 +77,12 @@ EXONYMS = {
     "Délvidék", "Kárpátalja", "Partium", "Burgenland", "Bajorország", "Tirol", "Toszkána", "Dalmácia",
     "Balaton", "Alföld", "Dunántúl", "Tiszántúl", "Mátra", "Bükk", "Őrség", "Hortobágy",
 }
+# Foreign city names that are common English words in Hungarian office text
+# ("a Split funkció", "Nice to meet you", "Sale kampány")
+ENGLISH_WORD_CITIES = {
+    "Split", "Reading", "Sale", "Nice", "Bath", "Bury", "Hove", "Marl", "Gare", "Most", "Bolton", "Wells", "Deal",
+    "March", "Street", "Hamm", "Mobile", "Orange", "Moody", "Derby", "Poole", "Ashford", "Crawley", "Slough",
+}
 # Counties and regions of Hungary (settlement and country lists do not have them)
 REGIONS = {
     "Baranya", "Bács-Kiskun", "Békés", "Borsod", "Borsod-Abaúj-Zemplén", "Csongrád-Csanád", "Fejér",
@@ -185,9 +191,11 @@ class HuPlaceRecognizer(EntityRecognizer):
                 continue
             base = self._base(w, self.single)
             dated = bool(base) and DATE_LINE_AFTER.match(text[end:]) is not None
+            if base in ENGLISH_WORD_CITIES and base == w:
+                base = None  # "a Split funkció": only an inflected form is the city ("Splitben")
             if base and not STREET_AFTER.match(text[end:]) and (dated or not self._ambiguous(text, start, w, base)):
                 results.append(self._result(start, end, 0.5, "place name"))
-            elif not base and self._plain_place(text, start, w) and not STREET_AFTER.match(text[end:]):
+            elif not base and w not in ENGLISH_WORD_CITIES and self._plain_place(text, start, w) and not STREET_AFTER.match(text[end:]):
                 results.append(self._result(start, end, 0.45, "place name typed without accents"))
             i += 1
         results.extend(self._local_institutions(text))
