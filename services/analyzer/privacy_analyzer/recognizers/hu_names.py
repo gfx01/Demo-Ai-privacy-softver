@@ -653,7 +653,8 @@ class HuNameRecognizer(EntityRecognizer):
         words = [tokens[k][2] for k in run]
         if words[0] in VEHICLE_MAKES:
             return None  # "Škoda Octavia", "Dacia Logan": a car model
-        given_idx = [n for n, w in enumerate(words) if self.is_given(w)]
+        # accent-less given names count next to exact ones: "Barta Kristof" (Barta is both)
+        given_idx = [n for n, w in enumerate(words) if self.is_given(w) or (len(words) > 1 and self.is_given_plain(w))]
         if not given_idx:
             # typed without accents: "Reka", "Halasz Tibornal"; on its own the
             # word must not be an ordinary word once accents are gone

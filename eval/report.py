@@ -131,23 +131,28 @@ def _cell(d: dict | None, b: str) -> str:
 def summary_section() -> list[str]:
     dev, held, held2, held3 = (_load(f"detection_{n}.json") for n in ("dev", "heldout", "heldout2", "heldout3"))
     held4, held4_base = _load("detection_heldout4.json"), _load("detection_heldout4_baseline.json")
+    held4_first = _load("detection_heldout4_firstrun.json") or held4
     held3_base, held3_first = _load("detection_heldout3_baseline.json"), _load("detection_heldout3_firstrun.json")
-    backends = list(dev["backends"]) if dev else []
+    # HuSpaCy could not be downloaded here (see section 6 of LIMITATIONS.md): rows without results are left out
+    backends = [b for b, r in dev["backends"].items() if r.get("status") == "ok"] if dev else []
     lines = ["## Summary", "",
              "### Detection: share of entities protected (≥95% of characters masked, any type), 95% Wilson CI", "",
              "**The honest numbers** come from held-out sets that were written before the code they test and were "
              "measured once with it. *Old code* is the state before round 3 (commit `a055555`), run on the same set "
              "for comparison. Held-out #3 was written before the round-3 changes and measured once after them "
-             "(*first run*); the bugs it then revealed were fixed, so held-out #4 was written to measure the final "
-             "code once.", "",
-             "| backend | held-out #4, old code | **held-out #4, final code** | held-out #3, old code | **held-out #3, round-3 first run** |",
+             "(*first run*); the bugs it then revealed were fixed, so held-out #4 was written and measured once "
+             "with the round-3 code (*first run*). A few general bugs that run revealed (e-mail followed by a "
+             "Hungarian ending, money in more cases, \"szul:\", one-word German street names, romanised Ukrainian "
+             "given names) were fixed afterwards; their effect is only visible on the tuned table.", "",
+             "| backend | held-out #4, old code | **held-out #4, first run** | held-out #3, old code | **held-out #3, first run** |",
              "|---|---|---|---|---|"]
     for b in backends:
-        lines.append(f"| {b} | {_cell(held4_base, b)} | **{_cell(held4, b)}** | {_cell(held3_base, b)} | **{_cell(held3_first, b)}** |")
+        lines.append(f"| {b} | {_cell(held4_base, b)} | **{_cell(held4_first, b)}** | {_cell(held3_base, b)} | **{_cell(held3_first, b)}** |")
     lines += ["", "**Tuned sets (optimistic):** used to find and fix leaks, so they overstate real-world protection.", "",
-              "| backend | held-out #3, final code | held-out #2 | held-out #1 | dev |", "|---|---|---|---|---|"]
+              "| backend | held-out #4, current code | held-out #3, current code | held-out #2 | held-out #1 | dev |",
+              "|---|---|---|---|---|---|"]
     for b in backends:
-        lines.append(f"| {b} | {_cell(held3, b)} | {_cell(held2, b)} | {_cell(held, b)} | {_cell(dev, b)} |")
+        lines.append(f"| {b} | {_cell(held4, b)} | {_cell(held3, b)} | {_cell(held2, b)} | {_cell(held, b)} | {_cell(dev, b)} |")
     lines += ["",
               "`gazetteer` is the default quickstart configuration (patterns + name, place and word lists, no NER "
               "model); `nerkor_cnn` is the recommended one (`make nerkor`). *spurious* = masked spans that overlap no "
@@ -213,11 +218,15 @@ def ocr_section() -> list[str]:
                          f"{pct(k['accented_words_exact'])} of {k['accented_words']} | {k['seconds_mean']} / {k['seconds_p95']} |")
         lines += ["", "| backend | " + " | ".join(CONDITION_NAMES[c] for c in conds) + " |",
                   "|---|" + "---|" * len(conds)]
+        first = _load(f"ocr_{name}_firstrun.json")
         for b, per in d["backends"].items():
             if base and b in base["backends"]:
                 lines.append(f"| {b}, old code | " + " | ".join(
                     f"{base['backends'][b][c]['leaked']} leaked" for c in conds) + " |")
-            lines.append(f"| {b}{', final code' if base else ''} | " + " | ".join(
+            if first and b in first["backends"]:
+                lines.append(f"| {b}, first run | " + " | ".join(
+                    f"{first['backends'][b][c]['leaked']} leaked" for c in conds) + " |")
+            lines.append(f"| {b}{', current code' if base else ''} | " + " | ".join(
                 f"{per[c]['leaked']} leaked, {per[c].get('spurious_strings', '–')} spurious" for c in conds) + " |")
         lines += ["", f"Labelled entities per condition: {d['backends'][next(iter(d['backends']))]['original']['entities']}.", ""]
     lines += ["The phone-photo condition has a long tail: a few pages are read very badly (high mean, low median "
@@ -264,7 +273,7 @@ def main() -> int:
     ]
     lines += summary_section()
     titles = {
-        "heldout4": "held-out set #4 (written before the final code, measured once — honest)",
+        "heldout4": "held-out set #4, current code (first run in the summary; bugs it revealed were fixed — optimistic)",
         "heldout3": "held-out set #3 (final code; bugs it revealed were fixed — optimistic)",
         "heldout2": "held-out set #2 (honest in round 2, used for tuning in round 3 — optimistic)",
         "heldout": "held-out set #1 (used for tuning — optimistic)",

@@ -7,14 +7,25 @@ from .session import MaskingSession, resolve_overlaps
 from .strategies import Strategy, get_strategy
 
 
+# One morphology per (language, lexicon object): building one copies the
+# lexicon (~10,000 names) and starts with an empty word cache, which cost
+# ~15 ms on every masking call. The object holds no per-request state.
+_MORPHOLOGIES: dict[tuple[str, int], tuple[object, Morphology]] = {}
+
+
 def get_morphology(language: str, lexicon=None) -> Morphology:
     """Morphology for a language code; Hungarian gets suffix handling.
     ``lexicon`` (known names) prevents false splits when masking."""
-    if language.lower().startswith("hu"):
+    if not language.lower().startswith("hu"):
+        return NullMorphology()
+    key = (language.lower(), id(lexicon))
+    hit = _MORPHOLOGIES.get(key)
+    if hit is None or hit[0] is not lexicon:  # id() can be reused after the object is gone
         from .hungarian import HungarianMorphology
 
-        return HungarianMorphology(lexicon=lexicon)
-    return NullMorphology()
+        hit = (lexicon, HungarianMorphology(lexicon=lexicon))
+        _MORPHOLOGIES[key] = hit
+    return hit[1]
 
 
 def build_restorer(mapping: Mapping) -> Restorer:

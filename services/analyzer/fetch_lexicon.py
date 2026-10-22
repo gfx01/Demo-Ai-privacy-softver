@@ -125,6 +125,24 @@ def countries() -> list[str]:
     })
 
 
+# Official Ukrainian romanisation (Cabinet of Ministers resolution 55/2010),
+# the form used in Ukrainian passports: "Микола" -> "Mykola", "Юлія" -> "Yuliia".
+UK_LATIN = {
+    "а": "a", "б": "b", "в": "v", "г": "h", "ґ": "g", "д": "d", "е": "e", "є": "ie", "ж": "zh", "з": "z",
+    "и": "y", "і": "i", "ї": "i", "й": "i", "к": "k", "л": "l", "м": "m", "н": "n", "о": "o", "п": "p",
+    "р": "r", "с": "s", "т": "t", "у": "u", "ф": "f", "х": "kh", "ц": "ts", "ч": "ch", "ш": "sh",
+    "щ": "shch", "ь": "", "ю": "iu", "я": "ia", "'": "", "’": "",
+}
+UK_LATIN_INITIAL = {"є": "ye", "ї": "yi", "й": "y", "ю": "yu", "я": "ya"}
+
+
+def uk_latin(name: str) -> str:
+    low = name.lower().replace("зг", "зґг")  # "зг" -> "zgh" per the resolution (ґ marks it here)
+    out = "".join((UK_LATIN_INITIAL if i == 0 else {}).get(c, UK_LATIN.get(c, c)) for i, c in enumerate(low))
+    out = out.replace("zgg", "zg")  # "зґг" -> "zgh": ґ only marked the pair
+    return out[:1].upper() + out[1:]
+
+
 def _latin(name: str) -> bool:
     return name.isalpha() and all(unicodedata.name(c, "").startswith("LATIN") for c in name)
 
@@ -265,9 +283,13 @@ def main() -> int:
         lists = faker_lists(locale, wheel)
         for key in ("first_names_male", "first_names_female", "first_names"):
             foreign.update(unicodedata.normalize("NFC", n) for n in lists.get(key, []) if _latin(n) and len(n) >= 3)
+    # Ukrainian given names in the passport (Latin) form
+    uk = faker_lists("uk_UA", wheel)
+    foreign.update(uk_latin(n) for key in ("first_names_male", "first_names_female")
+                   for n in uk.get(key, []) if len(n) >= 3)
     (out / "foreign_given.txt").write_text("\n".join(sorted(foreign)) + "\n", encoding="utf-8")
-    meta["foreign_given"] = {"source": f"Faker 40.43.0 ({', '.join(FOREIGN_LOCALES)})", "count": len(foreign),
-                             "licence": "MIT (Faker)"}
+    meta["foreign_given"] = {"source": f"Faker 40.43.0 ({', '.join(FOREIGN_LOCALES)}; uk_UA romanised, KMU 55/2010)",
+                             "count": len(foreign), "licence": "MIT (Faker)"}
     cities = foreign_cities()
     (out / "foreign_cities.txt").write_text("\n".join(cities) + "\n", encoding="utf-8")
     meta["foreign_cities"] = {"source": GEONAMES_WHEEL[0], "sha256": GEONAMES_WHEEL[1], "count": len(cities),

@@ -185,6 +185,6 @@ class BirthDateRecognizer(HuRegexRecognizer):
     )
     # "szület" covers született, születési, születésű, születés; also as OCR and
     # accent-less typing render it ("sziil.", "szul.", "szuletett")
-    CONTEXT = r"sz(?:ü|u|ii|ű)let|\bsz(?:ü|u|ii|ű)l\.|\bszd\.|birth|\bborn\b|\bsz\. ?d|életkor|\bkora\b"
+    CONTEXT = r"sz(?:ü|u|ii|ű)let|\bsz(?:ü|u|ii|ű)l(?:\.|:|\b)|\bszd\.|birth|\bborn\b|\bsz\. ?d|életkor|\bkora\b"
     CONTEXT_BEFORE = 40
     CONTEXT_AFTER = 25  # "... 1991. augusztus 23. napján született"

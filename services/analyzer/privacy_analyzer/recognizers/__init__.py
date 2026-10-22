@@ -48,9 +48,22 @@ class AnyTldEmailRecognizer(EmailRecognizer):
     cost is occasional over-masking (``logo@2x.png``), the safe direction."""
 
     TLD_RE = re.compile(r"\.(?:[^\W\d_]{2,63}|xn--[a-z0-9-]{2,59})$", re.IGNORECASE)
+    # A Hungarian case ending after the address: "kovacs@ceg.hu-ra",
+    # "...@biztoskez.example-re". The e-mail pattern reads the ending as part of
+    # the domain, the TLD check then failed and the whole address leaked.
+    SUFFIX_RE = re.compile(r"-[a-záéíóöőúüű]{1,6}$")
 
     def validate_result(self, pattern_text: str) -> bool:
-        return bool(self.TLD_RE.search(pattern_text))
+        return bool(self.TLD_RE.search(pattern_text) or self.TLD_RE.search(self.SUFFIX_RE.sub("", pattern_text)))
+
+    def analyze(self, text, entities, nlp_artifacts=None, regex_flags=None):
+        results = super().analyze(text, entities, nlp_artifacts, regex_flags)
+        for r in results:
+            value = text[r.start : r.end]
+            m = self.SUFFIX_RE.search(value)
+            if m and not self.TLD_RE.search(value):
+                r.end -= len(m.group(0))  # the ending stays outside: "[EMAIL_1]-ra"
+        return results
 
 
 class GuardedPhoneRecognizer(PhoneRecognizer):

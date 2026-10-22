@@ -394,3 +394,22 @@ def test_replace_spans_matches_presidio_anonymizer(engine):
         reference = anonymizer.anonymize(text=text, analyzer_results=results, operators=ops).text
         assert mine == reference
         assert ours == theirs
+
+
+@pytest.mark.parametrize("text, expected", [
+    # fixed after the held-out #4 run
+    ("átküldtem a zsuzsanna.pinter@biztoskez.example-re", ("EMAIL_ADDRESS", "zsuzsanna.pinter@biztoskez.example")),
+    ("Írj a kovacs@ceg.hu-ra holnap", ("EMAIL_ADDRESS", "kovacs@ceg.hu")),
+    ("a gipszelés 486 euróba került", ("MONEY", "486 euróba")),
+    ("Barta Kristof, szul: 1996.02.11, TAJ", ("HU_BIRTH_DATE", "1996.02.11")),
+    ("Barta Kristof, szul: 1996.02.11, TAJ", ("PERSON", "Barta Kristof")),
+    ("Grazban, a Schönaugasse és a Münzgrabenstraße kereszteződésében", ("LOCATION", "Münzgrabenstraße")),
+    ("Kérelmező: Oksana Melnyk (szül. 1989. 07. 14.)", ("PERSON", "Oksana Melnyk")),
+])
+def test_round3c_positives(engine, text, expected):
+    assert expected in found(engine, text)
+
+
+def test_email_suffix_restores(engine):
+    res = engine.mask(["Írj a kovacs@ceg.hu-ra holnap."], "hu", "bracket")
+    assert res.masked_texts[0] == "Írj a [EMAIL_1]-ra holnap."

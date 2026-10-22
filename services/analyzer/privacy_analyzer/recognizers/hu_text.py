@@ -175,6 +175,13 @@ class HuStreetRecognizer(HuRegexRecognizer):
     # streets named after a person with a title: "Mátyás király út", "Szent István körút"
     _TITLE_IN_STREET = r"(?:(?:király|királyné|királynő|herceg|hercegnő|fejedelem|gróf|grófnő|báró|püspök|érsek|vezér|költő)\s+)?"
     PATTERNS = (
+        # one-word German street names: "a Schönaugasse és a Münzgrabenstraße kereszteződésében"
+        Pattern(
+            "foreign_street_word",
+            r"(?<![\w])(?P<value>[A-ZÄÖÜ][a-zäöüß]{2,30}(?:gasse|straße|strasse|platz|allee|ring|damm|ufer)"
+            r"(?:ban|ben|ba|be|ból|ből|on|en|ön|n|ra|re|nál|nél|hoz|hez|tól|től|ig|t|ot|et)?)(?![\w])",
+            0.45,
+        ),
         Pattern(
             "lower_street",
             rf"(?<![\w])(?P<value>[{LOWER}][{LOWER}\-]{{3,40}}\s+(?:{_STREET_LOWER}))(?![\w])(?!\s+\d)",
@@ -215,6 +222,9 @@ class HuStreetRecognizer(HuRegexRecognizer):
         for r in super().analyze(text, entities, nlp_artifacts):
             words = text[r.start : r.end].split()
             name_words, street = words[:-1], words[-1]
+            if r.analysis_explanation and r.analysis_explanation.pattern_name == "foreign_street_word":
+                out.append(r)
+                continue
             if text[r.start].islower():
                 # lower case: every name word must be a name, not an ordinary word ("a kálvin térre", not "a hosszú úton")
                 if not self.common or any(self._common(w) for w in name_words):
@@ -415,7 +425,8 @@ class MoneyRecognizer(HuRegexRecognizer):
     # bounded: an unbounded run of letters and hyphens is rescanned from every hyphen (quadratic)
     _WORDS = r"[a-záéíóöőúüű\-]{0,60}(?:ezer|millió|milliárd|száz)[a-záéíóöőúüű\-]{0,60}"
     # "Ft" without a trailing dot: "1 250 000 Ft." is usually a sentence end.
-    _CUR = r"Ft|ft|HUF|forint(?:ot|ra|ról|tal|nak|ért)?|EUR|euró(?:t|ra|ról|val|nak|ért)?|€|USD|\$|CHF|GBP|£"
+    _CUR = (r"Ft|ft|HUF|forint(?:ot|ra|ról|tal|nak|ért|ba|ban|ból|ig|on|hoz|tól|nál)?|EUR|"
+            r"euró(?:t|ra|ról|val|nak|ért|ba|ban|ból|ig|n|hoz|tól|nál)?|€|USD|\$|CHF|GBP|£")
     PATTERNS = (
         Pattern(
             "amount_currency",
