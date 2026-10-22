@@ -1,0 +1,36 @@
+{% extends "admin_base.html" %}
+{% block admin %}
+<h1>Napló / Audit log</h1>
+<p class="muted">A napló soha nem tartalmaz promptot, választ, felismert értéket vagy helyőrző-táblát — csak darabszámokat és típusokat.
+The log never contains prompts, responses, detected values or the placeholder mapping — only counts and types.</p>
+<form class="row card" method="get" action="/admin/audit">
+  <select name="org"><option value="">minden szervezet / all orgs</option>
+    {% for o in orgs %}<option value="{{ o.id }}" {% if org == o.id %}selected{% endif %}>{{ o.id }}</option>{% endfor %}</select>
+  <select name="outcome"><option value="">minden kimenet / all outcomes</option>
+    {% for oc in outcomes %}<option value="{{ oc }}" {% if outcome == oc %}selected{% endif %}>{{ oc }}</option>{% endfor %}</select>
+  <input name="user" value="{{ user }}" placeholder="user / key alias">
+  <button class="secondary">Szűrés / Filter</button>
+</form>
+<table>
+  <tr><th>Idő / Time (UTC)</th><th>Szervezet</th><th>User / key / end user</th><th>Modell</th><th>Esemény</th><th>Kimenet</th>
+      <th>Mód</th><th>Entitások / Entities</th><th>Visszaállítva</th><th>ms</th><th>Hiba</th></tr>
+  {% for r in rows %}
+  <tr>
+    <td>{{ r.ts.strftime('%Y-%m-%d %H:%M:%S') }}</td><td>{{ r.organisation_id }}</td>
+    <td>{{ r.user_id or '' }}<br><span class="muted">{{ r.key_alias or '' }} {{ r.end_user_id or '' }}</span></td>
+    <td>{{ r.model or '' }}</td><td>{{ r.event }}</td>
+    <td class="{% if r.outcome.startswith('blocked') or r.outcome == 'provider_error' %}bad{% elif r.outcome == 'completed' %}ok{% endif %}">{{ r.outcome }}</td>
+    <td>{{ r.mode or '' }} {{ r.strategy or '' }}</td>
+    <td>{% for k, v in (r.entity_counts or {}).items() %}<span class="pill">{{ k }}×{{ v }}</span>{% endfor %}</td>
+    <td>{{ r.restored_total if r.restored_total is not none else '' }}</td>
+    <td>{{ r.latency_ms if r.latency_ms is not none else '' }}</td><td>{{ r.error_class or '' }}</td>
+  </tr>
+  {% else %}
+  <tr><td colspan="11" class="muted">Nincs találat / no entries</td></tr>
+  {% endfor %}
+</table>
+<p class="row">
+  {% if page > 0 %}<a href="?org={{ org }}&outcome={{ outcome }}&user={{ user }}&page={{ page - 1 }}">← újabbak</a>{% endif %}
+  {% if rows|length == 100 %}<a href="?org={{ org }}&outcome={{ outcome }}&user={{ user }}&page={{ page + 1 }}">régebbiek →</a>{% endif %}
+</p>
+{% endblock %}

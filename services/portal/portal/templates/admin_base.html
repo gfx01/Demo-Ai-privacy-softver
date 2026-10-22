@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<nav class="row" style="margin-bottom:16px">
+  <a href="/admin">Áttekintés / Overview</a> ·
+  <a href="/admin/settings">Adatvédelmi beállítások / Privacy settings</a> ·
+  <a href="/admin/budgets">Keretek és felhasználók / Budgets &amp; users</a> ·
+  <a href="/admin/audit">Napló / Audit log</a>
+  <span class="muted" style="margin-left:auto">{{ admin.username }}</span>
+</nav>
+{% if error %}<div class="card bad">{{ error }}</div>{% endif %}
+{% block admin %}{% endblock %}
+{% endblock %}

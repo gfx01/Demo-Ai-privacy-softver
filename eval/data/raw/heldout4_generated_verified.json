@@ -1,0 +1,4213 @@
+{
+ "items": [
+  {
+   "id": "h4-chat-001",
+   "domain": "h4-chat",
+   "text": "irj ra egy rovid, kedves valaszt: \"szia Bogi, ma nem tudok bejonni, belazasodtam, holnap reggel megyek a dokihoz Gyalra. a keddi delutani meetinget a Kalibra Mernokirodaval at tudna venni Levi? a jegyzetek a kozos mappaban vannak, ha vmi nem vilagos, irj nyugodtan. bocsi, Csabi\"",
+   "entities": [
+    {
+     "text": "Bogi",
+     "type": "PERSON",
+     "base": "Bogi",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Gyalra",
+     "type": "LOCATION",
+     "base": "Gyal",
+     "case": "SUB",
+     "suffix": "ra"
+    },
+    {
+     "text": "Kalibra Mernokirodaval",
+     "type": "ORG",
+     "base": "Kalibra Mernokiroda",
+     "case": "INS",
+     "suffix": "val"
+    },
+    {
+     "text": "Levi",
+     "type": "PERSON",
+     "base": "Levi",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Csabi",
+     "type": "PERSON",
+     "base": "Csabi",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-chat-002",
+   "domain": "h4-chat",
+   "text": "Fordítsd le angolra, a német ügyfelünknek megy: Kedves Markus, a raklapokat csütörtökön a Kőrös-Sped Zrt.-vel küldjük, a sofőr Bakó Tamás lesz (+36 30 000 6142), érkezés előtt telefonál. A visszárut továbbra is ide kérjük: 2051 Biatorbágy, Ipar utca 14/A, a kapu hétköznap reggel 7-től van nyitva. Ha bármi gond adódik, Hajdú Ritát keresd a logisztikán.",
+   "entities": [
+    {
+     "text": "Markus",
+     "type": "PERSON",
+     "base": "Markus",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Kőrös-Sped Zrt.",
+     "type": "ORG",
+     "base": "Kőrös-Sped Zrt.",
+     "case": "INS",
+     "suffix": "-vel"
+    },
+    {
+     "text": "Bakó Tamás",
+     "type": "PERSON",
+     "base": "Bakó Tamás",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "+36 30 000 6142",
+     "type": "PHONE",
+     "base": "+36 30 000 6142",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "2051 Biatorbágy, Ipar utca 14/A",
+     "type": "ADDRESS",
+     "base": "2051 Biatorbágy, Ipar utca 14/A",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Hajdú Ritát",
+     "type": "PERSON",
+     "base": "Hajdú Rita",
+     "case": "ACC",
+     "suffix": "t"
+    }
+   ]
+  },
+  {
+   "id": "h4-chat-003",
+   "domain": "h4-chat",
+   "text": "@Juci a Rezkakas Nyomda szamlajan el van irva az adoszamunk, a helyes: {ADOSZAM}. vki szoljon nekik pls h stornozzak es kuldjenek ujat, az osszeg marad brutto 184 150 Ft. a szamlat a Gergotol kaptam meg, o ma nem er ra, holnap zugloban van egesz nap.",
+   "entities": [
+    {
+     "text": "Juci",
+     "type": "PERSON",
+     "base": "Juci",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Rezkakas Nyomda",
+     "type": "ORG",
+     "base": "Rezkakas Nyomda",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "184 150 Ft",
+     "type": "MONEY",
+     "base": "184 150 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Gergotol",
+     "type": "PERSON",
+     "base": "Gergo",
+     "case": "ABL",
+     "suffix": "tol"
+    },
+    {
+     "text": "zugloban",
+     "type": "LOCATION",
+     "base": "zuglo",
+     "case": "INE",
+     "suffix": "ban"
+    }
+   ]
+  },
+  {
+   "id": "h4-chat-004",
+   "domain": "h4-chat",
+   "text": "foglald össze pontokba, mit kell rendelni: a nagy tárgyalóban kifogyott a fekete toner (TN-2420), a kis konyhába kell 2 csomag szemes kávé meg tejpor. a lakatos szerint a raktárajtó zárbetétjét is cserélni kell, cikkszám ZB-60/30. a barna irattartókból is csak pár darab maradt, abból jöhet egy karton.",
+   "entities": []
+  },
+  {
+   "id": "h4-chat-005",
+   "domain": "h4-chat",
+   "text": "Írj egy rövid összefoglalót a csapatnak erről a hívásról: Délelőtt keresett minket Kalocsáról Rajkiné Csizmár Erika, a Fenyőliget Idősek Otthonának gazdasági vezetője. A múlt heti szállításból két karton nitril kesztyű hiányzott, ezt jóváírásként kérik, a módosított számlát a gazdasag@fenyoliget-otthon.example címre kell küldeni. Erika holnap 10 előtt visszahívást kér ezen a számon: 06 78 000 215.",
+   "entities": [
+    {
+     "text": "Kalocsáról",
+     "type": "LOCATION",
+     "base": "Kalocsa",
+     "case": "DEL",
+     "suffix": "ról"
+    },
+    {
+     "text": "Rajkiné Csizmár Erika",
+     "type": "PERSON",
+     "base": "Rajkiné Csizmár Erika",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Fenyőliget Idősek Otthonának",
+     "type": "ORG",
+     "base": "Fenyőliget Idősek Otthona",
+     "case": "DAT",
+     "suffix": "nak"
+    },
+    {
+     "text": "gazdasag@fenyoliget-otthon.example",
+     "type": "EMAIL",
+     "base": "gazdasag@fenyoliget-otthon.example",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Erika",
+     "type": "PERSON",
+     "base": "Erika",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "06 78 000 215",
+     "type": "PHONE",
+     "base": "06 78 000 215",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-chat-006",
+   "domain": "h4-chat",
+   "text": "ird at ezt egy rovid sms-se Hegedusnenek, h tudja mire szamitson: \"holnap 8tol folytatjuk Hegeduseknel Obudan, de a csempe meg nem jott meg Budakeszirol, szal delelott csak bontunk. robi hozza a furgont (PTR-516), en a Zsoltival megyek. delutan 3 korul vegzunk, a sittet csutortokon visszuk el.\"",
+   "entities": [
+    {
+     "text": "Hegedusnenek",
+     "type": "PERSON",
+     "base": "Hegedusne",
+     "case": "DAT",
+     "suffix": "nek"
+    },
+    {
+     "text": "Hegeduseknel",
+     "type": "PERSON",
+     "base": "Hegedusek",
+     "case": "ADE",
+     "suffix": "nel"
+    },
+    {
+     "text": "Obudan",
+     "type": "LOCATION",
+     "base": "Obuda",
+     "case": "SUP",
+     "suffix": "n"
+    },
+    {
+     "text": "Budakeszirol",
+     "type": "LOCATION",
+     "base": "Budakeszi",
+     "case": "DEL",
+     "suffix": "rol"
+    },
+    {
+     "text": "robi",
+     "type": "PERSON",
+     "base": "robi",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "PTR-516",
+     "type": "LICENSE_PLATE",
+     "base": "PTR-516",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Zsoltival",
+     "type": "PERSON",
+     "base": "Zsolti",
+     "case": "INS",
+     "suffix": "val"
+    }
+   ]
+  },
+  {
+   "id": "h4-chat-007",
+   "domain": "h4-chat",
+   "text": "Tudnál írni ebből egy emlékeztetőt a csoportnak? Csütörtök reggel Somogyi Bence viszi a céges kisbuszt (AE KR-512) Kecskemétre, 9-re vagyunk bejelentkezve a Kerekes és Fia Autószerviznél. Az előleget már átutaltuk, a fennmaradó 18 900 forintot Bence készpénzben fizeti ki, a számlát hozza vissza. A kulcsot pénteken Lengyel Ildikónak kell leadni a portán.",
+   "entities": [
+    {
+     "text": "Somogyi Bence",
+     "type": "PERSON",
+     "base": "Somogyi Bence",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "AE KR-512",
+     "type": "LICENSE_PLATE",
+     "base": "AE KR-512",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Kecskemétre",
+     "type": "LOCATION",
+     "base": "Kecskemét",
+     "case": "SUB",
+     "suffix": "re"
+    },
+    {
+     "text": "Kerekes és Fia Autószerviznél",
+     "type": "ORG",
+     "base": "Kerekes és Fia Autószerviz",
+     "case": "ADE",
+     "suffix": "nél"
+    },
+    {
+     "text": "18 900 forintot",
+     "type": "MONEY",
+     "base": "18 900 forint",
+     "case": "ACC",
+     "suffix": "ot"
+    },
+    {
+     "text": "Bence",
+     "type": "PERSON",
+     "base": "Bence",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Lengyel Ildikónak",
+     "type": "PERSON",
+     "base": "Lengyel Ildikó",
+     "case": "DAT",
+     "suffix": "nak"
+    }
+   ]
+  },
+  {
+   "id": "h4-chat-008",
+   "domain": "h4-chat",
+   "text": "Foglald össze két mondatban, mi a helyzet:\n[9:02] Fülöp Dorina: sziasztok, írt Monika Aigner a Kesselmayr GmbH-tól, csúszik a szállítás, a gép csak a 46. héten indul Ausztriából\n[9:05] Kardos Ádám: oké, akkor Csepelen is tolni kell a telepítést, szólok Marcinak\n[9:07] Fülöp Dorina: köszi! a módosított visszaigazolást a logistik@kesselmayr.example címről küldik, majd továbbítom",
+   "entities": [
+    {
+     "text": "Fülöp Dorina",
+     "type": "PERSON",
+     "base": "Fülöp Dorina",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Monika Aigner",
+     "type": "PERSON",
+     "base": "Monika Aigner",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Kesselmayr GmbH",
+     "type": "ORG",
+     "base": "Kesselmayr GmbH",
+     "case": "ABL",
+     "suffix": "-tól"
+    },
+    {
+     "text": "Ausztriából",
+     "type": "LOCATION",
+     "base": "Ausztria",
+     "case": "ELA",
+     "suffix": "ból"
+    },
+    {
+     "text": "Kardos Ádám",
+     "type": "PERSON",
+     "base": "Kardos Ádám",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Csepelen",
+     "type": "LOCATION",
+     "base": "Csepel",
+     "case": "SUP",
+     "suffix": "en"
+    },
+    {
+     "text": "Marcinak",
+     "type": "PERSON",
+     "base": "Marci",
+     "case": "DAT",
+     "suffix": "nak"
+    },
+    {
+     "text": "Fülöp Dorina",
+     "type": "PERSON",
+     "base": "Fülöp Dorina",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "logistik@kesselmayr.example",
+     "type": "EMAIL",
+     "base": "logistik@kesselmayr.example",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-chat-009",
+   "domain": "h4-chat",
+   "text": "írj egy rövid üzenetet a csapatchatre: ma 14 és 16 óra között nem lesz net az irodában, frissítik a routert, és a 3. emeleti nyomtató is áll (hibajegy: INC-20417). aki teheti, ezt a két órát dolgozza le otthonról. a szakács üzeni, hogy pénteken vadászpörkölt lesz, aki kér, írja fel magát a nagy hűtőn lévő listára.",
+   "entities": []
+  },
+  {
+   "id": "h4-chat-010",
+   "domain": "h4-chat",
+   "text": "Írj egy udvarias fizetési emlékeztetőt ez alapján: a Tóparti Pékség Bt. részére október 3-án kiállított 2026/0418 számú számlánk (bruttó 96.520 Ft) még nincs kiegyenlítve. Kérjük, az összeget a {BANKSZAMLA} számlaszámra utalják, a közleménybe a számla számát írják be. Kérdés esetén forduljanak bizalommal Pataki Henriettához (henrietta.pataki@merlegpont.example), az aláírás a Mérleg-Pont Könyvelőiroda nevében menjen.",
+   "entities": [
+    {
+     "text": "Tóparti Pékség Bt.",
+     "type": "ORG",
+     "base": "Tóparti Pékség Bt.",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "96.520 Ft",
+     "type": "MONEY",
+     "base": "96.520 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Pataki Henriettához",
+     "type": "PERSON",
+     "base": "Pataki Henrietta",
+     "case": "ALL",
+     "suffix": "hoz"
+    },
+    {
+     "text": "henrietta.pataki@merlegpont.example",
+     "type": "EMAIL",
+     "base": "henrietta.pataki@merlegpont.example",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Mérleg-Pont Könyvelőiroda",
+     "type": "ORG",
+     "base": "Mérleg-Pont Könyvelőiroda",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-chat-011",
+   "domain": "h4-chat",
+   "text": "szia, itt az uj kollega adatai, pls vidd fel a berszamfejtobe es a NAV fele is jelentsd be ma:\nBarta Kristof, szul: 1996.02.11, TAJ: {TAJ}\nlakcim: 9024 Gyor, Babits Mihaly u. 18, 3/9, tel: 0620/000-7735\nnov 2-tol kezd a raktarban, szilvi lesz a mentora. a szerzodest Kristoffal mar alairattuk.",
+   "entities": [
+    {
+     "text": "NAV",
+     "type": "ORG",
+     "base": "NAV",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Barta Kristof",
+     "type": "PERSON",
+     "base": "Barta Kristof",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "1996.02.11",
+     "type": "DATE_OF_BIRTH",
+     "base": "1996.02.11",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "9024 Gyor, Babits Mihaly u. 18, 3/9",
+     "type": "ADDRESS",
+     "base": "9024 Gyor, Babits Mihaly u. 18, 3/9",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "0620/000-7735",
+     "type": "PHONE",
+     "base": "0620/000-7735",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "szilvi",
+     "type": "PERSON",
+     "base": "szilvi",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Kristoffal",
+     "type": "PERSON",
+     "base": "Kristof",
+     "case": "INS",
+     "suffix": "fal"
+    }
+   ]
+  },
+  {
+   "id": "h4-chat-012",
+   "domain": "h4-chat",
+   "text": "Ez jött Tímeától, segíts röviden visszaírni, hogy köszi, holnap úgyis Hatvanban leszünk, délelőtt beugrunk értük: \"Szia! A tegnapi átadás után nálunk maradt egy szürke laptoptöltő meg egy kék esernyő. A töltő biztos a Dánielé, ő dolgozott a fejlesztőszobában. Bármikor elvihetitek a Csillagfürt Óvodából, a titkárság délután 4-ig van nyitva (06-37/000-418).\"",
+   "entities": [
+    {
+     "text": "Tímeától",
+     "type": "PERSON",
+     "base": "Tímea",
+     "case": "ABL",
+     "suffix": "tól"
+    },
+    {
+     "text": "Hatvanban",
+     "type": "LOCATION",
+     "base": "Hatvan",
+     "case": "INE",
+     "suffix": "ban"
+    },
+    {
+     "text": "Dánielé",
+     "type": "PERSON",
+     "base": "Dániel",
+     "case": "POSS",
+     "suffix": "é"
+    },
+    {
+     "text": "Csillagfürt Óvodából",
+     "type": "ORG",
+     "base": "Csillagfürt Óvoda",
+     "case": "ELA",
+     "suffix": "ból"
+    },
+    {
+     "text": "06-37/000-418",
+     "type": "PHONE",
+     "base": "06-37/000-418",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-chat-013",
+   "domain": "h4-chat",
+   "text": "mit irjak vissza erre? \"a 4471-es rendelesunk meg mindig nem jott meg, a kovetes szerint 3 napja a csomagpontban van, de ott azt mondjak, nincs nekik. 2 doboznak kene lennie, a kovacsoltvas polc meg a hozza valo csavarok. a garanciajegy szama GJ-88213/B, ha kell.\"",
+   "entities": []
+  },
+  {
+   "id": "h4-chat-014",
+   "domain": "h4-chat",
+   "text": "Írj egy rövid választ Enikőnek, hogy rendben, megoldjuk: \"Holnap a vonat csak Szolnokig megy, onnan pótlóbusz van Debrecenbe, úgyhogy a 10 órás tárgyalásra a Hajdúsági Magtár Kft.-nél kb. 11-re érek oda. Valaki hívja fel pls Halmos Krisztiánt, hogy kezdjék nélkülem. Délután megyek Andiért az állomásra, utána még elérhető vagyok.\"",
+   "entities": [
+    {
+     "text": "Enikőnek",
+     "type": "PERSON",
+     "base": "Enikő",
+     "case": "DAT",
+     "suffix": "nek"
+    },
+    {
+     "text": "Szolnokig",
+     "type": "LOCATION",
+     "base": "Szolnok",
+     "case": "TER",
+     "suffix": "ig"
+    },
+    {
+     "text": "Debrecenbe",
+     "type": "LOCATION",
+     "base": "Debrecen",
+     "case": "ILL",
+     "suffix": "be"
+    },
+    {
+     "text": "Hajdúsági Magtár Kft.",
+     "type": "ORG",
+     "base": "Hajdúsági Magtár Kft.",
+     "case": "ADE",
+     "suffix": "-nél"
+    },
+    {
+     "text": "Halmos Krisztiánt",
+     "type": "PERSON",
+     "base": "Halmos Krisztián",
+     "case": "ACC",
+     "suffix": "t"
+    },
+    {
+     "text": "Andiért",
+     "type": "PERSON",
+     "base": "Andi",
+     "case": "CAU",
+     "suffix": "ért"
+    }
+   ]
+  },
+  {
+   "id": "h4-insurance-001",
+   "domain": "h4-insurance",
+   "text": "Tisztelt Kárügyintéző! Alulírott Szőllősi Réka (6000 Kecskemét, Batthyány utca 27. 2/8) bejelentem, hogy 2026. október 14-én reggel Kecskeméten, az Izsáki út és a Talfája utca kereszteződésében a KZR-361 forgalmi rendszámú személyautómba hátulról beleütközött az AA PT-582 rendszámú kisteherautó. A helyszínen a kisteherautó sofőrjével, Dudás Kornéllal kitöltöttük az európai baleseti bejelentőt; elmondása szerint a jármű nem az övé, hanem a munkáltatójáé, a Vasvári Építő Kft.-é. Kérem, hogy a kárszemle időpontjáról a +36 30 000 6148 számon vagy a szollosi.reka@levelezo.example címen értesítsenek, a kártérítést pedig a {BANKSZAMLA} számú bankszámlámra utalják.",
+   "entities": [
+    {
+     "text": "Szőllősi Réka",
+     "type": "PERSON",
+     "base": "Szőllősi Réka",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "6000 Kecskemét, Batthyány utca 27. 2/8",
+     "type": "ADDRESS",
+     "base": "6000 Kecskemét, Batthyány utca 27. 2/8",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Kecskeméten",
+     "type": "LOCATION",
+     "base": "Kecskemét",
+     "case": "SUP",
+     "suffix": "en"
+    },
+    {
+     "text": "Izsáki út",
+     "type": "LOCATION",
+     "base": "Izsáki út",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Talfája utca",
+     "type": "LOCATION",
+     "base": "Talfája utca",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "KZR-361",
+     "type": "LICENSE_PLATE",
+     "base": "KZR-361",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "AA PT-582",
+     "type": "LICENSE_PLATE",
+     "base": "AA PT-582",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Dudás Kornéllal",
+     "type": "PERSON",
+     "base": "Dudás Kornél",
+     "case": "INS",
+     "suffix": "lal"
+    },
+    {
+     "text": "Vasvári Építő Kft.",
+     "type": "ORG",
+     "base": "Vasvári Építő Kft.",
+     "case": "POSS",
+     "suffix": "-é"
+    },
+    {
+     "text": "+36 30 000 6148",
+     "type": "PHONE",
+     "base": "+36 30 000 6148",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "szollosi.reka@levelezo.example",
+     "type": "EMAIL",
+     "base": "szollosi.reka@levelezo.example",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-insurance-002",
+   "domain": "h4-insurance",
+   "text": "Bartos Levente 9:12: szia, at tudnad venni a csotoreses ugyet? biztositott: Lakatosne Vida Erzsebet, 1094 Budapest, Tuzolto utca 58. 3/12, a viz a felso szomszedtol, Hajdu Gergotol folyt at a furdoszobaba\nFenyvesi Ildiko 9:14: persze, a szomszedot hivta mar valaki?\nBartos Levente 9:15: meg nem, a szama 06 70 000 2953. Lakatosne kerte, hogy hetfo elott ne menjunk ki, mert Debrecenbe utazott a lanyahoz\nFenyvesi Ildiko 9:16: ok, delutan felhivom a hajdut, aztan beirom a szemlet keddre",
+   "entities": [
+    {
+     "text": "Bartos Levente",
+     "type": "PERSON",
+     "base": "Bartos Levente",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Lakatosne Vida Erzsebet",
+     "type": "PERSON",
+     "base": "Lakatosne Vida Erzsebet",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "1094 Budapest, Tuzolto utca 58. 3/12",
+     "type": "ADDRESS",
+     "base": "1094 Budapest, Tuzolto utca 58. 3/12",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Hajdu Gergotol",
+     "type": "PERSON",
+     "base": "Hajdu Gergo",
+     "case": "ABL",
+     "suffix": "tol"
+    },
+    {
+     "text": "Fenyvesi Ildiko",
+     "type": "PERSON",
+     "base": "Fenyvesi Ildiko",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Bartos Levente",
+     "type": "PERSON",
+     "base": "Bartos Levente",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "06 70 000 2953",
+     "type": "PHONE",
+     "base": "06 70 000 2953",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Lakatosne",
+     "type": "PERSON",
+     "base": "Lakatosne",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Debrecenbe",
+     "type": "LOCATION",
+     "base": "Debrecen",
+     "case": "ILL",
+     "suffix": "be"
+    },
+    {
+     "text": "Fenyvesi Ildiko",
+     "type": "PERSON",
+     "base": "Fenyvesi Ildiko",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "hajdut",
+     "type": "PERSON",
+     "base": "hajdu",
+     "case": "ACC",
+     "suffix": "t"
+    }
+   ]
+  },
+  {
+   "id": "h4-insurance-003",
+   "domain": "h4-insurance",
+   "text": "Fogalmazd át közérthetőbben, ügyfeleknek szóló hangnemben az alábbi bekezdést: „Az OTTHON-PLUSZ 3 (termékkód: OP3-25/B) módozat esetén a csőtörésből eredő károk térítése az avulással csökkentett újraelőállítási érték alapján történik; a kármegelőzési kötelezettség elmulasztása esetén a biztosító a szolgáltatását arányosan csökkentheti.” Emeld ki azt is, hogy a vízvezeték-szerelő, az üveges vagy a lakatos számláját minden esetben csatolni kell, a kovácsoltvas kerítésben keletkezett károkat pedig csak a KIEG-07 záradék fedezi.",
+   "entities": []
+  },
+  {
+   "id": "h4-insurance-004",
+   "domain": "h4-insurance",
+   "text": "Tárgy: utasbiztosítási kárigény – Horvátország, kötvényszám: UT-26/118405. Tisztelt Ügyintéző! A fiam, Héder Botond (szül. 2014. május 22.) augusztus 9-én Splitben elcsúszott a strandon, a sürgősségi rendelőben dr. Tena Jurić látta el, a röntgen és a gipszelés 486 euróba került, ezt a helyszínen kártyával kifizettem. A számlát és a horvát nyelvű ambuláns lapot csatolom, Botond TAJ-száma: {TAJ}. Kérem, hogy a 486 eurót, valamint a kompjegy átfoglalásának díját (72 €) a {IBAN} számlára utalják vissza. Üdvözlettel: Gulyás Noémi, +36 20 000 7316",
+   "entities": [
+    {
+     "text": "Horvátország",
+     "type": "LOCATION",
+     "base": "Horvátország",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Héder Botond",
+     "type": "PERSON",
+     "base": "Héder Botond",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "2014. május 22.",
+     "type": "DATE_OF_BIRTH",
+     "base": "2014. május 22.",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Splitben",
+     "type": "LOCATION",
+     "base": "Split",
+     "case": "INE",
+     "suffix": "ben"
+    },
+    {
+     "text": "dr. Tena Jurić",
+     "type": "PERSON",
+     "base": "dr. Tena Jurić",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "486 euróba",
+     "type": "MONEY",
+     "base": "486 euró",
+     "case": "ILL",
+     "suffix": "ba"
+    },
+    {
+     "text": "Botond",
+     "type": "PERSON",
+     "base": "Botond",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "486 eurót",
+     "type": "MONEY",
+     "base": "486 euró",
+     "case": "ACC",
+     "suffix": "t"
+    },
+    {
+     "text": "72 €",
+     "type": "MONEY",
+     "base": "72 €",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Gulyás Noémi",
+     "type": "PERSON",
+     "base": "Gulyás Noémi",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "+36 20 000 7316",
+     "type": "PHONE",
+     "base": "+36 20 000 7316",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-insurance-005",
+   "domain": "h4-insurance",
+   "text": "Szemle jkv. – viharkár, 2026.10.16. Helyszín: 8237 Tihany, Kossuth Lajos u. 31/A (nyaraló); jelen: ifj. Csizmadia Ottó szerz., aki Veszprémből jött át, és a sógora, Rigó Tibor. Megáll.: a lakóház tetején kb. 40 db cserép elmozdult, a garázs tetejére a szomsz. Fodoréktól átdőlt diófa esett, Fodor Imre szerint a fa a közös telekhatáron állt (felelősség tisztázandó!). Becs. kár: 1,35 millió Ft, a szerz. szerint 50 000 Ft-os önrész van a kötvényen. Fotók feltöltve, ügyf. visszahívható: 06 87 000 412.",
+   "entities": [
+    {
+     "text": "8237 Tihany, Kossuth Lajos u. 31/A",
+     "type": "ADDRESS",
+     "base": "8237 Tihany, Kossuth Lajos u. 31/A",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "ifj. Csizmadia Ottó",
+     "type": "PERSON",
+     "base": "ifj. Csizmadia Ottó",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Veszprémből",
+     "type": "LOCATION",
+     "base": "Veszprém",
+     "case": "ELA",
+     "suffix": "ből"
+    },
+    {
+     "text": "Rigó Tibor",
+     "type": "PERSON",
+     "base": "Rigó Tibor",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Fodoréktól",
+     "type": "PERSON",
+     "base": "Fodorék",
+     "case": "ABL",
+     "suffix": "tól"
+    },
+    {
+     "text": "Fodor Imre",
+     "type": "PERSON",
+     "base": "Fodor Imre",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "1,35 millió Ft",
+     "type": "MONEY",
+     "base": "1,35 millió Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "50 000 Ft",
+     "type": "MONEY",
+     "base": "50 000 Ft",
+     "case": "OTHER",
+     "suffix": "-os"
+    },
+    {
+     "text": "06 87 000 412",
+     "type": "PHONE",
+     "base": "06 87 000 412",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-insurance-006",
+   "domain": "h4-insurance",
+   "text": "Tisztelt Hölgyem/Uram! Alulírott özv. Kerekes Jánosné (szül. 1949. február 3., lakcím: 3300 Eger, Dobó István utca 12/B) bejelentem, hogy férjem, Kerekes János 2026. szeptember 18-án elhunyt, ezért a nevére a Bástya Biztosító Zrt.-nél kötött, KGFB-0193374 számú kötelező biztosítást az MKP-947 rendszámú Suzukira vonatkozóan megszüntetni kérem. Az autót az unokánkra, Kerekes Dorinára íratjuk át, aki Miskolcon él, és a saját nevére köt rá új szerződést. A lakásbiztosításunkat ezentúl én fizetem tovább, a díjat (havi 6 840 Ft) kérem a {BANKSZAMLA} számú számlámról csoportos beszedéssel levonni.",
+   "entities": [
+    {
+     "text": "özv. Kerekes Jánosné",
+     "type": "PERSON",
+     "base": "özv. Kerekes Jánosné",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "1949. február 3.",
+     "type": "DATE_OF_BIRTH",
+     "base": "1949. február 3.",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "3300 Eger, Dobó István utca 12/B",
+     "type": "ADDRESS",
+     "base": "3300 Eger, Dobó István utca 12/B",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Kerekes János",
+     "type": "PERSON",
+     "base": "Kerekes János",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Bástya Biztosító Zrt.",
+     "type": "ORG",
+     "base": "Bástya Biztosító Zrt.",
+     "case": "ADE",
+     "suffix": "-nél"
+    },
+    {
+     "text": "MKP-947",
+     "type": "LICENSE_PLATE",
+     "base": "MKP-947",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Kerekes Dorinára",
+     "type": "PERSON",
+     "base": "Kerekes Dorina",
+     "case": "SUB",
+     "suffix": "ra"
+    },
+    {
+     "text": "Miskolcon",
+     "type": "LOCATION",
+     "base": "Miskolc",
+     "case": "SUP",
+     "suffix": "on"
+    },
+    {
+     "text": "6 840 Ft",
+     "type": "MONEY",
+     "base": "6 840 Ft",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-insurance-007",
+   "domain": "h4-insurance",
+   "text": "Kedves Henrietta! A Tiszavirág Logisztika Kft. (adószám: {ADOSZAM}, cégjegyzékszám: {CEGJEGYZEKSZAM}) 23 járműves flottájára két casco-ajánlatot kértem be: az Alföldi Garancia Biztosító Zrt. éves díja 4 860 000 Ft, a Kőhíd Biztosító ugyanerre 5 120 000 Ft-ot kér, viszont nála 150 000 forinttal alacsonyabb az önrész. A részletes összevetést holnap reggel átküldöm a konya.henrietta@tiszavirag.example címre, kérem, továbbítsa Szolnokra Mészáros Gergőnek is. A döntést október 31-ig várom, mert a jelenlegi szerződés november 15-én lejár. Üdvözlettel: Sárközi Benedek, Sárközi és Társa Biztosítási Alkusz Kft., tel.: 06-1/000-3827",
+   "entities": [
+    {
+     "text": "Henrietta",
+     "type": "PERSON",
+     "base": "Henrietta",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Tiszavirág Logisztika Kft.",
+     "type": "ORG",
+     "base": "Tiszavirág Logisztika Kft.",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Alföldi Garancia Biztosító Zrt.",
+     "type": "ORG",
+     "base": "Alföldi Garancia Biztosító Zrt.",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "4 860 000 Ft",
+     "type": "MONEY",
+     "base": "4 860 000 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Kőhíd Biztosító",
+     "type": "ORG",
+     "base": "Kőhíd Biztosító",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "5 120 000 Ft",
+     "type": "MONEY",
+     "base": "5 120 000 Ft",
+     "case": "ACC",
+     "suffix": "-ot"
+    },
+    {
+     "text": "150 000 forinttal",
+     "type": "MONEY",
+     "base": "150 000 forint",
+     "case": "INS",
+     "suffix": "tal"
+    },
+    {
+     "text": "konya.henrietta@tiszavirag.example",
+     "type": "EMAIL",
+     "base": "konya.henrietta@tiszavirag.example",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Szolnokra",
+     "type": "LOCATION",
+     "base": "Szolnok",
+     "case": "SUB",
+     "suffix": "ra"
+    },
+    {
+     "text": "Mészáros Gergőnek",
+     "type": "PERSON",
+     "base": "Mészáros Gergő",
+     "case": "DAT",
+     "suffix": "nek"
+    },
+    {
+     "text": "Sárközi Benedek",
+     "type": "PERSON",
+     "base": "Sárközi Benedek",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Sárközi és Társa Biztosítási Alkusz Kft.",
+     "type": "ORG",
+     "base": "Sárközi és Társa Biztosítási Alkusz Kft.",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "06-1/000-3827",
+     "type": "PHONE",
+     "base": "06-1/000-3827",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-insurance-008",
+   "domain": "h4-insurance",
+   "text": "Készíts egy áttekinthető táblázatot az alábbi lakásbiztosítási csomagokról, és írd mellé egy mondatban, melyik kinek ajánlott: ALAP – éves díj 38 900 Ft, üvegtörés nélkül, önrész 20 000 Ft; KOMFORT – 54 200 Ft, üvegtöréssel, önrész 10 000 Ft; PRÉMIUM – 79 500 Ft, üvegtöréssel és assistance szolgáltatással (vízszerelő, villanyszerelő vagy kőműves kiszállása évente háromszor), önrész nélkül. A KOMFORT csomaghoz külön 6 000 forintért kérhető kerékpárlopás-kiegészítő is.",
+   "entities": [
+    {
+     "text": "38 900 Ft",
+     "type": "MONEY",
+     "base": "38 900 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "20 000 Ft",
+     "type": "MONEY",
+     "base": "20 000 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "54 200 Ft",
+     "type": "MONEY",
+     "base": "54 200 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "10 000 Ft",
+     "type": "MONEY",
+     "base": "10 000 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "79 500 Ft",
+     "type": "MONEY",
+     "base": "79 500 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "6 000 forintért",
+     "type": "MONEY",
+     "base": "6 000 forint",
+     "case": "CAU",
+     "suffix": "ért"
+    }
+   ]
+  },
+  {
+   "id": "h4-insurance-009",
+   "domain": "h4-insurance",
+   "text": "Szia Zsuzsi! képzeld, tegnap Budaörsön a parkolóban belém tolatott egy srác, a Napkorong Biztosítónál van a kötelezője. Vámos Krisztiánnak hívják, AE LK-206 a rendszáma, a kék papírt kitöltöttük, a fotókat meg már átküldtem a zsuzsanna.pinter@biztoskez.example-re. Most vigyem el Törökbálintra a Fényes Karosszériához, vagy várjam meg a kárszakértőt? Lacival már megnéztük, szerinte csak a hátsó lökhárító minimum 180 ezer forint lesz.",
+   "entities": [
+    {
+     "text": "Zsuzsi",
+     "type": "PERSON",
+     "base": "Zsuzsi",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Budaörsön",
+     "type": "LOCATION",
+     "base": "Budaörs",
+     "case": "SUP",
+     "suffix": "ön"
+    },
+    {
+     "text": "Napkorong Biztosítónál",
+     "type": "ORG",
+     "base": "Napkorong Biztosító",
+     "case": "ADE",
+     "suffix": "nál"
+    },
+    {
+     "text": "Vámos Krisztiánnak",
+     "type": "PERSON",
+     "base": "Vámos Krisztián",
+     "case": "DAT",
+     "suffix": "nak"
+    },
+    {
+     "text": "AE LK-206",
+     "type": "LICENSE_PLATE",
+     "base": "AE LK-206",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "zsuzsanna.pinter@biztoskez.example",
+     "type": "EMAIL",
+     "base": "zsuzsanna.pinter@biztoskez.example",
+     "case": "SUB",
+     "suffix": "-re"
+    },
+    {
+     "text": "Törökbálintra",
+     "type": "LOCATION",
+     "base": "Törökbálint",
+     "case": "SUB",
+     "suffix": "ra"
+    },
+    {
+     "text": "Fényes Karosszériához",
+     "type": "ORG",
+     "base": "Fényes Karosszéria",
+     "case": "ALL",
+     "suffix": "hoz"
+    },
+    {
+     "text": "Lacival",
+     "type": "PERSON",
+     "base": "Laci",
+     "case": "INS",
+     "suffix": "val"
+    },
+    {
+     "text": "180 ezer forint",
+     "type": "MONEY",
+     "base": "180 ezer forint",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-insurance-010",
+   "domain": "h4-insurance",
+   "text": "Fordítsd le angolra, ezt küldeném az osztrák biztosítónak: „Tisztelt Címzett! 2026. augusztus 2-án Grazban, a Schönaugasse és a Münzgrabenstraße kereszteződésében Markus Leitner a piros jelzés ellenére behajtott, és oldalba ütötte a PNH-512 rendszámú autómat, amelyben a lányom, Bencze Lili is utazott. A balesetet a helyszínre kiérkező rendőrök rögzítették, Leitner úr a felelősségét elismerte. A javítást Győrben végeztettem el, a számla végösszege 3 412 euró, ennek megtérítését a {IBAN} számlára kérem. Tisztelettel: Bencze Hajnalka, személyi igazolvány száma: {SZIG}”",
+   "entities": [
+    {
+     "text": "Grazban",
+     "type": "LOCATION",
+     "base": "Graz",
+     "case": "INE",
+     "suffix": "ban"
+    },
+    {
+     "text": "Schönaugasse",
+     "type": "LOCATION",
+     "base": "Schönaugasse",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Münzgrabenstraße",
+     "type": "LOCATION",
+     "base": "Münzgrabenstraße",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Markus Leitner",
+     "type": "PERSON",
+     "base": "Markus Leitner",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "PNH-512",
+     "type": "LICENSE_PLATE",
+     "base": "PNH-512",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Bencze Lili",
+     "type": "PERSON",
+     "base": "Bencze Lili",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Leitner",
+     "type": "PERSON",
+     "base": "Leitner",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Győrben",
+     "type": "LOCATION",
+     "base": "Győr",
+     "case": "INE",
+     "suffix": "ben"
+    },
+    {
+     "text": "3 412 euró",
+     "type": "MONEY",
+     "base": "3 412 euró",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Bencze Hajnalka",
+     "type": "PERSON",
+     "base": "Bencze Hajnalka",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-insurance-011",
+   "domain": "h4-insurance",
+   "text": "sziasztok, holnaptól élesedik az új kárfelvételi felület: a KF-2 űrlapon már kötelező megadni a sérülés helyét és a becsült kárösszeget, különben a rendszer nem engedi továbbküldeni. Nagy értékű ingóságoknál (ékszer, műszaki cikk) a régi ING-04 helyett az ING-05 mellékletet kell csatolni, a fekete listás alvázszámokat pedig továbbra is a csalásmegelőzés nézi át. Kis összegű üvegkárnál szemle nélkül is rendezhető a kár, ha van fotó és árajánlat.",
+   "entities": []
+  },
+  {
+   "id": "h4-insurance-012",
+   "domain": "h4-insurance",
+   "text": "Írj egy udvarias, de határozott választ az alábbi panaszra, hivatkozva a feltételek 7.3. pontjára (zárszerkezet-előírás): „Dobosné Halász Mónika vagyok, a Zuglóban lévő lakásunkba szeptember 30-án betörtek, és bár 1 280 000 Ft értékben vittek el ékszert és laptopot, Önök elutasították a kárigényemet, mert a XIV. kerületi Rendőrkapitányságtól kapott jegyzőkönyv szerint az ajtó nem volt kulcsra zárva. Ez nem igaz, a fiam, Dobos Ádám aznap reggel bezárta, erről a szomszédunkat, Kálmán Jenőt is megkérdezhetik. Ha nem vizsgálják felül a döntést, a Pénzügyi Békéltető Testülethez fordulok.” A választ dr. Halmos Krisztina kárrendezési vezető nevében írd meg.",
+   "entities": [
+    {
+     "text": "Dobosné Halász Mónika",
+     "type": "PERSON",
+     "base": "Dobosné Halász Mónika",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Zuglóban",
+     "type": "LOCATION",
+     "base": "Zugló",
+     "case": "INE",
+     "suffix": "ban"
+    },
+    {
+     "text": "1 280 000 Ft",
+     "type": "MONEY",
+     "base": "1 280 000 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "XIV. kerületi Rendőrkapitányságtól",
+     "type": "ORG",
+     "base": "XIV. kerületi Rendőrkapitányság",
+     "case": "ABL",
+     "suffix": "tól"
+    },
+    {
+     "text": "Dobos Ádám",
+     "type": "PERSON",
+     "base": "Dobos Ádám",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Kálmán Jenőt",
+     "type": "PERSON",
+     "base": "Kálmán Jenő",
+     "case": "ACC",
+     "suffix": "t"
+    },
+    {
+     "text": "Pénzügyi Békéltető Testülethez",
+     "type": "ORG",
+     "base": "Pénzügyi Békéltető Testület",
+     "case": "ALL",
+     "suffix": "hez"
+    },
+    {
+     "text": "dr. Halmos Krisztina",
+     "type": "PERSON",
+     "base": "dr. Halmos Krisztina",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-logistics-001",
+   "domain": "h4-logistics",
+   "text": "Tisztelt Szélrózsa Expressz Kft.!\n\nAlulírott özv. Sárközi Lajosné panaszt teszek, mert a 2026. október 6-án kiszállított mosógépet horpadt ajtóval kaptam meg, és ezt a futárral, Gerencsér Mátéval a szállítólevélen is rögzítettük. Kérem, hogy október 20-ig szállítsanak cserekészüléket a 6800 Hódmezővásárhely, Szegfű utca 12/A címre, vagy fizessék vissza a 189 990 Ft vételárat. Napközben a lányomat, Sárközi Zsófiát keressék a +36 30 000 6283 számon.\n\nTisztelettel:\nözv. Sárközi Lajosné",
+   "entities": [
+    {
+     "text": "Szélrózsa Expressz Kft.",
+     "type": "ORG",
+     "base": "Szélrózsa Expressz Kft.",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "özv. Sárközi Lajosné",
+     "type": "PERSON",
+     "base": "özv. Sárközi Lajosné",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Gerencsér Mátéval",
+     "type": "PERSON",
+     "base": "Gerencsér Máté",
+     "case": "INS",
+     "suffix": "val"
+    },
+    {
+     "text": "6800 Hódmezővásárhely, Szegfű utca 12/A",
+     "type": "ADDRESS",
+     "base": "6800 Hódmezővásárhely, Szegfű utca 12/A",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "189 990 Ft",
+     "type": "MONEY",
+     "base": "189 990 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Sárközi Zsófiát",
+     "type": "PERSON",
+     "base": "Sárközi Zsófia",
+     "case": "ACC",
+     "suffix": "t"
+    },
+    {
+     "text": "+36 30 000 6283",
+     "type": "PHONE",
+     "base": "+36 30 000 6283",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "özv. Sárközi Lajosné",
+     "type": "PERSON",
+     "base": "özv. Sárközi Lajosné",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-logistics-002",
+   "domain": "h4-logistics",
+   "text": "zoli figyi, a KPZ-318 meg mindig hegyeshalomnal all a sorban, robi szerint legalabb 3 ora mire atjut\nszolj pls jutkanak h a lerakast linzben tolja at holnap reggel 8ra, ma mar nem er oda\na masik kocsi mar csepelen rakodik, az idoben leer szolnokra\nrobit a 06 20 000 7146-on ered el, a ceges telefonja lemerult",
+   "entities": [
+    {
+     "text": "zoli",
+     "type": "PERSON",
+     "base": "zoli",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "KPZ-318",
+     "type": "LICENSE_PLATE",
+     "base": "KPZ-318",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "hegyeshalomnal",
+     "type": "LOCATION",
+     "base": "hegyeshalom",
+     "case": "ADE",
+     "suffix": "nal"
+    },
+    {
+     "text": "robi",
+     "type": "PERSON",
+     "base": "robi",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "jutkanak",
+     "type": "PERSON",
+     "base": "jutka",
+     "case": "DAT",
+     "suffix": "nak"
+    },
+    {
+     "text": "linzben",
+     "type": "LOCATION",
+     "base": "linz",
+     "case": "INE",
+     "suffix": "ben"
+    },
+    {
+     "text": "csepelen",
+     "type": "LOCATION",
+     "base": "csepel",
+     "case": "SUP",
+     "suffix": "en"
+    },
+    {
+     "text": "szolnokra",
+     "type": "LOCATION",
+     "base": "szolnok",
+     "case": "SUB",
+     "suffix": "ra"
+    },
+    {
+     "text": "robit",
+     "type": "PERSON",
+     "base": "robi",
+     "case": "ACC",
+     "suffix": "t"
+    },
+    {
+     "text": "06 20 000 7146",
+     "type": "PHONE",
+     "base": "06 20 000 7146",
+     "case": "SUP",
+     "suffix": "-on"
+    }
+   ]
+  },
+  {
+   "id": "h4-logistics-003",
+   "domain": "h4-logistics",
+   "text": "Írj egy rövid, udvarias választ angolul Bojan Lazićnak: a Szerbiából indított 22 raklap autóalkatrész még mindig Röszkén áll, mert a T1-es okmányon szereplő bruttó súly eltér a mérlegelt értéktől. Írd bele, hogy a vámügynökünk, Fazekas Lilla a Kapu Vámügynökség Kft.-től ma délután benyújtja a javított okmányt a NAV-hoz. Ha kérdése van, Lillával közvetlenül is egyeztethet a fazekas.lilla@kapuvam.example címen vagy a +36 62 000 734 számon. A tárolási díj napi 85 euró, ezt a Ravnica Logistika d.o.o. felé továbbszámlázzuk.",
+   "entities": [
+    {
+     "text": "Bojan Lazićnak",
+     "type": "PERSON",
+     "base": "Bojan Lazić",
+     "case": "DAT",
+     "suffix": "nak"
+    },
+    {
+     "text": "Szerbiából",
+     "type": "LOCATION",
+     "base": "Szerbia",
+     "case": "ELA",
+     "suffix": "ból"
+    },
+    {
+     "text": "Röszkén",
+     "type": "LOCATION",
+     "base": "Röszke",
+     "case": "SUP",
+     "suffix": "n"
+    },
+    {
+     "text": "Fazekas Lilla",
+     "type": "PERSON",
+     "base": "Fazekas Lilla",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Kapu Vámügynökség Kft.",
+     "type": "ORG",
+     "base": "Kapu Vámügynökség Kft.",
+     "case": "ABL",
+     "suffix": "-től"
+    },
+    {
+     "text": "NAV",
+     "type": "ORG",
+     "base": "NAV",
+     "case": "ALL",
+     "suffix": "-hoz"
+    },
+    {
+     "text": "Lillával",
+     "type": "PERSON",
+     "base": "Lilla",
+     "case": "INS",
+     "suffix": "val"
+    },
+    {
+     "text": "fazekas.lilla@kapuvam.example",
+     "type": "EMAIL",
+     "base": "fazekas.lilla@kapuvam.example",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "+36 62 000 734",
+     "type": "PHONE",
+     "base": "+36 62 000 734",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "85 euró",
+     "type": "MONEY",
+     "base": "85 euró",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Ravnica Logistika d.o.o.",
+     "type": "ORG",
+     "base": "Ravnica Logistika d.o.o.",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-logistics-004",
+   "domain": "h4-logistics",
+   "text": "Lengyel rendszámú hűtős pótkocsi áll a 4-es rámpán, a rakományt (SKU 44-0917, gyorsfagyasztott zöldség) délig át kell tárolni a B3-as hűtőkamrába. Fekete fóliás raklapot ne tegyetek a felső polcsorra, mert a KRT-204 típusú targoncával nem érjük el. A kerekes konténereket a lakatos csak holnap javítja meg, addig a 2-es kapun hozzátok be az árut.",
+   "entities": []
+  },
+  {
+   "id": "h4-logistics-005",
+   "domain": "h4-logistics",
+   "text": "Készült Győrött, 2026. október 9-én, a Rábaköz Raktárház Kft. 9027 Győr, Gyár utca 14/B alatti csarnokában. 14:20 körül a 7-es sorban egy lecsúszó raklap a lábán találta el Szőllősi Tamást (szül.: 1990. 06. 23., TAJ-száma: {TAJ}), akit az Országos Mentőszolgálat kórházba szállított. A targoncát ifj. Lukács Barnabás vezette, aki szerint a polc tartógerendája már hetek óta deformált volt. A jegyzőkönyvet Pintérné Varjú Edit műszakvezető vette fel, és Halmai Zsolttal, a baleset szemtanújával együtt írta alá.",
+   "entities": [
+    {
+     "text": "Győrött",
+     "type": "LOCATION",
+     "base": "Győr",
+     "case": "OTHER",
+     "suffix": "ött"
+    },
+    {
+     "text": "Rábaköz Raktárház Kft.",
+     "type": "ORG",
+     "base": "Rábaköz Raktárház Kft.",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "9027 Győr, Gyár utca 14/B",
+     "type": "ADDRESS",
+     "base": "9027 Győr, Gyár utca 14/B",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Szőllősi Tamást",
+     "type": "PERSON",
+     "base": "Szőllősi Tamás",
+     "case": "ACC",
+     "suffix": "t"
+    },
+    {
+     "text": "1990. 06. 23.",
+     "type": "DATE_OF_BIRTH",
+     "base": "1990. 06. 23.",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Országos Mentőszolgálat",
+     "type": "ORG",
+     "base": "Országos Mentőszolgálat",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "ifj. Lukács Barnabás",
+     "type": "PERSON",
+     "base": "ifj. Lukács Barnabás",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Pintérné Varjú Edit",
+     "type": "PERSON",
+     "base": "Pintérné Varjú Edit",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Halmai Zsolttal",
+     "type": "PERSON",
+     "base": "Halmai Zsolt",
+     "case": "INS",
+     "suffix": "tal"
+    }
+   ]
+  },
+  {
+   "id": "h4-logistics-006",
+   "domain": "h4-logistics",
+   "text": "Flotta-karb. 42. hét\n– AE FK-208 (vontató, 412 300 km): első fékbetét + tárcsa, olajcsere, tachográf-kalibr. esedékes.\n– Ajánlat: Mátra Flotta Szerviz Kft., 386 400 Ft + áfa, ügyint. Csonka Viktor, tel. 06 37 000 518.\n– Csüt. 7:00-ra Bartos Feri viszi át Hatvanba, addig ő az LTM-905-öt kapja.\n– A pótkocsi műszakija nov. 14-én lejár, Feritől kérdezd meg, ráér-e azt is elvinni.",
+   "entities": [
+    {
+     "text": "AE FK-208",
+     "type": "LICENSE_PLATE",
+     "base": "AE FK-208",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Mátra Flotta Szerviz Kft.",
+     "type": "ORG",
+     "base": "Mátra Flotta Szerviz Kft.",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "386 400 Ft",
+     "type": "MONEY",
+     "base": "386 400 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Csonka Viktor",
+     "type": "PERSON",
+     "base": "Csonka Viktor",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "06 37 000 518",
+     "type": "PHONE",
+     "base": "06 37 000 518",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Bartos Feri",
+     "type": "PERSON",
+     "base": "Bartos Feri",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Hatvanba",
+     "type": "LOCATION",
+     "base": "Hatvan",
+     "case": "ILL",
+     "suffix": "ba"
+    },
+    {
+     "text": "LTM-905",
+     "type": "LICENSE_PLATE",
+     "base": "LTM-905",
+     "case": "ACC",
+     "suffix": "-öt"
+    },
+    {
+     "text": "Feritől",
+     "type": "PERSON",
+     "base": "Feri",
+     "case": "ABL",
+     "suffix": "től"
+    }
+   ]
+  },
+  {
+   "id": "h4-logistics-007",
+   "domain": "h4-logistics",
+   "text": "Novembertől változik a díjtábla: a belföldi raklaphelyes díj 6 900 Ft-ról 7 400 Ft-ra emelkedik, a várakozási díj pedig az első két ingyenes óra után óránként 9 500 Ft lesz. ADR-es árunál 12% felár jön rá, hűtött szállításnál a minimális fuvardíj 38 000 Ft + áfa. A raklapcsere továbbra is darabonként 4 200 Ft, ha a címzett nem ad vissza EUR-raklapot.",
+   "entities": [
+    {
+     "text": "6 900 Ft",
+     "type": "MONEY",
+     "base": "6 900 Ft",
+     "case": "DEL",
+     "suffix": "-ról"
+    },
+    {
+     "text": "7 400 Ft",
+     "type": "MONEY",
+     "base": "7 400 Ft",
+     "case": "SUB",
+     "suffix": "-ra"
+    },
+    {
+     "text": "9 500 Ft",
+     "type": "MONEY",
+     "base": "9 500 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "38 000 Ft",
+     "type": "MONEY",
+     "base": "38 000 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "4 200 Ft",
+     "type": "MONEY",
+     "base": "4 200 Ft",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-logistics-008",
+   "domain": "h4-logistics",
+   "text": "Szia Évi! Csengersimánál állok, a román oldalon vagy 40 kamion van előttem, úgyhogy Szatmárnémetibe csak este nyolc körül érek be. A visszfuvart holnap reggel Fodoréknál rakom fel Mátészalkán, a 18 raklap alma már készen áll. A CMR-ek fotóit már elküldtem Krisztiánnak, de szólj neki, hogy a harmadik példányról hiányzik a pecsét. Ha nem érsz el, a másik számom +36 70 000 9132.",
+   "entities": [
+    {
+     "text": "Évi",
+     "type": "PERSON",
+     "base": "Évi",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Csengersimánál",
+     "type": "LOCATION",
+     "base": "Csengersima",
+     "case": "ADE",
+     "suffix": "nál"
+    },
+    {
+     "text": "Szatmárnémetibe",
+     "type": "LOCATION",
+     "base": "Szatmárnémeti",
+     "case": "ILL",
+     "suffix": "be"
+    },
+    {
+     "text": "Fodoréknál",
+     "type": "PERSON",
+     "base": "Fodorék",
+     "case": "ADE",
+     "suffix": "nál"
+    },
+    {
+     "text": "Mátészalkán",
+     "type": "LOCATION",
+     "base": "Mátészalka",
+     "case": "SUP",
+     "suffix": "n"
+    },
+    {
+     "text": "Krisztiánnak",
+     "type": "PERSON",
+     "base": "Krisztián",
+     "case": "DAT",
+     "suffix": "nak"
+    },
+    {
+     "text": "+36 70 000 9132",
+     "type": "PHONE",
+     "base": "+36 70 000 9132",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-logistics-009",
+   "domain": "h4-logistics",
+   "text": "Szia Niki!\nHétfőtől Sóskúton, a raktárbázisunkon kezd belföldi sofőrként Rácz Dénes, kérlek, vedd fel a bérszámfejtésbe. Adatai: szül. 1986. április 17., lakcím: 2038 Sóskút, Akácfa utca 8, szig. szám: {SZIG}, adóazonosító jel: {ADOAZONOSITO}, bankszámlaszám: {BANKSZAMLA}. A belépési bónusza bruttó 150 000 Ft, ezt az első bérével együtt fizetjük ki. Ha valami hiányzik, Dénest a 06 30 000 5821 számon vagy a racz.denes@postafiok.example címen éred el.\nÜdv, Bea",
+   "entities": [
+    {
+     "text": "Niki",
+     "type": "PERSON",
+     "base": "Niki",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Sóskúton",
+     "type": "LOCATION",
+     "base": "Sóskút",
+     "case": "SUP",
+     "suffix": "on"
+    },
+    {
+     "text": "Rácz Dénes",
+     "type": "PERSON",
+     "base": "Rácz Dénes",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "1986. április 17.",
+     "type": "DATE_OF_BIRTH",
+     "base": "1986. április 17.",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "2038 Sóskút, Akácfa utca 8",
+     "type": "ADDRESS",
+     "base": "2038 Sóskút, Akácfa utca 8",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "150 000 Ft",
+     "type": "MONEY",
+     "base": "150 000 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Dénest",
+     "type": "PERSON",
+     "base": "Dénes",
+     "case": "ACC",
+     "suffix": "t"
+    },
+    {
+     "text": "06 30 000 5821",
+     "type": "PHONE",
+     "base": "06 30 000 5821",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "racz.denes@postafiok.example",
+     "type": "EMAIL",
+     "base": "racz.denes@postafiok.example",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Bea",
+     "type": "PERSON",
+     "base": "Bea",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-logistics-010",
+   "domain": "h4-logistics",
+   "text": "Foglald össze három pontban az új diszpécsereknek: Árutovábbítási eljárásban a T1 okmány MRN-számát a rendeltetési vámhivatalban kell bemutatni, az árut pedig sértetlen zárral kell odaszállítani. Ha a plomba útközben megsérül, azonnal értesíteni kell a legközelebbi vámhatóságot, és jegyzőkönyvet kell felvenni. Hibás vámtarifaszám (pl. 8708 99 97 helyett 8708 99 10) késedelmet és bírságot vonhat maga után, ezért a kereskedelmi számlát és a csomagjegyzéket rakodás előtt mindig vessük össze.",
+   "entities": []
+  },
+  {
+   "id": "h4-logistics-011",
+   "domain": "h4-logistics",
+   "text": "Fordítsd le angolra ezt az e-mailt, a Donau-Kurier GmbH-nál dolgozó Lukas Brandstetterhez megy:\n\n„Kedves Lukas!\nA szeptemberi Budapest–Salzburg fuvarok számláját (összesen 4 860 EUR) ma elküldtük, kérlek, az összeget erre a bankszámlára utaljátok: {IBAN}. A két sérült raklap miatt 310 eurót már jóváírtunk, a kimutatást Somogyi Réka tegnap átküldte neked.\nÜdvözlettel:\nSzekeres Áron\nHídfő Szállítmányozási Bt., tel.: 06-1/000-3517”",
+   "entities": [
+    {
+     "text": "Donau-Kurier GmbH",
+     "type": "ORG",
+     "base": "Donau-Kurier GmbH",
+     "case": "ADE",
+     "suffix": "-nál"
+    },
+    {
+     "text": "Lukas Brandstetterhez",
+     "type": "PERSON",
+     "base": "Lukas Brandstetter",
+     "case": "ALL",
+     "suffix": "hez"
+    },
+    {
+     "text": "Lukas",
+     "type": "PERSON",
+     "base": "Lukas",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Budapest",
+     "type": "LOCATION",
+     "base": "Budapest",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Salzburg",
+     "type": "LOCATION",
+     "base": "Salzburg",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "4 860 EUR",
+     "type": "MONEY",
+     "base": "4 860 EUR",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "310 eurót",
+     "type": "MONEY",
+     "base": "310 euró",
+     "case": "ACC",
+     "suffix": "t"
+    },
+    {
+     "text": "Somogyi Réka",
+     "type": "PERSON",
+     "base": "Somogyi Réka",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Szekeres Áron",
+     "type": "PERSON",
+     "base": "Szekeres Áron",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Hídfő Szállítmányozási Bt.",
+     "type": "ORG",
+     "base": "Hídfő Szállítmányozási Bt.",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "06-1/000-3517",
+     "type": "PHONE",
+     "base": "06-1/000-3517",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-logistics-012",
+   "domain": "h4-logistics",
+   "text": "Tárgy: hiány a 2026/10/4471 sz. szállítólevélen\n\nTisztelt Bodnár Kitti!\n\nA Tiszahát Logisztika Zrt.-vel kötött keretszerződés alapján október 14-én Ceglédről Debrecenbe szállított tételből 33 raklap helyett csak 31 érkezett meg, a hiányt az RXT-640 rendszámú kamion sofőrje, Molnár Ernő is aláírta. Kérjük, a két raklap értékét (412 000 Ft) a következő számlában írják jóvá, ellenkező esetben kártérítési igényt érvényesítünk.\n\nÜdvözlettel:\ndr. Kardos Eszter jogtanácsos\nHajdúsági Konzerv Kft. (adószám: {ADOSZAM}, cégjegyzékszám: {CEGJEGYZEKSZAM})\nkardos.eszter@hajdukonzerv.example",
+   "entities": [
+    {
+     "text": "Bodnár Kitti",
+     "type": "PERSON",
+     "base": "Bodnár Kitti",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Tiszahát Logisztika Zrt.",
+     "type": "ORG",
+     "base": "Tiszahát Logisztika Zrt.",
+     "case": "INS",
+     "suffix": "-vel"
+    },
+    {
+     "text": "Ceglédről",
+     "type": "LOCATION",
+     "base": "Cegléd",
+     "case": "DEL",
+     "suffix": "ről"
+    },
+    {
+     "text": "Debrecenbe",
+     "type": "LOCATION",
+     "base": "Debrecen",
+     "case": "ILL",
+     "suffix": "be"
+    },
+    {
+     "text": "RXT-640",
+     "type": "LICENSE_PLATE",
+     "base": "RXT-640",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Molnár Ernő",
+     "type": "PERSON",
+     "base": "Molnár Ernő",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "412 000 Ft",
+     "type": "MONEY",
+     "base": "412 000 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "dr. Kardos Eszter",
+     "type": "PERSON",
+     "base": "dr. Kardos Eszter",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Hajdúsági Konzerv Kft.",
+     "type": "ORG",
+     "base": "Hajdúsági Konzerv Kft.",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "kardos.eszter@hajdukonzerv.example",
+     "type": "EMAIL",
+     "base": "kardos.eszter@hajdukonzerv.example",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-hospitality-001",
+   "domain": "h4-hospitality",
+   "text": "Tisztelt Bakos Gergely Úr! Köszönjük, hogy a Tölgyes Wellness Hotelt választotta: 2026. november 14. és 16. között egy superior kétágyas szobát (DBL-SUP) tartunk fenn Önnek és feleségének, Bakosné Simon Krisztinának, félpanziós ellátással. A két éjszaka díja összesen 118 400 Ft, ebből 30 000 Ft előleget kérünk öt munkanapon belül átutalni a Tölgyes-Invest Kft. számlájára (számlaszám: {BANKSZAMLA}). Szállodánk címe: 3348 Szilvásvárad, Egri út 31. Kérdés esetén Halmi Dorina foglalási munkatársunk szívesen segít a +36 36 000 512 telefonszámon vagy a foglalas@tolgyeshotel.example címen.",
+   "entities": [
+    {
+     "text": "Bakos Gergely",
+     "type": "PERSON",
+     "base": "Bakos Gergely",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Tölgyes Wellness Hotelt",
+     "type": "ORG",
+     "base": "Tölgyes Wellness Hotel",
+     "case": "ACC",
+     "suffix": "t"
+    },
+    {
+     "text": "Bakosné Simon Krisztinának",
+     "type": "PERSON",
+     "base": "Bakosné Simon Krisztina",
+     "case": "DAT",
+     "suffix": "nak"
+    },
+    {
+     "text": "118 400 Ft",
+     "type": "MONEY",
+     "base": "118 400 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "30 000 Ft",
+     "type": "MONEY",
+     "base": "30 000 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Tölgyes-Invest Kft.",
+     "type": "ORG",
+     "base": "Tölgyes-Invest Kft.",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "3348 Szilvásvárad, Egri út 31",
+     "type": "ADDRESS",
+     "base": "3348 Szilvásvárad, Egri út 31",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Halmi Dorina",
+     "type": "PERSON",
+     "base": "Halmi Dorina",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "+36 36 000 512",
+     "type": "PHONE",
+     "base": "+36 36 000 512",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "foglalas@tolgyeshotel.example",
+     "type": "EMAIL",
+     "base": "foglalas@tolgyeshotel.example",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-hospitality-002",
+   "domain": "h4-hospitality",
+   "text": "Írj egy udvarias, de határozott választ erre a panaszra a Platán Étterem nevében, Fodor Levente üzletvezető aláírásával. Rácz Tímeának ajánljunk fel egy 10 ezer forint értékű vacsorautalványt, de a tisztítás költségét ne térítsük meg. A panasz: „Szombat estére négy főre foglaltunk asztalt, direkt Szegedről jöttünk fel Óbudára, mégis 40 percet vártunk, majd a pincér vörösbort öntött az apósom zakójára. Kérem, hogy a 12 500 Ft-os tisztítási költséget térítsék meg! Rácz Tímea”",
+   "entities": [
+    {
+     "text": "Platán Étterem",
+     "type": "ORG",
+     "base": "Platán Étterem",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Fodor Levente",
+     "type": "PERSON",
+     "base": "Fodor Levente",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Rácz Tímeának",
+     "type": "PERSON",
+     "base": "Rácz Tímea",
+     "case": "DAT",
+     "suffix": "nak"
+    },
+    {
+     "text": "10 ezer forint",
+     "type": "MONEY",
+     "base": "10 ezer forint",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Szegedről",
+     "type": "LOCATION",
+     "base": "Szeged",
+     "case": "DEL",
+     "suffix": "ről"
+    },
+    {
+     "text": "Óbudára",
+     "type": "LOCATION",
+     "base": "Óbuda",
+     "case": "SUB",
+     "suffix": "ra"
+    },
+    {
+     "text": "12 500 Ft",
+     "type": "MONEY",
+     "base": "12 500 Ft",
+     "case": "OTHER",
+     "suffix": "-os"
+    },
+    {
+     "text": "Rácz Tímea",
+     "type": "PERSON",
+     "base": "Rácz Tímea",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-hospitality-003",
+   "domain": "h4-hospitality",
+   "text": "Esküvői egyeztetés – Malomkert Rendezvénypajta, Noszvaj, okt. 17. Jegyespár: Kerekes Imre és Jakab Henrietta, időpont: 2027. 06. 12., kb. 110 fő; menyasszonykikérés 14:00-kor, Imre a násznéppel Andornaktályára megy Henriettáért. Szertartás a kertben, vacsora a nagy teremben, a zenét Henrietta unokatestvére, Szűts Barnabás hozza Egerből. Ár: 21 500 Ft/fő + terembérlet 650 000 Ft, foglaló 300 000 Ft nov. 30-ig. A távolabbról érkező vendégeket Barabáséknál, a Fenyves Vendégházban szállásoljuk el. Kapcsolat: Henrietta, 06 30 000 7731, jakab.henrietta@posta.example",
+   "entities": [
+    {
+     "text": "Malomkert Rendezvénypajta",
+     "type": "ORG",
+     "base": "Malomkert Rendezvénypajta",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Noszvaj",
+     "type": "LOCATION",
+     "base": "Noszvaj",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Kerekes Imre",
+     "type": "PERSON",
+     "base": "Kerekes Imre",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Jakab Henrietta",
+     "type": "PERSON",
+     "base": "Jakab Henrietta",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Imre",
+     "type": "PERSON",
+     "base": "Imre",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Andornaktályára",
+     "type": "LOCATION",
+     "base": "Andornaktálya",
+     "case": "SUB",
+     "suffix": "ra"
+    },
+    {
+     "text": "Henriettáért",
+     "type": "PERSON",
+     "base": "Henrietta",
+     "case": "CAU",
+     "suffix": "ért"
+    },
+    {
+     "text": "Henrietta",
+     "type": "PERSON",
+     "base": "Henrietta",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Szűts Barnabás",
+     "type": "PERSON",
+     "base": "Szűts Barnabás",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Egerből",
+     "type": "LOCATION",
+     "base": "Eger",
+     "case": "ELA",
+     "suffix": "ből"
+    },
+    {
+     "text": "21 500 Ft",
+     "type": "MONEY",
+     "base": "21 500 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "650 000 Ft",
+     "type": "MONEY",
+     "base": "650 000 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "300 000 Ft",
+     "type": "MONEY",
+     "base": "300 000 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Barabáséknál",
+     "type": "PERSON",
+     "base": "Barabásék",
+     "case": "ADE",
+     "suffix": "nál"
+    },
+    {
+     "text": "Fenyves Vendégházban",
+     "type": "ORG",
+     "base": "Fenyves Vendégház",
+     "case": "INE",
+     "suffix": "ban"
+    },
+    {
+     "text": "Henrietta",
+     "type": "PERSON",
+     "base": "Henrietta",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "06 30 000 7731",
+     "type": "PHONE",
+     "base": "06 30 000 7731",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "jakab.henrietta@posta.example",
+     "type": "EMAIL",
+     "base": "jakab.henrietta@posta.example",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-hospitality-004",
+   "domain": "h4-hospitality",
+   "text": "sziasztok, jovo heti beosztas valtozas: hetfon a reggeli muszakot (6-14) zsuzsi viszi dodo helyett, mert o szabin lesz. kedden es szerdan delutan ricsi + bence a pultban, a konyhan feri bacsi egyedul lesz, szoval bence kerlek segits neki a mise en place-ban, a hutokamra kulcsa ricsinel van. pentekre kene meg egy ember az esti rendezvenyre, a lengyel csoport 40 fovel jon. ha valaki ra er, irjon hegedus rekanak vagy hivja a 06 20 000 3378 szamot. koszi!",
+   "entities": [
+    {
+     "text": "zsuzsi",
+     "type": "PERSON",
+     "base": "zsuzsi",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "dodo",
+     "type": "PERSON",
+     "base": "dodo",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "ricsi",
+     "type": "PERSON",
+     "base": "ricsi",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "bence",
+     "type": "PERSON",
+     "base": "bence",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "feri",
+     "type": "PERSON",
+     "base": "feri",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "bence",
+     "type": "PERSON",
+     "base": "bence",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "ricsinel",
+     "type": "PERSON",
+     "base": "ricsi",
+     "case": "ADE",
+     "suffix": "nel"
+    },
+    {
+     "text": "hegedus rekanak",
+     "type": "PERSON",
+     "base": "hegedus reka",
+     "case": "DAT",
+     "suffix": "nak"
+    },
+    {
+     "text": "06 20 000 3378",
+     "type": "PHONE",
+     "base": "06 20 000 3378",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-hospitality-005",
+   "domain": "h4-hospitality",
+   "text": "Írj rövid, étvágygerjesztő leírásokat az őszi étlapra ezekhez a fogásokhoz: Szakács ajánlata – báránycomb rozmaringos burgonyával (M-14), pontyhalászlé passzírozva (M-03), sütőtökös krémes (D-07), mellé száraz fehérbor (cikkszám: BOR-112). Az allergéneket számmal jelöld (1 = glutén, 7 = laktóz), a vegán fogásokat pedig egy zöld V betűvel. A kis teremben a 24 fős csoportoknak fix menü megy, ahhoz külön kártya kell. Árakat most ne írj, mert a beszerzési listát még frissítjük.",
+   "entities": []
+  },
+  {
+   "id": "h4-hospitality-006",
+   "domain": "h4-hospitality",
+   "text": "Kedves Csizmadia Lilla! Köszönjük, hogy megosztotta velünk tapasztalatait a Borostyán Szállóban töltött hétvégéjéről. Sajnáljuk, hogy a 312-es szobában nem működött a fűtés: a hibát Kocsis Dénes karbantartó kollégánk még aznap este elhárította, a radiátorokat pedig azóta az egész emeleten kicseréltük. Kedves szavait a reggelinél dolgozó kolléganőnknek, Évikének is továbbítottuk. Ha legközelebb Tihanyba látogatnak, egy kétszemélyes vacsorával szeretnénk kedveskedni Önöknek. Üdvözlettel: dr. Hollósi Krisztián szállodaigazgató",
+   "entities": [
+    {
+     "text": "Csizmadia Lilla",
+     "type": "PERSON",
+     "base": "Csizmadia Lilla",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Borostyán Szállóban",
+     "type": "ORG",
+     "base": "Borostyán Szálló",
+     "case": "INE",
+     "suffix": "ban"
+    },
+    {
+     "text": "Kocsis Dénes",
+     "type": "PERSON",
+     "base": "Kocsis Dénes",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Évikének",
+     "type": "PERSON",
+     "base": "Évike",
+     "case": "DAT",
+     "suffix": "nek"
+    },
+    {
+     "text": "Tihanyba",
+     "type": "LOCATION",
+     "base": "Tihany",
+     "case": "ILL",
+     "suffix": "ba"
+    },
+    {
+     "text": "dr. Hollósi Krisztián",
+     "type": "PERSON",
+     "base": "dr. Hollósi Krisztián",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-hospitality-007",
+   "domain": "h4-hospitality",
+   "text": "Szia Gizi! Pénteken 6 körül érkeznénk Hévízre a feleségemmel meg a két gyerekkel, a családi apartmant kérnénk két éjszakára, ahogy telefonon megbeszéltük. A 20 000 Ft-ot tegnap elutaltam előlegnek, a közleménybe a foglalási számot írtam (HV-2611). Egy szürke kombival jövünk, rendszám AE KM-207, a bejelentkezéshez pedig itt a szig. számom: {SZIG}. Ha bármi van, ezen a számon elérsz: 06 70 000 9154. Üdv, Lengyel Marci",
+   "entities": [
+    {
+     "text": "Gizi",
+     "type": "PERSON",
+     "base": "Gizi",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Hévízre",
+     "type": "LOCATION",
+     "base": "Hévíz",
+     "case": "SUB",
+     "suffix": "re"
+    },
+    {
+     "text": "20 000 Ft",
+     "type": "MONEY",
+     "base": "20 000 Ft",
+     "case": "ACC",
+     "suffix": "-ot"
+    },
+    {
+     "text": "AE KM-207",
+     "type": "LICENSE_PLATE",
+     "base": "AE KM-207",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "06 70 000 9154",
+     "type": "PHONE",
+     "base": "06 70 000 9154",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Lengyel Marci",
+     "type": "PERSON",
+     "base": "Lengyel Marci",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-hospitality-008",
+   "domain": "h4-hospitality",
+   "text": "Kedves Bartos Eszter! Ahogy kérte, elkészítettük az ajánlatot Krétára a 2027. május 22–29. közötti időszakra, két felnőtt és egy 9 éves gyermek részére, Debrecenből induló charterjárattal. A szállás Hersonissosban lenne, egy tengerparti négycsillagos hotelben all inclusive ellátással, a csomag teljes ára 1 286 000 Ft, a fakultatív kirándulás Knósszoszba pedig felnőttenként további 45 euró. Foglalás esetén a 30% előleget a következő számlára kérjük átutalni: {IBAN}, a közleményben a VF-27-0519 ajánlatszámmal. Az árat a légitársaság csak 72 óráig garantálja, ezért kérjük, mielőbb jelezzen vissza. Üdvözlettel: Somogyi Petra, Vándorfecske Utazási Iroda, +36 52 000 418, somogyi.petra@vandorfecske.example",
+   "entities": [
+    {
+     "text": "Bartos Eszter",
+     "type": "PERSON",
+     "base": "Bartos Eszter",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Krétára",
+     "type": "LOCATION",
+     "base": "Kréta",
+     "case": "SUB",
+     "suffix": "ra"
+    },
+    {
+     "text": "Debrecenből",
+     "type": "LOCATION",
+     "base": "Debrecen",
+     "case": "ELA",
+     "suffix": "ből"
+    },
+    {
+     "text": "Hersonissosban",
+     "type": "LOCATION",
+     "base": "Hersonissos",
+     "case": "INE",
+     "suffix": "ban"
+    },
+    {
+     "text": "1 286 000 Ft",
+     "type": "MONEY",
+     "base": "1 286 000 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Knósszoszba",
+     "type": "LOCATION",
+     "base": "Knósszosz",
+     "case": "ILL",
+     "suffix": "ba"
+    },
+    {
+     "text": "45 euró",
+     "type": "MONEY",
+     "base": "45 euró",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Somogyi Petra",
+     "type": "PERSON",
+     "base": "Somogyi Petra",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Vándorfecske Utazási Iroda",
+     "type": "ORG",
+     "base": "Vándorfecske Utazási Iroda",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "+36 52 000 418",
+     "type": "PHONE",
+     "base": "+36 52 000 418",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "somogyi.petra@vandorfecske.example",
+     "type": "EMAIL",
+     "base": "somogyi.petra@vandorfecske.example",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-hospitality-009",
+   "domain": "h4-hospitality",
+   "text": "Műszakátadás, 3. emelet: a 304-es és 309-es szobában cserélni kell a fehér ágyneműt, a 311-esben zúg a minibar (eszközkód: MB-0311), ezt már bejelentettem a karbantartásnak. A Rózsa lakosztályba két extra párna és egy babaágy kell 15 óráig. A takarítókocsira kis szappanból és barna papírtörlőből kell még utántöltés, a raktárkulcs a portán van. Holnap reggel 8-kor jön a kertész a téli lefedéshez, addig a teraszbútorokat be kell hordani.",
+   "entities": []
+  },
+  {
+   "id": "h4-hospitality-010",
+   "domain": "h4-hospitality",
+   "text": "Tisztelt Antal Viktória! Visszaigazoljuk, hogy a Kékvirág Rendezvényház nagytermét 2026. december 11-én 17 órától éjfélig lefoglaltuk az Önök évzárójára, 85 főre, a Dunakanyar Raktárlogisztika Zrt.-vel tavaly kötött keretszerződés feltételei szerint. A rendezvény díja nettó 1 940 000 Ft + áfa, a számlát a következő adatokkal állítjuk ki: Dunakanyar Raktárlogisztika Zrt., 2600 Vác, Ipartelep utca 18, adószám: {ADOSZAM}, cégjegyzékszám: {CEGJEGYZEKSZAM}. A menüt jövő héten Gulyás Ferenccel, a konyhafőnökünkkel tudják egyeztetni, a technikai igényekkel kapcsolatban pedig forduljon bizalommal Major Zsófiához a rendezveny@kekvirag.example címen. Üdvözlettel: ifj. Benkő Tamás értékesítési vezető, 06-1/000-6643",
+   "entities": [
+    {
+     "text": "Antal Viktória",
+     "type": "PERSON",
+     "base": "Antal Viktória",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Kékvirág Rendezvényház",
+     "type": "ORG",
+     "base": "Kékvirág Rendezvényház",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Dunakanyar Raktárlogisztika Zrt.",
+     "type": "ORG",
+     "base": "Dunakanyar Raktárlogisztika Zrt.",
+     "case": "INS",
+     "suffix": "-vel"
+    },
+    {
+     "text": "1 940 000 Ft",
+     "type": "MONEY",
+     "base": "1 940 000 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Dunakanyar Raktárlogisztika Zrt.",
+     "type": "ORG",
+     "base": "Dunakanyar Raktárlogisztika Zrt.",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "2600 Vác, Ipartelep utca 18",
+     "type": "ADDRESS",
+     "base": "2600 Vác, Ipartelep utca 18",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Gulyás Ferenccel",
+     "type": "PERSON",
+     "base": "Gulyás Ferenc",
+     "case": "INS",
+     "suffix": "cel"
+    },
+    {
+     "text": "Major Zsófiához",
+     "type": "PERSON",
+     "base": "Major Zsófia",
+     "case": "ALL",
+     "suffix": "hoz"
+    },
+    {
+     "text": "rendezveny@kekvirag.example",
+     "type": "EMAIL",
+     "base": "rendezveny@kekvirag.example",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "ifj. Benkő Tamás",
+     "type": "PERSON",
+     "base": "ifj. Benkő Tamás",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "06-1/000-6643",
+     "type": "PHONE",
+     "base": "06-1/000-6643",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-hospitality-011",
+   "domain": "h4-hospitality",
+   "text": "Foglald össze egy rövid, tárgyszerű e-mailben Szekeres Juditnak (bérszámfejtés) az új szakácsunk belépési adatait. Sipos Ádám, szül.: Kaposvár, 1996.02.09., anyja neve: Pintér Gizella, lakcím: 7400 Kaposvár, Hársfa utca 27/B, TAJ-szám: {TAJ}, adóazonosító jel: {ADOAZONOSITO}. Belépés 2026. november 2-án, heti 40 órában, bruttó 465 000 forint alapbérrel, a fizetését erre a számlaszámra kéri: {BANKSZAMLA}; korábban három szezont dolgozott Siófokon. Elérhetősége: sipos.adam96@levelezo.example, 06 30 000 2864. Az öltözőben a 7-es szekrényt kapja, ami eddig Szalai Edité volt.",
+   "entities": [
+    {
+     "text": "Szekeres Juditnak",
+     "type": "PERSON",
+     "base": "Szekeres Judit",
+     "case": "DAT",
+     "suffix": "nak"
+    },
+    {
+     "text": "Sipos Ádám",
+     "type": "PERSON",
+     "base": "Sipos Ádám",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Kaposvár",
+     "type": "LOCATION",
+     "base": "Kaposvár",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "1996.02.09.",
+     "type": "DATE_OF_BIRTH",
+     "base": "1996.02.09.",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Pintér Gizella",
+     "type": "PERSON",
+     "base": "Pintér Gizella",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "7400 Kaposvár, Hársfa utca 27/B",
+     "type": "ADDRESS",
+     "base": "7400 Kaposvár, Hársfa utca 27/B",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "465 000 forint",
+     "type": "MONEY",
+     "base": "465 000 forint",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Siófokon",
+     "type": "LOCATION",
+     "base": "Siófok",
+     "case": "SUP",
+     "suffix": "on"
+    },
+    {
+     "text": "sipos.adam96@levelezo.example",
+     "type": "EMAIL",
+     "base": "sipos.adam96@levelezo.example",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "06 30 000 2864",
+     "type": "PHONE",
+     "base": "06 30 000 2864",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Szalai Edité",
+     "type": "PERSON",
+     "base": "Szalai Edit",
+     "case": "POSS",
+     "suffix": "é"
+    }
+   ]
+  },
+  {
+   "id": "h4-hospitality-012",
+   "domain": "h4-hospitality",
+   "text": "Fordítsd le angolra, udvarias, hivatalos hangnemben: Kedves Brenner Úr! A szobájában talált ezüst karórát a szobaasszonyunktól, Pap Zsuzsannától vettük át, a holnapi kijelentkezéskor a recepción átadjuk Önnek. A reptéri transzfer 6:30-kor indul a Várkerület felőli főbejárattól, sofőrünk, Vörös Csaba egy fehér kisbusszal (rendszám: RKT-418) várja Önt és Sabine Krügert, Bécsig nagyjából egy óra az út. Ha a járatuk időpontja változna, kérjük, jelezze a recepción vagy a +36 99 000 314 telefonszámon.",
+   "entities": [
+    {
+     "text": "Brenner",
+     "type": "PERSON",
+     "base": "Brenner",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Pap Zsuzsannától",
+     "type": "PERSON",
+     "base": "Pap Zsuzsanna",
+     "case": "ABL",
+     "suffix": "tól"
+    },
+    {
+     "text": "Várkerület",
+     "type": "LOCATION",
+     "base": "Várkerület",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Vörös Csaba",
+     "type": "PERSON",
+     "base": "Vörös Csaba",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "RKT-418",
+     "type": "LICENSE_PLATE",
+     "base": "RKT-418",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Sabine Krügert",
+     "type": "PERSON",
+     "base": "Sabine Krüger",
+     "case": "ACC",
+     "suffix": "t"
+    },
+    {
+     "text": "Bécsig",
+     "type": "LOCATION",
+     "base": "Bécs",
+     "case": "TER",
+     "suffix": "ig"
+    },
+    {
+     "text": "+36 99 000 314",
+     "type": "PHONE",
+     "base": "+36 99 000 314",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-construction-001",
+   "domain": "h4-construction",
+   "text": "Építési napló, 2026.10.14. (szerda) – Időjárás: borult, 9 °C, reggel szitáló eső. Létszám: 6 fő saját, 4 fő alvállalkozó (Mátra-Szig Kft.). Elvégzett munkák: É-i homlokzaton 15 cm EPS hőszig. ragasztása a 2. emelet magasságáig, lábazati XPS kész. Az AA KR-417 rendszámú daruskocsi 10:40-kor érkezett Győrből a Kapu-Tüzép Kft. szállítmányával, a szállítólevelet Hegedűs Bálint vette át. 13 órakor bejárás a műszaki ellenőrrel, Vámos Ildikóval: az ÉK-i sarkon a dübelezés sűrűsége nem megfelelő, javítás határideje holnap 12 óra.",
+   "entities": [
+    {
+     "text": "Mátra-Szig Kft.",
+     "type": "ORG",
+     "base": "Mátra-Szig Kft.",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "AA KR-417",
+     "type": "LICENSE_PLATE",
+     "base": "AA KR-417",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Győrből",
+     "type": "LOCATION",
+     "base": "Győr",
+     "case": "ELA",
+     "suffix": "ből"
+    },
+    {
+     "text": "Kapu-Tüzép Kft.",
+     "type": "ORG",
+     "base": "Kapu-Tüzép Kft.",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Hegedűs Bálint",
+     "type": "PERSON",
+     "base": "Hegedűs Bálint",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Vámos Ildikóval",
+     "type": "PERSON",
+     "base": "Vámos Ildikó",
+     "case": "INS",
+     "suffix": "val"
+    }
+   ]
+  },
+  {
+   "id": "h4-construction-002",
+   "domain": "h4-construction",
+   "text": "Tisztelt Bodnárné Kiss Henrietta!\n\nA 2026. október 6-i helyszíni felmérés alapján megküldjük a 2083 Solymár, Diófa utca 27/A alatti családi ház fürdőszobájának felújítására vonatkozó árajánlatunkat. A bontás, a víz- és villanyszerelés, valamint 24 m² hidegburkolat munkadíja összesen bruttó 1 865 000 Ft, a becsült anyagköltség 1 140 000 Ft. A munkát november második felében, kb. 12 munkanap alatt tudjuk elvégezni; elfogadás esetén 30% előleget kérünk a {BANKSZAMLA} számú bankszámlánkra. Kérdés esetén kollégánk, Pintér Szabolcs áll rendelkezésére telefonon (+36 30 000 6158) vagy e-mailben (pinter.szabolcs@kofalbau.example).\n\nÜdvözlettel:\nKőfal-Bau Kft. (cégjegyzékszám: {CEGJEGYZEKSZAM}, adószám: {ADOSZAM})",
+   "entities": [
+    {
+     "text": "Bodnárné Kiss Henrietta",
+     "type": "PERSON",
+     "base": "Bodnárné Kiss Henrietta",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "2083 Solymár, Diófa utca 27/A",
+     "type": "ADDRESS",
+     "base": "2083 Solymár, Diófa utca 27/A",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "1 865 000 Ft",
+     "type": "MONEY",
+     "base": "1 865 000 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "1 140 000 Ft",
+     "type": "MONEY",
+     "base": "1 140 000 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Pintér Szabolcs",
+     "type": "PERSON",
+     "base": "Pintér Szabolcs",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "+36 30 000 6158",
+     "type": "PHONE",
+     "base": "+36 30 000 6158",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "pinter.szabolcs@kofalbau.example",
+     "type": "EMAIL",
+     "base": "pinter.szabolcs@kofalbau.example",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Kőfal-Bau Kft.",
+     "type": "ORG",
+     "base": "Kőfal-Bau Kft.",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-construction-003",
+   "domain": "h4-construction",
+   "text": "[08:12] Rácz Dániel: Gergo, a burkolok ma sem jottek ki Veresegyhazra, pedig Lakatos Bence azt irta, 7-re ott lesznek\n[08:14] Vida Gergely: most beszeltem Bencevel, Tahitotfalubol csak csutortokre tudnak atjonni, ott meg nem vegeztek\n[08:15] Rácz Dániel: az nekunk mar keso, 28-an atadas van... szolj Barta Noeminek, nezze meg az alvallalkozoi szerzodesben a kotberes reszt\n[08:17] Vida Gergely: ok, delutan ugyis megyek a Tisza-Stathoz a statikai szakvelemenyert, utana felhivom",
+   "entities": [
+    {
+     "text": "Rácz Dániel",
+     "type": "PERSON",
+     "base": "Rácz Dániel",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Gergo",
+     "type": "PERSON",
+     "base": "Gergo",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Veresegyhazra",
+     "type": "LOCATION",
+     "base": "Veresegyhaz",
+     "case": "SUB",
+     "suffix": "ra"
+    },
+    {
+     "text": "Lakatos Bence",
+     "type": "PERSON",
+     "base": "Lakatos Bence",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Vida Gergely",
+     "type": "PERSON",
+     "base": "Vida Gergely",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Bencevel",
+     "type": "PERSON",
+     "base": "Bence",
+     "case": "INS",
+     "suffix": "vel"
+    },
+    {
+     "text": "Tahitotfalubol",
+     "type": "LOCATION",
+     "base": "Tahitotfalu",
+     "case": "ELA",
+     "suffix": "bol"
+    },
+    {
+     "text": "Rácz Dániel",
+     "type": "PERSON",
+     "base": "Rácz Dániel",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Barta Noeminek",
+     "type": "PERSON",
+     "base": "Barta Noemi",
+     "case": "DAT",
+     "suffix": "nek"
+    },
+    {
+     "text": "Vida Gergely",
+     "type": "PERSON",
+     "base": "Vida Gergely",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Tisza-Stathoz",
+     "type": "ORG",
+     "base": "Tisza-Stat",
+     "case": "ALL",
+     "suffix": "hoz"
+    }
+   ]
+  },
+  {
+   "id": "h4-construction-004",
+   "domain": "h4-construction",
+   "text": "Tisztelt Vízfal Burkolástechnika Kft.!\n\nJúniusban Önök újították fel az 1144 Budapest, Kerepesi út 87, IV/12 alatti lakásunk fürdőszobáját, azóta azonban a zuhanytálca mellett szivárog a víz, és az alattunk lakó Kardoséknál már a mennyezet is foltos. Mivel a jótállási idő még messze nem járt le, kérem, hogy mielőbb küldjék ki Hajdu Rolandot, aki annak idején a burkolást végezte. Hétköznap 17 óra után vagyunk otthon, telefonon a 06 70 000 3392 számon, e-mailben az erdos.klara@postafiok.example címen érnek el.\n\nÜdvözlettel:\nErdős Klára",
+   "entities": [
+    {
+     "text": "Vízfal Burkolástechnika Kft.",
+     "type": "ORG",
+     "base": "Vízfal Burkolástechnika Kft.",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "1144 Budapest, Kerepesi út 87, IV/12",
+     "type": "ADDRESS",
+     "base": "1144 Budapest, Kerepesi út 87, IV/12",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Kardoséknál",
+     "type": "PERSON",
+     "base": "Kardosék",
+     "case": "ADE",
+     "suffix": "nál"
+    },
+    {
+     "text": "Hajdu Rolandot",
+     "type": "PERSON",
+     "base": "Hajdu Roland",
+     "case": "ACC",
+     "suffix": "ot"
+    },
+    {
+     "text": "06 70 000 3392",
+     "type": "PHONE",
+     "base": "06 70 000 3392",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "erdos.klara@postafiok.example",
+     "type": "EMAIL",
+     "base": "erdos.klara@postafiok.example",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Erdős Klára",
+     "type": "PERSON",
+     "base": "Erdős Klára",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-construction-005",
+   "domain": "h4-construction",
+   "text": "Foglald össze 3 rövid pontban, közérthetően, mert továbbítanom kell az ügyfélnek: „A Szentendrei Járási Hivatal építésügyi ügyintézője, dr. Fazekas Judit 2026. szeptember 30-án helyszíni szemlét tartott a Pomáz belterület 2814/3 hrsz.-ú ingatlanon. Megállapította, hogy a tetőtér-beépítés során a két új tetőablakot a jóváhagyott tervtől eltérő helyen alakították ki, ezért az építtetőt, ifj. Bakos Lajost 30 napon belül módosított tervdokumentáció benyújtására kötelezte. A hiánypótlást a felelős tervező, Kiss-Pál Ottó az ÉTDR-en keresztül nyújthatja be.”",
+   "entities": [
+    {
+     "text": "Szentendrei Járási Hivatal",
+     "type": "ORG",
+     "base": "Szentendrei Járási Hivatal",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "dr. Fazekas Judit",
+     "type": "PERSON",
+     "base": "dr. Fazekas Judit",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Pomáz",
+     "type": "LOCATION",
+     "base": "Pomáz",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "ifj. Bakos Lajost",
+     "type": "PERSON",
+     "base": "ifj. Bakos Lajos",
+     "case": "ACC",
+     "suffix": "t"
+    },
+    {
+     "text": "Kiss-Pál Ottó",
+     "type": "PERSON",
+     "base": "Kiss-Pál Ottó",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-construction-006",
+   "domain": "h4-construction",
+   "text": "Fordítsd le angolra, a külföldi kollégáknak kell kiküldenem: „Holnap 7-től az ács kezdi a szarufák cseréjét, utána jön a bádogos az ereszcsatornával, a kőműves pedig csak pénteken folytatja a kéményt. Fehér fugát kérünk a fürdőbe, nem szürkét, és a BX-3060 matt csempéből még 6 doboz hiányzik. A lakatos szerint a korláthoz M10-es vegyi dübel kell, a KMV-260 típusú vibrolapot pedig csütörtökig vissza kell vinni a gépkölcsönzőbe. Nagy baj nincs, csak a sittes konténert kérjük a 4-es kapuhoz.”",
+   "entities": []
+  },
+  {
+   "id": "h4-construction-007",
+   "domain": "h4-construction",
+   "text": "Szia Zsuzsa!\n\nA múlt héten egyeztetett rendelést szeretném véglegesíteni: 18 raklap 30-as falazóblokk, 40 zsák falazóhabarcs és 2 db 3 méteres acél áthidaló. Kérlek, a szállítást csütörtök reggel 8-ra írd be a 2100 Gödöllő, Szőlő utca 41 címre (sarokház, a kapu a Liget utca felől nyílik), a helyszínen Antal Botond veszi át (06-20/000-7765). Úgy tudom, Mogyoródig ingyenes a kiszállítás, ezért a fuvardíjat külön tételként kérem; a díjbekérőt (nettó 1 296 400 Ft + áfa) a beszerzes@duna-ep.example címre küldd, a Duna-Ép Generál Kft. nevére.\n\nKöszi,\nKozma Gellért",
+   "entities": [
+    {
+     "text": "Zsuzsa",
+     "type": "PERSON",
+     "base": "Zsuzsa",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "2100 Gödöllő, Szőlő utca 41",
+     "type": "ADDRESS",
+     "base": "2100 Gödöllő, Szőlő utca 41",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Liget utca",
+     "type": "LOCATION",
+     "base": "Liget utca",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Antal Botond",
+     "type": "PERSON",
+     "base": "Antal Botond",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "06-20/000-7765",
+     "type": "PHONE",
+     "base": "06-20/000-7765",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Mogyoródig",
+     "type": "LOCATION",
+     "base": "Mogyoród",
+     "case": "TER",
+     "suffix": "ig"
+    },
+    {
+     "text": "1 296 400 Ft",
+     "type": "MONEY",
+     "base": "1 296 400 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "beszerzes@duna-ep.example",
+     "type": "EMAIL",
+     "base": "beszerzes@duna-ep.example",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Duna-Ép Generál Kft.",
+     "type": "ORG",
+     "base": "Duna-Ép Generál Kft.",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Kozma Gellért",
+     "type": "PERSON",
+     "base": "Kozma Gellért",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-construction-008",
+   "domain": "h4-construction",
+   "text": "Munkabaleset – helyszíni rögzítés, 2026. 10. 09., 14:20. A sérült: Mykola Savchuk (szül. 1991. 04. 23., TAJ-száma: {TAJ}), segédmunkás, a Cívis-Szerkezet Kft. alkalmazottja. A Hajdúszoboszlón épülő társasház 3. emeleti födémjén a zsaluzatról lelépve megcsúszott és eltörte a bal csuklóját, a mentő Debrecenbe szállította. Elsősegélyt Orsós Gyula munkavédelmi képviselő nyújtott, a jegyzőkönyvet Szalai Krisztina vette fel. Tamási Leventétől és Gál Benedektől tanúnyilatkozatot kértünk.",
+   "entities": [
+    {
+     "text": "Mykola Savchuk",
+     "type": "PERSON",
+     "base": "Mykola Savchuk",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "1991. 04. 23.",
+     "type": "DATE_OF_BIRTH",
+     "base": "1991. 04. 23.",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Cívis-Szerkezet Kft.",
+     "type": "ORG",
+     "base": "Cívis-Szerkezet Kft.",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Hajdúszoboszlón",
+     "type": "LOCATION",
+     "base": "Hajdúszoboszló",
+     "case": "SUP",
+     "suffix": "n"
+    },
+    {
+     "text": "Debrecenbe",
+     "type": "LOCATION",
+     "base": "Debrecen",
+     "case": "ILL",
+     "suffix": "be"
+    },
+    {
+     "text": "Orsós Gyula",
+     "type": "PERSON",
+     "base": "Orsós Gyula",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Szalai Krisztina",
+     "type": "PERSON",
+     "base": "Szalai Krisztina",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Tamási Leventétől",
+     "type": "PERSON",
+     "base": "Tamási Levente",
+     "case": "ABL",
+     "suffix": "től"
+    },
+    {
+     "text": "Gál Benedektől",
+     "type": "PERSON",
+     "base": "Gál Benedek",
+     "case": "ABL",
+     "suffix": "től"
+    }
+   ]
+  },
+  {
+   "id": "h4-construction-009",
+   "domain": "h4-construction",
+   "text": "Fodor Zsófia: jo estet, vegul a vilagosabb csempet valasztottuk, Tibi szerint a sotet tul nyomaszto lenne abba a kis furdobe\nKántor Attila: rendben, holnap leadom a rendelest, kb 10 munkanap mire beer\nFodor Zsófia: a kadat ugye a Csempe-Pont Kft.-tol hozzak egyenesen Csepelre, vagy elobb nekunk kell atvenni Ferencvarosban?\nKántor Attila: egyenesen Csepelre, csutortokon 9 es 12 kozott, csak legyen otthon valaki. az eloleg 380 000 Ft, a szamlat holnap kuldom",
+   "entities": [
+    {
+     "text": "Fodor Zsófia",
+     "type": "PERSON",
+     "base": "Fodor Zsófia",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Tibi",
+     "type": "PERSON",
+     "base": "Tibi",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Kántor Attila",
+     "type": "PERSON",
+     "base": "Kántor Attila",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Fodor Zsófia",
+     "type": "PERSON",
+     "base": "Fodor Zsófia",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Csempe-Pont Kft.",
+     "type": "ORG",
+     "base": "Csempe-Pont Kft.",
+     "case": "ABL",
+     "suffix": "-tol"
+    },
+    {
+     "text": "Csepelre",
+     "type": "LOCATION",
+     "base": "Csepel",
+     "case": "SUB",
+     "suffix": "re"
+    },
+    {
+     "text": "Ferencvarosban",
+     "type": "LOCATION",
+     "base": "Ferencvaros",
+     "case": "INE",
+     "suffix": "ban"
+    },
+    {
+     "text": "Kántor Attila",
+     "type": "PERSON",
+     "base": "Kántor Attila",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Csepelre",
+     "type": "LOCATION",
+     "base": "Csepel",
+     "case": "SUB",
+     "suffix": "re"
+    },
+    {
+     "text": "380 000 Ft",
+     "type": "MONEY",
+     "base": "380 000 Ft",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-construction-010",
+   "domain": "h4-construction",
+   "text": "Írj egy udvarias, de határozott válaszlevelet Jakab Norbertnek, a Rét-Faház Kft. ügyvezetőjének, aki a visszatartott 5%-os biztosíték (1 412 000 Ft) azonnali kifizetését követeli. A lényeg: a szerződés szerint ez az összeg csak a sikeres műszaki átadás-átvételt követő 30. napon esedékes, a Zalaegerszegen épülő tornacsarnoknál viszont az átadás még nem zárult le, mert a műszaki ellenőr, Herczeg Ármin három hiányosságot rögzített. A levelet Somogyi Tímea projektvezető nevében írd, a végére kerüljön a közvetlen telefonszáma (06-1/000-4821), és szerepeljen benne, hogy a hiányok pótlása után a teljes összeget átutaljuk.",
+   "entities": [
+    {
+     "text": "Jakab Norbertnek",
+     "type": "PERSON",
+     "base": "Jakab Norbert",
+     "case": "DAT",
+     "suffix": "nek"
+    },
+    {
+     "text": "Rét-Faház Kft.",
+     "type": "ORG",
+     "base": "Rét-Faház Kft.",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "1 412 000 Ft",
+     "type": "MONEY",
+     "base": "1 412 000 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Zalaegerszegen",
+     "type": "LOCATION",
+     "base": "Zalaegerszeg",
+     "case": "SUP",
+     "suffix": "en"
+    },
+    {
+     "text": "Herczeg Ármin",
+     "type": "PERSON",
+     "base": "Herczeg Ármin",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Somogyi Tímea",
+     "type": "PERSON",
+     "base": "Somogyi Tímea",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "06-1/000-4821",
+     "type": "PHONE",
+     "base": "06-1/000-4821",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-construction-011",
+   "domain": "h4-construction",
+   "text": "Készíts egy egyoldalas hibabejelentő sablont a felújítási ügyfeleinknek a következő mezőkkel: [Megrendelő neve], [Ingatlan címe], [Telefonszám], [A hiba leírása], [Észlelés dátuma], [Fotó csatolva: igen/nem]. Legyen benne egy rövid tájékoztató arról, hogy a jótállás 3 évre szól, a beépített nyílászárókra 5 évre, és hogy a bejelentéstől számított 8 munkanapon belül felvesszük a kapcsolatot. A hangnem legyen barátságos, de ne bizalmaskodó, a végén pedig hagyj helyet a dátumnak és az aláírásnak.",
+   "entities": []
+  },
+  {
+   "id": "h4-construction-012",
+   "domain": "h4-construction",
+   "text": "Meghatalmazás\n\nAlulírott özv. Kerekes Józsefné (születési név: Sipos Margit, született: Kaposvár, 1948. február 11., anyja neve: Lengyel Rozália, lakcím: 7400 Kaposvár, Béke utca 12, személyi igazolvány száma: {SZIG}) meghatalmazom Bárdos Emese építészmérnököt, hogy a tulajdonomban álló, 3417/2 hrsz.-ú lakóingatlan bővítésének egyszerű bejelentési eljárásában, valamint az azt megelőző településképi konzultáción Kaposvár Megyei Jogú Város Önkormányzata és az építésügyi hatóság előtt teljes jogkörrel eljárjon.\n\nKaposvár, 2026. október 12.",
+   "entities": [
+    {
+     "text": "özv. Kerekes Józsefné",
+     "type": "PERSON",
+     "base": "özv. Kerekes Józsefné",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Sipos Margit",
+     "type": "PERSON",
+     "base": "Sipos Margit",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Kaposvár",
+     "type": "LOCATION",
+     "base": "Kaposvár",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "1948. február 11.",
+     "type": "DATE_OF_BIRTH",
+     "base": "1948. február 11.",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Lengyel Rozália",
+     "type": "PERSON",
+     "base": "Lengyel Rozália",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "7400 Kaposvár, Béke utca 12",
+     "type": "ADDRESS",
+     "base": "7400 Kaposvár, Béke utca 12",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Bárdos Emese",
+     "type": "PERSON",
+     "base": "Bárdos Emese",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Kaposvár Megyei Jogú Város Önkormányzata",
+     "type": "ORG",
+     "base": "Kaposvár Megyei Jogú Város Önkormányzata",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Kaposvár",
+     "type": "LOCATION",
+     "base": "Kaposvár",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-social-001",
+   "domain": "h4-social",
+   "text": "2026.10.06. – családlátogatás Edelényben (Rákóczi út). Jelen: Rostás Klaudia (anya), élettársa Kalányos Dénes és a 3 gyermek. Klaudia elmondta, hogy a szeptemberi villanyszámlát (41 860 Ft) nem tudták kifizetni, a szolgáltató már felszólítást küldött. Megbeszéltük, hogy a rendkívüli települési támogatás iránti kérelmet még e héten beadjuk az Edelényi Polgármesteri Hivatalba, a hiányzó jövedelemigazolást holnap átveszem Kalányos Dénestől. Köv. lépés: okt. 13-ig egyeztetés a Hétszínvirág Óvoda vezetőjével a legkisebb gyermek étkezési hátraléka miatt. Rögz.: Bodnárné Sipos Erika csal. seg.",
+   "entities": [
+    {
+     "text": "Edelényben",
+     "type": "LOCATION",
+     "base": "Edelény",
+     "case": "INE",
+     "suffix": "ben"
+    },
+    {
+     "text": "Rákóczi út",
+     "type": "LOCATION",
+     "base": "Rákóczi út",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Rostás Klaudia",
+     "type": "PERSON",
+     "base": "Rostás Klaudia",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Kalányos Dénes",
+     "type": "PERSON",
+     "base": "Kalányos Dénes",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Klaudia",
+     "type": "PERSON",
+     "base": "Klaudia",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "41 860 Ft",
+     "type": "MONEY",
+     "base": "41 860 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Edelényi Polgármesteri Hivatalba",
+     "type": "ORG",
+     "base": "Edelényi Polgármesteri Hivatal",
+     "case": "ILL",
+     "suffix": "ba"
+    },
+    {
+     "text": "Kalányos Dénestől",
+     "type": "PERSON",
+     "base": "Kalányos Dénes",
+     "case": "ABL",
+     "suffix": "től"
+    },
+    {
+     "text": "Hétszínvirág Óvoda",
+     "type": "ORG",
+     "base": "Hétszínvirág Óvoda",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Bodnárné Sipos Erika",
+     "type": "PERSON",
+     "base": "Bodnárné Sipos Erika",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-social-002",
+   "domain": "h4-social",
+   "text": "Tárgy: értesítés gondozási hely változásáról\n\nTisztelt Ügyintéző!\n\nTájékoztatjuk, hogy Lakatos Bencét (szül.: 2016. 02. 11., TAJ-száma: {TAJ}) 2026. november 3-ától a Kiskunfélegyházán élő Pataki János és Szekeres Judit nevelőszülőknél helyezzük el. A gyermek november 4-től a Szivárvány Általános Iskolában folytatja tanulmányait. Testvérével, Lakatos Jázminnal a kapcsolattartás havonta két alkalommal, a Kecskeméti Járási Hivatal által jóváhagyott rend szerint biztosított. Kérdés esetén keressék gyámunkat, Fehérvári Orsolyát a fehervari.orsolya@gyermekvedelem-bk.example címen vagy a 06-76/000-482 telefonszámon.\n\nÜdvözlettel:\nMolnár-Czakó Henrietta\nnevelőszülői tanácsadó, Alföldi Nevelőszülői Hálózat",
+   "entities": [
+    {
+     "text": "Lakatos Bencét",
+     "type": "PERSON",
+     "base": "Lakatos Bence",
+     "case": "ACC",
+     "suffix": "t"
+    },
+    {
+     "text": "2016. 02. 11.",
+     "type": "DATE_OF_BIRTH",
+     "base": "2016. 02. 11.",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Kiskunfélegyházán",
+     "type": "LOCATION",
+     "base": "Kiskunfélegyháza",
+     "case": "SUP",
+     "suffix": "n"
+    },
+    {
+     "text": "Pataki János",
+     "type": "PERSON",
+     "base": "Pataki János",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Szekeres Judit",
+     "type": "PERSON",
+     "base": "Szekeres Judit",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Szivárvány Általános Iskolában",
+     "type": "ORG",
+     "base": "Szivárvány Általános Iskola",
+     "case": "INE",
+     "suffix": "ban"
+    },
+    {
+     "text": "Lakatos Jázminnal",
+     "type": "PERSON",
+     "base": "Lakatos Jázmin",
+     "case": "INS",
+     "suffix": "nal"
+    },
+    {
+     "text": "Kecskeméti Járási Hivatal",
+     "type": "ORG",
+     "base": "Kecskeméti Járási Hivatal",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Fehérvári Orsolyát",
+     "type": "PERSON",
+     "base": "Fehérvári Orsolya",
+     "case": "ACC",
+     "suffix": "t"
+    },
+    {
+     "text": "fehervari.orsolya@gyermekvedelem-bk.example",
+     "type": "EMAIL",
+     "base": "fehervari.orsolya@gyermekvedelem-bk.example",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "06-76/000-482",
+     "type": "PHONE",
+     "base": "06-76/000-482",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Molnár-Czakó Henrietta",
+     "type": "PERSON",
+     "base": "Molnár-Czakó Henrietta",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Alföldi Nevelőszülői Hálózat",
+     "type": "ORG",
+     "base": "Alföldi Nevelőszülői Hálózat",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-social-003",
+   "domain": "h4-social",
+   "text": "Csenge: Sziasztok, szombaton 8-tól tartósélelmiszer-gyűjtés lesz a Kertváros Áruháznál Gödöllőn, a délelőtti műszakba kellene még 2 ember.\nDalma: en 10ig tudok maradni, utana viszem a gyerekeket Szentendrere\nÁron: Én jövök, és ha kell, 7:40-kor beugrok Dalmáért, útba esik.\nCsenge: Szuper, a kisbusz kulcsa Fazekaséknál van, a rendszám a szokásos NHK-472. Aki mégsem tud jönni, a 06 70 000 3381-re írjon, ne a csoportba.",
+   "entities": [
+    {
+     "text": "Csenge",
+     "type": "PERSON",
+     "base": "Csenge",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Kertváros Áruháznál",
+     "type": "ORG",
+     "base": "Kertváros Áruház",
+     "case": "ADE",
+     "suffix": "nál"
+    },
+    {
+     "text": "Gödöllőn",
+     "type": "LOCATION",
+     "base": "Gödöllő",
+     "case": "SUP",
+     "suffix": "n"
+    },
+    {
+     "text": "Dalma",
+     "type": "PERSON",
+     "base": "Dalma",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Szentendrere",
+     "type": "LOCATION",
+     "base": "Szentendre",
+     "case": "SUB",
+     "suffix": "re"
+    },
+    {
+     "text": "Áron",
+     "type": "PERSON",
+     "base": "Áron",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Dalmáért",
+     "type": "PERSON",
+     "base": "Dalma",
+     "case": "CAU",
+     "suffix": "ért"
+    },
+    {
+     "text": "Csenge",
+     "type": "PERSON",
+     "base": "Csenge",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Fazekaséknál",
+     "type": "PERSON",
+     "base": "Fazekas",
+     "case": "ADE",
+     "suffix": "éknál"
+    },
+    {
+     "text": "NHK-472",
+     "type": "LICENSE_PLATE",
+     "base": "NHK-472",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "06 70 000 3381",
+     "type": "PHONE",
+     "base": "06 70 000 3381",
+     "case": "SUB",
+     "suffix": "-re"
+    }
+   ]
+  },
+  {
+   "id": "h4-social-004",
+   "domain": "h4-social",
+   "text": "Heti raktárjelentés – 42. hét\nBeérkezett:\n– Fehér liszt (BL55): 620 kg\n– Barna rizs: 310 kg\n– Vörös lencse: 140 kg\n– UHT tej, cikkszám TJ-0448, sarzs L24117: 960 l\nA tej nov. 2-án lejár, ezért ezt kell elsőként bekészíteni a csomagokba. A nagy hűtőkamra kompresszora megint leállt, a szerviz 186 500 Ft-os árajánlatot küldött, addig csak a kis kamra használható. Szerdán a hűtött és a száraz áru külön szállítólevélre kerüljön!",
+   "entities": [
+    {
+     "text": "186 500 Ft",
+     "type": "MONEY",
+     "base": "186 500 Ft",
+     "case": "OTHER",
+     "suffix": "-os"
+    }
+   ]
+  },
+  {
+   "id": "h4-social-005",
+   "domain": "h4-social",
+   "text": "ADOMÁNYIGAZOLÁS\nA Tücsökház Alapítvány (székhely: 7621 Pécs, Király utca 38/A, adószám: {ADOSZAM}) igazolja, hogy ifj. Somogyi Zsolt (lakcím: 7632 Pécs, Megyeri út 61. 3/12, adóazonosító jel: {ADOAZONOSITO}) 2026. szeptember 30-án 150 000 Ft, azaz egyszázötvenezer forint összegű pénzadományt utalt át az alapítvány {BANKSZAMLA} számú bankszámlájára. Az adományt az alapítvány a hátrányos helyzetű gyermekek nyári táboroztatására fordítja, az adományozó részére ellenszolgáltatást nem nyújt.\nPécs, 2026. október 2.\nVárnai Kinga\nkuratóriumi elnök",
+   "entities": [
+    {
+     "text": "Tücsökház Alapítvány",
+     "type": "ORG",
+     "base": "Tücsökház Alapítvány",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "7621 Pécs, Király utca 38/A",
+     "type": "ADDRESS",
+     "base": "7621 Pécs, Király utca 38/A",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "ifj. Somogyi Zsolt",
+     "type": "PERSON",
+     "base": "ifj. Somogyi Zsolt",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "7632 Pécs, Megyeri út 61. 3/12",
+     "type": "ADDRESS",
+     "base": "7632 Pécs, Megyeri út 61. 3/12",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "150 000 Ft",
+     "type": "MONEY",
+     "base": "150 000 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "egyszázötvenezer forint",
+     "type": "MONEY",
+     "base": "egyszázötvenezer forint",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Pécs",
+     "type": "LOCATION",
+     "base": "Pécs",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Várnai Kinga",
+     "type": "PERSON",
+     "base": "Várnai Kinga",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-social-006",
+   "domain": "h4-social",
+   "text": "Foglald össze 4-5 mondatban a lakhatási bizottságnak az alábbi kérelmet!\n\nKérelmező: Oksana Melnyk (szül. 1989. 07. 14.), 2022 márciusában érkezett Ukrajnából, két kiskorú gyermekével jelenleg az 1149 Budapest, Egressy út 61. 4/16 alatti albérletben él. A havi bérleti díj 210 000 Ft + rezsi, nettó jövedelme 268 000 Ft, a Dunapart Logisztika Kft.-nél dolgozik raktárosként. A lakás Gergely Ottóé, aki december végével felmondta a bérletet, mert el akarja adni az ingatlant. A kérelmet a Kapocs Lakhatási Egyesület is támogatja, kapcsolattartó: Ruzsa Edina (ruzsa.edina@kapocs-egyesulet.example).",
+   "entities": [
+    {
+     "text": "Oksana Melnyk",
+     "type": "PERSON",
+     "base": "Oksana Melnyk",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "1989. 07. 14.",
+     "type": "DATE_OF_BIRTH",
+     "base": "1989. 07. 14.",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Ukrajnából",
+     "type": "LOCATION",
+     "base": "Ukrajna",
+     "case": "ELA",
+     "suffix": "ból"
+    },
+    {
+     "text": "1149 Budapest, Egressy út 61. 4/16",
+     "type": "ADDRESS",
+     "base": "1149 Budapest, Egressy út 61. 4/16",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "210 000 Ft",
+     "type": "MONEY",
+     "base": "210 000 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "268 000 Ft",
+     "type": "MONEY",
+     "base": "268 000 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Dunapart Logisztika Kft.",
+     "type": "ORG",
+     "base": "Dunapart Logisztika Kft.",
+     "case": "ADE",
+     "suffix": "-nél"
+    },
+    {
+     "text": "Gergely Ottóé",
+     "type": "PERSON",
+     "base": "Gergely Ottó",
+     "case": "POSS",
+     "suffix": "é"
+    },
+    {
+     "text": "Kapocs Lakhatási Egyesület",
+     "type": "ORG",
+     "base": "Kapocs Lakhatási Egyesület",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Ruzsa Edina",
+     "type": "PERSON",
+     "base": "Ruzsa Edina",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "ruzsa.edina@kapocs-egyesulet.example",
+     "type": "EMAIL",
+     "base": "ruzsa.edina@kapocs-egyesulet.example",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-social-007",
+   "domain": "h4-social",
+   "text": "Mezőkövesd Város Önkormányzata\nHATÁROZAT\nGulyás Rozália (szül.: 1958. december 3., anyja neve: Csonka Mária, lakcím: 3400 Mezőkövesd, Mátyás király út 88/B, személyi ig. sz.: {SZIG}) kérelmére 2026. november 1-jétől 2027. április 30-ig havi 12 000 Ft lakhatási célú települési támogatást állapítok meg. A támogatást közvetlenül a gázszolgáltató részére folyósítom, mivel a kérelmezőnek díjhátraléka áll fenn. A határozat ellen a közléstől számított 15 napon belül Mezőkövesd Város Képviselő-testületéhez lehet fellebbezni.",
+   "entities": [
+    {
+     "text": "Mezőkövesd Város Önkormányzata",
+     "type": "ORG",
+     "base": "Mezőkövesd Város Önkormányzata",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Gulyás Rozália",
+     "type": "PERSON",
+     "base": "Gulyás Rozália",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "1958. december 3.",
+     "type": "DATE_OF_BIRTH",
+     "base": "1958. december 3.",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Csonka Mária",
+     "type": "PERSON",
+     "base": "Csonka Mária",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "3400 Mezőkövesd, Mátyás király út 88/B",
+     "type": "ADDRESS",
+     "base": "3400 Mezőkövesd, Mátyás király út 88/B",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "12 000 Ft",
+     "type": "MONEY",
+     "base": "12 000 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Mezőkövesd Város Képviselő-testületéhez",
+     "type": "ORG",
+     "base": "Mezőkövesd Város Képviselő-testülete",
+     "case": "ALL",
+     "suffix": "hez"
+    }
+   ]
+  },
+  {
+   "id": "h4-social-008",
+   "domain": "h4-social",
+   "text": "Kedves Ilona!\n\nA Csillagszeg Egyesület nevében szeretném megköszönni, hogy a Rétközi Malom Kft. idén is támogatta karácsonyi tartósélelmiszer-akciónkat. A 480 000 Ft értékű lisztadományból 160 család kapott csomagot Kisvárdán és Mándokon. Amikor 2014-ben néhány anyuka összefogásából Csillagszeg Egyesületté alakultunk, álmodni sem mertünk ekkora segítségről. Kérem, adja át köszönetünket Lőrincz Attilának is!\n\nSzeretettel:\nTarr-Benkő Viktória\nelnök",
+   "entities": [
+    {
+     "text": "Ilona",
+     "type": "PERSON",
+     "base": "Ilona",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Csillagszeg Egyesület",
+     "type": "ORG",
+     "base": "Csillagszeg Egyesület",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Rétközi Malom Kft.",
+     "type": "ORG",
+     "base": "Rétközi Malom Kft.",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "480 000 Ft",
+     "type": "MONEY",
+     "base": "480 000 Ft",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Kisvárdán",
+     "type": "LOCATION",
+     "base": "Kisvárda",
+     "case": "SUP",
+     "suffix": "n"
+    },
+    {
+     "text": "Mándokon",
+     "type": "LOCATION",
+     "base": "Mándok",
+     "case": "SUP",
+     "suffix": "on"
+    },
+    {
+     "text": "Csillagszeg Egyesületté",
+     "type": "ORG",
+     "base": "Csillagszeg Egyesület",
+     "case": "TRA",
+     "suffix": "té"
+    },
+    {
+     "text": "Lőrincz Attilának",
+     "type": "PERSON",
+     "base": "Lőrincz Attila",
+     "case": "DAT",
+     "suffix": "nak"
+    },
+    {
+     "text": "Tarr-Benkő Viktória",
+     "type": "PERSON",
+     "base": "Tarr-Benkő Viktória",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-social-009",
+   "domain": "h4-social",
+   "text": "Szia Laci! Holnap a nagy furgonnal (AE KT-318) menj, mert Debrecenből a Bihari Gyümölcs Kft. telephelyéről 2 raklap almát is hozunk. Utána Hajdúböszörményig viszed a 40 csomagot, ott Kun Melinda veszi át, a száma +36 30 000 7265. A szállítólevelet reggel Esztitől kérd el.\n– ok, de a furgonban meg bent van a tegnapi 12 lada tej, azzal mi legyen?",
+   "entities": [
+    {
+     "text": "Laci",
+     "type": "PERSON",
+     "base": "Laci",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "AE KT-318",
+     "type": "LICENSE_PLATE",
+     "base": "AE KT-318",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Debrecenből",
+     "type": "LOCATION",
+     "base": "Debrecen",
+     "case": "ELA",
+     "suffix": "ből"
+    },
+    {
+     "text": "Bihari Gyümölcs Kft.",
+     "type": "ORG",
+     "base": "Bihari Gyümölcs Kft.",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Hajdúböszörményig",
+     "type": "LOCATION",
+     "base": "Hajdúböszörmény",
+     "case": "TER",
+     "suffix": "ig"
+    },
+    {
+     "text": "Kun Melinda",
+     "type": "PERSON",
+     "base": "Kun Melinda",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "+36 30 000 7265",
+     "type": "PHONE",
+     "base": "+36 30 000 7265",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Esztitől",
+     "type": "PERSON",
+     "base": "Eszti",
+     "case": "ABL",
+     "suffix": "től"
+    }
+   ]
+  },
+  {
+   "id": "h4-social-010",
+   "domain": "h4-social",
+   "text": "Írj egy udvarias, rövid választ erre a levélre: igen, kell a háziorvosi igazolás, és időpontot ügyfélkapun keresztül is lehet foglalni.\n\nTisztelt Hivatal! Kántorné Hegyi Margit vagyok, ápolási díjat szeretnék igényelni, mert édesanyámat, özv. Hegyi Lajosnét tavaly óta egyedül gondozom, ezért Miskolcról visszaköltöztem hozzá Abaújszántóra. A kérelmet személyesen vinném be a Gönci Járási Hivatalba, de nem tudom, kell-e hozzá dr. Ambrus Gergely háziorvos igazolása. Elérhetőségem: kantorne.margit@levelezo.example, 06-47/000-913.",
+   "entities": [
+    {
+     "text": "Kántorné Hegyi Margit",
+     "type": "PERSON",
+     "base": "Kántorné Hegyi Margit",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "özv. Hegyi Lajosnét",
+     "type": "PERSON",
+     "base": "özv. Hegyi Lajosné",
+     "case": "ACC",
+     "suffix": "t"
+    },
+    {
+     "text": "Miskolcról",
+     "type": "LOCATION",
+     "base": "Miskolc",
+     "case": "DEL",
+     "suffix": "ról"
+    },
+    {
+     "text": "Abaújszántóra",
+     "type": "LOCATION",
+     "base": "Abaújszántó",
+     "case": "SUB",
+     "suffix": "ra"
+    },
+    {
+     "text": "Gönci Járási Hivatalba",
+     "type": "ORG",
+     "base": "Gönci Járási Hivatal",
+     "case": "ILL",
+     "suffix": "ba"
+    },
+    {
+     "text": "dr. Ambrus Gergely",
+     "type": "PERSON",
+     "base": "dr. Ambrus Gergely",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "kantorne.margit@levelezo.example",
+     "type": "EMAIL",
+     "base": "kantorne.margit@levelezo.example",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "06-47/000-913",
+     "type": "PHONE",
+     "base": "06-47/000-913",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  },
+  {
+   "id": "h4-social-011",
+   "domain": "h4-social",
+   "text": "Kedves Önkéntesek! A téli melegedő beosztása november 1-jétől az új online naptárban érhető el, a régi táblázatot már nem frissítjük. Műszakcserét legalább 48 órával előtte jelezzetek, a 2/2026. számú önkéntes-szabályzat szerint. Fekete zsákba csak a mosnivaló kerüljön, a kék ládákba pedig a tiszta, adományba kapott ruha. Aki most csatlakozik, az első két alkalommal egy tapasztalt önkéntes mellé kerül.",
+   "entities": []
+  },
+  {
+   "id": "h4-social-012",
+   "domain": "h4-social",
+   "text": "Fordítsd le angolra, a holland partnerünknek megy a negyedéves beszámolóba:\n\nA 2026-os tavaszi programban a Hídfő Szociális Egyesület 37 családnak nyújtott rendszeres segítséget Salgótarjánban és a környező falvakban. Legnagyobb sikerünk, hogy Dávid és Márk, akik tavaly sokat hiányoztak, szeptembertől újra rendszeresen iskolába járnak. Külön köszönjük Pieter Jansennek és a Stichting Brugwerknek a 12 500 EUR összegű támogatást, amelyből két új családgondozót tudtunk alkalmazni.",
+   "entities": [
+    {
+     "text": "Hídfő Szociális Egyesület",
+     "type": "ORG",
+     "base": "Hídfő Szociális Egyesület",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Salgótarjánban",
+     "type": "LOCATION",
+     "base": "Salgótarján",
+     "case": "INE",
+     "suffix": "ban"
+    },
+    {
+     "text": "Dávid",
+     "type": "PERSON",
+     "base": "Dávid",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Márk",
+     "type": "PERSON",
+     "base": "Márk",
+     "case": "NOM",
+     "suffix": ""
+    },
+    {
+     "text": "Pieter Jansennek",
+     "type": "PERSON",
+     "base": "Pieter Jansen",
+     "case": "DAT",
+     "suffix": "nek"
+    },
+    {
+     "text": "Stichting Brugwerknek",
+     "type": "ORG",
+     "base": "Stichting Brugwerk",
+     "case": "DAT",
+     "suffix": "nek"
+    },
+    {
+     "text": "12 500 EUR",
+     "type": "MONEY",
+     "base": "12 500 EUR",
+     "case": "NOM",
+     "suffix": ""
+    }
+   ]
+  }
+ ]
+}

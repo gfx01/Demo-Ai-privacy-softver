@@ -1,0 +1,102 @@
+# LiteLLM proxy configuration for the privacy hub.
+# privacy_hub.startup_check validates this file before LiteLLM starts and
+# refuses to start if the privacy guardrail is not mandatory.
+
+model_list:
+  # --- keyless mock provider (default for demos and tests) -----------------
+  - model_name: mock-gpt
+    litellm_params:
+      model: openai/mock-echo
+      api_base: http://mock-llm:8080/v1
+      api_key: os.environ/MOCK_LLM_API_KEY
+    model_info:
+      # Fake prices so that spend accrues and budgets can be tested.
+      input_cost_per_token: 0.00001
+      output_cost_per_token: 0.00002
+  - model_name: mock-inflect
+    litellm_params:
+      model: openai/mock-inflect
+      api_base: http://mock-llm:8080/v1
+      api_key: os.environ/MOCK_LLM_API_KEY
+    model_info:
+      input_cost_per_token: 0.00001
+      output_cost_per_token: 0.00002
+  # Anthropic Messages API code path against the mock (test only: not in
+  # any team's model list, so only the master key can call it).
+  - model_name: mock-claude
+    litellm_params:
+      model: anthropic/mock-claude
+      api_base: http://mock-llm:8080
+      api_key: os.environ/MOCK_LLM_API_KEY
+  - model_name: mock-error
+    litellm_params:
+      model: openai/mock-error
+      api_base: http://mock-llm:8080/v1
+      api_key: os.environ/MOCK_LLM_API_KEY
+      num_retries: 0
+
+  # --- in-process helper models (no network) --------------------------------
+  # Shows the user exactly what would be sent (masked text, never restored).
+  - model_name: privacy-preview
+    litellm_params:
+      model: privacyhub-preview/preview
+  # Target of the startup self-test (see privacy_hub/selftest.py).
+  - model_name: privacy-canary
+    litellm_params:
+      model: privacyhub-canary/canary
+
+  # --- self-hosted model (docker compose --profile local-llm) ---------------
+  # llama.cpp server on the internal "providers" network; the model file is
+  # chosen in .env (LOCAL_LLM_GGUF). Add "local-llm" to PROVIDER_MODELS to
+  # offer it to users. Masking stays on for this model too.
+  - model_name: local-llm
+    litellm_params:
+      model: openai/local-llm
+      api_base: http://local-llm:8080/v1
+      api_key: os.environ/LOCAL_LLM_API_KEY
+
+  # --- real providers: active only when the API key env var is set ---------
+  # Wildcards avoid hard-coding model ids, which change often; request e.g.
+  # "anthropic/<model-id>" with an id from the provider's documentation.
+  - model_name: openai/*
+    litellm_params:
+      model: openai/*
+      api_key: os.environ/OPENAI_API_KEY
+  - model_name: anthropic/*
+    litellm_params:
+      model: anthropic/*
+      api_key: os.environ/ANTHROPIC_API_KEY
+  - model_name: gemini/*
+    litellm_params:
+      model: gemini/*
+      api_key: os.environ/GEMINI_API_KEY
+
+guardrails:
+  - guardrail_name: privacy-hub
+    litellm_params:
+      guardrail: privacy_hub.guardrail.PrivacyHubGuardrail
+      mode: [pre_call, post_call]
+      default_on: true
+
+litellm_settings:
+  # Never put message content into logging callbacks / spend logs.
+  turn_off_message_logging: true
+  drop_params: true
+  request_timeout: 120
+  custom_provider_map:
+    - provider: privacyhub-canary
+      custom_handler: privacy_hub.providers.canary
+    - provider: privacyhub-preview
+      custom_handler: privacy_hub.providers.preview
+
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY
+  database_url: os.environ/DATABASE_URL
+  store_prompts_in_spend_logs: false
+  # Portal keys belong to the organisation's team; without this LiteLLM
+  # ignores the per-user budget for team keys (checked in 1.105.1 auth_checks).
+  apply_user_budget_to_team_keys: true
+  # Open WebUI forwards the signed-in user's id; used as LiteLLM end-user id.
+  user_header_mappings:
+    - header_name: X-OpenWebUI-User-Id
+      litellm_user_role: customer

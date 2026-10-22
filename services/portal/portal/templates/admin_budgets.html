@@ -1,0 +1,59 @@
+{% extends "admin_base.html" %}
+{% block admin %}
+<h1>Keretek és felhasználók / Budgets &amp; users</h1>
+<p class="muted">A kereteket a LiteLLM kényszeríti ki (USD-ben, a modellárak alapján). Budgets are enforced by LiteLLM (USD, based on model prices; the mock model has fake prices).</p>
+
+<h2>Csapatok (szervezetenként) / Teams</h2>
+<table>
+  <tr><th>Team</th><th>Szervezet</th><th>Költés / Spend</th><th>Keret / Budget</th><th></th></tr>
+  {% for t in teams %}
+  <tr>
+    <td>{{ t.team_alias or t.team_id }}</td><td>{{ (t.metadata or {}).get('organisation_id', '–') }}</td>
+    <td>{{ t.spend | money }}</td><td>{{ t.max_budget | money }} {{ t.budget_duration or '' }}</td>
+    <td>
+      <form method="post" action="/admin/budgets/team" class="row">
+        <input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="team_id" value="{{ t.team_id }}">
+        <input name="max_budget" size="7" placeholder="USD" value="{{ t.max_budget if t.max_budget is not none else '' }}">
+        <select name="budget_duration"><option value="">nincs reset / no reset</option>
+          {% for d in durations %}<option value="{{ d }}" {% if t.budget_duration == d %}selected{% endif %}>{{ d }}</option>{% endfor %}</select>
+        <button class="secondary">Mentés</button>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+<h2>Felhasználók / Users</h2>
+<table>
+  <tr><th>User</th><th>Költés / Spend</th><th>Keret / Budget</th><th></th></tr>
+  {% for u in users %}
+  <tr>
+    <td>{{ u.user_id }}</td><td>{{ u.spend | money }}</td><td>{{ u.max_budget | money }} {{ u.budget_duration or '' }}</td>
+    <td>
+      <form method="post" action="/admin/budgets/user/{{ u.user_id | urlencode }}" class="row">
+        <input type="hidden" name="csrf" value="{{ csrf }}">
+        <input name="max_budget" size="7" placeholder="USD" value="{{ u.max_budget if u.max_budget is not none else '' }}">
+        <select name="budget_duration"><option value="">nincs reset / no reset</option>
+          {% for d in durations %}<option value="{{ d }}" {% if u.budget_duration == d %}selected{% endif %}>{{ d }}</option>{% endfor %}</select>
+        <button class="secondary">Mentés</button>
+      </form>
+    </td>
+  </tr>
+  {% else %}
+  <tr><td colspan="4" class="muted">Még nincs felhasználó / no users yet</td></tr>
+  {% endfor %}
+</table>
+
+<form class="card" method="post" action="/admin/budgets/user">
+  <input type="hidden" name="csrf" value="{{ csrf }}">
+  <h2 style="margin-top:0">Felhasználó + API kulcs / User + API key</h2>
+  <div class="row">
+    <input name="user_id" placeholder="felhasznalo@ceg.hu" required>
+    <select name="org_id">{% for o in orgs %}<option value="{{ o.id }}">{{ o.name }}</option>{% endfor %}</select>
+    <input name="max_budget" size="7" placeholder="keret USD">
+    <select name="budget_duration"><option value="">nincs reset</option>{% for d in durations %}<option value="{{ d }}">{{ d }}</option>{% endfor %}</select>
+    <button type="submit">Kulcs kiadása / Issue key</button>
+  </div>
+  <p class="muted">A kulcsot egyszer mutatjuk meg. The key is shown once and not stored by the portal.</p>
+</form>
+{% endblock %}

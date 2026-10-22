@@ -1,0 +1,13 @@
+# Direct dependencies of the OCR service. Locked (with hashes) in
+# requirements.txt via: uv pip compile requirements.in --universal --generate-hashes --python-version 3.12 -o requirements.txt
+fastapi==0.149.0
+uvicorn==0.54.0
+pillow==12.3.0
+pypdfium2==5.14.0
+# Wheel bundles Tesseract 5.5.1 and Leptonica 1.85.0 with old image codecs:
+# the service only ever hands it raw pixels it decoded with Pillow.
+tesserocr==2.11.0
+python-docx==1.2.0
+openpyxl==3.1.5
+# openpyxl uses it, when installed, against XML entity-expansion attacks
+defusedxml==0.7.1

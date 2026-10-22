@@ -1,0 +1,7 @@
+# Optional Surya engine (docker compose build --build-arg OCR_WITH_SURYA=1 ocr).
+# The surya-ocr CODE is Apache-2.0; its MODEL WEIGHTS are not open for
+# commercial use (see docs/LIMITATIONS.md). Pulls in PyTorch (several GB) and
+# pins pillow<11, which downgrades the Pillow of the base image. Not hash-locked
+# and not built or run in this repository (PyTorch and the weights were not
+# downloadable from the build environment).
+surya-ocr==0.22.1

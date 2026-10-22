@@ -1,0 +1,15 @@
+.git
+.env
+.env.*
+**/__pycache__
+**/*.pyc
+.pytest_cache
+.venv*
+eval
+tests
+docs
+models/lexicon
+models/*_work
+models/tessdata
+*.md
+!certs/README.md

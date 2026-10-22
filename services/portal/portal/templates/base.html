@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}AI Privacy Hub{% endblock %}</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="/">🔒 AI Privacy Hub</a>
+    <nav>
+      <a href="/chat">Chat</a>
+      <a href="/admin">Admin</a>
+    </nav>
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+  <footer>Demo / MVP — maszkolás = álnevesítés, nem anonimizálás. Masking is pseudonymisation, not anonymisation.</footer>
+</body>
+</html>

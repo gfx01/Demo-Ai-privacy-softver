@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>AI Privacy Hub (demo)</h1>
+<p>Minden kérés a privacy gateway-en megy át: a személyes adatokat helyőrzőkre cseréljük, mielőtt a szöveg elhagyja a céget, és a választ visszaalakítjuk.</p>
+<p>Every request passes the privacy gateway: personal data is replaced with placeholders before text leaves the company, and the answer is restored.</p>
+<ul class="links">
+  <li><a href="/chat">Chat with preview / Chat előnézettel</a></li>
+  <li><a href="{{ openwebui_url }}">Open WebUI</a></li>
+  <li><a href="/admin">Admin</a></li>
+</ul>
+{% endblock %}

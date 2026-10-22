@@ -1,0 +1,11 @@
+{% extends "admin_base.html" %}
+{% block admin %}
+<h1>Új API kulcs / New API key</h1>
+<div class="card">
+  <p>Felhasználó / user: <b>{{ user_id }}</b></p>
+  <p>Kulcs / key (csak most látható / shown only now):</p>
+  <pre class="preview">{{ key }}</pre>
+  <p class="muted">Add át biztonságos csatornán. A felhasználó a <a href="/chat">Chat</a> oldalon vagy bármely OpenAI-kompatibilis kliensben használhatja (base URL: <code>/v1</code>).</p>
+</div>
+<p><a href="/admin/budgets">Vissza / back</a></p>
+{% endblock %}
